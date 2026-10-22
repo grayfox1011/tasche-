@@ -1,0 +1,64 @@
+TASCHE PIENE — VERSIONE 0.4.0, CANDIDATA AL COLLAUDO
+
+Obiettivo: rendere il tema modificabile dai controlli Design di Divi senza
+cambiare l'aspetto del sito, e semplificare i moduli custom.
+
+COSA CAMBIA RISPETTO ALLA 0.3.1
+- assets/css/tasche-piene.css riunisce il foglio del tema, styles/bundle.css,
+  styles/vb-bundle.css e i due blocchi di stile stampati da functions.php.
+  Le dichiarazioni !important passano da 5.518 a 163, tutte nella cornice
+  della pagina, negli stati gestiti da JavaScript, nei font dei pulsanti e
+  nel padding orizzontale in hover dei tre pulsanti.
+- Le regole dei moduli pesano quanto una classe (.tp-child-theme :where(...))
+  e sono ordinate come nel foglio originale: Divi vince, il tema non cambia.
+- Rimosso il "bridge" della 0.3.1 (inc/divi-design-bridge.php e
+  assets/js/divi-design-bridge.js): non serve piu promuovere i valori.
+- Rimossi cinque moduli footer mai registrati nella pagina (FooterCopyright,
+  FooterCharacters, FooterNavLeft, FooterNavRight, ThemeFooterShell), i file
+  SCSS e la pipeline CSS di webpack. scripts/bundle.js e ricompilato.
+- Nuova migrazione una tantum (inc/design-cleanup-migration.php): toglie dalle
+  pagine della landing i valori desktop di padding, altezza minima e colore di
+  sfondo delle sezioni e di padding e larghezza delle righe con classe tp-...,
+  che il vecchio CSS nascondeva. Mantiene le modifiche manuali registrate dalla
+  0.3.1. Il contenuto di esempio in inc/seed/home-content.php e gia pulito.
+
+VERIFICHE EFFETTUATE
+Ambiente: WordPress 7.1.3, Divi 5.15.1, home importata dall'export del sito
+(Tasche_Piene_Hero.json). Tema 0.3.1 e 0.4.0 su due installazioni affiancate,
+ciascuna con il proprio contenuto (0.4.0 dopo la migrazione).
+- Home, 20 larghezze da 320 a 1920 px: screenshot a pagina intera identici,
+  salvo immagini caricate in ritardo e fotogrammi del video. Stili calcolati di
+  819 elementi: nessun riquadro spostato o ridimensionato; restano differenze
+  solo su contenitori senza testo proprio e su allineamenti senza effetto
+  visibile ("start" al posto di "left", pulsante Mappe impaginato in flex).
+- Privacy e cookie policy, 10 larghezze: stessa impaginazione; unica
+  differenza 0,2 px nell'altezza del logo del footer, dovuta all'URL
+  dell'immagine nella copia di prova (stesso codice nelle due versioni).
+- Hover e focus di pulsanti, menu, card Tasca/Piatto, card Materie, menu del
+  footer a 1440, 820 e 390 px: stessi stili e stesse posizioni; screenshot
+  dei pulsanti in hover identici.
+- Visual Builder in vista desktop, tablet e telefono, home e privacy: nessuna
+  differenza di posizione o dimensione rispetto alla 0.3.1.
+- Modifica dal Visual Builder (8 moduli: titoli, testi, menu, orari, Materie):
+  l'anteprima cambia in 8 casi su 8 (0 su 8 con la 0.3.1).
+- Valori Design salvati e verificati sulla pagina pubblicata, a 1440 px
+  (tra parentesi la 0.3.1): testo 105/120 (4/120), spaziature 256/256
+  (206/256), sfondi 256/256 (252/256), dimensioni 252/256 (195/256).
+  A 820 e 390 px con valori tablet/telefono: testo 102/110 e 115/132,
+  spaziature 256/256. I casi non superati sono gli apici degli allergeni, le
+  due dimensioni di orari e legenda, su telefono alcuni prezzi e un
+  sottotitolo del menu, tre immagini e la striscia Materie che hanno
+  dimensioni fisse.
+- Controlli Design dei moduli custom (marquee, split-text, header e footer del
+  Theme Builder): applicati sulla pagina pubblicata.
+- Migrazione: test su copia del contenuto originale; rimuove solo i valori
+  previsti, seconda esecuzione senza effetti, revisione conservata.
+- 74 file PHP validi; build webpack completata senza avvisi.
+
+COLLAUDO ANCORA NECESSARIO
+- Le misure usano la copia locale dell'export della home: le pagine e il
+  Theme Builder del sito pubblico possono contenere valori diversi.
+- Prima dell'aggiornamento: backup del database. Dopo: svuotare la cache CSS di
+  Divi e dei plugin di cache, poi controllare home e pagine legali su desktop,
+  tablet e iPhone (i prezzi del menu su iPhone dipendono da JavaScript).
+- Nessuna modifica e' stata effettuata al sito pubblico.

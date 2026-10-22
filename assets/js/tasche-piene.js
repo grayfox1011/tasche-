@@ -5,14 +5,6 @@
 	var ua = window.navigator ? window.navigator.userAgent || '' : '';
 	var isIOSWebKit = /iP(hone|ad|od)/.test(ua) || (window.navigator && window.navigator.platform === 'MacIntel' && window.navigator.maxTouchPoints > 1);
 
-	// Keep each iOS fallback unchanged until a native Divi design value is saved.
-	// The bridge scopes these variables to their element with inherits:false.
-	function setDesignFallback(element, property, value) {
-		if (element) {
-			element.style.setProperty(property, 'var(--tp-design-' + property + ', ' + value + ')', 'important');
-		}
-	}
-
 	if (document.body && document.body.classList.contains('et-fb')) {
 		return;
 	}
@@ -46,7 +38,9 @@
 		};
 
 		function setImportant(element, property, value) {
-			setDesignFallback(element, property, value);
+			if (element) {
+				element.style.setProperty(property, value, 'important');
+			}
 		}
 
 		function placeNode(row, selector, x, y, width, display) {

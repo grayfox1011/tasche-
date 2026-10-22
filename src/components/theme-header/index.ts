@@ -5,9 +5,6 @@ import { SettingsContent } from './settings-content';
 import { ThemeHeaderAttrs } from './types';
 import { placeholderContent } from './placeholder-content';
 
-import './style.scss';
-import './module.scss';
-
 export const themeHeader: ModuleLibrary.Module.RegisterDefinition<ThemeHeaderAttrs> = {
 	metadata: metadata as Metadata.Values<ThemeHeaderAttrs>,
 	placeholderContent,

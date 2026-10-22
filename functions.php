@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( "TP_CHILD_VERSION", "0.3.1" );
+define( "TP_CHILD_VERSION", "0.4.0" );
 define( 'TP_CHILD_PATH', trailingslashit( get_stylesheet_directory() ) );
 define( 'TP_CHILD_URL', trailingslashit( get_stylesheet_directory_uri() ) );
 define( 'TP_CHILD_MODULES_JSON_PATH', TP_CHILD_PATH . 'modules-json/' );
@@ -22,7 +22,7 @@ require_once TP_CHILD_PATH . 'inc/chrome-nav-migration.php';
 require_once TP_CHILD_PATH . 'inc/chrome-menu-cleanup.php';
 require_once TP_CHILD_PATH . 'inc/nav-url-migration.php';
 require_once TP_CHILD_PATH . 'inc/hero-anchor-migration.php';
-require_once TP_CHILD_PATH . 'inc/divi-design-bridge.php';
+require_once TP_CHILD_PATH . 'inc/design-cleanup-migration.php';
 
 /**
  * Allow JPEG extension aliases that WordPress does not include by default.
@@ -489,24 +489,6 @@ function tp_child_enqueue_assets(): void {
 add_action( 'wp_enqueue_scripts', 'tp_child_enqueue_assets', 20 );
 
 /**
- * Divi writes page-level button styles in et-cache after the theme stylesheet.
- * This tiny late style keeps the editable Mappe button visible on mobile.
- */
-function tp_child_enqueue_location_button_frame_style(): void {
-	if ( ! tp_child_content_has_marker( 'tp-location-button' ) ) {
-		return;
-	}
-
-	wp_register_style( 'tp-location-button-frame', false, [], TP_CHILD_VERSION );
-	wp_enqueue_style( 'tp-location-button-frame' );
-	wp_add_inline_style(
-		'tp-location-button-frame',
-		'@media (max-width:767px){body #page-container .tp-location-section a.et_pb_button.tp-location-button,body #page-container .tp-location-section a.et_pb_button.tp-location-button:hover,body #page-container .tp-location-section a.et_pb_button.tp-location-button:focus,body #page-container .tp-location-section a.et_pb_button.tp-location-button:visited{display:inline-flex!important;align-items:center!important;justify-content:center!important;width:166.24px!important;height:37.56px!important;min-height:37.56px!important;padding:.799232px!important;border:0!important;border-radius:7.99232px!important;color:#fef5e9!important;font-family:var(--tp-font-display),Impact,sans-serif!important;font-size:15.9846px!important;font-weight:400!important;line-height:25px!important;text-align:center!important;text-decoration:none!important;overflow:hidden!important}.tp-location-button .tp-intro-button__label,.tp-location-button.tp-figma-button--enhanced .tp-intro-button__label{display:flex!important;align-items:center!important;justify-content:center!important;width:100%!important;height:100%!important;background-color:#560b22!important;background-image:linear-gradient(#560b22,#560b22)!important;border-radius:7.99232px!important;color:#fef5e9!important}}'
-	);
-}
-add_action( 'wp_enqueue_scripts', 'tp_child_enqueue_location_button_frame_style', 1000 );
-
-/**
  * Render the Figma-locked Tasca/Piatto section from editable Divi source modules.
  * The hidden source stays editable in Divi; frontend output keeps forced structure/styles.
  */
@@ -660,20 +642,11 @@ function tp_child_choice_data_from_divi_section( string $source_html ): array {
 		return $data;
 	}
 
-	$data['_design'] = [];
-	foreach ( [ 'section' => 'tp-choice-section', 'cards' => 'tp-choice-cards-row' ] as $key => $class ) {
-		$node = tp_child_choice_first_node( $xpath, '//*[' . tp_child_choice_class_predicate( $class ) . ']' );
-		if ( $node ) {
-			$data['_design'][ $key ] = tp_child_design_source_attributes( $node );
-		}
-	}
-
 	$title_node = tp_child_choice_first_node( $xpath, '//*[' . tp_child_choice_class_predicate( 'tp-choice-title' ) . ']' );
 
 	if ( $title_node ) {
 		$data['title_lines'] = tp_child_choice_lines_from_node( $title_node );
 		$data['_extracted']  = true;
-		$data['_design']['title'] = tp_child_design_source_attributes( $title_node, 'content' );
 	}
 
 	foreach ( [ 'tasca', 'piatto' ] as $card_key ) {
@@ -684,14 +657,6 @@ function tp_child_choice_data_from_divi_section( string $source_html ): array {
 		}
 
 		$data['_extracted'] = true;
-		$data['cards'][ $card_key ]['_design'] = [ 'card' => tp_child_design_source_attributes( $card ) ];
-		foreach ( [ 'image' => 'tp-choice-card-image', 'content' => 'tp-choice-card-content', 'chips' => 'tp-choice-card-chips' ] as $key => $class ) {
-			$node = tp_child_choice_first_node( $xpath, './/*[' . tp_child_choice_class_predicate( $class ) . ']', $card );
-			if ( $node ) {
-				$element = 'image' === $key ? 'image' : ( 'chips' === $key ? 'content' : 'module' );
-				$data['cards'][ $card_key ]['_design'][ $key ] = tp_child_design_source_attributes( $node, $element );
-			}
-		}
 
 		$image = tp_child_choice_first_node( $xpath, './/*[' . tp_child_choice_class_predicate( 'tp-choice-card-image' ) . ']//img', $card );
 		if ( $image instanceof DOMElement ) {
@@ -710,7 +675,6 @@ function tp_child_choice_data_from_divi_section( string $source_html ): array {
 		$title_node = tp_child_choice_first_node( $xpath, './/*[' . tp_child_choice_class_predicate( 'tp-choice-card-title' ) . ']', $card );
 		if ( $title_node ) {
 			$data['cards'][ $card_key ]['title'] = tp_child_choice_text_from_node( $title_node );
-			$data['cards'][ $card_key ]['_design']['title'] = tp_child_design_source_attributes( $title_node, 'content' );
 		}
 
 		$data['cards'][ $card_key ]['chips'] = tp_child_choice_extract_chips( $xpath, $card, $data['cards'][ $card_key ]['chips'] );
@@ -718,7 +682,6 @@ function tp_child_choice_data_from_divi_section( string $source_html ): array {
 		$description_node = tp_child_choice_first_node( $xpath, './/*[' . tp_child_choice_class_predicate( 'tp-choice-card-description' ) . ']', $card );
 		if ( $description_node ) {
 			$data['cards'][ $card_key ]['desc'] = tp_child_choice_text_from_node( $description_node );
-			$data['cards'][ $card_key ]['_design']['desc'] = tp_child_design_source_attributes( $description_node, 'content' );
 		}
 	}
 
@@ -749,7 +712,6 @@ function tp_child_responsive_img_attrs( string $url, string $sizes ): string {
 
 function tp_child_choice_card_markup( string $modifier, array $card ): string {
 	$chips = '';
-	$design = $card['_design'] ?? [];
 
 	foreach ( $card['chips'] as $chip ) {
 		$chips .= sprintf( '<li><span class="chip__icon" aria-hidden="true">◆</span>%s</li>', esc_html( $chip ) );
@@ -758,28 +720,19 @@ function tp_child_choice_card_markup( string $modifier, array $card ): string {
 	$img_extra = tp_child_responsive_img_attrs( $card['image'], '(max-width: 767px) 90vw, 640px' );
 
 	return sprintf(
-		'<article class="choice-card choice-card--%1$s" tabindex="0"%8$s><div class="choice-card__image"%9$s><img src="%2$s" alt="%3$s" loading="lazy" decoding="async"%7$s /></div><div class="choice-card__content"%10$s><h3 class="choice-card__title"%11$s>%4$s</h3><ul class="choice-card__chips"%12$s>%5$s</ul><p class="choice-card__desc"%13$s>%6$s</p></div></article>',
+		'<article class="choice-card choice-card--%1$s" tabindex="0"><div class="choice-card__image"><img src="%2$s" alt="%3$s" loading="lazy" decoding="async"%7$s /></div><div class="choice-card__content"><h3 class="choice-card__title">%4$s</h3><ul class="choice-card__chips">%5$s</ul><p class="choice-card__desc">%6$s</p></div></article>',
 		esc_attr( $modifier ),
 		esc_url( $card['image'] ),
 		esc_attr( $card['alt'] ),
 		esc_html( $card['title'] ),
 		$chips,
 		esc_html( $card['desc'] ),
-		$img_extra,
-		$design['card'] ?? '',
-		$design['image'] ?? '',
-		$design['content'] ?? '',
-		$design['title'] ?? '',
-		$design['chips'] ?? '',
-		$design['desc'] ?? ''
+		$img_extra
 	);
 }
 
 function tp_child_choice_normalize_data( array $data ): array {
 	$normalized = tp_child_choice_default_data();
-	if ( isset( $data['_design'] ) && is_array( $data['_design'] ) ) {
-		$normalized['_design'] = $data['_design'];
-	}
 
 	if ( array_key_exists( 'title_lines', $data ) && is_array( $data['title_lines'] ) ) {
 		$normalized['title_lines'] = array_values( array_map( 'strval', $data['title_lines'] ) );
@@ -793,10 +746,6 @@ function tp_child_choice_normalize_data( array $data ): array {
 		if ( ! isset( $data['cards'][ $card_key ] ) || ! is_array( $data['cards'][ $card_key ] ) ) {
 			continue;
 		}
-		if ( isset( $data['cards'][ $card_key ]['_design'] ) && is_array( $data['cards'][ $card_key ]['_design'] ) ) {
-			$normalized['cards'][ $card_key ]['_design'] = $data['cards'][ $card_key ]['_design'];
-		}
-
 		foreach ( [ 'image', 'alt', 'title', 'desc' ] as $field ) {
 			if ( array_key_exists( $field, $data['cards'][ $card_key ] ) ) {
 				$normalized['cards'][ $card_key ][ $field ] = (string) $data['cards'][ $card_key ][ $field ];
@@ -825,12 +774,9 @@ function tp_child_choice_standalone_markup( array $data = [] ): string {
 	$piatto_card = tp_child_choice_card_markup( 'piatto', $data['cards']['piatto'] );
 	$mobile_green_wave_url = esc_url( get_stylesheet_directory_uri() . '/assets/svg/choice-mobile-green-wave.svg' );
 	$mobile_bordeaux_wave_url = esc_url( get_stylesheet_directory_uri() . '/assets/svg/choice-mobile-bordeaux-wave.svg' );
-	$section_design = $data['_design']['section'] ?? '';
-	$title_design   = $data['_design']['title'] ?? '';
-	$cards_design   = $data['_design']['cards'] ?? '';
 
 	return <<<HTML
-<section id="choice" class="choice tp-choice-standalone" data-section="choice" data-y="2607" data-h="1263" aria-label="Tasca o piatto"{$section_design}>
+<section id="choice" class="choice tp-choice-standalone" data-section="choice" data-y="2607" data-h="1263" aria-label="Tasca o piatto">
 	<div class="choice__stage">
 	<svg class="choice__wave choice__wave--green" viewBox="0 0 1811.7627 428.3477" preserveAspectRatio="xMinYMin meet" aria-hidden="true" focusable="false">
 		<path d="M999.447 217.19C1300.56 148.011 1608.33 129.375 1724.58 128.705L1811.76 178.981L1711.82 428.348L0 428.348L0 281.543L0 0C207.686 101.221 698.337 286.369 999.447 217.19Z" fill="#054726" />
@@ -842,10 +788,10 @@ function tp_child_choice_standalone_markup( array $data = [] ): string {
 	<img class="choice__mobile-wave choice__mobile-wave--bordeaux-top" src="{$mobile_bordeaux_wave_url}" alt="" aria-hidden="true" decoding="async" loading="eager" />
 	<img class="choice__mobile-wave choice__mobile-wave--green-bottom" src="{$mobile_green_wave_url}" alt="" aria-hidden="true" decoding="async" loading="eager" />
 	<img class="choice__mobile-wave choice__mobile-wave--bordeaux-bottom" src="{$mobile_bordeaux_wave_url}" alt="" aria-hidden="true" decoding="async" loading="eager" />
-	<h2 class="choice__title"{$title_design}>
+	<h2 class="choice__title">
 		{$title_html}
 	</h2>
-	<div class="choice__cards"{$cards_design}>
+	<div class="choice__cards">
 		{$tasca_card}
 		{$piatto_card}
 	</div>
@@ -893,168 +839,15 @@ function tp_child_replace_choice_section( string $content ): string {
 add_filter( "the_content", "tp_child_replace_choice_section", 99 );
 
 /**
- * Divi prints et-cache styles after normal child-theme styles.
- * Keep the Figma waves for Tasca/Piatto after that cache while leaving content modules editable.
+ * Scale the fixed 1512px Tasca/Piatto stage to the viewport.
+ * Its styles live in assets/css/tasche-piene.css with the rest of the theme.
  */
-function tp_child_print_choice_hardcoded_wave_style(): void {
+function tp_child_print_choice_stage_script(): void {
 	if ( tp_child_is_visual_builder() || ! tp_child_content_has_marker( "tp-choice-section" ) ) {
 		return;
 	}
 
-	$mobile_choice_background_url = esc_url( get_stylesheet_directory_uri() . '/assets/svg/choice-mobile-background.svg?ver=20260522-2' );
-	$mobile_choice_reference_url = esc_url( get_stylesheet_directory_uri() . '/assets/images/choice/mobile-wave-layer-390x963.png?ver=20260522-wave-layer-editable' );
-
 	echo <<<HTML
-	<style id="tp-choice-hardcoded-wave-css">
-	body.tp-child-theme{overflow-x:hidden!important;}
-	body.tp-child-theme #page-container .tp-choice-section--legacy{display:none!important;}
-	body.tp-child-theme #page-container .tp-choice-standalone,
-	body.tp-child-theme #page-container section.tp-choice-standalone.choice{--choice-scale:1;position:relative!important;display:block!important;box-sizing:border-box!important;width:100vw!important;max-width:none!important;height:1263px!important;min-height:1263px!important;margin-top:0!important;margin-bottom:0!important;margin-left:calc(50% - 50vw)!important;margin-right:calc(50% - 50vw)!important;padding:0!important;overflow:hidden!important;background:var(--tp-cream,#fff5e9)!important;color:var(--tp-white,#fff)!important;isolation:isolate!important;}
-	body.tp-child-theme #page-container .tp-choice-standalone *,
-	body.tp-child-theme #page-container .tp-choice-standalone *::before,
-	body.tp-child-theme #page-container .tp-choice-standalone *::after{box-sizing:border-box!important;}
-	body.tp-child-theme #page-container .tp-choice-standalone::before{content:none!important;display:none!important;}
-	body.tp-child-theme #page-container .tp-choice-standalone .choice__stage{position:absolute!important;left:50%!important;top:0!important;width:1512px!important;height:1263px!important;max-width:none!important;margin:0!important;padding:0!important;overflow:hidden!important;transform:translateX(-50%) scale(var(--choice-scale,1))!important;transform-origin:top center!important;}
-	body.tp-child-theme #page-container .tp-choice-standalone .choice__stage::before{content:""!important;position:absolute!important;left:0!important;right:0!important;top:410px!important;bottom:0!important;display:block!important;z-index:2!important;background:var(--tp-bordeaux,#560b22)!important;pointer-events:none!important;}
-	body.tp-child-theme #page-container .tp-choice-standalone .choice__wave{position:absolute!important;display:block!important;max-width:none!important;pointer-events:none!important;}
-	body.tp-child-theme #page-container .tp-choice-standalone .choice__mobile-wave{display:none!important;}
-	body.tp-child-theme #page-container .tp-choice-standalone .choice__wave--green{left:-149.88px!important;top:0!important;width:1811.7627px!important;height:428.3477px!important;z-index:1!important;}
-	body.tp-child-theme #page-container .tp-choice-standalone .choice__wave--bordeaux{left:-10px!important;top:130.24px!important;width:1524.4385px!important;height:284.7612px!important;z-index:3!important;transform:scaleY(1)!important;transform-origin:center bottom!important;transition:transform 2396ms cubic-bezier(.34,1.56,.64,1)!important;}
-	body.tp-child-theme #page-container .tp-choice-standalone:hover .choice__wave--bordeaux,
-	body.tp-child-theme #page-container .tp-choice-standalone:focus-within .choice__wave--bordeaux{transform:scaleY(1.43)!important;}
-	body.tp-child-theme #page-container .tp-choice-standalone .choice__title{position:absolute!important;left:30px!important;top:320.35px!important;z-index:4!important;width:1452px!important;max-width:none!important;margin:0!important;padding:0!important;color:var(--tp-white,#fff)!important;font-family:var(--tp-font-display,"TP Bowlby One",Impact,sans-serif)!important;font-size:88px!important;font-weight:400!important;line-height:96px!important;letter-spacing:0!important;text-transform:none!important;white-space:nowrap!important;}
-	body.tp-child-theme #page-container .tp-choice-standalone .choice__title span{display:block!important;margin:0!important;padding:0!important;}
-	body.tp-child-theme #page-container .tp-choice-standalone .choice__cards{position:absolute!important;left:30px!important;top:682px!important;z-index:4!important;display:flex!important;align-items:stretch!important;width:1452px!important;max-width:none!important;margin:0!important;padding:0!important;gap:23.55px!important;}
-	body.tp-child-theme #page-container .tp-choice-standalone .choice-card{position:relative!important;flex:0 0 716.07px!important;width:716.07px!important;max-width:716.07px!important;height:581.06px!important;min-height:581.06px!important;margin:0!important;padding:0!important;overflow:hidden!important;background:var(--tp-cream,#fff5e9)!important;border:0!important;border-radius:20px!important;cursor:pointer!important;isolation:isolate!important;}
-	body.tp-child-theme #page-container .tp-choice-standalone .choice-card:focus{outline:3px solid var(--tp-white,#fff)!important;outline-offset:4px!important;}
-	body.tp-child-theme #page-container .tp-choice-standalone .choice-card__image{position:absolute!important;left:4.61%!important;top:8.09%!important;z-index:1!important;width:87.99%!important;height:61.62%!important;margin:0!important;padding:0!important;overflow:hidden!important;border-radius:18px!important;transition:left 1.02s cubic-bezier(.22,1,.36,1),top 1.02s cubic-bezier(.22,1,.36,1),width 1.02s cubic-bezier(.22,1,.36,1),height 1.02s cubic-bezier(.22,1,.36,1),border-radius 1.02s cubic-bezier(.22,1,.36,1)!important;}
-	body.tp-child-theme #page-container .tp-choice-standalone .choice-card__image::after{content:""!important;position:absolute!important;inset:0!important;z-index:2!important;display:block!important;background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,.95) 100%),rgba(0,0,0,.2)!important;border-radius:inherit!important;opacity:0!important;transition:opacity .8s cubic-bezier(.22,1,.36,1)!important;pointer-events:none!important;}
-	body.tp-child-theme #page-container .tp-choice-standalone .choice-card__image img{display:block!important;width:100%!important;height:100%!important;max-width:none!important;object-fit:cover!important;}
-	body.tp-child-theme #page-container .tp-choice-standalone .choice-card__content{position:absolute!important;left:4.61%!important;right:4.61%!important;top:78.12%!important;z-index:3!important;margin:0!important;padding:0!important;transition:top 1.02s cubic-bezier(.22,1,.36,1),color .5s ease!important;}
-	body.tp-child-theme #page-container .tp-choice-standalone .choice-card__title{margin:0 0 18px!important;padding:0!important;font-family:var(--tp-font-display,"TP Bowlby One",Impact,sans-serif)!important;font-size:40px!important;font-weight:400!important;line-height:40px!important;letter-spacing:0!important;text-transform:none!important;color:var(--tp-bordeaux,#560b22)!important;transition:color .5s ease!important;}
-	body.tp-child-theme #page-container .tp-choice-standalone .choice-card--tasca .choice-card__title{color:var(--tp-green,#054726)!important;}
-	body.tp-child-theme #page-container .tp-choice-standalone .choice-card__chips{display:flex!important;flex-wrap:wrap!important;gap:10px!important;align-items:center!important;margin:0!important;padding:0!important;list-style:none!important;}
-	body.tp-child-theme #page-container .tp-choice-standalone .choice-card__chips li{display:inline-flex!important;align-items:center!important;gap:6px!important;margin:0!important;padding:6px 14px!important;border-radius:999px!important;color:var(--tp-white,#fff)!important;font-family:var(--tp-font-body,"TP DM Sans",system-ui,sans-serif)!important;font-size:12px!important;font-weight:700!important;line-height:1!important;letter-spacing:.5px!important;white-space:nowrap!important;}
-	body.tp-child-theme #page-container .tp-choice-standalone .choice-card--tasca .choice-card__chips li{background:var(--tp-green,#054726)!important;}
-	body.tp-child-theme #page-container .tp-choice-standalone .choice-card--piatto .choice-card__chips li{background:var(--tp-bordeaux,#560b22)!important;}
-	body.tp-child-theme #page-container .tp-choice-standalone .chip__icon{font-size:9px!important;line-height:1!important;opacity:.9!important;}
-	body.tp-child-theme #page-container .tp-choice-standalone .choice-card__desc{margin:22px 0 0!important;padding:0!important;color:var(--tp-cream,#fff5e9)!important;font-family:var(--tp-font-body,"TP DM Sans",system-ui,sans-serif)!important;font-size:16px!important;font-weight:400!important;line-height:1.5!important;letter-spacing:0!important;opacity:0!important;transition:opacity .8s cubic-bezier(.22,1,.36,1)!important;}
-	body.tp-child-theme #page-container .tp-choice-standalone .choice-card:hover .choice-card__image,
-	body.tp-child-theme #page-container .tp-choice-standalone .choice-card:focus .choice-card__image,
-	body.tp-child-theme #page-container .tp-choice-standalone .choice-card.is-active .choice-card__image{left:-22.77%!important;top:0!important;width:142.88%!important;height:100%!important;border-radius:20px!important;}
-	body.tp-child-theme #page-container .tp-choice-standalone .choice-card:hover .choice-card__image::after,
-	body.tp-child-theme #page-container .tp-choice-standalone .choice-card:focus .choice-card__image::after,
-	body.tp-child-theme #page-container .tp-choice-standalone .choice-card.is-active .choice-card__image::after{opacity:1!important;}
-	body.tp-child-theme #page-container .tp-choice-standalone .choice-card:hover .choice-card__content,
-	body.tp-child-theme #page-container .tp-choice-standalone .choice-card:focus .choice-card__content,
-	body.tp-child-theme #page-container .tp-choice-standalone .choice-card.is-active .choice-card__content{top:71.43%!important;color:var(--tp-cream,#fff5e9)!important;}
-	body.tp-child-theme #page-container .tp-choice-standalone .choice-card:hover .choice-card__title,
-	body.tp-child-theme #page-container .tp-choice-standalone .choice-card:focus .choice-card__title,
-	body.tp-child-theme #page-container .tp-choice-standalone .choice-card.is-active .choice-card__title{color:var(--tp-cream,#fff5e9)!important;}
-	body.tp-child-theme #page-container .tp-choice-standalone .choice-card:hover .choice-card__desc,
-	body.tp-child-theme #page-container .tp-choice-standalone .choice-card:focus .choice-card__desc,
-	body.tp-child-theme #page-container .tp-choice-standalone .choice-card.is-active .choice-card__desc{opacity:1!important;}
-	@media (max-width:980px){
-		body.tp-child-theme #page-container .tp-choice-standalone{height:auto!important;min-height:0!important;padding:150px 24px 64px!important;background:var(--tp-bordeaux,#560b22)!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice__stage{position:relative!important;left:auto!important;top:auto!important;width:auto!important;height:auto!important;transform:none!important;overflow:visible!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice__stage::before{top:185px!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice__wave--green{left:50%!important;top:0!important;width:1280px!important;height:auto!important;transform:translateX(-50%)!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice__wave--bordeaux{left:50%!important;top:88px!important;width:1080px!important;height:auto!important;transform:translateX(-50%) scaleY(1)!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone:hover .choice__wave--bordeaux,
-		body.tp-child-theme #page-container .tp-choice-standalone:focus-within .choice__wave--bordeaux{transform:translateX(-50%) scaleY(1.24)!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice__title{position:relative!important;left:auto!important;top:auto!important;width:auto!important;max-width:none!important;margin:0 0 40px!important;font-size:48px!important;line-height:54px!important;white-space:normal!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice__cards{position:relative!important;left:auto!important;top:auto!important;display:flex!important;flex-direction:column!important;width:100%!important;max-width:none!important;gap:24px!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice-card{flex:0 0 auto!important;width:100%!important;max-width:none!important;height:560px!important;min-height:560px!important;}
-	}
-	@media (max-width:560px){
-		body.tp-child-theme #page-container .tp-choice-standalone{padding:124px 18px 48px!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice__title{font-size:38px!important;line-height:44px!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice-card{height:520px!important;min-height:520px!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice-card__title{font-size:32px!important;line-height:34px!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice-card__chips li{font-size:11px!important;padding:6px 10px!important;}
-	}
-
-	@media (max-width:767px){
-		body.tp-child-theme #page-container .tp-choice-standalone,
-		body.tp-child-theme #page-container section.tp-choice-standalone.choice{--choice-mobile-scale:1;position:relative!important;display:block!important;width:100%!important;max-width:none!important;height:963px!important;min-height:963px!important;margin:0!important;padding:0!important;overflow:hidden!important;background:var(--tp-bordeaux,#560b22)!important;color:var(--tp-white,#fff)!important;}
-	@supports (height:100dvh){
-		body.tp-child-theme #page-container .tp-choice-standalone,
-		body.tp-child-theme #page-container section.tp-choice-standalone.choice{height:963px!important;min-height:963px!important;}
-	}
-		body.tp-child-theme #page-container .tp-choice-standalone::before,
-		body.tp-child-theme #page-container section.tp-choice-standalone.choice::before,
-		body.tp-child-theme #page-container .tp-choice-standalone::after,
-		body.tp-child-theme #page-container section.tp-choice-standalone.choice::after{content:none!important;display:none!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice__stage{position:absolute!important;left:50%!important;top:0!important;z-index:2!important;width:390px!important;height:963px!important;max-width:none!important;margin:0!important;padding:0!important;overflow:hidden!important;background:var(--tp-bordeaux,#560b22)!important;transform:translateX(-50%) scale(var(--choice-mobile-scale))!important;transform-origin:top center!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice__stage::before{content:none!important;display:none!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice__stage::after{content:""!important;position:absolute!important;inset:0!important;z-index:1!important;display:block!important;background:url("{$mobile_choice_background_url}") center top/390px 963px no-repeat!important;pointer-events:none!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice__wave{display:none!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice__mobile-wave{display:none!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice__mobile-wave--green-top{left:-132px!important;top:0!important;z-index:1!important;width:574.3037px!important;height:143.576px!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice__mobile-wave--bordeaux-top{left:-11.76px!important;top:13px!important;z-index:1!important;width:471.4892px!important;height:113.5411px!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice__mobile-wave--green-bottom{left:-123.29px!important;top:auto!important;bottom:7.42px!important;z-index:1!important;width:574.3037px!important;height:143.576px!important;transform:rotate(180deg)!important;transform-origin:center center!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice__mobile-wave--bordeaux-bottom{left:-71.88px!important;top:auto!important;bottom:16.46px!important;z-index:1!important;width:471.4892px!important;height:113.5411px!important;transform:rotate(180deg)!important;transform-origin:center center!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice__title{position:absolute!important;left:16.74px!important;top:121px!important;z-index:4!important;width:386.31px!important;max-width:none!important;height:90px!important;min-height:90px!important;margin:0!important;padding:0!important;color:var(--tp-cream,#fff5e9)!important;font-family:var(--tp-font-display,"TP Bowlby One",Impact,sans-serif)!important;font-size:30px!important;font-weight:400!important;line-height:30.07px!important;letter-spacing:0!important;text-transform:none!important;white-space:normal!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice__title span{display:inline!important;margin:0!important;padding:0!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice__title span:first-child{display:block!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice__title span:first-child::after{content:""!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice__title span:nth-child(2)::after{content:" "!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice__cards{position:absolute!important;left:16px!important;top:230px!important;z-index:4!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;width:358px!important;max-width:none!important;margin:0!important;padding:0!important;gap:8.94px!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice-card{position:relative!important;flex:0 0 291px!important;width:358px!important;max-width:358px!important;height:291px!important;min-height:291px!important;margin:0!important;padding:0!important;overflow:hidden!important;background:var(--tp-cream,#fff5e9)!important;border:0!important;border-radius:10px!important;box-shadow:none!important;cursor:pointer!important;transform:none!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice-card:focus{outline:2px solid var(--tp-white,#fff)!important;outline-offset:3px!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice-card__image{position:absolute!important;left:16.56px!important;top:23.46px!important;z-index:1!important;width:315.45px!important;height:179.13px!important;margin:0!important;padding:0!important;overflow:hidden!important;border-radius:9px!important;transform:none!important;transition:left 1.022s cubic-bezier(.22,1,.36,1),top 1.022s cubic-bezier(.22,1,.36,1),width 1.022s cubic-bezier(.22,1,.36,1),height 1.022s cubic-bezier(.22,1,.36,1),border-radius 1.022s cubic-bezier(.22,1,.36,1)!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice-card:hover .choice-card__image,
-		body.tp-child-theme #page-container .tp-choice-standalone .choice-card:focus .choice-card__image,
-		body.tp-child-theme #page-container .tp-choice-standalone .choice-card.is-active .choice-card__image{left:0!important;top:0!important;width:100%!important;height:100%!important;border-radius:10px!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice-card__image::after{opacity:0!important;transition:opacity .8s cubic-bezier(.22,1,.36,1)!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice-card:hover .choice-card__image::after,
-		body.tp-child-theme #page-container .tp-choice-standalone .choice-card:focus .choice-card__image::after,
-		body.tp-child-theme #page-container .tp-choice-standalone .choice-card.is-active .choice-card__image::after{opacity:1!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice-card__image img{display:block!important;width:100%!important;height:100%!important;max-width:none!important;object-fit:cover!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice-card__content{position:absolute!important;left:16.56px!important;right:16.56px!important;top:226px!important;z-index:3!important;margin:0!important;padding:0!important;color:inherit!important;transition:top 1.022s cubic-bezier(.22,1,.36,1),color .5s ease!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice-card:hover .choice-card__content,
-		body.tp-child-theme #page-container .tp-choice-standalone .choice-card:focus .choice-card__content,
-		body.tp-child-theme #page-container .tp-choice-standalone .choice-card.is-active .choice-card__content{top:179px!important;color:var(--tp-cream,#fff5e9)!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice-card__title{margin:0 0 9.5px!important;padding:0!important;font-family:var(--tp-font-display,"TP Bowlby One",Impact,sans-serif)!important;font-size:18.75px!important;font-weight:400!important;line-height:18.8px!important;letter-spacing:0!important;text-transform:none!important;transition:color .5s ease!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice-card--tasca .choice-card__title,
-		body.tp-child-theme #page-container .tp-choice-standalone .choice-card--tasca:hover .choice-card__title,
-		body.tp-child-theme #page-container .tp-choice-standalone .choice-card--tasca:focus .choice-card__title{color:var(--tp-green,#054726)!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice-card--piatto .choice-card__title,
-		body.tp-child-theme #page-container .tp-choice-standalone .choice-card--piatto:hover .choice-card__title,
-		body.tp-child-theme #page-container .tp-choice-standalone .choice-card--piatto:focus .choice-card__title{color:var(--tp-bordeaux,#560b22)!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice-card__chips{display:flex!important;flex-wrap:nowrap!important;align-items:center!important;width:100%!important;margin:0!important;padding:0!important;gap:5px!important;list-style:none!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice-card__chips li{display:inline-flex!important;align-items:center!important;justify-content:center!important;flex:0 0 auto!important;gap:5.6px!important;min-width:0!important;height:11.6px!important;margin:0!important;padding:.47px 6.2px!important;border-radius:4.7px!important;color:var(--tp-white,#fff)!important;font-family:var(--tp-font-display,"TP Bowlby One",Impact,sans-serif)!important;font-size:7.46px!important;font-weight:400!important;line-height:12px!important;letter-spacing:0!important;white-space:nowrap!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .chip__icon{flex:0 0 9.8px!important;width:9.8px!important;height:9.8px!important;font-size:7px!important;line-height:9.8px!important;text-align:center!important;opacity:1!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice-card__desc{display:block!important;margin:8px 0 0!important;padding:0!important;color:var(--tp-cream,#fff5e9)!important;font-family:var(--tp-font-body,"TP DM Sans",system-ui,sans-serif)!important;font-size:10.8px!important;font-weight:500!important;line-height:13.2px!important;letter-spacing:0!important;opacity:0!important;transition:opacity .8s cubic-bezier(.22,1,.36,1)!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice-card:hover .choice-card__title,
-		body.tp-child-theme #page-container .tp-choice-standalone .choice-card:focus .choice-card__title,
-		body.tp-child-theme #page-container .tp-choice-standalone .choice-card.is-active .choice-card__title,
-		body.tp-child-theme #page-container .tp-choice-standalone .choice-card:hover .choice-card__desc,
-		body.tp-child-theme #page-container .tp-choice-standalone .choice-card:focus .choice-card__desc,
-		body.tp-child-theme #page-container .tp-choice-standalone .choice-card.is-active .choice-card__desc{color:var(--tp-cream,#fff5e9)!important;opacity:1!important;}
-	}
-	@media (max-width:767px){
-		body.tp-child-theme #page-container .tp-choice-standalone .choice__stage{background:var(--tp-cream,#fff5e9)!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice__stage::before{content:""!important;position:absolute!important;inset:0!important;z-index:2!important;display:block!important;background:url("{$mobile_choice_reference_url}") center top/390px 963px no-repeat!important;pointer-events:none!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice__stage::after{content:none!important;display:none!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice__wave{display:none!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice__mobile-wave{display:none!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice__mobile-wave--green-top,
-		body.tp-child-theme #page-container .tp-choice-standalone .choice__mobile-wave--green-bottom{display:none!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice__title{opacity:1!important;pointer-events:auto!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice__cards{opacity:1!important;pointer-events:auto!important;visibility:visible!important;}
-		body.tp-child-theme #page-container .tp-choice-standalone .choice-card{opacity:1!important;pointer-events:auto!important;visibility:visible!important;}
-	}
-	@media (max-width:389px){
-		body.tp-child-theme #page-container .tp-choice-standalone,
-		body.tp-child-theme #page-container section.tp-choice-standalone.choice{--choice-mobile-scale:.961538;height:926px!important;min-height:926px!important;}
-	}
-	@media (max-width:374px){
-		body.tp-child-theme #page-container .tp-choice-standalone,
-		body.tp-child-theme #page-container section.tp-choice-standalone.choice{--choice-mobile-scale:.923077;height:889px!important;min-height:889px!important;}
-	}
-
-	</style>
 	<script id="tp-choice-stage-js">
 	(function(){
 		function updateChoiceStage(){
@@ -1065,8 +858,8 @@ function tp_child_print_choice_hardcoded_wave_style(): void {
 					section.style.removeProperty('--choice-scale');
 					section.style.setProperty('--choice-mobile-scale', mobileScale.toFixed(6));
 					var mobileHeight = (963 * mobileScale).toFixed(2) + 'px';
-					section.style.setProperty('height', 'var(--tp-design-height, ' + mobileHeight + ')', 'important');
-					section.style.setProperty('min-height', 'var(--tp-design-min-height, ' + mobileHeight + ')', 'important');
+					section.style.setProperty('height', mobileHeight, 'important');
+					section.style.setProperty('min-height', mobileHeight, 'important');
 					return;
 				}
 				if (window.matchMedia('(max-width: 980px)').matches) {
@@ -1080,8 +873,8 @@ function tp_child_print_choice_hardcoded_wave_style(): void {
 				var scale = viewportWidth / 1512;
 				section.style.setProperty('--choice-scale', scale.toFixed(6));
 				var scaledHeight = (1263 * scale).toFixed(2) + 'px';
-				section.style.setProperty('height', 'var(--tp-design-height, ' + scaledHeight + ')', 'important');
-				section.style.setProperty('min-height', 'var(--tp-design-min-height, ' + scaledHeight + ')', 'important');
+				section.style.setProperty('height', scaledHeight, 'important');
+				section.style.setProperty('min-height', scaledHeight, 'important');
 			});
 		}
 		if (document.readyState === 'loading') {
@@ -1094,7 +887,7 @@ function tp_child_print_choice_hardcoded_wave_style(): void {
 	</script>
 HTML;
 }
-add_action( "wp_head", "tp_child_print_choice_hardcoded_wave_style", 9999 );
+add_action( "wp_head", "tp_child_print_choice_stage_script", 9999 );
 
 /**
  * Load the GSAP preloader runtime on landing pages.
@@ -1143,37 +936,11 @@ function tp_child_register_vb_package_builds(): void {
 
 	\ET\Builder\VisualBuilder\Assets\PackageBuildManager::register_package_build(
 		[
-			'name'    => 'tp-child-builder-vb-style',
-			'version' => tp_child_asset_version( 'styles/vb-bundle.css' ),
-			'style'   => [
-				'src'                => TP_CHILD_URL . 'styles/vb-bundle.css',
-				'deps'               => [],
-				'enqueue_top_window' => false,
-				'enqueue_app_window' => true,
-			],
-		]
-	);
-
-	\ET\Builder\VisualBuilder\Assets\PackageBuildManager::register_package_build(
-		[
 			'name'    => 'tp-child-builder-site-style',
 			'version' => tp_child_asset_version( 'assets/css/tasche-piene.css' ),
 			'style'   => [
 				'src'                => TP_CHILD_URL . 'assets/css/tasche-piene.css',
 				'deps'               => [],
-				'enqueue_top_window' => false,
-				'enqueue_app_window' => true,
-			],
-		]
-	);
-
-	\ET\Builder\VisualBuilder\Assets\PackageBuildManager::register_package_build(
-		[
-			'name'    => 'tp-child-builder-module-style',
-			'version' => tp_child_asset_version( 'styles/bundle.css' ),
-			'style'   => [
-				'src'                => TP_CHILD_URL . 'styles/bundle.css',
-				'deps'               => [ 'tp-child-builder-site-style' ],
 				'enqueue_top_window' => false,
 				'enqueue_app_window' => true,
 			],
@@ -1215,8 +982,6 @@ add_action( 'divi_visual_builder_assets_before_enqueue_scripts', 'tp_child_local
  */
 function tp_child_enqueue_split_text_assets(): void {
 	$has_split_module = tp_child_has_block( 'tp/split-text' );
-	$has_marquee_module = tp_child_has_block( 'tp/marquee' );
-	$has_shape_wave_module = tp_child_has_block( 'tp/shape-wave' );
 	$has_split_targets = $has_split_module
 		|| tp_child_content_has_marker( 'tp-hero-section' )
 		|| tp_child_content_has_marker( 'tp-intro-title' )
@@ -1225,15 +990,6 @@ function tp_child_enqueue_split_text_assets(): void {
 		|| tp_child_content_has_marker( 'tp-menu-title' )
 		|| tp_child_content_has_marker( 'tp-materie-title' )
 		|| tp_child_content_has_marker( 'tp-location-title' );
-
-	if ( ! tp_child_is_visual_builder() && ( $has_split_module || $has_marquee_module || $has_shape_wave_module ) ) {
-		wp_enqueue_style(
-			'tp-custom-modules',
-			TP_CHILD_URL . 'styles/bundle.css',
-			[ 'tp-site' ],
-			tp_child_asset_version( 'styles/bundle.css' )
-		);
-	}
 
 	if ( tp_child_is_visual_builder() || ! $has_split_targets ) {
 		return;
@@ -1460,22 +1216,6 @@ function tp_child_hero_native_video() {
 			webm: <?php echo wp_json_encode( $webm ); ?>,
 			poster: <?php echo wp_json_encode( $poster ); ?>
 		};
-		var authored = hero.getAttribute('data-tp-design-video');
-		if (authored) {
-			try {
-				var responsive = JSON.parse(authored);
-				['desktop', 'tablet', 'phone'].forEach(function(device){
-					if (device === 'phone' && !window.matchMedia('(max-width: 767px)').matches) { return; }
-					var values = responsive[device];
-					if (!values || typeof values !== 'object') { return; }
-					if (Object.prototype.hasOwnProperty.call(values, 'mp4') || Object.prototype.hasOwnProperty.call(values, 'webm')) {
-						media.mp4 = typeof values.mp4 === 'string' ? values.mp4 : '';
-						media.webm = typeof values.webm === 'string' ? values.webm : '';
-					}
-					if (Object.prototype.hasOwnProperty.call(values, 'poster') && typeof values.poster === 'string') { media.poster = values.poster; }
-				});
-			} catch (error) { /* Retain the original fallback for invalid metadata. */ }
-		}
 		if (!media.mp4 && !media.webm) { return; }
 		var v = document.createElement('video');
 		v.className = 'tp-hero-native-video';
@@ -1529,11 +1269,6 @@ function tp_child_alberto_mobile_reflow() {
 	?>
 <script id="tp-alberto-reflow-js">
 (function(){
-	function copyDesignIdentity(source, target){
-		if (!source || !target || !source.getAttribute('data-tp-design-source')) { return; }
-		target.setAttribute('data-tp-design-source', source.getAttribute('data-tp-design-source'));
-		target.setAttribute('data-tp-design-element', 'module');
-	}
 	function stripIds(node){
 		if (node.removeAttribute) { node.removeAttribute('id'); }
 		var withId = node.querySelectorAll ? node.querySelectorAll('[id]') : [];
@@ -1571,7 +1306,6 @@ function tp_child_alberto_mobile_reflow() {
 		function makeCopy(list){
 			if (!list.length) { return null; }
 			var d = document.createElement('div'); d.setAttribute('class', copyCls);
-			copyDesignIdentity(copy, d);
 			var di = document.createElement('div'); di.className = 'et_pb_text_inner';
 			list.forEach(function(p){ di.appendChild(stripIds(p.cloneNode(true))); });
 			d.appendChild(di);
@@ -1587,7 +1321,6 @@ function tp_child_alberto_mobile_reflow() {
 		if (titleText) {
 			titleEl = document.createElement('div');
 			titleEl.className = 'tp-alberto-title tp-alberto-title--mobile';
-			copyDesignIdentity(title, titleEl);
 			var h2 = document.createElement('h2');
 			h2.textContent = titleText;
 			titleEl.appendChild(h2);

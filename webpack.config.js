@@ -1,5 +1,4 @@
 const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
 	entry: {
@@ -25,34 +24,8 @@ module.exports = {
 				},
 				exclude: /node_modules/,
 			},
-			{
-				test: /\.s?css$/i,
-				use: [
-					{ loader: MiniCssExtractPlugin.loader },
-					{ loader: 'css-loader', options: { url: false, importLoaders: 2 } },
-					{ loader: 'sass-loader' },
-				],
-			},
 		],
 	},
-	optimization: {
-		splitChunks: {
-			cacheGroups: {
-				vb: {
-					type: 'css/mini-extract',
-					test: /[\\/]style(\.module)?\.(sc|sa|c)ss$/,
-					chunks: 'all',
-					enforce: true,
-					name(_, chunks, cacheGroupKey) {
-						const chunkName = chunks[0].name;
-						return `${path.dirname(chunkName)}/${cacheGroupKey}-${path.basename(chunkName)}`;
-					},
-				},
-				default: false,
-			},
-		},
-	},
-	plugins: [new MiniCssExtractPlugin({ filename: '../styles/[name].css' })],
 	resolve: {
 		extensions: ['.js', '.jsx', '.tsx', '.ts', '.json'],
 	},
