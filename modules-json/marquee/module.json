@@ -1,0 +1,469 @@
+{
+  "name": "tp/marquee",
+  "d4Shortcode": "",
+  "title": "Striscia scorrevole",
+  "titles": "Strisce scorrevoli",
+  "moduleIcon": "divi/module-text",
+  "moduleClassName": "tp_marquee",
+  "moduleOrderClassName": "tp_marquee",
+  "childModuleName": "tp/marquee-item",
+  "childModuleTitle": "Scritta",
+  "category": "module",
+  "childrenName": [
+    "tp/marquee-item"
+  ],
+  "attributes": {
+    "module": {
+      "type": "object",
+      "selector": "{{selector}}",
+      "settings": {
+        "meta": {
+          "meta": {}
+        },
+        "advanced": {
+          "elements": {},
+          "html": {},
+          "link": {},
+          "loop": {}
+        },
+        "decoration": {
+          "layout": {},
+          "animation": {},
+          "attributes": {},
+          "background": {},
+          "conditions": {},
+          "sizing": {},
+          "spacing": {},
+          "border": {},
+          "boxShadow": {},
+          "filters": {},
+          "interactions": {},
+          "order": {},
+          "transform": {},
+          "overflow": {},
+          "disabledOn": {},
+          "transition": {},
+          "position": {},
+          "scroll": {},
+          "zIndex": {},
+          "sticky": {}
+        }
+      }
+    },
+    "speed": {
+      "type": "object",
+      "default": {
+        "desktop": {
+          "value": "28"
+        }
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupSlug": "contentMotion",
+            "attrName": "speed.innerContent",
+            "priority": 10,
+            "render": true,
+            "label": "Velocità",
+            "description": "Più alto = scorrimento più lento. Per una striscia tranquilla prova 30–40.",
+            "features": {
+              "sticky": false,
+              "responsive": false
+            },
+            "component": {
+              "name": "divi/range",
+              "type": "field",
+              "props": {
+                "min": 8,
+                "max": 120,
+                "step": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "direction": {
+      "type": "object",
+      "default": {
+        "desktop": {
+          "value": "left"
+        }
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupSlug": "contentMotion",
+            "attrName": "direction.innerContent",
+            "priority": 20,
+            "render": true,
+            "label": "Direzione scorrimento",
+            "features": {
+              "sticky": false,
+              "responsive": false
+            },
+            "component": {
+              "name": "divi/select",
+              "type": "field",
+              "props": {
+                "options": {
+                  "left": {
+                    "label": "Sinistra"
+                  },
+                  "right": {
+                    "label": "Destra"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "repeatCount": {
+      "type": "object",
+      "default": {
+        "desktop": {
+          "value": "2"
+        }
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupSlug": "contentAdvanced",
+            "attrName": "repeatCount.innerContent",
+            "priority": 10,
+            "render": true,
+            "label": "Lunghezza nastro",
+            "description": "Lascia 2 se non sei sicuro: serve solo a rendere lo scorrimento continuo senza salti.",
+            "features": {
+              "sticky": false,
+              "responsive": false
+            },
+            "component": {
+              "name": "divi/range",
+              "type": "field",
+              "props": {
+                "min": 2,
+                "max": 8,
+                "step": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "pauseOnHover": {
+      "type": "object",
+      "default": {
+        "desktop": {
+          "value": "on"
+        }
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupSlug": "contentMotion",
+            "attrName": "pauseOnHover.innerContent",
+            "priority": 40,
+            "render": true,
+            "label": "Pausa al passaggio del mouse",
+            "features": {
+              "sticky": false,
+              "responsive": false
+            },
+            "component": {
+              "name": "divi/toggle",
+              "type": "field",
+              "props": {
+                "options": {
+                  "on": {
+                    "label": "Attiva"
+                  },
+                  "off": {
+                    "label": "Disattiva"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "variant": {
+      "type": "object",
+      "default": {
+        "desktop": {
+          "value": "green"
+        }
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupSlug": "contentStyle",
+            "attrName": "variant.innerContent",
+            "priority": 10,
+            "render": true,
+            "label": "Colore di sfondo",
+            "features": {
+              "sticky": false,
+              "responsive": false
+            },
+            "component": {
+              "name": "divi/select",
+              "type": "field",
+              "props": {
+                "options": {
+                  "green": {
+                    "label": "Verde (classico)"
+                  },
+                  "burgundy": {
+                    "label": "Bordeaux"
+                  },
+                  "cream": {
+                    "label": "Crema"
+                  },
+                  "materie": {
+                    "label": "Testo grande verde (Materie prime)"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "separator": {
+      "type": "object",
+      "default": {
+        "desktop": {
+          "value": "·"
+        }
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupSlug": "contentStyle",
+            "attrName": "separator.innerContent",
+            "priority": 20,
+            "render": true,
+            "label": "Simbolo tra le scritte",
+            "description": "Esempi: ·  •  |  —  Lascia vuoto per nessun separatore.",
+            "features": {
+              "sticky": false,
+              "responsive": false
+            },
+            "component": {
+              "name": "divi/text",
+              "type": "field"
+            }
+          }
+        }
+      }
+    },
+    "tpDesignText": {
+      "type": "object",
+      "selector": "{{selector}} .tp-marquee__phrase, {{selector}} .tp-marquee__phrase *, {{selector}} .tp-marquee__separator, {{selector}} .tp-marquee__track--materie-edit .tp-marquee-item__field, {{selector}} .tp-marquee__track--materie-edit .tp-marquee-item__field *, {{selector}} .tp-marquee__track--materie-edit .tp-marquee-item__fallback",
+      "settings": {
+        "decoration": {
+          "font": {
+            "groupType": "group-item",
+            "item": {
+              "groupSlug": "designTpDesignText",
+              "priority": 10,
+              "render": true,
+              "component": {
+                "name": "divi/font",
+                "type": "group",
+                "props": {
+                  "grouped": false,
+                  "fieldLabel": "Testo della striscia"
+                }
+              }
+            }
+          }
+        }
+      },
+      "styleProps": {
+        "font": {
+          "important": true
+        }
+      }
+    },
+    "tpDesignStrip": {
+      "type": "object",
+      "selector": "{{selector}} .tp-marquee",
+      "settings": {
+        "decoration": {
+          "sizing": {
+            "groupType": "group-item",
+            "item": {
+              "groupSlug": "designTpDesignStrip",
+              "priority": 10,
+              "render": true,
+              "component": {
+                "name": "divi/sizing",
+                "type": "group",
+                "props": {
+                  "grouped": true,
+                  "fieldLabel": "Dimensioni e spazi della striscia"
+                }
+              }
+            }
+          },
+          "spacing": {
+            "groupType": "group-item",
+            "item": {
+              "groupSlug": "designTpDesignStrip",
+              "priority": 20,
+              "render": true,
+              "component": {
+                "name": "divi/spacing",
+                "type": "group",
+                "props": {
+                  "grouped": true,
+                  "fieldLabel": "Dimensioni e spazi della striscia"
+                }
+              }
+            }
+          },
+          "border": {
+            "groupType": "group-item",
+            "item": {
+              "groupSlug": "designTpDesignStrip",
+              "priority": 30,
+              "render": true,
+              "component": {
+                "name": "divi/border",
+                "type": "group",
+                "props": {
+                  "grouped": true,
+                  "fieldLabel": "Dimensioni e spazi della striscia"
+                }
+              }
+            }
+          },
+          "boxShadow": {
+            "groupType": "group-item",
+            "item": {
+              "groupSlug": "designTpDesignStrip",
+              "priority": 40,
+              "render": true,
+              "component": {
+                "name": "divi/box-shadow",
+                "type": "group",
+                "props": {
+                  "grouped": true,
+                  "fieldLabel": "Dimensioni e spazi della striscia"
+                }
+              }
+            }
+          }
+        }
+      },
+      "styleProps": {
+        "sizing": {
+          "important": true
+        },
+        "spacing": {
+          "important": true
+        },
+        "border": {
+          "important": true
+        },
+        "boxShadow": {
+          "important": true
+        }
+      }
+    }
+  },
+  "customCssFields": {
+    "marquee": {
+      "subName": "marquee",
+      "selectorSuffix": " .tp-marquee"
+    },
+    "track": {
+      "subName": "track",
+      "selectorSuffix": " .tp-marquee__track"
+    },
+    "phrase": {
+      "subName": "phrase",
+      "selectorSuffix": " .tp-marquee__phrase"
+    },
+    "separator": {
+      "subName": "separator",
+      "selectorSuffix": " .tp-marquee__separator"
+    }
+  },
+  "settings": {
+    "content": "auto",
+    "design": "auto",
+    "advanced": "auto",
+    "groups": {
+      "contentStyle": {
+        "panel": "content",
+        "priority": 10,
+        "groupName": "contentStyle",
+        "multiElements": true,
+        "component": {
+          "name": "divi/composite",
+          "props": {
+            "groupLabel": "Aspetto"
+          }
+        }
+      },
+      "contentMotion": {
+        "panel": "content",
+        "priority": 20,
+        "groupName": "contentMotion",
+        "multiElements": true,
+        "component": {
+          "name": "divi/composite",
+          "props": {
+            "groupLabel": "Movimento"
+          }
+        }
+      },
+      "contentAdvanced": {
+        "panel": "content",
+        "priority": 30,
+        "groupName": "contentAdvanced",
+        "multiElements": true,
+        "component": {
+          "name": "divi/composite",
+          "props": {
+            "groupLabel": "Regolazione fine (opzionale)"
+          }
+        }
+      },
+      "designTpDesignText": {
+        "panel": "design",
+        "priority": 5,
+        "groupName": "designTpDesignText",
+        "component": {
+          "name": "divi/composite",
+          "props": {
+            "groupLabel": "Testo della striscia"
+          }
+        }
+      },
+      "designTpDesignStrip": {
+        "panel": "design",
+        "priority": 6,
+        "groupName": "designTpDesignStrip",
+        "component": {
+          "name": "divi/composite",
+          "props": {
+            "groupLabel": "Dimensioni e spazi della striscia"
+          }
+        }
+      }
+    }
+  }
+}

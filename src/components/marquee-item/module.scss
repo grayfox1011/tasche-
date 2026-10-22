@@ -1,0 +1,4 @@
+/* Frontend: le scritte del marquee non sono renderizzate come moduli figli. */
+.tp_marquee_item {
+	display: none;
+}

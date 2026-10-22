@@ -1,0 +1,1067 @@
+{
+  "name": "tp/theme-header",
+  "d4Shortcode": "",
+  "title": "Header sito",
+  "titles": "Header sito",
+  "moduleIcon": "divi/module-menu",
+  "moduleClassName": "tp_theme_header",
+  "moduleOrderClassName": "tp_theme_header",
+  "category": "module",
+  "childrenName": [],
+  "attributes": {
+    "module": {
+      "type": "object",
+      "selector": "{{selector}}",
+      "settings": {
+        "meta": {
+          "meta": {}
+        },
+        "advanced": {
+          "elements": {},
+          "html": {},
+          "link": {},
+          "loop": {}
+        },
+        "decoration": {
+          "layout": {},
+          "animation": {},
+          "attributes": {},
+          "background": {},
+          "conditions": {},
+          "sizing": {},
+          "spacing": {},
+          "border": {},
+          "boxShadow": {},
+          "filters": {},
+          "interactions": {},
+          "order": {},
+          "transform": {},
+          "overflow": {},
+          "disabledOn": {},
+          "transition": {},
+          "position": {},
+          "scroll": {},
+          "zIndex": {},
+          "sticky": {}
+        }
+      }
+    },
+    "logoImage": {
+      "type": "object",
+      "default": {
+        "desktop": {
+          "value": {
+            "src": ""
+          }
+        }
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-items",
+          "items": {
+            "src": {
+              "groupSlug": "contentBrand",
+              "priority": 8,
+              "render": true,
+              "subName": "src",
+              "attrName": "logoImage.innerContent",
+              "label": "Logo navigazione",
+              "description": "Carica il logo (SVG, PNG, JPG o WebP). Clicca sul logo nell'header per sostituirlo.",
+              "features": {
+                "dynamicContent": {
+                  "type": "image"
+                },
+                "sticky": false,
+                "preset": "content"
+              },
+              "component": {
+                "name": "divi/upload",
+                "type": "field",
+                "props": {
+                  "syncImageData": {
+                    "src": true,
+                    "id": true,
+                    "alt": false,
+                    "titleText": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "selector": "{{selector}} .tp-theme-nav-logo img",
+      "elementType": "image",
+      "attributes": {
+        "class": "tp-theme-nav-logo-img"
+      }
+    },
+    "logoUrl": {
+      "type": "object",
+      "default": {
+        "desktop": {
+          "value": ""
+        }
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupSlug": "contentBrand",
+            "attrName": "logoUrl.innerContent",
+            "priority": 10,
+            "render": false,
+            "label": "URL logo navigazione (fallback)",
+            "description": "Usato solo se il campo 'Logo navigazione' e' vuoto. Mantenuto per retrocompatibilita.",
+            "features": {
+              "dynamicContent": {
+                "type": "text"
+              },
+              "sticky": false,
+              "preset": "content"
+            },
+            "component": {
+              "name": "divi/text",
+              "type": "field"
+            }
+          }
+        }
+      }
+    },
+    "logoAlt": {
+      "type": "object",
+      "default": {
+        "desktop": {
+          "value": "Tasche Piene"
+        }
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupSlug": "contentBrand",
+            "attrName": "logoAlt.innerContent",
+            "priority": 15,
+            "render": true,
+            "label": "Alt logo",
+            "features": {
+              "dynamicContent": {
+                "type": "text"
+              },
+              "sticky": false,
+              "preset": "content"
+            },
+            "component": {
+              "name": "divi/text",
+              "type": "field"
+            }
+          }
+        }
+      }
+    },
+    "phone": {
+      "type": "object",
+      "default": {
+        "desktop": {
+          "value": "+393513738630"
+        }
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupSlug": "contentCta",
+            "attrName": "phone.innerContent",
+            "priority": 10,
+            "render": false,
+            "label": "Numero di telefono (link)",
+            "features": {
+              "dynamicContent": {
+                "type": "text"
+              },
+              "sticky": false,
+              "preset": "content"
+            },
+            "component": {
+              "name": "divi/text",
+              "type": "field"
+            }
+          }
+        }
+      }
+    },
+    "ctaLabel": {
+      "type": "object",
+      "default": {
+        "desktop": {
+          "value": "Chiamaci"
+        }
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupSlug": "contentCta",
+            "attrName": "ctaLabel.innerContent",
+            "priority": 20,
+            "render": false,
+            "label": "Etichetta CTA telefono",
+            "features": {
+              "dynamicContent": {
+                "type": "text"
+              },
+              "sticky": false,
+              "preset": "content"
+            },
+            "component": {
+              "name": "divi/text",
+              "type": "field"
+            }
+          }
+        }
+      }
+    },
+    "menuLocation": {
+      "type": "object",
+      "default": {
+        "desktop": {
+          "value": "tp_main_nav"
+        }
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupSlug": "contentNavItems",
+            "attrName": "menuLocation.innerContent",
+            "priority": 10,
+            "render": false,
+            "label": "Menu collegato",
+            "description": "Voci fisse dal menu WordPress «Tasche Piene — Header». Modifica da Aspetto → Menu sito.",
+            "features": {
+              "sticky": false,
+              "responsive": false
+            },
+            "component": {
+              "name": "divi/select",
+              "type": "field",
+              "props": {
+                "options": {
+                  "tp_main_nav": {
+                    "label": "Header — barra in alto"
+                  },
+                  "tp_footer_left": {
+                    "label": "Footer — colonna sinistra"
+                  },
+                  "tp_footer_right": {
+                    "label": "Footer — colonna destra"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "navBackgroundColor": {
+      "type": "object",
+      "default": {
+        "desktop": {
+          "value": "#fef5e9"
+        }
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupSlug": "contentAppearance",
+            "attrName": "navBackgroundColor.innerContent",
+            "priority": 10,
+            "render": true,
+            "label": "Sfondo barra menu",
+            "description": "Colore della pillola del menu in alto.",
+            "features": {
+              "sticky": false,
+              "responsive": false
+            },
+            "component": {
+              "name": "divi/color-picker",
+              "type": "field"
+            }
+          }
+        }
+      }
+    },
+    "navLinkColor": {
+      "type": "object",
+      "default": {
+        "desktop": {
+          "value": "#054726"
+        }
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupSlug": "contentAppearance",
+            "attrName": "navLinkColor.innerContent",
+            "priority": 20,
+            "render": true,
+            "label": "Colore scritte menu",
+            "description": "Colore delle voci come I tramezzini, Dove siamo, ecc.",
+            "features": {
+              "sticky": false,
+              "responsive": false
+            },
+            "component": {
+              "name": "divi/color-picker",
+              "type": "field"
+            }
+          }
+        }
+      }
+    },
+    "logoLink": {
+      "type": "object",
+      "default": {
+        "desktop": {
+          "value": "#home"
+        }
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupSlug": "contentBrand",
+            "attrName": "logoLink.innerContent",
+            "priority": 18,
+            "render": true,
+            "label": "Dove porta il logo (clic)",
+            "description": "Es: #home oppure la homepage del sito.",
+            "features": {
+              "dynamicContent": {
+                "type": "text"
+              },
+              "sticky": false,
+              "preset": "content"
+            },
+            "component": {
+              "name": "divi/text",
+              "type": "field"
+            }
+          }
+        }
+      }
+    },
+    "navItem1Text": {
+      "type": "object",
+      "default": {
+        "desktop": {
+          "value": "Home"
+        }
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupSlug": "contentNavItems",
+            "attrName": "navItem1Text.innerContent",
+            "priority": 10,
+            "render": false,
+            "label": "Voce 1 — testo",
+            "description": "Scritta visibile nel menu.",
+            "features": {
+              "dynamicContent": {
+                "type": "text"
+              },
+              "sticky": false,
+              "preset": "content"
+            },
+            "component": {
+              "name": "divi/text",
+              "type": "field"
+            }
+          }
+        }
+      }
+    },
+    "navItem1Link": {
+      "type": "object",
+      "default": {
+        "desktop": {
+          "value": "#home"
+        }
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupSlug": "contentNavItems",
+            "attrName": "navItem1Link.innerContent",
+            "priority": 11,
+            "render": false,
+            "label": "Voce 1 — link o ancora",
+            "description": "Es: #menu oppure https://...",
+            "features": {
+              "dynamicContent": {
+                "type": "text"
+              },
+              "sticky": false,
+              "preset": "content"
+            },
+            "component": {
+              "name": "divi/text",
+              "type": "field"
+            }
+          }
+        }
+      }
+    },
+    "navItem2Text": {
+      "type": "object",
+      "default": {
+        "desktop": {
+          "value": "I tramezzini"
+        }
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupSlug": "contentNavItems",
+            "attrName": "navItem2Text.innerContent",
+            "priority": 12,
+            "render": false,
+            "label": "Voce 2 — testo",
+            "description": "Scritta visibile nel menu.",
+            "features": {
+              "dynamicContent": {
+                "type": "text"
+              },
+              "sticky": false,
+              "preset": "content"
+            },
+            "component": {
+              "name": "divi/text",
+              "type": "field"
+            }
+          }
+        }
+      }
+    },
+    "navItem2Link": {
+      "type": "object",
+      "default": {
+        "desktop": {
+          "value": "#menu"
+        }
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupSlug": "contentNavItems",
+            "attrName": "navItem2Link.innerContent",
+            "priority": 13,
+            "render": false,
+            "label": "Voce 2 — link o ancora",
+            "description": "Es: #menu oppure https://...",
+            "features": {
+              "dynamicContent": {
+                "type": "text"
+              },
+              "sticky": false,
+              "preset": "content"
+            },
+            "component": {
+              "name": "divi/text",
+              "type": "field"
+            }
+          }
+        }
+      }
+    },
+    "navItem3Text": {
+      "type": "object",
+      "default": {
+        "desktop": {
+          "value": "La nostra idea"
+        }
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupSlug": "contentNavItems",
+            "attrName": "navItem3Text.innerContent",
+            "priority": 14,
+            "render": false,
+            "label": "Voce 3 — testo",
+            "description": "Scritta visibile nel menu.",
+            "features": {
+              "dynamicContent": {
+                "type": "text"
+              },
+              "sticky": false,
+              "preset": "content"
+            },
+            "component": {
+              "name": "divi/text",
+              "type": "field"
+            }
+          }
+        }
+      }
+    },
+    "navItem3Link": {
+      "type": "object",
+      "default": {
+        "desktop": {
+          "value": "#chi-siamo"
+        }
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupSlug": "contentNavItems",
+            "attrName": "navItem3Link.innerContent",
+            "priority": 15,
+            "render": false,
+            "label": "Voce 3 — link o ancora",
+            "description": "Es: #menu oppure https://...",
+            "features": {
+              "dynamicContent": {
+                "type": "text"
+              },
+              "sticky": false,
+              "preset": "content"
+            },
+            "component": {
+              "name": "divi/text",
+              "type": "field"
+            }
+          }
+        }
+      }
+    },
+    "navItem4Text": {
+      "type": "object",
+      "default": {
+        "desktop": {
+          "value": "Zena"
+        }
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupSlug": "contentNavItems",
+            "attrName": "navItem4Text.innerContent",
+            "priority": 16,
+            "render": false,
+            "label": "Voce 4 — testo",
+            "description": "Scritta visibile nel menu.",
+            "features": {
+              "dynamicContent": {
+                "type": "text"
+              },
+              "sticky": false,
+              "preset": "content"
+            },
+            "component": {
+              "name": "divi/text",
+              "type": "field"
+            }
+          }
+        }
+      }
+    },
+    "navItem4Link": {
+      "type": "object",
+      "default": {
+        "desktop": {
+          "value": "#materie"
+        }
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupSlug": "contentNavItems",
+            "attrName": "navItem4Link.innerContent",
+            "priority": 17,
+            "render": false,
+            "label": "Voce 4 — link o ancora",
+            "description": "Es: #menu oppure https://...",
+            "features": {
+              "dynamicContent": {
+                "type": "text"
+              },
+              "sticky": false,
+              "preset": "content"
+            },
+            "component": {
+              "name": "divi/text",
+              "type": "field"
+            }
+          }
+        }
+      }
+    },
+    "navItem5Text": {
+      "type": "object",
+      "default": {
+        "desktop": {
+          "value": "Dove siamo"
+        }
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupSlug": "contentNavItems",
+            "attrName": "navItem5Text.innerContent",
+            "priority": 18,
+            "render": false,
+            "label": "Voce 5 — testo",
+            "description": "Scritta visibile nel menu.",
+            "features": {
+              "dynamicContent": {
+                "type": "text"
+              },
+              "sticky": false,
+              "preset": "content"
+            },
+            "component": {
+              "name": "divi/text",
+              "type": "field"
+            }
+          }
+        }
+      }
+    },
+    "navItem5Link": {
+      "type": "object",
+      "default": {
+        "desktop": {
+          "value": "#location"
+        }
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupSlug": "contentNavItems",
+            "attrName": "navItem5Link.innerContent",
+            "priority": 19,
+            "render": false,
+            "label": "Voce 5 — link o ancora",
+            "description": "Es: #menu oppure https://...",
+            "features": {
+              "dynamicContent": {
+                "type": "text"
+              },
+              "sticky": false,
+              "preset": "content"
+            },
+            "component": {
+              "name": "divi/text",
+              "type": "field"
+            }
+          }
+        }
+      }
+    },
+    "burgerOpenLabel": {
+      "type": "object",
+      "default": {
+        "desktop": {
+          "value": "Apri menu"
+        }
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupSlug": "contentMobile",
+            "attrName": "burgerOpenLabel.innerContent",
+            "priority": 10,
+            "render": true,
+            "label": "Testo bottone menu mobile (chiuso)",
+            "description": "Solo per accessibilità, non visibile sullo schermo.",
+            "features": {
+              "dynamicContent": {
+                "type": "text"
+              },
+              "sticky": false,
+              "preset": "content"
+            },
+            "component": {
+              "name": "divi/text",
+              "type": "field"
+            }
+          }
+        }
+      }
+    },
+    "burgerCloseLabel": {
+      "type": "object",
+      "default": {
+        "desktop": {
+          "value": "Chiudi menu"
+        }
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupSlug": "contentMobile",
+            "attrName": "burgerCloseLabel.innerContent",
+            "priority": 20,
+            "render": true,
+            "label": "Testo bottone menu mobile (aperto)",
+            "description": "Solo per accessibilità, non visibile sullo schermo.",
+            "features": {
+              "dynamicContent": {
+                "type": "text"
+              },
+              "sticky": false,
+              "preset": "content"
+            },
+            "component": {
+              "name": "divi/text",
+              "type": "field"
+            }
+          }
+        }
+      }
+    },
+    "tpDesignText": {
+      "type": "object",
+      "selector": "{{selector}} .tp-theme-nav-links a, {{selector}} .tp-theme-nav-links a *",
+      "settings": {
+        "decoration": {
+          "font": {
+            "groupType": "group-item",
+            "item": {
+              "groupSlug": "designTpDesignText",
+              "priority": 10,
+              "render": true,
+              "component": {
+                "name": "divi/font",
+                "type": "group",
+                "props": {
+                  "grouped": false,
+                  "fieldLabel": "Voci del menu"
+                }
+              }
+            }
+          }
+        }
+      },
+      "styleProps": {
+        "font": {
+          "important": true
+        }
+      }
+    },
+    "tpDesignLogo": {
+      "type": "object",
+      "selector": "{{selector}} .tp-theme-nav-logo img",
+      "settings": {
+        "decoration": {
+          "sizing": {
+            "groupType": "group-item",
+            "item": {
+              "groupSlug": "designTpDesignLogo",
+              "priority": 10,
+              "render": true,
+              "component": {
+                "name": "divi/sizing",
+                "type": "group",
+                "props": {
+                  "grouped": true,
+                  "fieldLabel": "Logo"
+                }
+              }
+            }
+          },
+          "spacing": {
+            "groupType": "group-item",
+            "item": {
+              "groupSlug": "designTpDesignLogo",
+              "priority": 20,
+              "render": true,
+              "component": {
+                "name": "divi/spacing",
+                "type": "group",
+                "props": {
+                  "grouped": true,
+                  "fieldLabel": "Logo"
+                }
+              }
+            }
+          },
+          "border": {
+            "groupType": "group-item",
+            "item": {
+              "groupSlug": "designTpDesignLogo",
+              "priority": 30,
+              "render": true,
+              "component": {
+                "name": "divi/border",
+                "type": "group",
+                "props": {
+                  "grouped": true,
+                  "fieldLabel": "Logo"
+                }
+              }
+            }
+          },
+          "boxShadow": {
+            "groupType": "group-item",
+            "item": {
+              "groupSlug": "designTpDesignLogo",
+              "priority": 40,
+              "render": true,
+              "component": {
+                "name": "divi/box-shadow",
+                "type": "group",
+                "props": {
+                  "grouped": true,
+                  "fieldLabel": "Logo"
+                }
+              }
+            }
+          },
+          "filters": {
+            "groupType": "group-item",
+            "item": {
+              "groupSlug": "designTpDesignLogo",
+              "priority": 50,
+              "render": true,
+              "component": {
+                "name": "divi/filters",
+                "type": "group",
+                "props": {
+                  "grouped": true,
+                  "fieldLabel": "Logo"
+                }
+              }
+            }
+          }
+        }
+      },
+      "styleProps": {
+        "sizing": {
+          "important": true
+        },
+        "spacing": {
+          "important": true
+        },
+        "border": {
+          "important": true
+        },
+        "boxShadow": {
+          "important": true
+        },
+        "filters": {
+          "important": true
+        }
+      }
+    },
+    "tpDesignContent": {
+      "type": "object",
+      "selector": "{{selector}} .tp-theme-nav",
+      "settings": {
+        "decoration": {
+          "sizing": {
+            "groupType": "group-item",
+            "item": {
+              "groupSlug": "designTpDesignContent",
+              "priority": 10,
+              "render": true,
+              "component": {
+                "name": "divi/sizing",
+                "type": "group",
+                "props": {
+                  "grouped": true,
+                  "fieldLabel": "Spazi della navigazione"
+                }
+              }
+            }
+          },
+          "spacing": {
+            "groupType": "group-item",
+            "item": {
+              "groupSlug": "designTpDesignContent",
+              "priority": 20,
+              "render": true,
+              "component": {
+                "name": "divi/spacing",
+                "type": "group",
+                "props": {
+                  "grouped": true,
+                  "fieldLabel": "Spazi della navigazione"
+                }
+              }
+            }
+          },
+          "border": {
+            "groupType": "group-item",
+            "item": {
+              "groupSlug": "designTpDesignContent",
+              "priority": 30,
+              "render": true,
+              "component": {
+                "name": "divi/border",
+                "type": "group",
+                "props": {
+                  "grouped": true,
+                  "fieldLabel": "Spazi della navigazione"
+                }
+              }
+            }
+          },
+          "boxShadow": {
+            "groupType": "group-item",
+            "item": {
+              "groupSlug": "designTpDesignContent",
+              "priority": 40,
+              "render": true,
+              "component": {
+                "name": "divi/box-shadow",
+                "type": "group",
+                "props": {
+                  "grouped": true,
+                  "fieldLabel": "Spazi della navigazione"
+                }
+              }
+            }
+          }
+        }
+      },
+      "styleProps": {
+        "sizing": {
+          "important": true
+        },
+        "spacing": {
+          "important": true
+        },
+        "border": {
+          "important": true
+        },
+        "boxShadow": {
+          "important": true
+        }
+      }
+    }
+  },
+  "customCssFields": {
+    "main": {
+      "subName": "main",
+      "selectorSuffix": " .site-header.tp-theme-header"
+    },
+    "nav": {
+      "subName": "nav",
+      "selectorSuffix": " .tp-theme-nav"
+    },
+    "logo": {
+      "subName": "logo",
+      "selectorSuffix": " .tp-theme-nav-logo"
+    },
+    "links": {
+      "subName": "links",
+      "selectorSuffix": " .tp-theme-nav-links"
+    }
+  },
+  "settings": {
+    "content": "auto",
+    "design": "auto",
+    "advanced": "auto",
+    "groups": {
+      "contentAppearance": {
+        "panel": "content",
+        "priority": 5,
+        "groupName": "contentAppearance",
+        "multiElements": true,
+        "component": {
+          "name": "divi/composite",
+          "props": {
+            "groupLabel": "Sfondo e colori menu"
+          }
+        }
+      },
+      "contentBrand": {
+        "panel": "content",
+        "priority": 10,
+        "groupName": "contentBrand",
+        "multiElements": true,
+        "component": {
+          "name": "divi/composite",
+          "props": {
+            "groupLabel": "Logo"
+          }
+        }
+      },
+      "contentNavItems": {
+        "panel": "content",
+        "priority": 20,
+        "groupName": "contentNavItems",
+        "multiElements": true,
+        "component": {
+          "name": "divi/composite",
+          "props": {
+            "groupLabel": "Collegamenti navigazione"
+          }
+        }
+      },
+      "contentMobile": {
+        "panel": "content",
+        "priority": 30,
+        "groupName": "contentMobile",
+        "multiElements": true,
+        "component": {
+          "name": "divi/composite",
+          "props": {
+            "groupLabel": "Menu mobile"
+          }
+        }
+      },
+      "designTpDesignText": {
+        "panel": "design",
+        "priority": 5,
+        "groupName": "designTpDesignText",
+        "component": {
+          "name": "divi/composite",
+          "props": {
+            "groupLabel": "Voci del menu"
+          }
+        }
+      },
+      "designTpDesignLogo": {
+        "panel": "design",
+        "priority": 6,
+        "groupName": "designTpDesignLogo",
+        "component": {
+          "name": "divi/composite",
+          "props": {
+            "groupLabel": "Logo"
+          }
+        }
+      },
+      "designTpDesignContent": {
+        "panel": "design",
+        "priority": 7,
+        "groupName": "designTpDesignContent",
+        "component": {
+          "name": "divi/composite",
+          "props": {
+            "groupLabel": "Spazi della navigazione"
+          }
+        }
+      }
+    }
+  }
+}

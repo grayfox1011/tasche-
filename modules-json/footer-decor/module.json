@@ -1,0 +1,516 @@
+{
+  "name": "tp/footer-decor",
+  "d4Shortcode": "",
+  "title": "Footer — Decorazione festiva",
+  "titles": "Footer — Decorazioni festive",
+  "moduleIcon": "divi/module-image",
+  "moduleClassName": "tp_footer_decor",
+  "moduleOrderClassName": "tp_footer_decor",
+  "category": "child-module",
+  "childrenName": [],
+  "attributes": {
+    "module": {
+      "type": "object",
+      "selector": "{{selector}}",
+      "settings": {
+        "meta": {
+          "meta": {}
+        },
+        "advanced": {
+          "elements": {},
+          "html": {},
+          "link": {},
+          "loop": {}
+        },
+        "decoration": {
+          "layout": {},
+          "animation": {},
+          "attributes": {},
+          "background": {},
+          "conditions": {},
+          "sizing": {},
+          "spacing": {},
+          "border": {},
+          "boxShadow": {},
+          "filters": {},
+          "interactions": {},
+          "order": {},
+          "transform": {},
+          "overflow": {},
+          "disabledOn": {},
+          "transition": {},
+          "position": {},
+          "scroll": {},
+          "zIndex": {},
+          "sticky": {}
+        }
+      }
+    },
+    "image": {
+      "type": "object",
+      "default": {
+        "desktop": {
+          "value": {
+            "src": "",
+            "id": 0
+          }
+        }
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupSlug": "contentMain",
+            "attrName": "image.innerContent",
+            "priority": 10,
+            "render": true,
+            "label": "Immagine / SVG decorativo",
+            "description": "Carica un cappello di Natale, un SVG festivo o qualsiasi decorazione sovrapponibile ai personaggi.",
+            "features": {
+              "sticky": false,
+              "responsive": false
+            },
+            "component": {
+              "name": "divi/upload",
+              "type": "field"
+            }
+          }
+        }
+      }
+    },
+    "imageUrl": {
+      "type": "object",
+      "default": {
+        "desktop": {
+          "value": ""
+        }
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupSlug": "contentMain",
+            "attrName": "imageUrl.innerContent",
+            "priority": 20,
+            "render": false,
+            "label": "URL fallback (legacy)",
+            "features": {
+              "dynamicContent": {
+                "type": "text"
+              },
+              "sticky": false,
+              "preset": "content"
+            },
+            "component": {
+              "name": "divi/text",
+              "type": "field"
+            }
+          }
+        }
+      }
+    },
+    "alt": {
+      "type": "object",
+      "default": {
+        "desktop": {
+          "value": ""
+        }
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupSlug": "contentMain",
+            "attrName": "alt.innerContent",
+            "priority": 30,
+            "render": true,
+            "label": "Testo alternativo",
+            "features": {
+              "dynamicContent": {
+                "type": "text"
+              },
+              "sticky": false,
+              "preset": "content"
+            },
+            "component": {
+              "name": "divi/text",
+              "type": "field"
+            }
+          }
+        }
+      }
+    },
+    "posTop": {
+      "type": "object",
+      "default": {
+        "desktop": {
+          "value": "0"
+        }
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupSlug": "contentPosition",
+            "attrName": "posTop.innerContent",
+            "priority": 10,
+            "render": true,
+            "label": "Posizione alto (px o %)",
+            "features": {
+              "sticky": false,
+              "responsive": false
+            },
+            "component": {
+              "name": "divi/text",
+              "type": "field"
+            }
+          }
+        }
+      }
+    },
+    "posLeft": {
+      "type": "object",
+      "default": {
+        "desktop": {
+          "value": "0"
+        }
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupSlug": "contentPosition",
+            "attrName": "posLeft.innerContent",
+            "priority": 20,
+            "render": true,
+            "label": "Posizione sinistra (px o %)",
+            "features": {
+              "sticky": false,
+              "responsive": false
+            },
+            "component": {
+              "name": "divi/text",
+              "type": "field"
+            }
+          }
+        }
+      }
+    },
+    "width": {
+      "type": "object",
+      "default": {
+        "desktop": {
+          "value": "120"
+        }
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupSlug": "contentPosition",
+            "attrName": "width.innerContent",
+            "priority": 30,
+            "render": true,
+            "label": "Larghezza (px)",
+            "features": {
+              "sticky": false,
+              "responsive": false
+            },
+            "component": {
+              "name": "divi/range",
+              "type": "field",
+              "props": {
+                "min": 20,
+                "max": 600,
+                "step": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "zIndex": {
+      "type": "object",
+      "default": {
+        "desktop": {
+          "value": "20"
+        }
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupSlug": "contentPosition",
+            "attrName": "zIndex.innerContent",
+            "priority": 40,
+            "render": true,
+            "label": "Ordine sovrapposizione (z-index)",
+            "features": {
+              "sticky": false,
+              "responsive": false
+            },
+            "component": {
+              "name": "divi/range",
+              "type": "field",
+              "props": {
+                "min": 0,
+                "max": 99,
+                "step": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "tpDesignImage": {
+      "type": "object",
+      "selector": "{{selector}} .tp-theme-footer-decor-item img",
+      "settings": {
+        "decoration": {
+          "sizing": {
+            "groupType": "group-item",
+            "item": {
+              "groupSlug": "designTpDesignImage",
+              "priority": 10,
+              "render": true,
+              "component": {
+                "name": "divi/sizing",
+                "type": "group",
+                "props": {
+                  "grouped": true,
+                  "fieldLabel": "Immagine decorativa"
+                }
+              }
+            }
+          },
+          "spacing": {
+            "groupType": "group-item",
+            "item": {
+              "groupSlug": "designTpDesignImage",
+              "priority": 20,
+              "render": true,
+              "component": {
+                "name": "divi/spacing",
+                "type": "group",
+                "props": {
+                  "grouped": true,
+                  "fieldLabel": "Immagine decorativa"
+                }
+              }
+            }
+          },
+          "border": {
+            "groupType": "group-item",
+            "item": {
+              "groupSlug": "designTpDesignImage",
+              "priority": 30,
+              "render": true,
+              "component": {
+                "name": "divi/border",
+                "type": "group",
+                "props": {
+                  "grouped": true,
+                  "fieldLabel": "Immagine decorativa"
+                }
+              }
+            }
+          },
+          "boxShadow": {
+            "groupType": "group-item",
+            "item": {
+              "groupSlug": "designTpDesignImage",
+              "priority": 40,
+              "render": true,
+              "component": {
+                "name": "divi/box-shadow",
+                "type": "group",
+                "props": {
+                  "grouped": true,
+                  "fieldLabel": "Immagine decorativa"
+                }
+              }
+            }
+          },
+          "filters": {
+            "groupType": "group-item",
+            "item": {
+              "groupSlug": "designTpDesignImage",
+              "priority": 50,
+              "render": true,
+              "component": {
+                "name": "divi/filters",
+                "type": "group",
+                "props": {
+                  "grouped": true,
+                  "fieldLabel": "Immagine decorativa"
+                }
+              }
+            }
+          }
+        }
+      },
+      "styleProps": {
+        "sizing": {
+          "important": true
+        },
+        "spacing": {
+          "important": true
+        },
+        "border": {
+          "important": true
+        },
+        "boxShadow": {
+          "important": true
+        },
+        "filters": {
+          "important": true
+        }
+      }
+    },
+    "tpDesignContent": {
+      "type": "object",
+      "selector": "{{selector}} .tp-theme-footer-decor-item",
+      "settings": {
+        "decoration": {
+          "sizing": {
+            "groupType": "group-item",
+            "item": {
+              "groupSlug": "designTpDesignContent",
+              "priority": 10,
+              "render": true,
+              "component": {
+                "name": "divi/sizing",
+                "type": "group",
+                "props": {
+                  "grouped": true,
+                  "fieldLabel": "Spazi della decorazione"
+                }
+              }
+            }
+          },
+          "spacing": {
+            "groupType": "group-item",
+            "item": {
+              "groupSlug": "designTpDesignContent",
+              "priority": 20,
+              "render": true,
+              "component": {
+                "name": "divi/spacing",
+                "type": "group",
+                "props": {
+                  "grouped": true,
+                  "fieldLabel": "Spazi della decorazione"
+                }
+              }
+            }
+          },
+          "border": {
+            "groupType": "group-item",
+            "item": {
+              "groupSlug": "designTpDesignContent",
+              "priority": 30,
+              "render": true,
+              "component": {
+                "name": "divi/border",
+                "type": "group",
+                "props": {
+                  "grouped": true,
+                  "fieldLabel": "Spazi della decorazione"
+                }
+              }
+            }
+          },
+          "boxShadow": {
+            "groupType": "group-item",
+            "item": {
+              "groupSlug": "designTpDesignContent",
+              "priority": 40,
+              "render": true,
+              "component": {
+                "name": "divi/box-shadow",
+                "type": "group",
+                "props": {
+                  "grouped": true,
+                  "fieldLabel": "Spazi della decorazione"
+                }
+              }
+            }
+          }
+        }
+      },
+      "styleProps": {
+        "sizing": {
+          "important": true
+        },
+        "spacing": {
+          "important": true
+        },
+        "border": {
+          "important": true
+        },
+        "boxShadow": {
+          "important": true
+        }
+      }
+    }
+  },
+  "customCssFields": {
+    "decor": {
+      "subName": "decor",
+      "selectorSuffix": " .tp-theme-footer-decor-item"
+    }
+  },
+  "settings": {
+    "content": "auto",
+    "design": "auto",
+    "advanced": "auto",
+    "groups": {
+      "contentMain": {
+        "panel": "content",
+        "priority": 5,
+        "groupName": "contentMain",
+        "multiElements": true,
+        "component": {
+          "name": "divi/composite",
+          "props": {
+            "groupLabel": "Decorazione"
+          }
+        }
+      },
+      "contentPosition": {
+        "panel": "content",
+        "priority": 10,
+        "groupName": "contentPosition",
+        "multiElements": true,
+        "component": {
+          "name": "divi/composite",
+          "props": {
+            "groupLabel": "Posizione e dimensione"
+          }
+        }
+      },
+      "designTpDesignImage": {
+        "panel": "design",
+        "priority": 5,
+        "groupName": "designTpDesignImage",
+        "component": {
+          "name": "divi/composite",
+          "props": {
+            "groupLabel": "Immagine decorativa"
+          }
+        }
+      },
+      "designTpDesignContent": {
+        "panel": "design",
+        "priority": 6,
+        "groupName": "designTpDesignContent",
+        "component": {
+          "name": "divi/composite",
+          "props": {
+            "groupLabel": "Spazi della decorazione"
+          }
+        }
+      }
+    }
+  }
+}
