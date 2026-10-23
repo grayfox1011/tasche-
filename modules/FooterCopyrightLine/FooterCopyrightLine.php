@@ -9,29 +9,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( 'Direct access forbidden.' );
 }
 
-use ET\Builder\Framework\DependencyManagement\Interfaces\DependencyInterface;
-use ET\Builder\Packages\ModuleLibrary\ModuleRegistration;
+use TaschePieneDiviChild\Modules\ModuleBase;
 
-class FooterCopyrightLine implements DependencyInterface {
+class FooterCopyrightLine extends ModuleBase {
 
 	use FooterCopyrightLineTrait\RenderCallbackTrait;
-	use FooterCopyrightLineTrait\ModuleClassnamesTrait;
-	use FooterCopyrightLineTrait\ModuleStylesTrait;
-	use FooterCopyrightLineTrait\ModuleScriptDataTrait;
 
-	public function load() {
-		$module_json_folder_path = TP_CHILD_MODULES_JSON_PATH . 'footer-copyright-line/';
+	protected const JSON_FOLDER = 'footer-copyright-line';
 
-		add_action(
-			'init',
-			function () use ( $module_json_folder_path ) {
-				ModuleRegistration::register_module(
-					$module_json_folder_path,
-					[
-						'render_callback' => [ self::class, 'render_callback' ],
-					]
-				);
-			}
-		);
-	}
+	protected const CLASS_NAME = 'tp_footer_copyright_line';
+
+	protected const DESIGN_GROUPS = [ 'tpDesignText' ];
 }

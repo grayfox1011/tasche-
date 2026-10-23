@@ -13,29 +13,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( 'Direct access forbidden.' );
 }
 
-use ET\Builder\Framework\DependencyManagement\Interfaces\DependencyInterface;
-use ET\Builder\Packages\ModuleLibrary\ModuleRegistration;
+use TaschePieneDiviChild\Modules\ModuleBase;
 
-class ThemeHeader implements DependencyInterface {
+class ThemeHeader extends ModuleBase {
 
 	use ThemeHeaderTrait\RenderCallbackTrait;
-	use ThemeHeaderTrait\ModuleClassnamesTrait;
-	use ThemeHeaderTrait\ModuleStylesTrait;
-	use ThemeHeaderTrait\ModuleScriptDataTrait;
 
-	public function load() {
-		$module_json_folder_path = TP_CHILD_MODULES_JSON_PATH . 'theme-header/';
+	protected const JSON_FOLDER = 'theme-header';
 
-		add_action(
-			'init',
-			function () use ( $module_json_folder_path ) {
-				ModuleRegistration::register_module(
-					$module_json_folder_path,
-					[
-						'render_callback' => [ self::class, 'render_callback' ],
-					]
-				);
-			}
-		);
-	}
+	protected const CLASS_NAME = 'tp_theme_header';
+
+	protected const DESIGN_GROUPS = [ 'tpDesignText', 'tpDesignLogo', 'tpDesignContent' ];
 }

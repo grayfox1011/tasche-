@@ -104,91 +104,14 @@
 	}
 
 	gsap.matchMedia().add('(min-width: 981px)', function () {
-		var cleanups = [];
-		var activeCard = null;
-
-		var setActiveCard = function (card) {
-			if (activeCard && activeCard !== card) {
-				activeCard.classList.remove('is-active');
-			}
-
-			activeCard = card;
-			card.classList.add('is-active');
-		};
-
-		var clearActiveCard = function (card) {
-			if (!card || activeCard === card) {
-				activeCard = null;
-			}
-
-			if (card) {
-				card.classList.remove('is-active');
-			}
-		};
-
-		cards.forEach(function (card) {
-			var image = card.querySelector('.tp-materie-card-image');
-
-			if (!image) {
-				return;
-			}
-
-			if (!card.hasAttribute('tabindex')) {
-				card.setAttribute('tabindex', '0');
-			}
-
-			var show = function () {
-				setActiveCard(card);
-				gsap.set(image, { clearProps: 'transform' });
-			};
-
-			var hide = function () {
-				clearActiveCard(card);
-				gsap.set(image, { clearProps: 'transform' });
-			};
-
-			var toggleFromPointer = function (event) {
-				if (!event.pointerType || event.pointerType === 'mouse') {
-					return;
-				}
-
-				if (card.classList.contains('is-active')) {
-					hide();
-					return;
-				}
-
-				show();
-			};
-
-			var handleKeydown = function (event) {
-				if (event.key === 'Escape') {
-					hide();
-				}
-			};
-
-			card.addEventListener('pointerenter', show);
-			card.addEventListener('pointerleave', hide);
-			card.addEventListener('pointerdown', toggleFromPointer);
-			card.addEventListener('focusin', show);
-			card.addEventListener('focusout', hide);
-			card.addEventListener('keydown', handleKeydown);
-
-			cleanups.push(function () {
-				card.removeEventListener('pointerenter', show);
-				card.removeEventListener('pointerleave', hide);
-				card.removeEventListener('pointerdown', toggleFromPointer);
-				card.removeEventListener('focusin', show);
-				card.removeEventListener('focusout', hide);
-				card.removeEventListener('keydown', handleKeydown);
-				card.classList.remove('is-active');
-				gsap.set(image, { clearProps: 'transform' });
-			});
+		var withImage = cards.filter(function (card) {
+			return card.querySelector('.tp-materie-card-image');
 		});
 
-		return function () {
-			cleanups.forEach(function (cleanup) {
-				cleanup();
-			});
-		};
+		return window.tpBindActiveState(withImage, {
+			onChange: function (card) {
+				gsap.set(card.querySelector('.tp-materie-card-image'), { clearProps: 'transform' });
+			}
+		});
 	});
 })();

@@ -25,7 +25,117 @@
 		doc.classList.add('tp-reduced-motion');
 	}
 
+	/**
+	 * Active state shared by the hours, the Tasca/Piatto cards and the Materie cards:
+	 * one element at a time gets .is-active on mouse over and keyboard focus; a touch
+	 * tap toggles it and Escape clears it. Options: `outside` (selector) clears it on
+	 * a tap or click elsewhere, `onChange(element)` runs after every change.
+	 * Returns a function that removes the listeners and the class.
+	 */
+	function bindActiveState(elements, options) {
+		var settings = options || {};
+		var activeItem = null;
+		var cleanups = [];
 
+		function setActive(item) {
+			if (activeItem && activeItem !== item) {
+				activeItem.classList.remove('is-active');
+			}
+
+			activeItem = item;
+			item.classList.add('is-active');
+		}
+
+		function clearActive(item) {
+			if (!item || activeItem === item) {
+				activeItem = null;
+			}
+
+			if (item) {
+				item.classList.remove('is-active');
+			}
+		}
+
+		Array.prototype.forEach.call(elements, function (item) {
+			var changed = function () {
+				if (settings.onChange) {
+					settings.onChange(item);
+				}
+			};
+			var show = function () {
+				setActive(item);
+				changed();
+			};
+			var hide = function () {
+				clearActive(item);
+				changed();
+			};
+			var toggleFromPointer = function (event) {
+				if (!event.pointerType || event.pointerType === 'mouse') {
+					return;
+				}
+
+				if (item.classList.contains('is-active')) {
+					hide();
+					return;
+				}
+
+				show();
+			};
+			var handleKeydown = function (event) {
+				if (event.key === 'Escape') {
+					hide();
+				}
+			};
+
+			if (!item.hasAttribute('tabindex')) {
+				item.setAttribute('tabindex', '0');
+			}
+
+			item.addEventListener('pointerenter', show);
+			item.addEventListener('pointerleave', hide);
+			item.addEventListener('pointerdown', toggleFromPointer);
+			item.addEventListener('focusin', show);
+			item.addEventListener('focusout', hide);
+			item.addEventListener('keydown', handleKeydown);
+
+			cleanups.push(function () {
+				item.removeEventListener('pointerenter', show);
+				item.removeEventListener('pointerleave', hide);
+				item.removeEventListener('pointerdown', toggleFromPointer);
+				item.removeEventListener('focusin', show);
+				item.removeEventListener('focusout', hide);
+				item.removeEventListener('keydown', handleKeydown);
+				item.classList.remove('is-active');
+				changed();
+			});
+		});
+
+		if (settings.outside) {
+			var handleOutside = function (event) {
+				if (event.target.closest(settings.outside)) {
+					return;
+				}
+
+				if (activeItem) {
+					clearActive(activeItem);
+				}
+			};
+
+			document.addEventListener('pointerdown', handleOutside);
+			cleanups.push(function () {
+				document.removeEventListener('pointerdown', handleOutside);
+			});
+		}
+
+		return function () {
+			cleanups.forEach(function (cleanup) {
+				cleanup();
+			});
+		};
+	}
+
+	window.tpBindActiveState = bindActiveState;
 
 	function initIOSMenuPriceLayout() {
 		if (!isIOSWebKit) {
@@ -116,9 +226,21 @@
 			});
 		}
 
+		// Resize events can fire many times per frame: lay out once, before the next paint.
+		var frame = 0;
+
+		function scheduleLayout() {
+			if (!frame) {
+				frame = window.requestAnimationFrame(function () {
+					frame = 0;
+					layout();
+				});
+			}
+		}
+
 		layout();
 		window.addEventListener('load', layout, { once: true });
-		window.addEventListener('resize', layout);
+		window.addEventListener('resize', scheduleLayout);
 		window.setTimeout(layout, 600);
 	}
 
@@ -289,82 +411,13 @@
 	}
 
 	function initHoursItems() {
-		var items = Array.prototype.slice.call(document.querySelectorAll('.tp-hours-item'));
-		var activeItem = null;
+		var items = document.querySelectorAll('.tp-hours-item');
 
 		if (!items.length) {
 			return;
 		}
 
-		function setActive(item) {
-			if (activeItem && activeItem !== item) {
-				activeItem.classList.remove('is-active');
-			}
-
-			activeItem = item;
-			item.classList.add('is-active');
-		}
-
-		function clearActive(item) {
-			if (!item || activeItem === item) {
-				activeItem = null;
-			}
-
-			if (item) {
-				item.classList.remove('is-active');
-			}
-		}
-
-		items.forEach(function (item) {
-			if (!item.hasAttribute('tabindex')) {
-				item.setAttribute('tabindex', '0');
-			}
-
-			item.addEventListener('pointerenter', function () {
-				setActive(item);
-			});
-
-			item.addEventListener('pointerleave', function () {
-				clearActive(item);
-			});
-
-			item.addEventListener('pointerdown', function (event) {
-				if (!event.pointerType || event.pointerType === 'mouse') {
-					return;
-				}
-
-				if (item.classList.contains('is-active')) {
-					clearActive(item);
-					return;
-				}
-
-				setActive(item);
-			});
-
-			item.addEventListener('focusin', function () {
-				setActive(item);
-			});
-
-			item.addEventListener('focusout', function () {
-				clearActive(item);
-			});
-
-			item.addEventListener('keydown', function (event) {
-				if (event.key === 'Escape') {
-					clearActive(item);
-				}
-			});
-		});
-
-		document.addEventListener('pointerdown', function (event) {
-			if (event.target.closest('.tp-hours-item')) {
-				return;
-			}
-
-			if (activeItem) {
-				clearActive(activeItem);
-			}
-		});
+		bindActiveState(items, { outside: '.tp-hours-item' });
 	}
 
 	initIOSHeaderFallback();

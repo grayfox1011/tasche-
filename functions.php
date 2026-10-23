@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( "TP_CHILD_VERSION", "0.4.1" );
+define( "TP_CHILD_VERSION", "0.4.2" );
 define( 'TP_CHILD_PATH', trailingslashit( get_stylesheet_directory() ) );
 define( 'TP_CHILD_URL', trailingslashit( get_stylesheet_directory_uri() ) );
 define( 'TP_CHILD_MODULES_JSON_PATH', TP_CHILD_PATH . 'modules-json/' );
@@ -868,57 +868,6 @@ function tp_child_replace_choice_section( string $content ): string {
 add_filter( "the_content", "tp_child_replace_choice_section", 99 );
 
 /**
- * Scale the fixed 1512px Tasca/Piatto stage to the viewport.
- * Its styles live in assets/css/tasche-piene.css with the rest of the theme.
- */
-function tp_child_print_choice_stage_script(): void {
-	if ( tp_child_is_visual_builder() || ! tp_child_content_has_marker( "tp-choice-section" ) ) {
-		return;
-	}
-
-	echo <<<HTML
-	<script id="tp-choice-stage-js">
-	(function(){
-		function updateChoiceStage(){
-			document.querySelectorAll('.tp-choice-standalone').forEach(function(section){
-				var viewportWidth = window.innerWidth || document.documentElement.clientWidth || section.clientWidth;
-				if (window.matchMedia('(max-width: 767px)').matches) {
-					var mobileScale = viewportWidth / 390;
-					section.style.removeProperty('--choice-scale');
-					section.style.setProperty('--choice-mobile-scale', mobileScale.toFixed(6));
-					var mobileHeight = (963 * mobileScale).toFixed(2) + 'px';
-					section.style.setProperty('height', mobileHeight, 'important');
-					section.style.setProperty('min-height', mobileHeight, 'important');
-					return;
-				}
-				if (window.matchMedia('(max-width: 980px)').matches) {
-					section.style.removeProperty('--choice-scale');
-					section.style.removeProperty('--choice-mobile-scale');
-					section.style.removeProperty('height');
-					section.style.removeProperty('min-height');
-					return;
-				}
-				section.style.removeProperty('--choice-mobile-scale');
-				var scale = viewportWidth / 1512;
-				section.style.setProperty('--choice-scale', scale.toFixed(6));
-				var scaledHeight = (1263 * scale).toFixed(2) + 'px';
-				section.style.setProperty('height', scaledHeight, 'important');
-				section.style.setProperty('min-height', scaledHeight, 'important');
-			});
-		}
-		if (document.readyState === 'loading') {
-			document.addEventListener('DOMContentLoaded', updateChoiceStage);
-		} else {
-			updateChoiceStage();
-		}
-		window.addEventListener('resize', updateChoiceStage, { passive: true });
-	})();
-	</script>
-HTML;
-}
-add_action( "wp_head", "tp_child_print_choice_stage_script", 9999 );
-
-/**
  * Load the GSAP preloader runtime on landing pages.
  */
 function tp_child_enqueue_preloader_assets(): void {
@@ -1036,7 +985,7 @@ function tp_child_enqueue_choice_card_assets(): void {
 	wp_enqueue_script(
 		'tp-choice-cards',
 		TP_CHILD_URL . 'assets/js/tp-choice-cards.js',
-		[],
+		[ 'tp-site' ],
 		tp_child_asset_version( 'assets/js/tp-choice-cards.js' ),
 		true
 	);
@@ -1076,7 +1025,7 @@ function tp_child_enqueue_materie_assets(): void {
 	wp_enqueue_script(
 		'tp-materie',
 		TP_CHILD_URL . 'assets/js/tp-materie.js',
-		[ 'gsap-core' ],
+		[ 'gsap-core', 'tp-site' ],
 		tp_child_asset_version( 'assets/js/tp-materie.js' ),
 		true
 	);
@@ -1122,41 +1071,31 @@ add_action( 'init', function () {
 add_action( 'wp_head', 'tp_child_viewport_meta', 1 );
 
 /**
- * Responsive fix (2026-06-07): scale the fixed 1512x982 footer scene to fit
- * viewports 981-1511px, mirroring the choice-section scale pattern already used
- * by the theme. Sets --tp-footer-scale = innerWidth/1512 (consumed by CSS in
- * assets/css/tasche-piene.css). Frontend only; never runs in the Visual Builder.
+ * Front-end layout helpers in assets/js/tp-layout.js: scales of the 1512px stages
+ * and of the mobile menu card, mobile hero video, Alberto mobile flow, menu
+ * allergens. Printed where they used to be inline, before jQuery and Divi's
+ * scripts, so each part still runs on DOMContentLoaded ahead of them.
  */
-function tp_child_footer_scale_script() {
+function tp_child_print_layout_script(): void {
 	if ( is_admin() || tp_child_is_visual_builder() ) {
 		return;
 	}
-	?>
-<script id="tp-footer-scale-js">
-(function(){
-	function upd(){
-		var w = window.innerWidth || document.documentElement.clientWidth || 0;
-		var r = document.documentElement;
-		if (w >= 981 && w <= 1511) {
-			r.style.setProperty('--tp-fit-scale', (w / 1512).toFixed(6));
-		} else {
-			r.style.removeProperty('--tp-fit-scale');
-		}
-		// Menu main card: render alla larghezza di riferimento iPhone 16 (346px) e
-		// scala con zoom per adattarsi a ogni telefono -> layout prezzi identico ovunque.
-		if (w <= 767) {
-			r.style.setProperty('--tp-menu-zoom', Math.min(1, (w - 32) / 346).toFixed(4));
-		} else {
-			r.style.removeProperty('--tp-menu-zoom');
-		}
-	}
-	if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', upd); } else { upd(); }
-	window.addEventListener('resize', upd, { passive: true });
-})();
-</script>
-	<?php
+
+	wp_register_script( 'tp-layout', TP_CHILD_URL . 'assets/js/tp-layout.js', [], tp_child_asset_version( 'assets/js/tp-layout.js' ), true );
+	wp_add_inline_script(
+		'tp-layout',
+		'window.tpHeroVideo = ' . wp_json_encode(
+			[
+				'mp4'    => esc_url( TP_CHILD_URL . 'assets/video/videodefinitivo.mp4' ),
+				'webm'   => esc_url( TP_CHILD_URL . 'assets/video/videodefinitivo.webm' ),
+				'poster' => esc_url( TP_CHILD_URL . 'assets/images/hero-poster.webp' ),
+			]
+		) . ';',
+		'before'
+	);
+	wp_print_scripts( 'tp-layout' );
 }
-add_action( 'wp_footer', 'tp_child_footer_scale_script' );
+add_action( 'wp_footer', 'tp_child_print_layout_script' );
 
 /**
  * Visual Builder: scale the modular 1512x982 footer canvas to the real preview width.
@@ -1217,256 +1156,3 @@ function tp_child_vb_footer_scale_script() {
 	<?php
 }
 add_action( 'wp_footer', 'tp_child_vb_footer_scale_script', 5 );
-
-/**
- * Hero video — native inline player on mobile/tablet (<=980px).
- *
- * Divi's background video uses MediaElement.js which, on iOS Safari, resizes the
- * <video> to ~1554px and re-applies it via JS (crop + scroll-break) — and our
- * earlier poster fallback looked "frozen" because nothing plays. Here we inject a
- * plain HTML5 <video autoplay muted loop playsinline> that we size ourselves
- * (object-fit:cover), bypassing MEJS entirely. Plays inline on iOS 15/16/17 and
- * Chrome; the hero-poster.webp stays as the poster/background fallback if autoplay
- * is blocked. Desktop (>=981) keeps Divi's working MEJS video untouched.
- */
-function tp_child_hero_native_video() {
-	if ( is_admin() || tp_child_is_visual_builder() ) {
-		return;
-	}
-	$mp4    = esc_url( TP_CHILD_URL . 'assets/video/videodefinitivo.mp4' );
-	$webm   = esc_url( TP_CHILD_URL . 'assets/video/videodefinitivo.webm' );
-	$poster = esc_url( TP_CHILD_URL . 'assets/images/hero-poster.webp' );
-	?>
-<script id="tp-hero-native-video-js">
-(function(){
-	var MQ = '(max-width: 980px)';
-	var injected = false;
-	function inject(){
-		if (injected) { return; }
-		if (!window.matchMedia || !window.matchMedia(MQ).matches) { return; }
-		var hero = document.querySelector('.tp-hero-section');
-		if (!hero) { return; }
-		injected = true;
-		var media = {
-			mp4: <?php echo wp_json_encode( $mp4 ); ?>,
-			webm: <?php echo wp_json_encode( $webm ); ?>,
-			poster: <?php echo wp_json_encode( $poster ); ?>
-		};
-		if (!media.mp4 && !media.webm) { return; }
-		var v = document.createElement('video');
-		v.className = 'tp-hero-native-video';
-		v.muted = true; v.defaultMuted = true;
-		v.autoplay = true; v.loop = true;
-		v.setAttribute('muted', '');
-		v.setAttribute('autoplay', '');
-		v.setAttribute('loop', '');
-		v.setAttribute('playsinline', '');
-		v.setAttribute('webkit-playsinline', '');
-		v.setAttribute('preload', 'auto');
-		v.setAttribute('poster', media.poster);
-		var sWebm = document.createElement('source');
-		sWebm.src = media.webm; sWebm.type = 'video/webm';
-		var sMp4 = document.createElement('source');
-		sMp4.src = media.mp4; sMp4.type = 'video/mp4';
-		if (media.webm) { v.appendChild(sWebm); }
-		if (media.mp4) { v.appendChild(sMp4); }
-		hero.insertBefore(v, hero.firstChild);
-		var tryPlay = function(){ var p = v.play(); if (p && p.catch) { p.catch(function(){}); } };
-		tryPlay();
-		v.addEventListener('canplay', tryPlay, { once: true });
-		document.addEventListener('touchstart', tryPlay, { once: true, passive: true });
-	}
-	if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', inject); } else { inject(); }
-})();
-</script>
-	<?php
-}
-add_action( 'wp_footer', 'tp_child_hero_native_video' );
-
-/**
- * Sezione storia (tp-alberto-section) — ordine MOBILE come da Figma.
- *
- * Su desktop il layout e' a 2 colonne (testo | collage di 2 foto). Su mobile il
- * Figma vuole foto e testo ALTERNATI: foto -> H1 -> 1o testo -> [foto centrale] ->
- * 2o testo -> foto finale. Il markup pero' tiene tutto il testo in un solo modulo e
- * le foto in una colonna separata: con la sola CSS non si puo' infilare una foto TRA
- * due paragrafi. Qui, SOLO sul frontend, costruiamo un contenitore mobile
- * (.tp-alberto-mobile-flow) clonando titolo/paragrafi/foto nell'ordine del Figma.
- * Usiamo CLONI: gli originali restano intatti -> il DESKTOP non cambia e il contenuto
- * resta editabile in Divi (il Visual Builder e' escluso). La CSS mostra il flow solo
- * <=767 e nasconde le colonne originali; >767 nasconde il flow e mostra il collage.
- * Distribuzione robusta a 2 o 3+ foto: prima foto in cima, ultima foto in fondo
- * (la "foto finale pomodoro"), eventuali foto intermedie tra i due blocchi di testo.
- */
-function tp_child_alberto_mobile_reflow() {
-	if ( is_admin() || tp_child_is_visual_builder() ) {
-		return;
-	}
-	?>
-<script id="tp-alberto-reflow-js">
-(function(){
-	function stripIds(node){
-		if (node.removeAttribute) { node.removeAttribute('id'); }
-		var withId = node.querySelectorAll ? node.querySelectorAll('[id]') : [];
-		for (var i=0;i<withId.length;i++){ withId[i].removeAttribute('id'); }
-		return node;
-	}
-	// Clona una foto: toglie gli id e forza il caricamento EAGER (i cloni aggiunti a
-	// runtime non verrebbero osservati dal lazy-load -> rischio "foto vuota").
-	function clonePhoto(node){
-		var c = stripIds(node.cloneNode(true));
-		var imgs = c.tagName === 'IMG' ? [c] : (c.querySelectorAll ? c.querySelectorAll('img') : []);
-		for (var i=0;i<imgs.length;i++){
-			var im = imgs[i];
-			im.setAttribute('loading', 'eager');
-			im.removeAttribute('data-lazy-src');
-			if (im.getAttribute('data-src')) { im.setAttribute('src', im.getAttribute('data-src')); }
-			if (im.getAttribute('data-srcset')) { im.setAttribute('srcset', im.getAttribute('data-srcset')); }
-			im.classList && im.classList.remove('lazyload', 'lazy', 'et_pb_lazyload');
-		}
-		return c;
-	}
-	function build(){
-		var sec = document.querySelector('.tp-alberto-section');
-		if (!sec || sec.getAttribute('data-tp-alberto-flow') === '1') { return; }
-		var row = sec.querySelector('.tp-alberto-row');
-		var title = sec.querySelector('.tp-alberto-title');
-		var copy = sec.querySelector('.tp-alberto-copy');
-		var photoCol = sec.querySelector('.tp-alberto-photos-column');
-		if (!row || !copy || !photoCol) { return; }
-		var inner = copy.querySelector('.et_pb_text_inner') || copy;
-		var paras = [].slice.call(inner.children).filter(function(n){ return n.tagName === 'P'; });
-		var photos = [].slice.call(photoCol.children).filter(function(n){ return n.nodeType === 1; });
-		if (!paras.length || !photos.length) { return; }
-		var copyCls = copy.getAttribute('class') || 'tp-alberto-copy';
-		function makeCopy(list){
-			if (!list.length) { return null; }
-			var d = document.createElement('div'); d.setAttribute('class', copyCls);
-			var di = document.createElement('div'); di.className = 'et_pb_text_inner';
-			list.forEach(function(p){ di.appendChild(stripIds(p.cloneNode(true))); });
-			d.appendChild(di);
-			return d;
-		}
-		var g1 = makeCopy(paras.slice(0, 1));        // 1o blocco = primo paragrafo
-		var g2 = makeCopy(paras.slice(1));           // 2o blocco = resto
-		// Titolo: NON cloniamo lo SplitText (ha elementi position:absolute per
-		// l'animazione che, senza init JS, si sovrappongono alla foto). Costruiamo un
-		// H1 semplice col solo testo: eredita lo stile da .tp-alberto-title h2.
-		var titleText = title ? (title.textContent || '').replace(/\s+/g, ' ').trim() : '';
-		var titleEl = null;
-		if (titleText) {
-			titleEl = document.createElement('div');
-			titleEl.className = 'tp-alberto-title tp-alberto-title--mobile';
-			var h2 = document.createElement('h2');
-			h2.textContent = titleText;
-			titleEl.appendChild(h2);
-		}
-		var wrap = document.createElement('div');
-		wrap.className = 'tp-alberto-mobile-flow';
-		// Ordine Figma: H1 -> (ogni blocco di testo seguito da UNA foto) -> eventuali
-		// foto rimaste in fondo. NIENTE foto prima dell'H1. Per la sezione storia
-		// (2 testi, 2 foto) = H1 -> para1 -> foto -> para2 -> foto(pomodoro).
-		if (titleEl) { wrap.appendChild(titleEl); }                       // H1
-		var groups = [g1, g2].filter(Boolean);
-		var pi = 0;
-		groups.forEach(function(g){
-			wrap.appendChild(g);                                          // blocco di testo
-			if (pi < photos.length) {                                     // + 1 foto
-				wrap.appendChild(clonePhoto(photos[pi++]));
-			}
-		});
-		while (pi < photos.length) {                                      // foto extra (se 3+ foto, 2 testi)
-			wrap.appendChild(clonePhoto(photos[pi++]));
-		}
-		row.appendChild(wrap);
-		sec.setAttribute('data-tp-alberto-flow', '1');
-	}
-	if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', build); } else { build(); }
-})();
-</script>
-	<?php
-}
-add_action( 'wp_footer', 'tp_child_alberto_mobile_reflow' );
-
-/**
- * Allergeni + nomi brevi mobile, EDITABILI DA DIVI (nessun reseed):
- *
- * 1) ALLERGENI: si scrivono nel titolo del piatto in Divi tra parentesi
- *    quadre, es. "MELANZANA ALLA PARMIGIANA [7,8]". Il frontend rimuove le
- *    quadre dal testo e mostra i numeri in apice (<sup class="tp-allergeni">).
- *    Se il titolo NON ha le quadre vale la mappa di fallback qui sotto
- *    (valori dal Figma 10:314). NB: il Figma usa anche l'allergene "12" che
- *    nella legenda attuale manca (e c'e' un refuso "5 pesce") -> validare col
- *    cliente.
- *
- * 2) NOME BREVE (mobile, trippa/stocco): derivato automaticamente dal titolo
- *    Divi = tutto cio' che precede " - " (es. "TRIPPA - OGNI VENERDI" ->
- *    "TRIPPA" via attributo data-tp-short letto dal CSS ::before). Rinominare
- *    il piatto in Divi aggiorna anche il mobile, senza toccare il CSS.
- *
- * Nel Visual Builder non gira nulla: titoli mostrati come digitati (quadre
- * comprese), tutto editabile. Solo frontend.
- */
-function tp_child_menu_allergens() {
-	if ( is_admin() || tp_child_is_visual_builder() ) {
-		return;
-	}
-	?>
-<script id="tp-allergeni-js">
-(function(){
-	var MAP = [
-		[/MELANZAN/i, '7,8'],
-		[/RIPIENI LIGURI/i, '1,3,7,12'],
-		[/POLPETTE/i, '1,3,7'],
-		[/POLLO ALLA LIGURE/i, '8,12'],
-		[/TRIPPA/i, '8,9,12'],
-		[/STOCCAFISSO/i, '4,8,9,12'],
-		[/CAPRESE/i, '7,8'],
-		[/ACCIUGHE/i, '4,7']
-	];
-	function apply(){
-		var heads = document.querySelectorAll('.tp-menu-section .tp-menu-name h4, .tp-menu-section h4.et_pb_module_header');
-		for (var i = 0; i < heads.length; i++) {
-			var h = heads[i];
-			var nums = null;
-			// 1) numeri dal titolo Divi: suffisso "[7,8]" (vince sulla mappa)
-			for (var n = 0; n < h.childNodes.length; n++) {
-				var node = h.childNodes[n];
-				if (node.nodeType === 3 && /\[([0-9,\s]+)\]/.test(node.textContent)) {
-					nums = node.textContent.match(/\[([0-9,\s]+)\]/)[1].replace(/\s+/g, '');
-					node.textContent = node.textContent.replace(/\s*\[[0-9,\s]+\]\s*/, ' ').replace(/\s+$/, '');
-				}
-			}
-			// 2) fallback: mappa Figma
-			var t = h.textContent || '';
-			if (nums === null) {
-				for (var m = 0; m < MAP.length; m++) {
-					if (MAP[m][0].test(t)) { nums = MAP[m][1]; break; }
-				}
-			}
-			var sup = h.querySelector('.tp-allergeni');
-			if (nums) {
-				if (!sup) {
-					sup = document.createElement('sup');
-					sup.className = 'tp-allergeni';
-					h.appendChild(sup);
-				}
-				sup.textContent = nums;
-			} else if (sup) {
-				sup.parentNode.removeChild(sup);
-			}
-			// nome breve mobile: parte del titolo prima di " - "
-			if (t.indexOf(' - ') > 0) {
-				h.setAttribute('data-tp-short', t.split(' - ')[0].replace(/\s+$/, ''));
-			} else {
-				h.removeAttribute('data-tp-short');
-			}
-		}
-	}
-	window.tpMenuAllergeni = apply; /* richiamabile per test/refresh */
-	if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', apply); } else { apply(); }
-})();
-</script>
-	<?php
-}
-add_action( 'wp_footer', 'tp_child_menu_allergens' );

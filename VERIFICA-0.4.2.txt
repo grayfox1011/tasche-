@@ -1,4 +1,66 @@
-TASCHE PIENE — VERSIONE 0.4.1, CANDIDATA AL COLLAUDO
+TASCHE PIENE — VERSIONE 0.4.2, CANDIDATA AL COLLAUDO
+
+La 0.4.2 e' la fase 3 della revisione del codice (la fase 2 aspetta i dati del
+sito pubblico): stesso aspetto della 0.4.1, codice piu' semplice da mantenere.
+Le note delle versioni precedenti, piu' in basso, restano valide.
+
+COSA CAMBIA RISPETTO ALLA 0.4.1
+- Script: i cinque script stampati inline in ogni pagina (scale della sezione
+  Tasca/Piatto e del footer, video della hero su mobile, sezione Alberto su
+  mobile, allergeni) sono in assets/js/tp-layout.js, che il browser tiene in
+  cache. Il file e' stampato dove stavano gli script, prima di jQuery e degli
+  script di Divi, quindi l'ordine di esecuzione non cambia. Inline restano la
+  riga del preloader e gli indirizzi del video della hero.
+- Lo stato attivo di orari, card Tasca/Piatto e card Materie (mouse, tocco,
+  tastiera, Esc) usa una sola funzione in tasche-piene.js. Le due scale sulla
+  larghezza di 1512 px usano una sola funzione e un solo ascoltatore di resize.
+  Il menu resta com'e': risponde solo al mouse e alla tastiera.
+- iPhone: i prezzi del menu si ricalcolano al massimo una volta per frame
+  durante il resize. Il risultato e' lo stesso; va comunque provato su un
+  iPhone vero.
+- Moduli: le 11 classi estendono modules/ModuleBase.php, che sostituisce 33
+  trait identici. Il PHP dei moduli passa da 2.784 a 1.756 righe.
+- package.json porta la versione del tema; scripts/bundle.js, ricompilato, e'
+  identico.
+- Non applicato: le regole CSS valide solo nel Visual Builder restano nel
+  foglio principale. Sono 49 KB, non 80 come stimato, e per almeno 82 di esse
+  l'ordine conta: in un file a parte cambierebbero l'anteprima del builder.
+
+VERIFICHE EFFETTUATE SULLA 0.4.2
+Riferimento: la 0.4.1 sullo stesso sito di prova, con la cache PHP disattivata.
+- Home a 20 larghezze, privacy e cookie a 10: stessi stili calcolati e stesse
+  posizioni per tutti gli elementi; screenshot a pagina intera identici con
+  tutte le immagini caricate.
+- Hover e focus a 1440, 820 e 390 px: stessi stili; screenshot dei pulsanti
+  identici con il video della hero nascosto.
+- Menu mobile aperto a 390 e 820 px e iPhone 13 in emulazione: stessi stili,
+  screenshot identici, nessun errore JavaScript.
+- Visual Builder in vista desktop, tablet e telefono (home) e desktop
+  (privacy): stessi stili e posizioni, screenshot identici.
+- Modificabilita': stesso esito della 0.4.1 modulo per modulo; modifica dal
+  Visual Builder 8 su 8.
+- Stato attivo di orari, card Tasca/Piatto e card Materie con mouse, tocco,
+  tastiera, Esc e tocco fuori, a 1440 e 390 px, anche con le animazioni
+  attive: stessa sequenza.
+- Scale, video della hero su mobile, sezione Alberto e allergeni a 1440, 1100,
+  820 e 390 px e dopo ridimensionamenti; prezzi del menu su iPhone al
+  caricamento e dopo un resize: stesso risultato.
+- HTML di home, pagine legali e pagine di test, e CSS dei moduli rigenerato da
+  Divi dopo aver svuotato la sua cache: identici, salvo il numero di versione
+  e gli script.
+- Script inline del tema per pagina: da 9,9 a 0,4 KB nella home, da 8,3 a
+  0,4 KB nelle pagine legali.
+- File PHP validi; build webpack senza avvisi, scripts/bundle.js identico.
+
+RICONTROLLO DELLA 0.4.1
+Durante la fase 3 e' emerso che il server PHP del sito di prova teneva in
+cache parte del codice e lo eseguiva anche dopo il cambio di versione. I
+confronti 0.4.0 -> 0.4.1 sono stati rifatti con la cache disattivata: gli
+esiti restano quelli riportati sotto, salvo le query, ora corrette.
+
+==============================================================================
+
+NOTE DELLA 0.4.1
 
 La 0.4.1 e' la fase 1 della revisione del codice: stesso aspetto della 0.4.0,
 meno codice e meno lavoro per server e browser. Le note della 0.4.0, piu' in
@@ -47,8 +109,10 @@ Riferimento: la 0.4.0 sullo stesso sito di prova (WordPress 7.1.3, Divi
 - iPhone 13 in emulazione: nessun errore JavaScript (2 nella home e 1 nelle
   pagine legali con la 0.4.0). Header, navigazione e pulsante del menu
   ricevono gli stessi stili della 0.3.1; aspetto identico alla 0.4.0.
-- Query al database per pagina: 68 invece di 79 nella home, 67 invece di 78
-  nella privacy.
+- Query al database nella home: 68 invece di 83 (15 in meno), misurate su
+  una copia del database con i flag non ancora convertiti, come sul sito
+  pubblico. Il primo conteggio (79) era falsato dalla cache PHP del sito di
+  prova; rimisurato con la cache disattivata.
 - File PHP validi; i sorgenti dei moduli non cambiano, scripts/bundle.js
   resta lo stesso.
 

@@ -44,6 +44,12 @@ Moduli custom:
 
 - I moduli `tp/*` hanno gruppi Design propri (testo della striscia, logo, link, copyright...). I valori impostati vincono sempre sul tema: Divi li stampa con `!important` dentro `@layer tp-authored`.
 - Gli stili dei moduli custom sono in `assets/css/tasche-piene.css`; `npm run build` compila solo `scripts/bundle.js` per il Visual Builder.
+- Ogni modulo PHP estende `modules/ModuleBase.php`, che registra il modulo e ne stampa classi, stili e dati script: la classe del modulo dichiara solo la cartella del `module.json`, la classe CSS e i gruppi Design, e tiene il proprio render.
+
+Script del sito pubblico:
+
+- `assets/js/tasche-piene.js`: header e menu, pulsanti, orari, prezzi su iOS e lo stato attivo comune a orari, card Tasca/Piatto e Materie.
+- `assets/js/tp-layout.js`: scale delle sezioni a 1512 px e della card del menu, video della hero su mobile, ordine mobile della sezione Alberto, allergeni. Viene stampato prima di jQuery, dove stavano gli script inline, perche' deve girare prima degli script di Divi.
 
 Pulizia una tantum (`inc/design-cleanup-migration.php`):
 
