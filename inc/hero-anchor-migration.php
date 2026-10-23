@@ -40,7 +40,7 @@ function tp_child_migrate_hero_home_id(): void {
 		}
 	}
 
-	update_option( 'tp_child_hero_home_id_v1', '1', false );
+	update_option( 'tp_child_hero_home_id_v1', '1', true );
 
 	if ( function_exists( 'et_core_clear_cache' ) ) {
 		et_core_clear_cache();
@@ -95,7 +95,7 @@ function tp_child_nav_menu_restore_hash_home_links(): void {
 		}
 	}
 
-	update_option( 'tp_child_nav_hash_home_v3', '1', false );
+	update_option( 'tp_child_nav_hash_home_v3', '1', true );
 }
 
 /**

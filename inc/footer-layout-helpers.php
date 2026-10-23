@@ -22,7 +22,10 @@ function tp_child_footer_render_characters_html( array $attrs, $elements ): stri
 		'characterOneUrl',
 		$asset_base . 'images/footer/personaggi-1.webp',
 		'one',
-		[ 'aria-hidden' => 'true' ]
+		[
+			'aria-hidden' => 'true',
+			'loading'     => 'lazy',
+		]
 	);
 
 	$person_four = tp_child_chrome_render_footer_character_slot(
@@ -32,7 +35,10 @@ function tp_child_footer_render_characters_html( array $attrs, $elements ): stri
 		'characterFourUrl',
 		$asset_base . 'images/footer/personaggi-4.webp',
 		'four',
-		[ 'aria-hidden' => 'true' ]
+		[
+			'aria-hidden' => 'true',
+			'loading'     => 'lazy',
+		]
 	);
 
 	$person_three = tp_child_chrome_render_footer_character_slot(
@@ -42,7 +48,10 @@ function tp_child_footer_render_characters_html( array $attrs, $elements ): stri
 		'characterThreeUrl',
 		$asset_base . 'images/footer/personaggi-3.webp',
 		'three',
-		[ 'aria-hidden' => 'true' ]
+		[
+			'aria-hidden' => 'true',
+			'loading'     => 'lazy',
+		]
 	);
 
 	return ET\Builder\Framework\Utility\HTMLUtility::render(

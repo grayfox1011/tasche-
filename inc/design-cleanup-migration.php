@@ -159,7 +159,7 @@ function tp_child_migrate_design_cleanup(): void {
 	}
 
 	kses_init();
-	update_option( 'tp_child_design_cleanup_v1', '1', false );
+	update_option( 'tp_child_design_cleanup_v1', '1', true );
 
 	if ( function_exists( 'et_core_clear_cache' ) ) {
 		et_core_clear_cache();

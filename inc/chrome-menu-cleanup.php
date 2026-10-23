@@ -124,6 +124,6 @@ function tp_child_chrome_migrate_nav_menu_labels(): void {
 	tp_child_chrome_delete_orphan_nav_menus();
 	tp_child_chrome_normalize_nav_menu_locations();
 
-	update_option( 'tp_child_chrome_menus_v1', '1', false );
+	update_option( 'tp_child_chrome_menus_v1', '1', true );
 }
 add_action( 'after_setup_theme', 'tp_child_chrome_migrate_nav_menu_labels', 23 );

@@ -5,6 +5,12 @@
 	var ua = window.navigator ? window.navigator.userAgent || '' : '';
 	var isIOSWebKit = /iP(hone|ad|od)/.test(ua) || (window.navigator && window.navigator.platform === 'MacIntel' && window.navigator.maxTouchPoints > 1);
 
+	function setImportant(element, property, value) {
+		if (element) {
+			element.style.setProperty(property, value, 'important');
+		}
+	}
+
 	if (document.body && document.body.classList.contains('et-fb')) {
 		return;
 	}
@@ -36,12 +42,6 @@
 			lValue: '.tp-menu-price-label-l .tp-menu-price-value',
 			sValue: '.tp-menu-price-label-s .tp-menu-price-value'
 		};
-
-		function setImportant(element, property, value) {
-			if (element) {
-				element.style.setProperty(property, value, 'important');
-			}
-		}
 
 		function placeNode(row, selector, x, y, width, display) {
 			var node = row.querySelector(selector);
@@ -144,26 +144,26 @@
 					return;
 				}
 
-				setDesignFallback(element, "display", element === toggle ? "flex" : "block");
-				setDesignFallback(element, "visibility", "visible");
-				setDesignFallback(element, "opacity", "1");
-				setDesignFallback(element, "pointer-events", element === headerShell ? "none" : "auto");
+				setImportant(element, "display", element === toggle ? "flex" : "block");
+				setImportant(element, "visibility", "visible");
+				setImportant(element, "opacity", "1");
+				setImportant(element, "pointer-events", element === headerShell ? "none" : "auto");
 			});
 
 			if (header) {
-				setDesignFallback(header, "position", "absolute");
-				setDesignFallback(header, "top", "32.7px");
-				setDesignFallback(header, "left", "0");
-				setDesignFallback(header, "width", "100%");
-				setDesignFallback(header, "z-index", "3000");
-				setDesignFallback(header, "transform", "none");
-				setDesignFallback(header, "-webkit-transform", "none");
+				setImportant(header, "position", "absolute");
+				setImportant(header, "top", "32.7px");
+				setImportant(header, "left", "0");
+				setImportant(header, "width", "100%");
+				setImportant(header, "z-index", "3000");
+				setImportant(header, "transform", "none");
+				setImportant(header, "-webkit-transform", "none");
 			}
 
 			if (toggle) {
-				setDesignFallback(toggle, "position", "absolute");
-				setDesignFallback(toggle, "top", "0");
-				setDesignFallback(toggle, "right", "10.8px");
+				setImportant(toggle, "position", "absolute");
+				setImportant(toggle, "top", "0");
+				setImportant(toggle, "right", "10.8px");
 			}
 		}
 

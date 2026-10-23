@@ -101,39 +101,6 @@ function tp_child_legal_heading_module( string $title ): string {
 }
 
 /**
- * Logo block for legal pages.
- */
-function tp_child_legal_logo_module(): string {
-	return tp_child_seed_block_single(
-		'divi/image',
-		[
-			'module'         => [
-				'advanced' => [
-					'htmlAttributes' => [
-						'desktop' => [
-							'value' => [
-								'class' => 'tp-legal-logo',
-							],
-						],
-					],
-				],
-			],
-			'image'          => [
-				'innerContent' => [
-					'desktop' => [
-						'value' => [
-							'src' => '{{TP_CHILD_URL}}assets/svg/logo-tasche-piene-nav.svg',
-							'alt' => 'Tasche Piene',
-						],
-					],
-				],
-			],
-			'builderVersion' => TP_CHILD_SEED_BUILDER_VERSION,
-		]
-	);
-}
-
-/**
  * Privacy policy HTML body.
  */
 function tp_child_legal_privacy_body_html(): string {
@@ -528,13 +495,18 @@ function tp_child_ensure_legal_pages(): array {
 
 /**
  * Bootstrap / repair legal pages on theme load (idempotent).
+ * Once bootstrapped, only dashboard requests look the pages up again.
  */
 function tp_child_migrate_legal_pages(): void {
+	if ( ! is_admin() && get_option( 'tp_child_legal_pages_v2' ) ) {
+		return;
+	}
+
 	if ( tp_child_legal_pages_exist() ) {
 		if ( ! get_option( 'tp_child_legal_pages_v2' ) ) {
 			tp_child_update_footer_legal_links();
 			update_option( 'tp_child_legal_pages_v1', '1', false );
-			update_option( 'tp_child_legal_pages_v2', '1', false );
+			update_option( 'tp_child_legal_pages_v2', '1', true );
 		}
 
 		return;
@@ -542,7 +514,7 @@ function tp_child_migrate_legal_pages(): void {
 
 	tp_child_ensure_legal_pages();
 	update_option( 'tp_child_legal_pages_v1', '1', false );
-	update_option( 'tp_child_legal_pages_v2', '1', false );
+	update_option( 'tp_child_legal_pages_v2', '1', true );
 
 	if ( function_exists( 'et_core_clear_cache' ) ) {
 		et_core_clear_cache();

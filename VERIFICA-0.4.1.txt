@@ -1,4 +1,64 @@
-TASCHE PIENE — VERSIONE 0.4.0, CANDIDATA AL COLLAUDO
+TASCHE PIENE — VERSIONE 0.4.1, CANDIDATA AL COLLAUDO
+
+La 0.4.1 e' la fase 1 della revisione del codice: stesso aspetto della 0.4.0,
+meno codice e meno lavoro per server e browser. Le note della 0.4.0, piu' in
+basso, restano valide.
+
+COSA CAMBIA RISPETTO ALLA 0.4.0
+- iPhone: ripristinata la funzione che fissa header, navigazione e pulsante
+  del menu. Nella 0.4.0 si fermava con l'errore "setDesignFallback is not
+  defined" e la navigazione restava non cliccabile (pointer-events: none).
+- CSS: assets/css/tasche-piene.css passa da 591 a 527 KB (da 57 a 53 KB in
+  gzip). Tolte 1.021 dichiarazioni sempre sovrascritte da una regola successiva
+  con lo stesso selettore e lo stesso contesto, e 108 selettori che richiedono
+  classi assenti dal codice, dai contenuti e dalla pagina (vecchio footer
+  modulare, vecchie righe Tasca/Piatto e Materie). Per ogni selettore rimasto
+  vince la stessa dichiarazione di prima.
+- Visual Builder: il foglio del tema e' caricato una volta sola invece di due.
+  La scala del footer si ricalcola solo quando cambia la larghezza del footer.
+- PHP: tolte 8 funzioni mai chiamate e il doppio caricamento di style.css. I
+  flag delle migrazioni sono caricati con le altre opzioni (conversione una
+  tantum alla prima richiesta); per i visitatori il controllo delle pagine
+  legali legge solo il flag, la riparazione resta dalle pagine di
+  amministrazione.
+- Immagini: tolti 6 file mai usati e lo script che aggiungeva gli attributi
+  alle immagini. Tre PNG del menu mobile e della sezione Tasca/Piatto mobile
+  sono in WebP lossless con pixel identici (-104 KB). I tre personaggi del
+  footer si caricano quando la pagina si avvicina al footer.
+
+VERIFICHE EFFETTUATE SULLA 0.4.1
+Riferimento: la 0.4.0 sullo stesso sito di prova (WordPress 7.1.3, Divi
+5.15.1, home importata dall'export del sito).
+- Home a 20 larghezze, privacy e cookie a 10: stessi stili calcolati e stesse
+  posizioni per tutti gli elementi; cambia solo l'URL dei tre PNG diventati
+  WebP. Screenshot a pagina intera identici, anche con tutte le immagini
+  caricate. Le foto delle card Materie cambiano posizione secondo il momento
+  dello scatto: uno screenshot ripetuto della 0.4.1 coincide al pixel con
+  quello della 0.4.0.
+- Hover e focus a 1440, 820 e 390 px: stessi stili in tutti i 31 stati;
+  screenshot dei pulsanti identici con il video della hero nascosto.
+- Menu mobile aperto a 390 e 820 px: stessi stili, screenshot identici.
+- Visual Builder in vista desktop, tablet e telefono (home) e desktop
+  (privacy): stessi stili e posizioni, screenshot identici.
+- Modificabilita': testo 105/120, spaziature 256/256, sfondi 256/256,
+  dimensioni 252/256 a 1440 px; 102/110, 115/132 e 256/256 a 820 e 390 px;
+  modifica dal Visual Builder 8 su 8. Stesso esito della 0.4.0 modulo per
+  modulo.
+- iPhone 13 in emulazione: nessun errore JavaScript (2 nella home e 1 nelle
+  pagine legali con la 0.4.0). Header, navigazione e pulsante del menu
+  ricevono gli stessi stili della 0.3.1; aspetto identico alla 0.4.0.
+- Query al database per pagina: 68 invece di 79 nella home, 67 invece di 78
+  nella privacy.
+- File PHP validi; i sorgenti dei moduli non cambiano, scripts/bundle.js
+  resta lo stesso.
+
+COLLAUDO ANCORA NECESSARIO
+- Dopo l'aggiornamento svuotare la cache CSS di Divi e dei plugin di cache e
+  controllare home e pagine legali su desktop, tablet e iPhone.
+
+==============================================================================
+
+NOTE DELLA 0.4.0
 
 Obiettivo: rendere il tema modificabile dai controlli Design di Divi senza
 cambiare l'aspetto del sito, e semplificare i moduli custom.

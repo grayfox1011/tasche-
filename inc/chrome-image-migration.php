@@ -134,7 +134,7 @@ function tp_child_chrome_migrate_theme_builder_images(): void {
 		}
 	}
 
-	update_option( 'tp_child_chrome_images_v4', '1', false );
+	update_option( 'tp_child_chrome_images_v4', '1', true );
 
 	if ( $updated && function_exists( 'et_core_clear_cache' ) ) {
 		et_core_clear_cache();
@@ -193,7 +193,7 @@ function tp_child_chrome_migrate_theme_builder_image_ids_v5(): void {
 		}
 	}
 
-	update_option( 'tp_child_chrome_images_v5', '1', false );
+	update_option( 'tp_child_chrome_images_v5', '1', true );
 
 	if ( $updated && function_exists( 'et_core_clear_cache' ) ) {
 		et_core_clear_cache();

@@ -336,53 +336,6 @@ function tp_child_seed_column_attrs(): array {
 	];
 }
 
-function tp_child_seed_footer_column_attrs(): array {
-	return [
-		'module'         => [
-			'advanced' => [
-				'type' => [
-					'desktop' => [ 'value' => '4_4' ],
-				],
-				'htmlAttributes' => [
-					'desktop' => [
-						'value' => [
-							'class' => 'tp-theme-footer-container',
-						],
-					],
-				],
-			],
-		],
-		'builderVersion' => TP_CHILD_SEED_BUILDER_VERSION,
-	];
-}
-
-function tp_child_seed_code_block( string $class_name, string $html ): string {
-	return tp_child_seed_block_single(
-		'divi/code',
-		[
-			'module'         => [
-				'advanced' => [
-					'htmlAttributes' => [
-						'desktop' => [
-							'value' => [
-								'class' => $class_name,
-							],
-						],
-					],
-				],
-			],
-			'content'        => [
-				'innerContent' => [
-					'desktop' => [
-						'value' => trim( $html ),
-					],
-				],
-			],
-			'builderVersion' => TP_CHILD_SEED_BUILDER_VERSION,
-		]
-	);
-}
-
 function tp_child_seed_module_layout( string $section_class, string $label, string $module_markup ): string {
 	$content  = tp_child_seed_block_open( 'divi/placeholder' );
 	$content .= tp_child_seed_block_open( 'divi/section', tp_child_seed_section_attrs( $section_class, $label ) );
@@ -409,68 +362,6 @@ function tp_child_seed_footer_layout( string $module_markup ): string {
 	$content .= tp_child_seed_block_close( 'divi/placeholder' );
 
 	return $content;
-}
-
-function tp_child_seed_layout( string $section_class, string $label, string $code_class, string $html ): string {
-	return tp_child_seed_module_layout( $section_class, $label, tp_child_seed_code_block( $code_class, $html ) );
-}
-
-function tp_child_seed_header_html(): string {
-	$logo = esc_url( TP_CHILD_URL . 'assets/svg/logo-tasche-piene-nav.svg' );
-
-	return <<<HTML
-<header class="site-header tp-theme-header" id="site-header">
-	<nav class="tp-theme-nav" aria-label="Principale">
-		<a href="#home" class="tp-theme-nav-logo" aria-label="Tasche Piene">
-			<img src="{$logo}" alt="Tasche Piene">
-		</a>
-		<button class="tp-theme-nav-toggle" type="button" aria-label="Apri menu" aria-expanded="false" aria-controls="primary-navigation">
-			<span></span>
-			<span></span>
-			<span></span>
-		</button>
-		<ul id="primary-navigation" class="tp-theme-nav-links">
-			<li><a href="#menu"><span class="tp-nav-link-text">I tramezzini</span></a></li>
-			<li><a href="#chi-siamo"><span class="tp-nav-link-text">La nostra idea</span></a></li>
-			<li><a href="#materie"><span class="tp-nav-link-text">Zena</span></a></li>
-			<li><a href="#location"><span class="tp-nav-link-text">Dove siamo</span></a></li>
-			<li><a href="tel:+393513738630"><span class="tp-nav-link-text">Chiamaci</span></a></li>
-		</ul>
-	</nav>
-</header>
-HTML;
-}
-
-function tp_child_seed_footer_html(): string {
-	$logo     = esc_url( tp_child_seed_media_asset_url( 'assets/images/logo-footer.webp' ) );
-	$person_1 = esc_url( tp_child_seed_media_asset_url( 'assets/images/footer/personaggi-1.webp' ) );
-	$person_3 = esc_url( tp_child_seed_media_asset_url( 'assets/images/footer/personaggi-3.webp' ) );
-	$person_4 = esc_url( tp_child_seed_media_asset_url( 'assets/images/footer/personaggi-4.webp' ) );
-
-	return <<<HTML
-<footer class="site-footer tp-theme-footer">
-	<div class="tp-theme-footer-container">
-		<div class="tp-theme-footer-characters">
-			<img class="tp-theme-footer-character tp-theme-footer-character--one" src="{$person_1}" alt="" aria-hidden="true">
-			<img class="tp-theme-footer-character tp-theme-footer-character--four" src="{$person_4}" alt="" aria-hidden="true">
-			<img class="tp-theme-footer-character tp-theme-footer-character--three" src="{$person_3}" alt="" aria-hidden="true">
-		</div>
-		<div class="tp-theme-footer-logo">
-			<img src="{$logo}" alt="Tasche Piene">
-		</div>
-		<nav class="tp-theme-footer-nav" aria-label="Footer">
-			<!--TP_FOOTER_NAV_LEFT-->
-			<!--TP_FOOTER_NAV_RIGHT-->
-		</nav>
-		<div class="tp-theme-footer-copyright">
-			<span>Copyright 2026, Tasche piene tutti i diritti riservati</span>
-			<span>P.IVA 03942309300</span>
-			<span>Privacy-Cookie</span>
-			<span>Designed By Mochi</span>
-		</div>
-	</div>
-</footer>
-HTML;
 }
 
 function tp_child_seed_find_post_id( string $post_type, string $slug ): int {

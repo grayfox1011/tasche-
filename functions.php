@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( "TP_CHILD_VERSION", "0.4.0" );
+define( "TP_CHILD_VERSION", "0.4.1" );
 define( 'TP_CHILD_PATH', trailingslashit( get_stylesheet_directory() ) );
 define( 'TP_CHILD_URL', trailingslashit( get_stylesheet_directory_uri() ) );
 define( 'TP_CHILD_MODULES_JSON_PATH', TP_CHILD_PATH . 'modules-json/' );
@@ -23,6 +23,41 @@ require_once TP_CHILD_PATH . 'inc/chrome-menu-cleanup.php';
 require_once TP_CHILD_PATH . 'inc/nav-url-migration.php';
 require_once TP_CHILD_PATH . 'inc/hero-anchor-migration.php';
 require_once TP_CHILD_PATH . 'inc/design-cleanup-migration.php';
+
+/**
+ * The one-time migrations check their flag on every request. Until 0.4.0 the
+ * flags were saved without autoload, so each check cost a database query: load
+ * them with the other options from now on.
+ */
+function tp_child_autoload_migration_flags(): void {
+	if ( get_option( 'tp_child_migration_flags_autoload_v1' ) ) {
+		return;
+	}
+
+	if ( function_exists( 'wp_set_option_autoload_values' ) ) {
+		wp_set_option_autoload_values(
+			array_fill_keys(
+				[
+					'tp_child_chrome_images_v4',
+					'tp_child_chrome_images_v5',
+					'tp_child_chrome_nav_wp_v1',
+					'tp_child_chrome_menus_v1',
+					'tp_child_nav_urls_v1',
+					'tp_child_nav_menu_titles_v2',
+					'tp_child_legal_pages_v2',
+					'tp_child_hero_home_id_v1',
+					'tp_child_nav_hash_home_v3',
+					'tp_child_materie_marquee_migrated_v1',
+					'tp_child_design_cleanup_v1',
+				],
+				true
+			)
+		);
+	}
+
+	update_option( 'tp_child_migration_flags_autoload_v1', '1', true );
+}
+add_action( 'after_setup_theme', 'tp_child_autoload_migration_flags', 1 );
 
 /**
  * Allow JPEG extension aliases that WordPress does not include by default.
@@ -380,15 +415,23 @@ function tp_child_has_block( string $block_name ): bool {
 
 /**
  * Check current singular content for a class or text marker.
+ * The answer is kept for the request: the same markers are asked several times.
  */
 function tp_child_content_has_marker( string $marker ): bool {
+	static $found = [];
+
 	if ( ! is_singular() ) {
 		return false;
 	}
 
-	$content = get_post_field( 'post_content', get_queried_object_id() );
+	$post_id = get_queried_object_id();
 
-	return is_string( $content ) && false !== strpos( $content, $marker );
+	if ( ! isset( $found[ $post_id ][ $marker ] ) ) {
+		$content                      = get_post_field( 'post_content', $post_id );
+		$found[ $post_id ][ $marker ] = is_string( $content ) && false !== strpos( $content, $marker );
+	}
+
+	return $found[ $post_id ][ $marker ];
 }
 
 /**
@@ -448,29 +491,15 @@ function tp_child_render_preloader(): void {
 add_action( 'wp_body_open', 'tp_child_render_preloader', 1 );
 
 /**
- * Enqueue Divi parent styles and lightweight project assets.
+ * Enqueue the project stylesheet and runtime. Divi already enqueues its own
+ * stylesheet and the child style.css (divi-style-child) at the default priority,
+ * so the project stylesheet still prints after them.
  */
 function tp_child_enqueue_assets(): void {
-	$parent_theme = wp_get_theme( get_template() );
-
-	wp_enqueue_style(
-		'tp-divi-parent',
-		get_template_directory_uri() . '/style.css',
-		[],
-		$parent_theme->get( 'Version' )
-	);
-
-	wp_enqueue_style(
-		'tp-divi-child',
-		get_stylesheet_uri(),
-		[ 'tp-divi-parent' ],
-		TP_CHILD_VERSION
-	);
-
 	wp_enqueue_style(
 		'tp-site',
 		TP_CHILD_URL . 'assets/css/tasche-piene.css',
-		[ 'tp-divi-child' ],
+		[],
 		tp_child_asset_version( 'assets/css/tasche-piene.css' )
 	);
 
@@ -910,7 +939,8 @@ function tp_child_enqueue_preloader_assets(): void {
 add_action( 'wp_enqueue_scripts', 'tp_child_enqueue_preloader_assets', 32 );
 
 /**
- * Register the Visual Builder bundle for child-theme modules.
+ * Register the Visual Builder bundle for child-theme modules. The stylesheet
+ * reaches the builder preview through tp_child_enqueue_assets().
  */
 function tp_child_register_vb_package_builds(): void {
 	if ( ! function_exists( 'et_builder_d5_enabled' ) || ! et_builder_d5_enabled() ) {
@@ -928,19 +958,6 @@ function tp_child_register_vb_package_builds(): void {
 			'script'  => [
 				'src'                => TP_CHILD_URL . 'scripts/bundle.js',
 				'deps'               => [ 'divi-module-library', 'divi-vendor-wp-hooks' ],
-				'enqueue_top_window' => false,
-				'enqueue_app_window' => true,
-			],
-		]
-	);
-
-	\ET\Builder\VisualBuilder\Assets\PackageBuildManager::register_package_build(
-		[
-			'name'    => 'tp-child-builder-site-style',
-			'version' => tp_child_asset_version( 'assets/css/tasche-piene.css' ),
-			'style'   => [
-				'src'                => TP_CHILD_URL . 'assets/css/tasche-piene.css',
-				'deps'               => [],
 				'enqueue_top_window' => false,
 				'enqueue_app_window' => true,
 			],
@@ -1144,6 +1161,9 @@ add_action( 'wp_footer', 'tp_child_footer_scale_script' );
 /**
  * Visual Builder: scale the modular 1512x982 footer canvas to the real preview width.
  * 100vw is wrong in VB because the canvas is narrower than the browser window.
+ * The builder renders (and re-renders) the footer after load: a light observer
+ * tracks which footer node is on the page, a ResizeObserver reads its width only
+ * when it changes.
  */
 function tp_child_vb_footer_scale_script() {
 	if ( ! tp_child_is_visual_builder() ) {
@@ -1152,8 +1172,9 @@ function tp_child_vb_footer_scale_script() {
 	?>
 <script id="tp-vb-footer-scale-js">
 (function(){
+	var section = null;
+	var resizer = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(upd) : null;
 	function upd(){
-		var section = document.querySelector('.tp-theme-builder-footer-shell');
 		var root = document.documentElement;
 		if (!section) {
 			root.style.removeProperty('--tp-vb-footer-scale');
@@ -1163,12 +1184,27 @@ function tp_child_vb_footer_scale_script() {
 		var scale = w > 0 ? Math.min(1, w / 1512) : 1;
 		root.style.setProperty('--tp-vb-footer-scale', scale.toFixed(6));
 	}
-	function boot(){
+	function track(){
+		var current = document.querySelector('.tp-theme-builder-footer-shell');
+		if (current === section) {
+			return;
+		}
+		if (section && resizer) {
+			resizer.unobserve(section);
+		}
+		section = current;
+		if (section && resizer) {
+			resizer.observe(section, { box: 'border-box' });
+		}
 		upd();
-		window.addEventListener('resize', upd, { passive: true });
+	}
+	function boot(){
+		track();
+		if (!resizer) {
+			window.addEventListener('resize', upd, { passive: true });
+		}
 		if (typeof MutationObserver !== 'undefined') {
-			var mo = new MutationObserver(upd);
-			mo.observe(document.documentElement, { childList: true, subtree: true, attributes: true });
+			new MutationObserver(track).observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
 		}
 	}
 	if (document.readyState === 'loading') {
@@ -1351,40 +1387,6 @@ function tp_child_alberto_mobile_reflow() {
 	<?php
 }
 add_action( 'wp_footer', 'tp_child_alberto_mobile_reflow' );
-
-/**
- * iOS image robustness: decoding="async" su tutte le immagini + loading="lazy"
- * su quelle prive di attributo loading e sotto il primo viewport. Riduce la
- * pressione di decodifica simultanea su device con poca RAM (es. iPhone 11),
- * dove alcune immagini non venivano renderizzate. Non tocca chi ha gia' loading
- * (es. i cloni alberto eager). Solo frontend.
- */
-function tp_child_image_decode_hints() {
-	if ( is_admin() || tp_child_is_visual_builder() ) {
-		return;
-	}
-	?>
-<script id="tp-img-hints-js">
-(function(){
-	function hint(){
-		var vh = window.innerHeight || 800;
-		var imgs = document.getElementsByTagName('img');
-		for (var i = 0; i < imgs.length; i++) {
-			var im = imgs[i];
-			if (!im.getAttribute('decoding')) { im.setAttribute('decoding', 'async'); }
-			if (!im.getAttribute('loading')) {
-				var top = im.getBoundingClientRect().top + (window.pageYOffset || 0);
-				if (top > vh * 1.5) { im.setAttribute('loading', 'lazy'); }
-			}
-		}
-	}
-	if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', hint); } else { hint(); }
-})();
-</script>
-	<?php
-}
-add_action( 'wp_footer', 'tp_child_image_decode_hints' );
-
 
 /**
  * Allergeni + nomi brevi mobile, EDITABILI DA DIVI (nessun reseed):

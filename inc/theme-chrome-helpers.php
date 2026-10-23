@@ -387,29 +387,6 @@ function tp_child_chrome_render_copyright_line( string $text, string $link ): st
 }
 
 /**
- * Seed helper for paired text/link attrs.
- */
-function tp_child_chrome_seed_link_pair( string $text, string $link ): array {
-	return [
-		'innerContent' => [
-			'desktop' => [
-				'value' => $text,
-			],
-		],
-	];
-}
-
-function tp_child_chrome_seed_link_url( string $url ): array {
-	return [
-		'innerContent' => [
-			'desktop' => [
-				'value' => $url,
-			],
-		],
-	];
-}
-
-/**
  * Read the uploaded image src from a Divi image attribute.
  */
 function tp_child_chrome_get_image_src_from_attr( array $attrs, string $upload_key ): string {

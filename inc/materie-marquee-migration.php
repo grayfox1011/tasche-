@@ -236,7 +236,7 @@ function tp_child_migrate_materie_marquee_content(): void {
 		tp_child_migrate_post_materie_marquee( $post_id );
 	}
 
-	update_option( 'tp_child_materie_marquee_migrated_v1', 1, false );
+	update_option( 'tp_child_materie_marquee_migrated_v1', 1, true );
 }
 
 add_action( 'after_setup_theme', 'tp_child_migrate_materie_marquee_content', 22 );

@@ -184,7 +184,7 @@ function tp_child_nav_url_migrate(): void {
 		}
 	}
 
-	update_option( 'tp_child_nav_urls_v1', '1', false );
+	update_option( 'tp_child_nav_urls_v1', '1', true );
 }
 add_action( 'after_setup_theme', 'tp_child_nav_url_migrate', 23 );
 
@@ -243,6 +243,6 @@ function tp_child_nav_menu_restore_titles(): void {
 		}
 	}
 
-	update_option( 'tp_child_nav_menu_titles_v2', '1', false );
+	update_option( 'tp_child_nav_menu_titles_v2', '1', true );
 }
 add_action( 'after_setup_theme', 'tp_child_nav_menu_restore_titles', 24 );
