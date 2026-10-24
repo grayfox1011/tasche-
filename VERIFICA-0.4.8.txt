@@ -102,6 +102,11 @@ DA DECIDERE
 - Titoli: la riduzione e' calcolata sulle parole di oggi ("NASCOSTI.",
   "NOSTRO"); una parola piu' lunga scritta in Divi puo' ancora andare a capo a
   meta' tra 981 e 1220 px.
+- Titolo "Il nostro menu'" sul computer: l'accento della U e' tagliato e resta
+  un trattino, anche nella 0.4.7 (sui tablet e sui telefoni si vede).
+  L'animazione dei titoli chiude ogni riga con un taglio alto quanto il
+  carattere; togliere il taglio a fine animazione fa vedere l'accento, ma
+  cambia l'aspetto del titolo: serve un ok.
 
 ==============================================================================
 
