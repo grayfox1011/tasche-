@@ -1,4 +1,83 @@
-TASCHE PIENE — VERSIONE 0.4.3, CANDIDATA AL COLLAUDO
+TASCHE PIENE — VERSIONE 0.4.4, CANDIDATA AL COLLAUDO
+
+La 0.4.4 porta la card del menu su telefono e tablet al Figma: la tavola
+"mobilw", la stessa da cui vengono gli export "react mobile" e "html-css
+mobile". Da 981 px in su (computer e iPad in orizzontale) il sito resta
+identico alla 0.4.3. Le note delle versioni precedenti, piu' in basso, restano
+valide.
+
+COSA CAMBIA RISPETTO ALLA 0.4.3
+- Card del menu sotto i 981 px, su tutti i browser: scritte "Tasca" e "Piatto"
+  inclinate come nel Figma (-8 e 9 gradi), icone, lettere M e L accanto alle
+  ciotole, prezzi Tasca, M e L in una riga sotto le icone. Prima su Android e
+  nei browser non iOS non si vedeva nessun prezzo e "Piatto" stava sopra la
+  ciotola L; su iPhone si vedeva solo il prezzo Tasca e le lettere M e L erano
+  sovrapposte in un angolo; sui tablet le cifre dei prezzi andavano in colonna.
+- Prezzi e lettere: 17,42 px sui telefoni, come nel Figma; sui tablet crescono
+  con la card (circa 21-26 px) e sono tutti uguali, quindi il prezzo Tasca sui
+  tablet passa da 32 a circa 22 px.
+- Le regole del menu per tablet valgono da 768 px invece che da 778. Tra 768 e
+  777 px (iPad mini e iPad 9,7" in verticale) il menu restava senza lo stile
+  per tablet: griglia senza icone su Android, card schiacciata sul titolo su
+  iPad.
+- Tolto lo script che posizionava i prezzi del menu solo su iPhone e iPad. Le
+  nuove regole CSS pesano una classe: i valori impostati in Divi su scritte e
+  prezzi prevalgono anche su iPhone, e le anteprime telefono e tablet del
+  Visual Builder mostrano la card come sul sito.
+
+VERIFICHE EFFETTUATE SULLA 0.4.4
+Riferimento: la 0.4.3 sullo stesso sito di prova.
+- Suite completa. Home a 20 larghezze: cambia solo il menu sotto i 981 px; a
+  768 px il menu prende lo stile per tablet e la pagina si allunga di 482 px.
+  Privacy e cookie identiche al pixel. Hover e focus identici, tranne la card
+  del menu sotto i 981 px. Visual Builder: desktop identico, telefono e tablet
+  cambiano solo nella card. Modificabilita': uguale a 1440 e 390 px; a 820 px
+  passano 24 controlli in piu', perche' i prezzi ora si vedono; modifica dal
+  builder 8 su 8. HTML dei moduli, query al database, stato attivo e scale
+  invariati. iPhone 13 in emulazione senza errori.
+- Card su 10 dispositivi in emulazione (Chromium con i profili Android, iPhone
+  13, iPhone SE, iPad Pro 11, iPad mini e tablet Android a 768 e 820 px):
+  stessa card su tutti, confrontata con il Figma; sui telefoni icone, scritte e
+  prezzo Tasca stanno dove gli iPhone li mostravano gia'.
+- Rotazione di iPad e iPhone e ridimensionamento 390 -> 1440 -> 390 px: card
+  uguale a un caricamento nuovo. Nessun errore JavaScript nuovo.
+- Non provato: Safari vero. Le prove su iPhone e iPad usano Chromium con il
+  profilo del dispositivo; le nuove regole sono CSS di base (posizioni in
+  percentuale).
+
+INSTALLAZIONE DELLO ZIP
+Provata caricando lo zip da wp-admin (Aspetto > Temi > Carica tema), come si
+fa sul sito pubblico, su una copia del sito di prova con la 0.4.3 installata
+dallo zip. WordPress mostra la tabella "Installato / Caricato" e sostituisce
+il tema senza errori; i file installati sono identici allo zip; Divi svuota da
+solo la sua cache CSS. Home (6 larghezze, da 320 a 1440 px) e privacy hanno gli
+stessi stili e le stesse posizioni della versione di sviluppo. Nessun errore
+PHP del tema.
+
+DA DECIDERE
+- Misura S del piatto (variante S/M/L del Figma, quattro prezzi): approvata,
+  servono i prezzi. Nel Figma su desktop anche i prezzi M e L sono diversi da
+  quelli di oggi e l'intestazione dice ancora "Regular" e "Large".
+- Tablet, card "Trippa - ogni venerdi'" e "Stoccafisso - ogni giovedi'": il
+  titolo va su due righe e gli allergeni finiscono sopra la seconda (gia' nella
+  0.4.3; su telefono il titolo e' corto e non succede).
+- iOS: il preloader sparisce di colpo 1,2 s dopo il caricamento, a meta'
+  animazione.
+- Titoli "Siamo nei caruggi..." e "Il nostro menu'" tra 981 e 1180 px: le
+  parole vanno a capo a meta' (CARUG / GI.).
+- Moduli custom: alcune opzioni del modulo Onda non hanno effetto; il
+  separatore della striscia non si puo' togliere; la striscia Materie salta se
+  le ripetizioni non sono 4; le opzioni Design delle singole scritte non hanno
+  effetto; una striscia senza scritte mostra frasi predefinite sul sito.
+- Visual Builder: i colori globali di Divi nei moduli Header/Footer e i campi
+  con contenuto dinamico non si vedono nell'anteprima del builder (sul sito
+  si'); i segnaposto usano un percorso fisso del tema.
+- "Crea/aggiorna home": un doppio clic durante i circa 40 s di lavoro puo'
+  creare doppioni.
+
+==============================================================================
+
+NOTE DELLA 0.4.3
 
 La 0.4.3 corregge gli errori trovati nella notte tra il 23 e il 24 ottobre 2026:
 una ricerca in sei aree (PHP, sicurezza, JavaScript, moduli, file richiamati,
