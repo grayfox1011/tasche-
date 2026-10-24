@@ -1,6 +1,10 @@
 <?php
 /**
  * Allow trusted editors to upload SVG assets (logo header/footer, ecc.).
+ *
+ * An SVG can carry scripts that run on the site's own domain, and the regex clean-up
+ * below cannot catch every form, so SVG uploads are limited to users who may already
+ * publish unfiltered HTML (administrators and editors on a single site).
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -11,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Register SVG mime types for the Media Library and Divi upload fields.
  */
 function tp_child_allow_svg_upload_mimes( array $mimes ): array {
-	if ( ! current_user_can( 'upload_files' ) ) {
+	if ( ! current_user_can( 'unfiltered_html' ) ) {
 		return $mimes;
 	}
 
@@ -26,6 +30,10 @@ add_filter( 'upload_mimes', 'tp_child_allow_svg_upload_mimes', 20 );
  * WordPress sometimes mis-detects SVG file extensions.
  */
 function tp_child_fix_svg_filetype( array $data, string $file, string $filename, $mimes ): array {
+	if ( ! current_user_can( 'unfiltered_html' ) ) {
+		return $data;
+	}
+
 	$extension = strtolower( pathinfo( $filename, PATHINFO_EXTENSION ) );
 
 	if ( in_array( $extension, [ 'svg', 'svgz' ], true ) ) {
@@ -83,6 +91,7 @@ function tp_child_sanitize_svg_upload( array $file ): array {
 	return $file;
 }
 add_filter( 'wp_handle_upload_prefilter', 'tp_child_sanitize_svg_upload', 5 );
+add_filter( 'wp_handle_sideload_prefilter', 'tp_child_sanitize_svg_upload', 5 );
 
 /**
  * Show SVG previews in the Media Library grid/list and Divi media modal.

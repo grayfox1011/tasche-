@@ -516,9 +516,7 @@ function tp_child_migrate_legal_pages(): void {
 	update_option( 'tp_child_legal_pages_v1', '1', false );
 	update_option( 'tp_child_legal_pages_v2', '1', true );
 
-	if ( function_exists( 'et_core_clear_cache' ) ) {
-		et_core_clear_cache();
-	}
+	tp_child_clear_divi_static_css();
 }
 add_action( 'after_setup_theme', 'tp_child_migrate_legal_pages', 24 );
 

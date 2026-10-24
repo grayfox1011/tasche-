@@ -179,8 +179,8 @@ function tp_child_nav_url_migrate(): void {
 			}
 		}
 
-		if ( $updated && function_exists( 'et_core_clear_cache' ) ) {
-			et_core_clear_cache();
+		if ( $updated ) {
+			tp_child_clear_divi_static_css();
 		}
 	}
 

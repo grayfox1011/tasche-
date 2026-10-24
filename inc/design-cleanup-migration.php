@@ -137,6 +137,7 @@ function tp_child_migrate_design_cleanup(): void {
 
 	// The block JSON must be saved verbatim, whoever triggers the request.
 	kses_remove_filters();
+	$cleaned = 0;
 
 	foreach ( array_map( 'intval', $page_ids ) as $page_id ) {
 		$content = (string) get_post_field( 'post_content', $page_id );
@@ -152,6 +153,7 @@ function tp_child_migrate_design_cleanup(): void {
 				'post_content' => wp_slash( $updated ),
 			]
 		);
+		$cleaned++;
 
 		if ( function_exists( 'tp_child_seed_clear_divi_cache_meta' ) ) {
 			tp_child_seed_clear_divi_cache_meta( $page_id );
@@ -161,8 +163,8 @@ function tp_child_migrate_design_cleanup(): void {
 	kses_init();
 	update_option( 'tp_child_design_cleanup_v1', '1', true );
 
-	if ( function_exists( 'et_core_clear_cache' ) ) {
-		et_core_clear_cache();
+	if ( $cleaned > 0 ) {
+		tp_child_clear_divi_static_css();
 	}
 }
 add_action( 'after_setup_theme', 'tp_child_migrate_design_cleanup', 27 );

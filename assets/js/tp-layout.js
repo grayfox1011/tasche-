@@ -89,7 +89,27 @@
 			var hero = document.querySelector('.tp-hero-section');
 			if (!hero) { return; }
 			injected = true;
+			// The video chosen in Divi for this breakpoint: Divi prints one span per
+			// breakpoint with its own value (an empty one when the video is removed
+			// there). The theme files stay the fallback when the hero has none.
 			var media = window.tpHeroVideo || {};
+			var own = function (suffix) {
+				for (var i = 0; i < hero.children.length; i++) {
+					var el = hero.children[i];
+					if (!el.classList || !el.classList.contains('et-pb-background-video')) { continue; }
+					var variant = /(?:^|\s)et-pb-background-video_/.test(el.className);
+					if (suffix ? el.classList.contains('et-pb-background-video' + suffix) && !/__/.test(el.className) : !variant) { return el; }
+				}
+				return null;
+			};
+			var span = (window.matchMedia('(max-width: 767px)').matches && own('_phone')) || own('_tablet') || own('');
+			if (span) {
+				var pick = function (type) {
+					var s = span.querySelector('source[type="video/' + type + '"]');
+					return s ? (s.getAttribute('data-src') || s.getAttribute('src') || '') : '';
+				};
+				media = { mp4: pick('mp4'), webm: pick('webm'), poster: media.poster };
+			}
 			if (!media.mp4 && !media.webm) { return; }
 			var v = document.createElement('video');
 			v.className = 'tp-hero-native-video';

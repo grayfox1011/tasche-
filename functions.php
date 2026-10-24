@@ -7,11 +7,37 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( "TP_CHILD_VERSION", "0.4.2" );
+define( "TP_CHILD_VERSION", "0.4.3" );
 define( 'TP_CHILD_PATH', trailingslashit( get_stylesheet_directory() ) );
 define( 'TP_CHILD_URL', trailingslashit( get_stylesheet_directory_uri() ) );
 define( 'TP_CHILD_MODULES_JSON_PATH', TP_CHILD_PATH . 'modules-json/' );
 
+/**
+ * Invalidate Divi's static CSS files after a migration rewrote saved layouts, so the
+ * pages are not served with CSS built from their old content. Divi 5 has no
+ * et_core_clear_cache(), and ET_Core_PageResource is ready only from wp_loaded; the
+ * public do_remove_static_resources() also works for visitors, cron and WP-CLI.
+ */
+function tp_child_clear_divi_static_css(): void {
+	static $scheduled = false;
+
+	if ( $scheduled ) {
+		return;
+	}
+
+	$scheduled = true;
+	$clear     = static function (): void {
+		if ( class_exists( 'ET_Core_PageResource' ) && ET_Core_PageResource::can_write_to_filesystem() ) {
+			ET_Core_PageResource::do_remove_static_resources( 'all', 'all' );
+		}
+	};
+
+	if ( did_action( 'wp_loaded' ) ) {
+		$clear();
+	} else {
+		add_action( 'wp_loaded', $clear );
+	}
+}
 
 require_once TP_CHILD_PATH . 'inc/media-upload-fallback.php';
 require_once TP_CHILD_PATH . 'inc/svg-upload-support.php';
@@ -387,7 +413,9 @@ function tp_child_is_visual_builder(): bool {
 		return true;
 	}
 
-	if ( ! isset( $_GET['et_fb'] ) ) {
+	// Divi opens the builder only for users who can edit: a visitor adding ?et_fb=1 to
+	// a URL must still get the normal page with its scripts.
+	if ( ! isset( $_GET['et_fb'] ) || ! is_user_logged_in() || ! current_user_can( 'edit_posts' ) ) {
 		return false;
 	}
 
@@ -854,8 +882,17 @@ function tp_child_replace_choice_section( string $content ): string {
 		return $content;
 	}
 
+	// A callback, so "$1" or "\1" written in the editorial text is kept as text.
 	$replacement = tp_child_choice_standalone_markup( $data ) . "\n";
-	$updated     = preg_replace( $pattern, $replacement, $content, 1, $replaced );
+	$updated     = preg_replace_callback(
+		$pattern,
+		static function () use ( $replacement ): string {
+			return $replacement;
+		},
+		$content,
+		1,
+		$replaced
+	);
 
 	if ( is_string( $updated ) && $replaced > 0 ) {
 		return $updated;

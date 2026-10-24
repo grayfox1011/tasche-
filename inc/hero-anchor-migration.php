@@ -42,9 +42,7 @@ function tp_child_migrate_hero_home_id(): void {
 
 	update_option( 'tp_child_hero_home_id_v1', '1', true );
 
-	if ( function_exists( 'et_core_clear_cache' ) ) {
-		et_core_clear_cache();
-	}
+	tp_child_clear_divi_static_css();
 }
 
 /**

@@ -166,6 +166,7 @@ function tp_child_migrate_menu_label_text_modules(): void {
 			]
 		);
 		tp_child_seed_clear_divi_cache_meta( $home_id );
+		tp_child_clear_divi_static_css();
 	}
 
 	update_option( $flag, TP_CHILD_VERSION );

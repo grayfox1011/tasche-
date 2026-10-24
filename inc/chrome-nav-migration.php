@@ -125,8 +125,8 @@ function tp_child_chrome_migrate_theme_builder_nav_attrs(): void {
 
 	update_option( 'tp_child_chrome_nav_wp_v1', '1', true );
 
-	if ( $updated && function_exists( 'et_core_clear_cache' ) ) {
-		et_core_clear_cache();
+	if ( $updated ) {
+		tp_child_clear_divi_static_css();
 	}
 }
 add_action( 'after_setup_theme', 'tp_child_chrome_migrate_theme_builder_nav_attrs', 22 );

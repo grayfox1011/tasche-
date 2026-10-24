@@ -232,11 +232,17 @@ function tp_child_migrate_materie_marquee_content(): void {
 		$post_ids = array_merge( $post_ids, array_map( 'intval', $pages ) );
 	}
 
+	$changed = false;
+
 	foreach ( array_unique( array_filter( $post_ids ) ) as $post_id ) {
-		tp_child_migrate_post_materie_marquee( $post_id );
+		$changed = tp_child_migrate_post_materie_marquee( $post_id ) || $changed;
 	}
 
 	update_option( 'tp_child_materie_marquee_migrated_v1', 1, true );
+
+	if ( $changed ) {
+		tp_child_clear_divi_static_css();
+	}
 }
 
 add_action( 'after_setup_theme', 'tp_child_migrate_materie_marquee_content', 22 );
