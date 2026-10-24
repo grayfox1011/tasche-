@@ -19939,6 +19939,7 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 	}
 
 	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices .tp-menu-price .et_pb_text_inner),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices .tp-menu-label-s .et_pb_text_inner),
 .tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices .tp-menu-label-m .et_pb_text_inner),
 .tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices .tp-menu-label-l .et_pb_text_inner) {
 		font-size: 2.69vw;
@@ -19955,7 +19956,8 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 		color: #560b22;
 	}
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices .tp-menu-label-m .et_pb_text_inner),
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices .tp-menu-label-s .et_pb_text_inner),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices .tp-menu-label-m .et_pb_text_inner),
 .tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices .tp-menu-label-l .et_pb_text_inner) {
 		color: #89515e;
 	}
@@ -19972,9 +19974,149 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 @media (max-width: 767px) {
 
 	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices .tp-menu-price .et_pb_text_inner),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices .tp-menu-label-s .et_pb_text_inner),
 .tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices .tp-menu-label-m .et_pb_text_inner),
 .tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices .tp-menu-label-l .et_pb_text_inner) {
 		font-size: 17.42px;
+	}
+}
+
+/*
+ * Menu with the S size of the plate (Figma: frames "statico per copy", "iPhone 17 - 2", "iPad Pro 11"):
+ * on desktop the prices sit in fixed columns (Tasca, S, M, L), so a row without S keeps its S cell
+ * empty; on phones and tablets a row with an S price is a four-column card, with smaller icons.
+ */
+@media (min-width: 981px) {
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main:has(.tp-menu-price-value-s) .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices) {
+		display: grid;
+		grid-template-columns: 70px 13px 70px 13px 70px 13px 70px;
+		column-gap: 24px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main:has(.tp-menu-price-value-s) .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices > .tp-menu-price),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main:has(.tp-menu-price-value-s) .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices > .tp-menu-label) {
+		grid-row: 1;
+		min-width: 0;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main:has(.tp-menu-price-value-s) .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices > .tp-menu-price-value-tasca) {
+		grid-column: 1;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main:has(.tp-menu-price-value-s) .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices > .tp-menu-label-tasca) {
+		grid-column: 1;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main:has(.tp-menu-price-value-s) .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices > .tp-menu-label-piatto) {
+		grid-column: 1;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main:has(.tp-menu-price-value-s) .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices > .tp-menu-label-s) {
+		grid-column: 2;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main:has(.tp-menu-price-value-s) .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices > .tp-menu-price-value-s) {
+		grid-column: 3;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main:has(.tp-menu-price-value-s) .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices > .tp-menu-label-m) {
+		grid-column: 4;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main:has(.tp-menu-price-value-s) .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices > .tp-menu-price-value-m) {
+		grid-column: 5;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main:has(.tp-menu-price-value-s) .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices > .tp-menu-label-l) {
+		grid-column: 6;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main:has(.tp-menu-price-value-s) .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices > .tp-menu-price-value-l) {
+		grid-column: 7;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main:has(.tp-menu-price-value-s) .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices > .tp-menu-label-s .et_pb_text_inner),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main:has(.tp-menu-price-value-s) .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices > .tp-menu-label-m .et_pb_text_inner),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main:has(.tp-menu-price-value-s) .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices > .tp-menu-label-l .et_pb_text_inner) {
+		text-align: right;
+	}
+
+	/* Four price columns leave less room: the description shrinks and wraps along with the name. */
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main:has(.tp-menu-price-value-s) .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-meta),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main:has(.tp-menu-price-value-s) .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-meta .et_pb_text_inner),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main:has(.tp-menu-price-value-s) .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-meta p),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main:has(.tp-menu-price-value-s) .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-meta span) {
+		flex-shrink: 1;
+		min-width: 0;
+		white-space: normal;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-legend-sizes:has(> span:nth-child(3))) {
+		gap: 24px;
+	}
+}
+
+@media (max-width: 980px) {
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices) {
+		background-image: url("../svg/menu-tasca-icon.svg"), url("../svg/menu-piatto-m-icon.svg"), url("../svg/menu-piatto-m-icon.svg"), url("../svg/menu-piatto-l-icon.svg"), url("../svg/menu-arrow-green.svg"), url("../svg/menu-arrow-bordeaux.svg");
+		background-position: 4.7% 76%, 33.5% 77%, 59.4% 77%, 88.2% 76%, 17.7% 65%, 30.1% 69%;
+		background-size: 12.7% auto, 7% auto, 9.6% auto, 11.6% auto, 3.86% 10.2%, 3.52% 10.8%;
+		background-repeat: no-repeat;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices .tp-menu-label-tasca .et_pb_text_inner) {
+		left: 4%;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices .tp-menu-label-piatto .et_pb_text_inner) {
+		left: 26.7%;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices .tp-menu-price-value-tasca .et_pb_text_inner) {
+		left: 4.4%;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices .tp-menu-price-value-s .et_pb_text_inner) {
+		left: 28.5%;
+		top: 88%;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices .tp-menu-price-value-m .et_pb_text_inner) {
+		left: 52.6%;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices .tp-menu-price-value-l .et_pb_text_inner) {
+		left: 79.1%;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices .tp-menu-label-s .et_pb_text_inner) {
+		left: 40.1%;
+		top: 77%;
+		margin-top: -4.7%;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices .tp-menu-label-m .et_pb_text_inner) {
+		left: 63.8%;
+		top: 77%;
+		margin-top: -4.7%;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices .tp-menu-label-l .et_pb_text_inner) {
+		left: 91.6%;
+		top: 77%;
+		margin-top: -4.7%;
+	}
+}
+
+/* Browsers without :has() cannot place the S size: they show the menu with Tasca, M and L only. */
+@supports not selector(:has(*)) {
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices > .tp-menu-label-s),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices > .tp-menu-price-value-s),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-legend-sizes > span:first-child:nth-last-child(3)) {
+		display: none;
 	}
 }
 

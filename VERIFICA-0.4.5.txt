@@ -1,4 +1,115 @@
-TASCHE PIENE — VERSIONE 0.4.4, CANDIDATA AL COLLAUDO
+TASCHE PIENE — VERSIONE 0.4.5, CANDIDATA AL COLLAUDO
+
+La 0.4.5 aggiunge al menu la misura S del piatto, come nel Figma: prezzi e
+intestazione dalla tavola desktop "statico per copy", card a quattro colonne
+dalle tavole per iPhone 17 e iPad Pro 11. Fuori dal menu il sito resta
+identico alla 0.4.4. Le note delle versioni precedenti, piu' in basso,
+restano valide.
+
+COSA CAMBIA RISPETTO ALLA 0.4.4
+- Menu principale: ogni piatto ha la lettera S e il prezzo S prima della M,
+  tranne la melanzana alla parmigiana, che nel Figma non ha la S. Prezzi del
+  Figma (Tasca invariata):
+    Melanzana alla parmigiana          -       M 10,50   L 14,50
+    Ripieni liguri, Caprese            S 7,00  M 10,50   L 14,50
+    Polpette, Pollo, Acciughe          S 8,00  M 12,00   L 16,50
+    Trippa, Stoccafisso                S 9,00  M 13,50   L 18,00
+  Prima M e L erano 6,00 e 9,00 (melanzana, ripieni, caprese) e 7,50 e
+  10,50 (gli altri).
+- Intestazione del menu: "S - 150g", "M - 200g", "L - 400g" (prima
+  "Regular - 200g" e "Large - 400g").
+- Desktop: i prezzi stanno in colonne fisse (Tasca, S, M, L), quindi la
+  parmigiana lascia vuota la cella S e le colonne restano allineate. Con
+  quattro colonne la descrizione dei piatti ha meno spazio e va a capo.
+- Telefono e tablet: un piatto con il prezzo S ha la card a quattro colonne
+  (Tasca, S, M, L) con le ciotole piu' piccole e le lettere S, M e L sulla
+  stessa riga; la parmigiana resta a tre colonne come nella 0.4.4.
+- Aggiornamento della home: alla prima richiesta dopo l'aggiornamento il tema
+  aggiunge la S alla home salvata in Divi, una sola volta, chiunque apra il
+  sito per primo. Cambia solo i moduli dei prezzi e la legenda: un prezzo M o
+  L gia' cambiato a mano resta com'e', un piatto rinominato non viene toccato
+  (non si sa quale prezzo dargli) e WordPress conserva la home precedente tra
+  le revisioni. La riga "in rotazione" (salsiccia) non cambia.
+  "Crea/aggiorna home" e le installazioni nuove usano gia' il contenuto con
+  la S.
+- Browser senza il selettore :has() (Safari prima del 15.4, Firefox prima del
+  121): mostrano il menu della 0.4.4, con Tasca, M e L e i nuovi prezzi,
+  invece di disegnare la S fuori posto.
+- Per togliere la S a un piatto basta eliminare in Divi i suoi due moduli,
+  lettera e prezzo (classi tp-menu-label-s e tp-menu-price-value-s).
+
+VERIFICHE EFFETTUATE SULLA 0.4.5
+Riferimento: la 0.4.4 sullo stesso sito di prova.
+- Suite completa. Home a 20 larghezze: stessa altezza della pagina a tutte le
+  larghezze e differenze solo dentro il menu, nessun altro elemento si
+  sposta. Privacy e cookie identiche al pixel. Hover e focus identici, tranne
+  le righe del menu. Visual Builder: cambia solo il menu, privacy identica.
+  Modificabilita' e modifica dal builder (8 su 8) come nella 0.4.4. HTML dei
+  moduli, query al database, stato attivo e scale invariati. iPhone 13 in
+  emulazione senza errori.
+- Nuovi moduli S, su pagine di prova costruite dalla home aggiornata: i 14
+  moduli (7 lettere e 7 prezzi) prendono colore e dimensione del testo,
+  spaziature, sfondo e larghezza impostati in Divi a 1440, 820 e 390 px, come
+  i moduli M. Gli altri moduli danno gli stessi esiti di prima.
+- Card in emulazione (Android 390 e 768, iPhone 13, iPad mini, iPad Pro 11,
+  tablet Android 820): quattro colonne con la S, tre per la parmigiana,
+  confrontate con il Figma.
+- Desktop a 981, 1024, 1100, 1280, 1440 e 1512 px: colonne allineate,
+  intestazione dentro il riquadro, descrizioni a capo senza sovrapporsi.
+- Aggiornamento della home, su copie del sito:
+  - home della 0.4.4: sette piatti con la S, prezzi e intestazione del
+    Figma, una revisione in piu', cache CSS di Divi svuotata; una seconda
+    richiesta non cambia niente;
+  - home con modifiche del proprietario: il piatto rinominato resta com'e',
+    il prezzo M cambiato a mano (7,80) resta, S e L arrivano lo stesso;
+  - aggiornamento partito dalla visita di un utente non collegato, il caso
+    piu' probabile sul sito pubblico: la home salvata e' identica byte per
+    byte a quella prevista (WordPress non la filtra come un testo scritto
+    dal visitatore, che puo' togliere iframe o script incorporati);
+  - contenuto di "Crea/aggiorna home" uguale alla home aggiornata, e su un
+    WordPress nuovo il menu ha la S e l'intestazione S, M, L.
+- Browser senza :has(), simulato in Chromium: menu e intestazione come nella
+  0.4.4, con i nuovi prezzi.
+- Non provati: Safari vero (le prove su iPhone e iPad usano Chromium con il
+  profilo del dispositivo) e un browser vecchio vero.
+
+INSTALLAZIONE DELLO ZIP
+Provata caricando lo zip da wp-admin (Aspetto > Temi > Carica tema) su una
+copia del sito di prova con la 0.4.4 installata dallo zip. WordPress
+sostituisce il tema senza errori e alla prima richiesta la home riceve la S.
+Home a 5 larghezze (da 390 a 1440 px) con gli stessi stili e le stesse
+posizioni del sito di sviluppo. Nessun errore PHP del tema.
+
+DA DECIDERE
+- Riga "in rotazione" (salsiccia): nel Figma desktop e' una riga normale con
+  Tasca 7,50 e S, M, L a 9,00, 13,50 e 18,00; sul sito resta la riga "in
+  rotazione" con un solo prezzo, come prima.
+- Tablet: nella tavola iPad del Figma le scritte Tasca e Piatto stanno a
+  destra, con frecce curve verso il basso, e icone e prezzi sono piu' grandi;
+  il sito usa sui tablet la disposizione del telefono, come nella 0.4.4.
+- Visual Builder: come nella 0.4.4, la figura sopra il riquadro "Piatto" si
+  vede davanti al testo solo nel builder; ora passa sulla L di "L - 400g"
+  (prima sulla g di "Large"). Sul sito e' dietro il riquadro.
+- Tablet, card "Trippa - ogni venerdi'" e "Stoccafisso - ogni giovedi'": il
+  titolo va su due righe e gli allergeni finiscono sopra la seconda (gia'
+  nella 0.4.3).
+- iOS: il preloader sparisce di colpo 1,2 s dopo il caricamento, a meta'
+  animazione.
+- Titoli "Siamo nei caruggi..." e "Il nostro menu'" tra 981 e 1180 px: le
+  parole vanno a capo a meta' (CARUG / GI.).
+- Moduli custom: alcune opzioni del modulo Onda non hanno effetto; il
+  separatore della striscia non si puo' togliere; la striscia Materie salta se
+  le ripetizioni non sono 4; le opzioni Design delle singole scritte non hanno
+  effetto; una striscia senza scritte mostra frasi predefinite sul sito.
+- Visual Builder: i colori globali di Divi nei moduli Header/Footer e i campi
+  con contenuto dinamico non si vedono nell'anteprima del builder (sul sito
+  si'); i segnaposto usano un percorso fisso del tema.
+- "Crea/aggiorna home": un doppio clic durante i circa 40 s di lavoro puo'
+  creare doppioni.
+
+==============================================================================
+
+NOTE DELLA 0.4.4
 
 La 0.4.4 porta la card del menu su telefono e tablet al Figma: la tavola
 "mobilw", la stessa da cui vengono gli export "react mobile" e "html-css

@@ -45,7 +45,8 @@ Cosa resta fisso:
 - La sezione Tasca/Piatto viene ricostruita dal tema: dai moduli Divi si modificano testi e immagini, non il design.
 - Gli apici degli allergeni nei nomi del menu sono aggiunti via JavaScript e mantengono il loro stile.
 - Orari e legenda del menu usano due span con dimensioni diverse: il colore si modifica, le due dimensioni restano distinte.
-- Sotto i 981 px la card del menu segue la tavola "mobilw" del Figma: scritte Tasca e Piatto inclinate, icone, lettere M e L accanto alle ciotole, prezzi Tasca, M e L in una riga. Sono regole CSS in fondo al foglio, uguali su tutti i browser: i valori impostati in Divi su scritte e prezzi prevalgono. Le regole del menu per tablet valgono da 768 px; da 981 px in su (anche iPad in orizzontale) vale il layout desktop.
+- Sotto i 981 px la card del menu segue il Figma: scritte Tasca e Piatto inclinate, icone, lettere accanto alle ciotole, prezzi in una riga. Con il prezzo S la card ha quattro colonne (tavole per iPhone 17 e iPad Pro 11), senza ne ha tre (tavola "mobilw"). Sono regole CSS in fondo al foglio, uguali su tutti i browser: i valori impostati in Divi su scritte e prezzi prevalgono. Le regole del menu per tablet valgono da 768 px; da 981 px in su (anche iPad in orizzontale) vale il layout desktop.
+- Misura S del piatto: in ogni riga del menu principale un modulo Testo con classe `tp-menu-label tp-menu-label-s` (la lettera) e uno con classe `tp-menu-price tp-menu-price-value-s` (il prezzo), prima della M. Su desktop, se almeno un piatto ha la S, i prezzi stanno in colonne fisse (Tasca, S, M, L): un piatto senza S lascia vuota la sua cella. Per togliere la S a un piatto basta eliminare i suoi due moduli. I browser senza il selettore `:has()` (Safari prima del 15.4, Firefox prima del 121) non mostrano la S e tengono la card a tre colonne.
 - L'allineamento del testo di alcuni moduli (prezzi, card Materie, link "Torna alla home") resta quello del tema.
 
 Moduli custom:
@@ -58,6 +59,11 @@ Script del sito pubblico:
 
 - `assets/js/tasche-piene.js`: header e menu, pulsanti, orari e lo stato attivo comune a orari, card Tasca/Piatto e Materie.
 - `assets/js/tp-layout.js`: scale delle sezioni a 1512 px e della card del menu, video della hero su mobile (usa il video impostato in Divi per quel breakpoint; se in Divi non c'e' video, non ne mostra), ordine mobile della sezione Alberto, allergeni. Viene stampato prima di jQuery, dove stavano gli script inline, perche' deve girare prima degli script di Divi.
+
+Misura S una tantum (`inc/menu-size-s-migration.php`):
+
+- Alla prima richiesta dopo l'aggiornamento alla 0.4.5 la home riceve la misura S del Figma (tavola "statico per copy"): lettera e prezzo S in ogni piatto del menu principale (la parmigiana non ha la S), prezzi M e L del Figma e legenda "S - 150g", "M - 200g", "L - 400g".
+- Un prezzo cambiato a mano in Divi resta com'e', e cosi' un piatto rinominato; la riga "in rotazione" non cambia. Le revisioni di WordPress conservano la versione precedente della home.
 
 Pulizia una tantum (`inc/design-cleanup-migration.php`):
 

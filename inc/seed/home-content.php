@@ -104,7 +104,7 @@ return '<!-- wp:divi/placeholder --><!-- wp:divi/section {"module":{"advanced":{
 <!-- wp:divi/group {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-legend"}}}}},"builderVersion":"5.2.0"} -->
 <!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-legend-box tp-menu-legend-tasca"}}}},"decoration":{"boxShadow":{"desktop":{"value":{"style":"none"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cspan class=\u0022tp-menu-legend-main\u0022\u003eTASCA\u003c/span\u003e\u003cspan class=\u0022tp-menu-legend-sub\u0022\u003eIL PANINO\u003c/span\u003e"}}},"builderVersion":"5.2.0"} /-->
 
-<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-legend-box tp-menu-legend-piatto"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cspan class=\u0022tp-menu-legend-main\u0022\u003ePIATTO\u003c/span\u003e\u003cspan class=\u0022tp-menu-legend-sizes\u0022\u003e\u003cspan\u003eRegular - 200g\u003c/span\u003e\u003cspan\u003eLarge - 400g\u003c/span\u003e\u003c/span\u003e"}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-legend-box tp-menu-legend-piatto"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cspan class=\u0022tp-menu-legend-main\u0022\u003ePIATTO\u003c/span\u003e\u003cspan class=\u0022tp-menu-legend-sizes\u0022\u003e\u003cspan\u003eS - 150g\u003c/span\u003e\u003cspan\u003eM - 200g\u003c/span\u003e\u003cspan\u003eL - 400g\u003c/span\u003e\u003c/span\u003e"}}},"builderVersion":"5.2.0"} /-->
 <!-- /wp:divi/group -->
 <!-- /wp:divi/group -->
 
@@ -128,10 +128,10 @@ return '<!-- wp:divi/placeholder --><!-- wp:divi/section {"module":{"advanced":{
 <!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-label tp-menu-label-piatto tp-menu-price-label-s"}}},"meta":{"adminLabel":{"desktop":{"value":"Etichetta Piatto"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003ePiatto\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
 
 <!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-label tp-menu-label-m"}}},"meta":{"adminLabel":{"desktop":{"value":"Etichetta M"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003eM\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
-<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-label-m tp-menu-price-value-m"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e6,00€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-label-m tp-menu-price-value-m"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e10,50€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
 
 <!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-label tp-menu-label-l"}}},"meta":{"adminLabel":{"desktop":{"value":"Etichetta L"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003eL\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
-<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-label-l tp-menu-price-value-l"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e9,00€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-label-l tp-menu-price-value-l"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e14,50€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
 
 <!-- /wp:divi/group -->
 <!-- /wp:divi/group -->
@@ -152,11 +152,14 @@ return '<!-- wp:divi/placeholder --><!-- wp:divi/section {"module":{"advanced":{
 
 <!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-label tp-menu-label-piatto tp-menu-price-label-s"}}},"meta":{"adminLabel":{"desktop":{"value":"Etichetta Piatto"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003ePiatto\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
 
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-label tp-menu-label-s"}}},"meta":{"adminLabel":{"desktop":{"value":"Etichetta S"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003eS\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-value-s"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e7,00€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+
 <!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-label tp-menu-label-m"}}},"meta":{"adminLabel":{"desktop":{"value":"Etichetta M"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003eM\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
-<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-label-m tp-menu-price-value-m"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e6,00€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-label-m tp-menu-price-value-m"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e10,50€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
 
 <!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-label tp-menu-label-l"}}},"meta":{"adminLabel":{"desktop":{"value":"Etichetta L"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003eL\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
-<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-label-l tp-menu-price-value-l"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e9,00€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-label-l tp-menu-price-value-l"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e14,50€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
 
 <!-- /wp:divi/group -->
 <!-- /wp:divi/group -->
@@ -177,11 +180,14 @@ return '<!-- wp:divi/placeholder --><!-- wp:divi/section {"module":{"advanced":{
 
 <!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-label tp-menu-label-piatto tp-menu-price-label-s"}}},"meta":{"adminLabel":{"desktop":{"value":"Etichetta Piatto"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003ePiatto\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
 
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-label tp-menu-label-s"}}},"meta":{"adminLabel":{"desktop":{"value":"Etichetta S"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003eS\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-value-s"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e8,00€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+
 <!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-label tp-menu-label-m"}}},"meta":{"adminLabel":{"desktop":{"value":"Etichetta M"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003eM\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
-<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-label-m tp-menu-price-value-m"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e7,50€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-label-m tp-menu-price-value-m"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e12,00€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
 
 <!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-label tp-menu-label-l"}}},"meta":{"adminLabel":{"desktop":{"value":"Etichetta L"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003eL\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
-<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-label-l tp-menu-price-value-l"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e10,50€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-label-l tp-menu-price-value-l"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e16,50€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
 
 <!-- /wp:divi/group -->
 <!-- /wp:divi/group -->
@@ -202,11 +208,14 @@ return '<!-- wp:divi/placeholder --><!-- wp:divi/section {"module":{"advanced":{
 
 <!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-label tp-menu-label-piatto tp-menu-price-label-s"}}},"meta":{"adminLabel":{"desktop":{"value":"Etichetta Piatto"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003ePiatto\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
 
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-label tp-menu-label-s"}}},"meta":{"adminLabel":{"desktop":{"value":"Etichetta S"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003eS\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-value-s"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e8,00€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+
 <!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-label tp-menu-label-m"}}},"meta":{"adminLabel":{"desktop":{"value":"Etichetta M"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003eM\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
-<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-label-m tp-menu-price-value-m"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e7,50€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-label-m tp-menu-price-value-m"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e12,00€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
 
 <!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-label tp-menu-label-l"}}},"meta":{"adminLabel":{"desktop":{"value":"Etichetta L"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003eL\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
-<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-label-l tp-menu-price-value-l"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e10,50€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-label-l tp-menu-price-value-l"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e16,50€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
 
 <!-- /wp:divi/group -->
 <!-- /wp:divi/group -->
@@ -227,11 +236,14 @@ return '<!-- wp:divi/placeholder --><!-- wp:divi/section {"module":{"advanced":{
 
 <!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-label tp-menu-label-piatto tp-menu-price-label-s"}}},"meta":{"adminLabel":{"desktop":{"value":"Etichetta Piatto"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003ePiatto\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
 
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-label tp-menu-label-s"}}},"meta":{"adminLabel":{"desktop":{"value":"Etichetta S"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003eS\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-value-s"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e9,00€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+
 <!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-label tp-menu-label-m"}}},"meta":{"adminLabel":{"desktop":{"value":"Etichetta M"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003eM\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
-<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-label-m tp-menu-price-value-m"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e7,50€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-label-m tp-menu-price-value-m"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e13,50€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
 
 <!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-label tp-menu-label-l"}}},"meta":{"adminLabel":{"desktop":{"value":"Etichetta L"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003eL\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
-<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-label-l tp-menu-price-value-l"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e10,50€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-label-l tp-menu-price-value-l"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e18,00€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
 
 <!-- /wp:divi/group -->
 <!-- /wp:divi/group -->
@@ -252,11 +264,14 @@ return '<!-- wp:divi/placeholder --><!-- wp:divi/section {"module":{"advanced":{
 
 <!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-label tp-menu-label-piatto tp-menu-price-label-s"}}},"meta":{"adminLabel":{"desktop":{"value":"Etichetta Piatto"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003ePiatto\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
 
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-label tp-menu-label-s"}}},"meta":{"adminLabel":{"desktop":{"value":"Etichetta S"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003eS\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-value-s"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e9,00€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+
 <!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-label tp-menu-label-m"}}},"meta":{"adminLabel":{"desktop":{"value":"Etichetta M"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003eM\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
-<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-label-m tp-menu-price-value-m"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e7,50€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-label-m tp-menu-price-value-m"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e13,50€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
 
 <!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-label tp-menu-label-l"}}},"meta":{"adminLabel":{"desktop":{"value":"Etichetta L"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003eL\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
-<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-label-l tp-menu-price-value-l"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e10,50€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-label-l tp-menu-price-value-l"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e18,00€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
 
 <!-- /wp:divi/group -->
 <!-- /wp:divi/group -->
@@ -277,11 +292,14 @@ return '<!-- wp:divi/placeholder --><!-- wp:divi/section {"module":{"advanced":{
 
 <!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-label tp-menu-label-piatto tp-menu-price-label-s"}}},"meta":{"adminLabel":{"desktop":{"value":"Etichetta Piatto"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003ePiatto\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
 
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-label tp-menu-label-s"}}},"meta":{"adminLabel":{"desktop":{"value":"Etichetta S"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003eS\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-value-s"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e7,00€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+
 <!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-label tp-menu-label-m"}}},"meta":{"adminLabel":{"desktop":{"value":"Etichetta M"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003eM\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
-<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-label-m tp-menu-price-value-m"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e6,00€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-label-m tp-menu-price-value-m"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e10,50€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
 
 <!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-label tp-menu-label-l"}}},"meta":{"adminLabel":{"desktop":{"value":"Etichetta L"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003eL\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
-<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-label-l tp-menu-price-value-l"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e9,00€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-label-l tp-menu-price-value-l"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e14,50€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
 
 <!-- /wp:divi/group -->
 <!-- /wp:divi/group -->
@@ -302,11 +320,14 @@ return '<!-- wp:divi/placeholder --><!-- wp:divi/section {"module":{"advanced":{
 
 <!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-label tp-menu-label-piatto tp-menu-price-label-s"}}},"meta":{"adminLabel":{"desktop":{"value":"Etichetta Piatto"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003ePiatto\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
 
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-label tp-menu-label-s"}}},"meta":{"adminLabel":{"desktop":{"value":"Etichetta S"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003eS\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-value-s"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e8,00€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+
 <!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-label tp-menu-label-m"}}},"meta":{"adminLabel":{"desktop":{"value":"Etichetta M"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003eM\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
-<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-label-m tp-menu-price-value-m"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e7,50€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-label-m tp-menu-price-value-m"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e12,00€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
 
 <!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-label tp-menu-label-l"}}},"meta":{"adminLabel":{"desktop":{"value":"Etichetta L"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003eL\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
-<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-label-l tp-menu-price-value-l"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e10,50€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-label-l tp-menu-price-value-l"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e16,50€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
 
 <!-- /wp:divi/group -->
 <!-- /wp:divi/group -->
