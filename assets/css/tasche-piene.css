@@ -4151,10 +4151,12 @@ body.tp-child-theme :where(.tp-legal-page .tp-legal-body ul) {
 	color: var(--tp-cream);
 }
 
+/* tp-menu.js reveals the mascot; the Visual Builder does not run it, so it shows where the reveal ends. */
 .tp-child-theme :where(.tp-menu-legend.is-revealed .tp-menu-legend-piatto)::after,
 .tp-child-theme :where(.tp-menu-legend:hover .tp-menu-legend-piatto)::after,
 .tp-child-theme :where(.tp-menu-legend:focus-within .tp-menu-legend-piatto)::after,
-.tp-child-theme :where(.tp-menu-legend.is-active .tp-menu-legend-piatto)::after {
+.tp-child-theme :where(.tp-menu-legend.is-active .tp-menu-legend-piatto)::after,
+body.et-fb :where(.tp-menu-legend-piatto)::after {
 	opacity: 1;
 	transform: translate3d(0, 0, 0) scale(.78);
 }
@@ -20117,6 +20119,296 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 .tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices > .tp-menu-price-value-s),
 .tp-child-theme :where(#page-container .tp-menu-section .tp-menu-legend-sizes > span:first-child:nth-last-child(3)) {
 		display: none;
+	}
+}
+
+/*
+ * Menu on tablets (768-980 px) as in the Figma frame "iPad Pro 11" - 1" (834 px wide): the section
+ * as wide as the screen minus the frame's margins, wide and low cards with Tasca and Piatto at the
+ * right of their icons and curved arrows, contorni, dolci and bevande rows of the same width. Every
+ * size and gap is the Figma's at 834 px, scaled with the screen (--tp-ipad is one Figma pixel);
+ * Divi's 30 px gap between the parts of the menu column stays and comes off the margins.
+ * Cards with an S price have four columns; the others keep Tasca and L in place and M in between.
+ */
+@media (min-width: 768px) and (max-width: 980px) {
+	.tp-child-theme :where(#page-container .tp-menu-section) {
+		--tp-ipad: calc(100vw / 834);
+		--tp-menu-tablet-card: calc(var(--tp-ipad) * 755);
+		--tp-menu-tablet-row: calc(var(--tp-ipad) * 302.1);
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-header),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-title),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-title h2),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-feature-image),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-sectionhead),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-note),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--sides),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--desserts),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--drinks) {
+		width: calc(var(--tp-ipad) * 752);
+		max-width: none;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main) {
+		width: var(--tp-menu-tablet-card);
+		max-width: none;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-title),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-title h2),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-title h2 > *) {
+		text-align: left;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-feature-image) {
+		height: calc(var(--tp-ipad) * 466.1);
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-header) {
+		margin-bottom: calc(var(--tp-ipad) * 42 - 37px);
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-feature-image) {
+		margin-bottom: calc(var(--tp-ipad) * 54.6 - 30px);
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table) {
+		margin-bottom: 0;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-sectionhead--sides) {
+		margin-top: calc(var(--tp-ipad) * 128.1 - 33.6px);
+		margin-bottom: calc(var(--tp-ipad) * 47.8 - 31px);
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-sectionhead--desserts) {
+		margin-top: calc(var(--tp-ipad) * 104.3 - 33.6px);
+		margin-bottom: calc(var(--tp-ipad) * 24.5 - 31px);
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-sectionhead--drinks) {
+		margin-top: calc(var(--tp-ipad) * 104.3 - 33.6px);
+		margin-bottom: calc(var(--tp-ipad) * 47.8 - 31px);
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-note) {
+		margin-top: calc(var(--tp-ipad) * 84.2 - 33px);
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-feature-image)::after {
+		top: calc(100% + var(--tp-ipad) * 19.1 - 5.77px);
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main) {
+		gap: calc(var(--tp-ipad) * 18.2);
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--sides .tp-menu-row),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--desserts .tp-menu-row),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--drinks .tp-menu-row) {
+		box-sizing: border-box;
+		height: calc(var(--tp-ipad) * 111.8);
+		min-height: 0;
+		padding: 0 calc(var(--tp-ipad) * 27);
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--sides),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--desserts),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--drinks) {
+		gap: calc(var(--tp-ipad) * 18.8);
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--sides .tp-menu-name h4),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--desserts .tp-menu-name h4),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--drinks .tp-menu-name h4) {
+		font-size: calc(var(--tp-ipad) * 19.7);
+		line-height: 1.1;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--sides .tp-menu-price .et_pb_text_inner),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--desserts .tp-menu-price .et_pb_text_inner),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--drinks .tp-menu-price .et_pb_text_inner) {
+		font-size: calc(var(--tp-ipad) * 30.6);
+		line-height: 1;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5) .tp-menu-name .et_pb_module_header),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6) .tp-menu-name .et_pb_module_header) {
+		color: #3e372e;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5) .tp-menu-name h4)::before,
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5) .tp-menu-name .et_pb_module_header)::before,
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6) .tp-menu-name h4)::before,
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6) .tp-menu-name .et_pb_module_header)::before {
+		content: none;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5))::after,
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6))::after {
+		left: auto;
+		right: calc(var(--tp-ipad) * 33.4);
+		top: calc(var(--tp-ipad) * 22);
+		width: calc(var(--tp-ipad) * 150);
+		height: calc(var(--tp-ipad) * 60);
+		font-size: calc(var(--tp-ipad) * 17);
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-item) {
+		left: 4.79%;
+		top: 14.09%;
+		width: 88%;
+		max-width: 88%;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-name h4) {
+		font-size: calc(var(--tp-ipad) * 19.7);
+		line-height: 1.08;
+		white-space: nowrap;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-name) {
+		max-width: 86%;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-meta) {
+		font-size: calc(var(--tp-ipad) * 13.3);
+		line-height: 1;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices) {
+		background-image: url("../svg/menu-tasca-icon.svg"), url("../svg/menu-piatto-m-icon.svg"), url("../svg/menu-piatto-l-icon.svg"), url("../svg/menu-arrow-green-tablet.svg"), url("../svg/menu-arrow-bordeaux-tablet.svg");
+		background-position: 6.05% 65.02%, 46.27% 66.02%, 89.55% 64.64%, 12.45% 50.77%, 42.05% 47.22%;
+		background-size: 8.416% auto, 8.119% auto, 8.476% auto, 5.527% 5.404%, 7.063% 7.227%;
+		background-repeat: no-repeat;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices .tp-menu-label-tasca .et_pb_text_inner) {
+		left: 12.43%;
+		top: 38.60%;
+		margin-top: 0;
+		transform: rotate(8.7deg);
+		transform-origin: 0 0;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices .tp-menu-label-piatto .et_pb_text_inner) {
+		left: 38.58%;
+		top: 37.01%;
+		margin-top: 0;
+		transform: rotate(-4.2deg);
+		transform-origin: 0 0;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices .tp-menu-price-value-tasca .et_pb_text_inner) {
+		left: 4.17%;
+		top: 76.45%;
+		margin-top: 0;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices .tp-menu-price-value-m .et_pb_text_inner) {
+		left: 42.08%;
+		top: 76.45%;
+		margin-top: 0;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices .tp-menu-price-value-l .et_pb_text_inner) {
+		left: 81.15%;
+		top: 76.45%;
+		margin-top: 0;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices .tp-menu-label-m .et_pb_text_inner) {
+		left: 50.88%;
+		top: 59.08%;
+		margin-top: 0;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices .tp-menu-label-l .et_pb_text_inner) {
+		left: 91.98%;
+		top: 59.08%;
+		margin-top: 0;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices) {
+		background-image: url("../svg/menu-tasca-icon.svg"), url("../svg/menu-piatto-m-icon.svg"), url("../svg/menu-piatto-m-icon.svg"), url("../svg/menu-piatto-l-icon.svg"), url("../svg/menu-arrow-green-tablet.svg"), url("../svg/menu-arrow-bordeaux-tablet.svg");
+		background-position: 6.05% 65.02%, 32.64% 66.05%, 59.34% 66.02%, 89.55% 64.64%, 12.45% 50.77%, 29.02% 50.38%;
+		background-size: 8.416% auto, 5.970% auto, 8.119% auto, 8.476% auto, 5.527% 5.404%, 7.063% 7.227%;
+		background-repeat: no-repeat;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices .tp-menu-label-tasca .et_pb_text_inner) {
+		left: 12.43%;
+		top: 38.60%;
+		margin-top: 0;
+		transform: rotate(8.7deg);
+		transform-origin: 0 0;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices .tp-menu-label-piatto .et_pb_text_inner) {
+		left: 26.48%;
+		top: 39.95%;
+		margin-top: 0;
+		transform: rotate(-4.2deg);
+		transform-origin: 0 0;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices .tp-menu-price-value-tasca .et_pb_text_inner) {
+		left: 4.17%;
+		top: 76.45%;
+		margin-top: 0;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices .tp-menu-price-value-s .et_pb_text_inner) {
+		left: 29.27%;
+		top: 76.45%;
+		margin-top: 0;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices .tp-menu-price-value-m .et_pb_text_inner) {
+		left: 54.10%;
+		top: 76.45%;
+		margin-top: 0;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices .tp-menu-price-value-l .et_pb_text_inner) {
+		left: 81.15%;
+		top: 76.45%;
+		margin-top: 0;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices .tp-menu-label-s .et_pb_text_inner) {
+		left: 37.06%;
+		top: 59.08%;
+		margin-top: 0;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices .tp-menu-label-m .et_pb_text_inner) {
+		left: 62.90%;
+		top: 59.08%;
+		margin-top: 0;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices .tp-menu-label-l .et_pb_text_inner) {
+		left: 91.98%;
+		top: 59.08%;
+		margin-top: 0;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices .tp-menu-price .et_pb_text_inner) {
+		font-size: calc(var(--tp-ipad) * 32.1);
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices .tp-menu-label-s .et_pb_text_inner),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices .tp-menu-label-m .et_pb_text_inner),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices .tp-menu-label-l .et_pb_text_inner) {
+		font-size: calc(var(--tp-ipad) * 24.3);
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices .tp-menu-label-tasca .et_pb_text_inner),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices .tp-menu-label-piatto .et_pb_text_inner) {
+		font-size: calc(var(--tp-ipad) * 20.4);
+		line-height: 1;
 	}
 }
 

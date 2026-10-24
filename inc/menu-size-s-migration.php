@@ -3,6 +3,7 @@
  * Menu: the S size of the plate, as in the Figma (frame "statico per copy"). Every main menu row
  * gets an S letter and an S price before the M ones, the M and L prices move to the Figma's where
  * the row still has the previous ones, and the legend reads "S - 150g", "M - 200g", "L - 400g".
+ * Since 0.4.6 the salsiccia row "in rotazione" is a normal row with S, M and L too.
  * Rows and prices changed by hand in Divi stay as they are.
  */
 
@@ -84,14 +85,21 @@ function tp_child_menu_size_s_swap_price( string $block, string $from, string $t
 }
 
 /**
+ * The row's dish name in capitals ('' when the row has no name module).
+ */
+function tp_child_menu_size_s_row_name( string $row ): string {
+	if ( ! preg_match( '/"class":"(?:[^"]* )?tp-menu-name(?: [^"]*)?".*?"title":\{"innerContent":\{"desktop":\{"value":"([^"]*)"/s', $row, $name ) ) {
+		return '';
+	}
+
+	return strtoupper( trim( wp_strip_all_tags( json_decode( '"' . $name[1] . '"' ) ?? '' ) ) );
+}
+
+/**
  * One main menu row: the S letter and price before the M letter, the Figma's M and L prices.
  */
 function tp_child_menu_size_s_row( string $row ): string {
-	if ( ! preg_match( '/"class":"(?:[^"]* )?tp-menu-name(?: [^"]*)?".*?"title":\{"innerContent":\{"desktop":\{"value":"([^"]*)"/s', $row, $name ) ) {
-		return $row;
-	}
-
-	$name   = strtoupper( trim( wp_strip_all_tags( json_decode( '"' . $name[1] . '"' ) ?? '' ) ) );
+	$name   = tp_child_menu_size_s_row_name( $row );
 	$prices = null;
 
 	foreach ( tp_child_menu_size_s_prices() as $prefix => $values ) {
@@ -129,38 +137,39 @@ function tp_child_menu_size_s_row( string $row ): string {
 }
 
 /**
- * The home content with the S size in the main menu and the S, M, L legend.
+ * The main menu rows of $content, last first: [ offset, length, is the "in rotazione" row ].
  */
-function tp_child_menu_size_s_transform( string $content ): string {
+function tp_child_menu_size_s_main_rows( string $content ): array {
 	$table = strpos( $content, tp_child_menu_size_s_json_text( 'tp-menu-table--main' ) );
 
 	if ( false === $table ) {
-		return $content;
+		return [];
 	}
 
 	$end = strpos( $content, tp_child_menu_size_s_json_text( 'tp-menu-table--sides' ), $table );
 	$end = false === $end ? strlen( $content ) : $end;
 
-	// Main menu rows: from each row's opening comment to the next one.
+	// From each row's opening comment to the next one.
 	preg_match_all( '/<!-- wp:divi\/group \{[^>]*?"class":"tp-menu-row(?: [^"]*)?"[^>]*?-->/', $content, $starts, PREG_OFFSET_CAPTURE, $table );
-	$bounds = [];
+	$starts = array_values( array_filter( $starts[0], static fn( $start ) => $start[1] < $end ) );
+	$rows   = [];
 
-	foreach ( $starts[0] as $start ) {
-		if ( $start[1] < $end ) {
-			$bounds[] = [ $start[1], false !== strpos( $start[0], 'proposal' ) ];
-		}
+	foreach ( $starts as $i => $start ) {
+		$to     = isset( $starts[ $i + 1 ] ) ? $starts[ $i + 1 ][1] : $end;
+		$rows[] = [ $start[1], $to - $start[1], false !== strpos( $start[0], 'proposal' ) ];
 	}
 
-	for ( $i = count( $bounds ) - 1; $i >= 0; $i-- ) {
-		if ( $bounds[ $i ][1] ) {
-			continue;
+	return array_reverse( $rows );
+}
+
+/**
+ * The home content with the S size in the main menu and the S, M, L legend.
+ */
+function tp_child_menu_size_s_transform( string $content ): string {
+	foreach ( tp_child_menu_size_s_main_rows( $content ) as list( $from, $length, $proposal ) ) {
+		if ( ! $proposal ) {
+			$content = substr_replace( $content, tp_child_menu_size_s_row( substr( $content, $from, $length ) ), $from, $length );
 		}
-
-		$from = $bounds[ $i ][0];
-		$to   = isset( $bounds[ $i + 1 ] ) ? $bounds[ $i + 1 ][0] : $end;
-		$row  = substr( $content, $from, $to - $from );
-
-		$content = substr_replace( $content, tp_child_menu_size_s_row( $row ), $from, $to - $from );
 	}
 
 	return str_replace(
@@ -171,18 +180,59 @@ function tp_child_menu_size_s_transform( string $content ): string {
 }
 
 /**
- * Once: the S size on the home page. WordPress keeps the previous content as a revision.
+ * The salsiccia row "in rotazione" as a normal row, with the Figma's S, M and L prices (frame
+ * "statico per copy"). Its Tasca price and its text stay as they are.
  */
-function tp_child_migrate_menu_size_s(): void {
-	$flag = 'tp_child_menu_size_s_v1';
+function tp_child_menu_proposal_row( string $row ): string {
+	$price = tp_child_menu_size_s_find_block( $row, 'tp-menu-price' );
 
+	if ( 0 !== strpos( tp_child_menu_size_s_row_name( $row ), 'SALSICCIA' ) || ! $price || false !== strpos( $row, 'tp-menu-label' ) || false !== strpos( $row, 'tp-menu-price-value' ) ) {
+		return $row;
+	}
+
+	$builder_version = preg_match( '/"builderVersion":"([^"]+)"/', $price[0], $version ) ? $version[1] : '5.2.0';
+	$block           = static fn( string $class, string $html, string $label = '' ): string => tp_child_menu_size_s_text_block( $class, $html, $label, $builder_version );
+	$prices          = $block( 'tp-menu-label tp-menu-label-tasca tp-menu-price-label-tasca', '<p>Tasca</p>', 'Etichetta Tasca' ) . "\n"
+		. preg_replace( '/"class":"([^"]*)"/', '"class":"$1 tp-menu-price-value-tasca"', $price[0], 1 ) . "\n\n"
+		. $block( 'tp-menu-label tp-menu-label-piatto tp-menu-price-label-s', '<p>Piatto</p>', 'Etichetta Piatto' ) . "\n\n"
+		. $block( 'tp-menu-label tp-menu-label-s', '<p>S</p>', 'Etichetta S' ) . "\n"
+		. $block( 'tp-menu-price tp-menu-price-value-s', '<p>9,00€</p>' ) . "\n\n"
+		. $block( 'tp-menu-label tp-menu-label-m', '<p>M</p>', 'Etichetta M' ) . "\n"
+		. $block( 'tp-menu-price tp-menu-price-label-m tp-menu-price-value-m', '<p>13,50€</p>' ) . "\n\n"
+		. $block( 'tp-menu-label tp-menu-label-l', '<p>L</p>', 'Etichetta L' ) . "\n"
+		. $block( 'tp-menu-price tp-menu-price-label-l tp-menu-price-value-l', '<p>18,00€</p>' );
+	$row             = substr_replace( $row, $prices, $price[1], strlen( $price[0] ) );
+
+	// The row's own class: "tp-menu-row tp-menu-row--proposal" -> "tp-menu-row".
+	$open = strpos( $row, '-->' ) + 3;
+
+	return str_replace( ' ' . tp_child_menu_size_s_json_text( 'tp-menu-row--proposal' ), '', substr( $row, 0, $open ) ) . substr( $row, $open );
+}
+
+/**
+ * The home content with the salsiccia row as a normal row.
+ */
+function tp_child_menu_proposal_row_transform( string $content ): string {
+	foreach ( tp_child_menu_size_s_main_rows( $content ) as list( $from, $length, $proposal ) ) {
+		if ( $proposal ) {
+			$content = substr_replace( $content, tp_child_menu_proposal_row( substr( $content, $from, $length ) ), $from, $length );
+		}
+	}
+
+	return $content;
+}
+
+/**
+ * Once per $flag: $transform applied to the home page. WordPress keeps the previous content as a revision.
+ */
+function tp_child_menu_size_s_migrate_home( string $flag, callable $transform ): void {
 	if ( get_option( $flag ) ) {
 		return;
 	}
 
 	$home_id = (int) get_option( 'page_on_front' );
 	$content = $home_id > 0 ? (string) get_post_field( 'post_content', $home_id ) : '';
-	$updated = '' !== $content ? tp_child_menu_size_s_transform( $content ) : $content;
+	$updated = '' !== $content ? $transform( $content ) : $content;
 
 	if ( $updated !== $content ) {
 		// The block JSON must be saved verbatim, whoever triggers the request.
@@ -201,4 +251,14 @@ function tp_child_migrate_menu_size_s(): void {
 	update_option( $flag, TP_CHILD_VERSION, true );
 }
 
+function tp_child_migrate_menu_size_s(): void {
+	tp_child_menu_size_s_migrate_home( 'tp_child_menu_size_s_v1', 'tp_child_menu_size_s_transform' );
+}
+
 add_action( 'init', 'tp_child_migrate_menu_size_s', 26 );
+
+function tp_child_migrate_menu_proposal_row(): void {
+	tp_child_menu_size_s_migrate_home( 'tp_child_menu_proposal_row_v1', 'tp_child_menu_proposal_row_transform' );
+}
+
+add_action( 'init', 'tp_child_migrate_menu_proposal_row', 27 );

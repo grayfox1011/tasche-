@@ -43,9 +43,11 @@ Modificare il design da Divi:
 Cosa resta fisso:
 
 - La sezione Tasca/Piatto viene ricostruita dal tema: dai moduli Divi si modificano testi e immagini, non il design.
-- Gli apici degli allergeni nei nomi del menu sono aggiunti via JavaScript e mantengono il loro stile.
+- Gli apici degli allergeni nei nomi del menu sono aggiunti via JavaScript e mantengono il loro stile. I numeri di un piatto si scrivono in Divi tra parentesi quadre in fondo al nome, per esempio `[1,7]`: sul sito diventano l'apice.
 - Orari e legenda del menu usano due span con dimensioni diverse: il colore si modifica, le due dimensioni restano distinte.
-- Sotto i 981 px la card del menu segue il Figma: scritte Tasca e Piatto inclinate, icone, lettere accanto alle ciotole, prezzi in una riga. Con il prezzo S la card ha quattro colonne (tavole per iPhone 17 e iPad Pro 11), senza ne ha tre (tavola "mobilw"). Sono regole CSS in fondo al foglio, uguali su tutti i browser: i valori impostati in Divi su scritte e prezzi prevalgono. Le regole del menu per tablet valgono da 768 px; da 981 px in su (anche iPad in orizzontale) vale il layout desktop.
+- La figura sopra il riquadro Piatto sale al suo posto quando il menu entra nello schermo (`tp-menu.js`); nel Visual Builder, dove lo script non gira, e' gia' al suo posto.
+- Sui telefoni (sotto i 768 px) la card del menu segue il Figma: scritte Tasca e Piatto inclinate, icone, lettere accanto alle ciotole, prezzi in una riga. Con il prezzo S la card ha quattro colonne (tavola per iPhone 17), senza ne ha tre (tavola "mobilw"). Sono regole CSS in fondo al foglio, uguali su tutti i browser: i valori impostati in Divi su scritte e prezzi prevalgono.
+- Sui tablet (da 768 a 980 px) la sezione menu segue la tavola "iPad Pro 11" - 1" (834 px): foto, card, contorni, dolci e bevande a tutta larghezza, titolo a sinistra, card larghe e basse con Tasca e Piatto a destra delle icone e frecce curve (`menu-arrow-green-tablet.svg`, `menu-arrow-bordeaux-tablet.svg`). Misure e distanze sono quelle del Figma a 834 px e crescono con lo schermo; i nomi dei piatti stanno su una riga. Da 981 px in su (anche iPad in orizzontale) vale il layout desktop.
 - Misura S del piatto: in ogni riga del menu principale un modulo Testo con classe `tp-menu-label tp-menu-label-s` (la lettera) e uno con classe `tp-menu-price tp-menu-price-value-s` (il prezzo), prima della M. Su desktop, se almeno un piatto ha la S, i prezzi stanno in colonne fisse (Tasca, S, M, L): un piatto senza S lascia vuota la sua cella. Per togliere la S a un piatto basta eliminare i suoi due moduli. I browser senza il selettore `:has()` (Safari prima del 15.4, Firefox prima del 121) non mostrano la S e tengono la card a tre colonne.
 - L'allineamento del testo di alcuni moduli (prezzi, card Materie, link "Torna alla home") resta quello del tema.
 
@@ -63,7 +65,9 @@ Script del sito pubblico:
 Misura S una tantum (`inc/menu-size-s-migration.php`):
 
 - Alla prima richiesta dopo l'aggiornamento alla 0.4.5 la home riceve la misura S del Figma (tavola "statico per copy"): lettera e prezzo S in ogni piatto del menu principale (la parmigiana non ha la S), prezzi M e L del Figma e legenda "S - 150g", "M - 200g", "L - 400g".
-- Un prezzo cambiato a mano in Divi resta com'e', e cosi' un piatto rinominato; la riga "in rotazione" non cambia. Le revisioni di WordPress conservano la versione precedente della home.
+- Un prezzo cambiato a mano in Divi resta com'e', e cosi' un piatto rinominato. Le revisioni di WordPress conservano la versione precedente della home.
+- Alla prima richiesta dopo l'aggiornamento alla 0.4.6, con un secondo passaggio una tantum, la riga "in rotazione" della salsiccia diventa una riga normale come nel Figma desktop: etichette Tasca e Piatto, S 9,00, M 13,50 e L 18,00; il prezzo Tasca e i testi restano quelli salvati. Se la riga e' gia' stata cambiata a mano (altro piatto o moduli aggiunti) non viene toccata.
+- Entrambi i passaggi salvano la home cosi' com'e', anche quando la prima richiesta arriva da un visitatore non collegato.
 
 Pulizia una tantum (`inc/design-cleanup-migration.php`):
 

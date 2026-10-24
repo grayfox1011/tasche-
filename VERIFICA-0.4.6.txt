@@ -1,4 +1,140 @@
-TASCHE PIENE — VERSIONE 0.4.5, CANDIDATA AL COLLAUDO
+TASCHE PIENE — VERSIONE 0.4.6, CANDIDATA AL COLLAUDO
+
+La 0.4.6 risolve i primi tre punti "da decidere" della 0.4.5: la salsiccia
+diventa un piatto come gli altri, come nel Figma desktop; sui tablet il menu
+segue la tavola "iPad Pro 11" - 1"; nel Visual Builder la figura sopra il
+riquadro Piatto non copre piu' "L - 400g". Su computer e telefoni cambia solo
+la riga della salsiccia. Le note delle versioni precedenti, piu' in basso,
+restano valide.
+
+COSA CAMBIA RISPETTO ALLA 0.4.5
+- Salsiccia, alloro e peperoni confit: non e' piu' la riga "in rotazione" con
+  il solo prezzo Tasca, ma una riga come le altre, come nella tavola desktop
+  "statico per copy": scritte Tasca e Piatto, Tasca 7,50, S 9,00, M 13,50 e
+  L 18,00. La descrizione prende lo stile delle altre. Su telefono e tablet
+  ha la card a quattro colonne, quindi sotto i 981 px la pagina si allunga di
+  circa 95-140 px.
+- Aggiornamento della home: alla prima richiesta dopo l'aggiornamento il tema
+  cambia la riga salvata in Divi, una sola volta, chiunque apra il sito per
+  primo. Il prezzo Tasca e i testi restano quelli salvati; una riga gia'
+  cambiata a mano (un altro piatto, o scritte e prezzi gia' aggiunti) non
+  viene toccata; WordPress conserva la home precedente tra le revisioni. Da
+  una 0.4.4 il tema aggiunge prima la S e poi cambia la salsiccia.
+  "Crea/aggiorna home" e le installazioni nuove usano gia' la riga nuova.
+- Tablet (da 768 a 980 px: iPad e tablet Android in verticale): la sezione
+  menu segue la tavola iPad del Figma, larga 834 px, e cresce con lo schermo.
+  Foto, card, contorni, dolci e bevande vanno a tutta larghezza (margini di
+  circa 40 px a 834 px); il titolo "Il nostro menu'" va a sinistra, con lo
+  stile del sito; le card sono larghe e basse, con le scritte Tasca e Piatto
+  a destra delle icone e frecce curve, icone e prezzi piu' grandi (prezzi di
+  circa 32 px a 834 px). Le righe di contorni, dolci e bevande sono alte come
+  nel Figma, con nome e prezzo sulla stessa riga. Distanze tra titolo, foto,
+  card e sezioni come nel Figma. I nomi dei piatti stanno su una riga. Da
+  981 px in su resta il layout desktop.
+- Tablet, trippa e stoccafisso: il titolo sta su una riga con gli allergeni
+  accanto, come negli altri piatti, e la scritta del giorno sta in alto a
+  destra. Prima il titolo andava su due righe e gli allergeni finivano sopra
+  la seconda.
+- Visual Builder: la figura sopra il riquadro Piatto, che sul sito sale al
+  suo posto quando il menu entra nello schermo, nel builder e' gia' al suo
+  posto: non copre piu' "L - 400g". Nell'anteprima tablet del builder i
+  titoli di trippa e stoccafisso sono quelli giusti (vedi sotto).
+
+VERIFICHE EFFETTUATE SULLA 0.4.6
+Riferimento: la 0.4.5 sullo stesso sito di prova, con la riga della
+salsiccia gia' cambiata come nella 0.4.6.
+- Suite completa. Home a 20 larghezze: da 981 px in su e sotto i 768 px
+  stili e posizioni identici a ogni elemento; cambia solo la fascia da 768 a
+  980 px. Privacy e cookie identiche al pixel. Hover e focus identici a 1440
+  e 390 px; a 820 px cambiano solo le posizioni degli elementi sotto il menu.
+  Visual Builder: computer e telefono identici, cambia l'anteprima tablet;
+  privacy identica; modifica dal builder 8 su 8. Stato attivo, scale, menu
+  di navigazione aperto, HTML dei moduli e query al database invariati.
+  iPhone 13 in emulazione senza errori.
+- Modificabilita': i moduli gia' provati nella 0.4.5 danno gli stessi esiti,
+  modulo per modulo, anche a 820 px con il nuovo layout tablet. Su pagine di
+  prova costruite dalla home aggiornata, gli 8 moduli aggiunti alla salsiccia
+  e il suo prezzo Tasca prendono i valori impostati in Divi (testo,
+  spaziature, sfondo, dimensioni) a 1440, 820 e 390 px come gli stessi moduli
+  degli altri piatti; sul computer le scritte Tasca e Piatto restano nascoste,
+  come negli altri piatti.
+- Tablet confrontato con la tavola iPad del Figma a 834 px: elementi della
+  card entro circa 1 px; distanze titolo-foto, foto-card, tra le card,
+  card-contorni, righe dei contorni e tra le sezioni come nel Figma. Provato
+  anche a 768 e 980 px.
+- Emulazione (iPad mini 768, iPad 810, iPad Pro 11 834, tablet Android 800,
+  900 e 980): in tutti e nove i piatti nessuna scritta si sovrappone a
+  un'altra o esce dalla card; nessun errore JavaScript. iPad Pro 11 in
+  orizzontale usa il layout del computer, come prima.
+- Browser senza :has(), simulato in Chromium a 768, 820 e 834 px: card
+  tablet a tre colonne senza la S, con i prezzi Tasca, M e L.
+- Salsiccia, su copie della home: un altro piatto nella riga e una riga gia'
+  cambiata non vengono toccati; un prezzo Tasca cambiato a mano (8,00)
+  resta; un nome scritto in minuscolo viene riconosciuto.
+- Aggiornamento della home, su copie del sito installate dallo zip:
+  - da una 0.4.5: riga cambiata, una revisione in piu'; una seconda
+    richiesta non cambia niente;
+  - da una 0.4.4: prima la S, poi la salsiccia, due revisioni in piu'; la
+    home e' identica byte per byte a quella del caso precedente;
+  - aggiornamento partito dalla visita di un utente non collegato: home
+    identica byte per byte a quella prevista, indirizzo della mappa Google
+    intatto.
+- Installazione nuova (WordPress e Divi nuovi, zip caricato, attivato e
+  "Crea/aggiorna home"): menu con la S e la salsiccia gia' normale, nessuna
+  revisione aggiunta dai due passaggi una tantum; stili e posizioni uguali al
+  sito di sviluppo a 1440 e 390 px e alla copia aggiornata a 834 px.
+- Non provati: Safari vero (le prove su iPhone e iPad usano Chromium con il
+  profilo del dispositivo) e un browser vecchio vero.
+
+INSTALLAZIONE DELLO ZIP
+Provata caricando lo zip da wp-admin (Aspetto > Temi > Carica tema) su una
+copia del sito di prova con la 0.4.5 e su una con la 0.4.4, entrambe
+installate dallo zip. WordPress sostituisce il tema senza errori e alla prima
+richiesta la home viene aggiornata. Home a 7 larghezze (da 390 a 1440 px)
+identica al pixel nelle due copie e con gli elementi nelle stesse posizioni
+del sito di sviluppo. Nessun errore PHP del tema.
+
+DA DECIDERE
+- Allergeni sui nomi lunghi: quando il nome di un piatto va a capo, i numeri
+  degli allergeni toccano le lettere della riga sopra. Sul telefono succede
+  con "Pollo alla ligure..." e "Le acciughe di Luciano..."; sul computer tra
+  981 e 1366 px con quasi tutti i piatti, perche' con la colonna S i nomi
+  hanno meno spazio. Gia' cosi' nella 0.4.5; sui tablet non succede, i nomi
+  stanno su una riga. Si puo' tenere i numeri dentro la loro riga (sui nomi
+  su una riga scenderebbero di qualche pixel) o lasciare piu' spazio tra le
+  righe dei nomi.
+- Salsiccia: la descrizione dice ancora "In rotazione · Pulled pork, cavolo
+  viola e mayo spicy" e il piatto non ha numeri di allergeni; nel Figma il
+  nome e' "Salsiccia, alloro e pomodori confit". Sono testi salvati in Divi
+  e il tema non li cambia. Gli allergeni si aggiungono scrivendoli tra
+  parentesi quadre in fondo al nome, per esempio [1,7].
+- Visual Builder: le scritte "Di venerdi'" e "Di giovedi'" compaiono una card
+  prima (pollo e trippa invece di trippa e stoccafisso) e nell'anteprima
+  telefono la card del pollo mostra il titolo della trippa e quella della
+  trippa il titolo dello stoccafisso: il builder aggiunge un elemento in testa
+  alla tabella e le regole di queste due card contano le righe. Sono le
+  stesse regole della 0.4.5; sul sito tutto e' al posto giusto.
+- Tablet: un nome di piatto molto piu' lungo di quelli attuali uscirebbe
+  dalla card; c'e' spazio per circa un terzo in piu' sul nome piu' lungo (il
+  pollo) e per circa la meta' su trippa e stoccafisso, prima della scritta
+  del giorno.
+- iOS: il preloader sparisce di colpo 1,2 s dopo il caricamento, a meta'
+  animazione.
+- Titoli "Siamo nei caruggi..." e "Il nostro menu'" tra 981 e 1180 px: le
+  parole vanno a capo a meta' (CARUG / GI.).
+- Moduli custom: alcune opzioni del modulo Onda non hanno effetto; il
+  separatore della striscia non si puo' togliere; la striscia Materie salta se
+  le ripetizioni non sono 4; le opzioni Design delle singole scritte non hanno
+  effetto; una striscia senza scritte mostra frasi predefinite sul sito.
+- Visual Builder: i colori globali di Divi nei moduli Header/Footer e i campi
+  con contenuto dinamico non si vedono nell'anteprima del builder (sul sito
+  si'); i segnaposto usano un percorso fisso del tema.
+- "Crea/aggiorna home": un doppio clic durante i circa 40 s di lavoro puo'
+  creare doppioni.
+
+==============================================================================
+
+NOTE DELLA 0.4.5
 
 La 0.4.5 aggiunge al menu la misura S del piatto, come nel Figma: prezzi e
 intestazione dalla tavola desktop "statico per copy", card a quattro colonne

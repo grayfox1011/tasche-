@@ -332,7 +332,7 @@ return '<!-- wp:divi/placeholder --><!-- wp:divi/section {"module":{"advanced":{
 <!-- /wp:divi/group -->
 <!-- /wp:divi/group -->
 
-<!-- wp:divi/group {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-row tp-menu-row\u002d\u002dproposal"}}}}},"builderVersion":"5.2.0"} -->
+<!-- wp:divi/group {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-row"}}}}},"builderVersion":"5.2.0"} -->
 <!-- wp:divi/group {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-item"}}}}},"builderVersion":"5.2.0"} -->
 <!-- wp:divi/heading {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-name"}}}}},"title":{"innerContent":{"desktop":{"value":"SALSICCIA, ALLORO E PEPERONI CONFIT"}},"decoration":{"font":{"font":{"desktop":{"value":{"headingLevel":"h4"}}}}}},"builderVersion":"5.2.0"} /-->
 
@@ -343,7 +343,19 @@ return '<!-- wp:divi/placeholder --><!-- wp:divi/section {"module":{"advanced":{
 <!-- wp:divi/image {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-row-image"}}}}},"image":{"innerContent":{"desktop":{"value":{"src":"{{TP_CHILD_URL}}assets/images/dishes/flow-menu-proposta-mese.webp","alt":""}}}},"builderVersion":"5.2.0"} /-->
 
 <!-- wp:divi/group {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-prices"}}}}},"builderVersion":"5.2.0"} -->
-<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price\u002d\u002dtasca"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e7,50€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-label tp-menu-label-tasca tp-menu-price-label-tasca"}}},"meta":{"adminLabel":{"desktop":{"value":"Etichetta Tasca"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003eTasca\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price\u002d\u002dtasca tp-menu-price-value-tasca"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e7,50€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-label tp-menu-label-piatto tp-menu-price-label-s"}}},"meta":{"adminLabel":{"desktop":{"value":"Etichetta Piatto"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003ePiatto\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-label tp-menu-label-s"}}},"meta":{"adminLabel":{"desktop":{"value":"Etichetta S"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003eS\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-value-s"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e9,00€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-label tp-menu-label-m"}}},"meta":{"adminLabel":{"desktop":{"value":"Etichetta M"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003eM\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-label-m tp-menu-price-value-m"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e13,50€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-label tp-menu-label-l"}}},"meta":{"adminLabel":{"desktop":{"value":"Etichetta L"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003eL\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-price tp-menu-price-label-l tp-menu-price-value-l"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e18,00€\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
 
 <!-- /wp:divi/group -->
 <!-- /wp:divi/group -->
