@@ -1,4 +1,107 @@
-TASCHE PIENE — VERSIONE 0.4.2, CANDIDATA AL COLLAUDO
+TASCHE PIENE — VERSIONE 0.4.3, CANDIDATA AL COLLAUDO
+
+La 0.4.3 corregge gli errori trovati nella notte tra il 23 e il 24 ottobre 2026:
+una ricerca in sei aree (PHP, sicurezza, JavaScript, moduli, file richiamati,
+installazione e aggiornamento) con due verifiche indipendenti per ogni
+segnalazione, poi una revisione indipendente delle correzioni stesse. Sui
+dispositivi verificati (browser desktop da 320 a 1920 px, iPhone in
+emulazione) le pagine restano identiche alla 0.4.2; cambia solo l'iPad in
+orizzontale, che prima mostrava header e menu rotti. Le note delle versioni
+precedenti, piu' in basso, restano valide.
+
+COSA CAMBIA RISPETTO ALLA 0.4.2
+- Cache CSS di Divi: le migrazioni chiamavano et_core_clear_cache(), che in
+  Divi 5.15.1 non esiste, quindi non svuotavano mai i file statici. Aggiornando
+  via FTP senza svuotare la cache a mano, la 0.4.2 serviva il CSS vecchio
+  della 0.3.1 (home piu' alta di 164 px a 1440 e larga 408 px a 390, con
+  scorrimento orizzontale). Ora la richiesta di svuotamento e' salvata nel
+  database ed eseguita alla prima richiesta completa.
+- SVG: si caricano solo con la capacita' unfiltered_html (amministratori ed
+  editori); prima bastava upload_files e il filtro a regex si aggirava. La
+  pulizia vale anche per i caricamenti via REST/sideload.
+- Video della hero sotto i 981 px: usa il video impostato in Divi per quel
+  breakpoint, come la 0.3.1 (la 0.4.0 usava sempre il file del tema); se in
+  Divi il video e' tolto, non ne mostra.
+- ?et_fb=1 nell'indirizzo attiva la modalita' builder solo per chi puo'
+  modificare: prima un visitatore riceveva la pagina senza script.
+- Sezione Tasca/Piatto: "$1" o "\1" scritti nel testo restano testo.
+- Pagine legali: dopo la prima installazione una pagina mancante viene
+  ricreata da sola, senza riscrivere l'altra ne' le etichette del footer;
+  riattivare il tema o premere "Crea/aggiorna home" non le riscrive piu'.
+- Menu: le posizioni gia' assegnate dal proprietario restano assegnate quando
+  il tema viene riattivato, anche dal Personalizza. Alla prima installazione
+  vengono assegnati i menu Tasche Piene come prima.
+- Libreria media: aprirla non reimporta piu' le immagini del tema che il
+  proprietario ha eliminato.
+- "Crea/aggiorna home": limite di tempo portato a 300 s (sul server di prova
+  servono circa 43 s, oltre i 30 s abituali), nessun allegato doppio se la
+  richiesta si interrompe, e gli altri template del Theme Builder restano
+  collegati.
+- iPad: le correzioni per iPhone (prezzi del menu e header) non si applicano
+  piu' da 981 px in su; l'iPad in orizzontale mostra il layout desktop.
+
+VERIFICHE EFFETTUATE SULLA 0.4.3
+Riferimento: la 0.4.2 sullo stesso sito di prova, con la cache PHP disattivata.
+- Dopo ogni gruppo di correzioni, suite completa: home a 20 larghezze e pagine
+  legali a 10 con stessi stili e posizioni, hover e focus, menu mobile aperto,
+  iPhone 13 in emulazione, Visual Builder (desktop, tablet, telefono, privacy),
+  modificabilita' (stessi esiti modulo per modulo, modifica dal builder 8 su
+  8), stato attivo, scale, sezione Alberto, allergeni, prezzi su iPhone, HTML
+  dei moduli. Uniche differenze: il numero di versione e, su mobile,
+  l'indirizzo del video della hero (stesso file, preso da Divi).
+- Test mirati su copie del sito, ripetuti sulla 0.4.2 come controprova (la
+  0.4.2 mostra ogni volta il difetto, la 0.4.3 no): pagina legale cancellata,
+  riattivazione del tema, attivazione dal Personalizza, menu del proprietario,
+  "Crea/aggiorna home", Libreria media, template del Theme Builder, SVG
+  caricato da un autore, ?et_fb=1 da visitatore, "$1" nel testo, aggiornamento
+  via FTP con e senza interruzione della prima richiesta, hero senza video.
+- iPad Pro 11 in orizzontale: header identico al pixel a un browser desktop e
+  stesse righe del menu; in verticale identico alla 0.4.2, anche dopo una
+  rotazione.
+- Pagine non coperte dalla suite (articolo, ricerca, 404, archivi, pagina
+  semplice, schermate di amministrazione) su desktop, telefono e iPhone:
+  nessun errore JavaScript ne' file mancanti dovuti al tema.
+- Installazione dello zip da Aspetto > Temi > Carica tema (vedi sotto).
+
+INSTALLAZIONE DELLO ZIP
+Provata caricando lo zip da wp-admin, come si fa sul sito pubblico:
+- copia del sito di prova 0.3.1 con la home dell'export del sito pubblico,
+  aggiornata a 0.4.2 e, con lo zip finale, a 0.4.3: home, privacy e cookie
+  identiche al pixel alla 0.3.1 a ogni larghezza, stessi stili della versione
+  di sviluppo, valori di Divi applicati, query da 82 a 68;
+- lo stesso sito portato prima alla 0.4.0, poi aggiornato a 0.4.2 e a 0.4.3;
+- WordPress nuovi con Divi 5.15.1 (0.3.1, 0.4.2, 0.4.3): attivazione e
+  pulsante "Crea/aggiorna home"; con la 0.4.3 il pulsante completa il lavoro
+  anche con il limite PHP di 30 s.
+WordPress mostra la tabella "Installato / Caricato" e sostituisce il tema
+senza errori; i file installati sono identici allo zip; Divi svuota da solo la
+sua cache CSS. Nessun errore PHP.
+
+DA DECIDERE (non corretto: cambierebbe l'aspetto o richiede il Figma)
+- Card del menu su telefono e tablet: su Android e nei browser non iOS sotto i
+  768 px non si vede nessun prezzo e "Piatto" copre la L; su iPhone si vede
+  solo il prezzo Tasca, le lettere M e L sono sovrapposte in un angolo e i
+  prezzi Piatto (M e L) non compaiono mai; sui tablet le cifre vanno in
+  colonna. Il CSS contiene gia' le posizioni previste per i tre prezzi, ma una
+  regola successiva (font-size 0) le annulla. Serve il Figma per decidere se
+  le lettere M e L vanno mostrate.
+- iOS: il preloader sparisce di colpo 1,2 s dopo il caricamento, a meta'
+  animazione.
+- Titoli "Siamo nei caruggi..." e "Il nostro menu'" tra 981 e 1180 px: le
+  parole vanno a capo a meta' (CARUG / GI.).
+- Moduli custom: alcune opzioni del modulo Onda non hanno effetto; il
+  separatore della striscia non si puo' togliere; la striscia Materie salta se
+  le ripetizioni non sono 4; le opzioni Design delle singole scritte non hanno
+  effetto; una striscia senza scritte mostra frasi predefinite sul sito.
+- Visual Builder: i colori globali di Divi nei moduli Header/Footer e i campi
+  con contenuto dinamico non si vedono nell'anteprima del builder (sul sito
+  si'); i segnaposto usano un percorso fisso del tema.
+- "Crea/aggiorna home": un doppio clic durante i circa 40 s di lavoro puo'
+  creare doppioni.
+
+==============================================================================
+
+NOTE DELLA 0.4.2
 
 La 0.4.2 e' la fase 3 della revisione del codice (la fase 2 aspetta i dati del
 sito pubblico): stesso aspetto della 0.4.1, codice piu' semplice da mantenere.

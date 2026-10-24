@@ -12,8 +12,16 @@ Installazione su un nuovo WordPress:
 Aggiornamento di un sito esistente:
 
 - Fare un backup del database.
-- Sostituire il child theme e svuotare la cache CSS di Divi e quella di eventuali plugin di cache.
+- Sostituire il child theme da Aspetto > Temi > Aggiungi tema > Carica tema (WordPress chiede di sostituire il tema installato con quello caricato) e svuotare la cache di eventuali plugin di cache.
+- La cache CSS di Divi si svuota da sola: caricando lo zip da wp-admin la svuota Divi; se i file vengono copiati via FTP, il tema la invalida alla prima visita in cui riscrive un layout. Svuotarla a mano resta innocuo.
 - Alla prima richiesta il tema pulisce una sola volta le pagine della landing (vedi "Pulizia una tantum").
+
+Contenuti del proprietario:
+
+- Privacy e Cookie Policy vengono create dal tema solo se mancano. Una pagina eliminata viene ricreata senza toccare l'altra; riattivare il tema o usare "Crea/aggiorna home" non riscrive le pagine esistenti.
+- I menu assegnati dal proprietario alle posizioni del tema restano assegnati anche se il tema viene riattivato.
+- Aprire la Libreria media non reimporta le immagini del tema che il proprietario ha eliminato.
+- Gli SVG si possono caricare solo con la capacita' unfiltered_html (amministratori ed editori su sito singolo).
 
 Regole operative:
 
@@ -37,7 +45,7 @@ Cosa resta fisso:
 - La sezione Tasca/Piatto viene ricostruita dal tema: dai moduli Divi si modificano testi e immagini, non il design.
 - Gli apici degli allergeni nei nomi del menu sono aggiunti via JavaScript e mantengono il loro stile.
 - Orari e legenda del menu usano due span con dimensioni diverse: il colore si modifica, le due dimensioni restano distinte.
-- Su iPhone i prezzi del menu sono posizionati via JavaScript.
+- Su iPhone e iPad in verticale i prezzi del menu sono posizionati via JavaScript; da 981 px in su (iPad in orizzontale) vale il layout desktop.
 - L'allineamento del testo di alcuni moduli (prezzi, card Materie, link "Torna alla home") resta quello del tema.
 
 Moduli custom:
@@ -49,7 +57,7 @@ Moduli custom:
 Script del sito pubblico:
 
 - `assets/js/tasche-piene.js`: header e menu, pulsanti, orari, prezzi su iOS e lo stato attivo comune a orari, card Tasca/Piatto e Materie.
-- `assets/js/tp-layout.js`: scale delle sezioni a 1512 px e della card del menu, video della hero su mobile, ordine mobile della sezione Alberto, allergeni. Viene stampato prima di jQuery, dove stavano gli script inline, perche' deve girare prima degli script di Divi.
+- `assets/js/tp-layout.js`: scale delle sezioni a 1512 px e della card del menu, video della hero su mobile (usa il video impostato in Divi per quel breakpoint; se in Divi non c'e' video, non ne mostra), ordine mobile della sezione Alberto, allergeni. Viene stampato prima di jQuery, dove stavano gli script inline, perche' deve girare prima degli script di Divi.
 
 Pulizia una tantum (`inc/design-cleanup-migration.php`):
 
