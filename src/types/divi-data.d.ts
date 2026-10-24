@@ -3,3 +3,7 @@ declare module '@divi/data' {
 
 	export const useSelect: Data.UseSelect;
 }
+
+declare module '@divi/global-data' {
+	export const processGlobalVariableColor: ((value: string) => string) | undefined;
+}

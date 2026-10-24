@@ -3,7 +3,7 @@ import { ModuleContainer } from '@divi/module';
 
 import { NavPreviewItem, ThemeHeaderEditProps } from './types';
 import { createModuleClassnames, createModuleScriptData, createModuleStyles } from '../../utils/module-boilerplate';
-import { buildStyleVars, getString } from '../../utils/attrs';
+import { buildStyleVars, getColor, getString } from '../../utils/attrs';
 import { getWpMenuItems } from '../../utils/wp-menus';
 
 const MODULE_CLASSNAME = 'tp_theme_header';
@@ -30,8 +30,8 @@ export const ThemeHeaderEdit = (props: ThemeHeaderEditProps): ReactElement => {
 	const menuLocation = getString(attrs.menuLocation, 'tp_main_nav');
 	const navItems = getWpMenuItems(menuLocation, DEFAULT_NAV);
 	const navStyle = buildStyleVars({
-		'--tp-nav-bg': getString(attrs.navBackgroundColor, ''),
-		'--tp-nav-link-color': getString(attrs.navLinkColor, ''),
+		'--tp-nav-bg': getColor(attrs.navBackgroundColor, ''),
+		'--tp-nav-link-color': getColor(attrs.navLinkColor, ''),
 	});
 
 	return (

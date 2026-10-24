@@ -27,8 +27,8 @@ trait RenderCallbackTrait {
 	): string {
 		$footer_style = tp_child_chrome_style_from_vars(
 			[
-				'--tp-footer-bg'         => tp_child_chrome_get_string( $attrs, 'footerBackgroundColor', '' ),
-				'--tp-footer-link-color' => tp_child_chrome_get_string( $attrs, 'footerLinkColor', '' ),
+				'--tp-footer-bg'         => tp_child_chrome_get_color( $attrs, 'footerBackgroundColor', '' ),
+				'--tp-footer-link-color' => tp_child_chrome_get_color( $attrs, 'footerLinkColor', '' ),
 			]
 		);
 

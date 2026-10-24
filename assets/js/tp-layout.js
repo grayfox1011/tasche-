@@ -223,7 +223,8 @@
 
 	// Allergens are typed in the Divi dish title between square brackets, e.g.
 	// "MELANZANA ALLA PARMIGIANA [7,8]": the brackets are removed and the numbers
-	// shown as a superscript. Titles without brackets use the map below (Figma 10:314).
+	// shown as a superscript. Titles without brackets use the map below (Figma 10:314; the
+	// salsiccia's numbers come from the owner).
 	// The short mobile name is the part of the title before " - " (data-tp-short,
 	// read by the CSS). The Visual Builder shows the titles as typed.
 	(function () {
@@ -235,7 +236,8 @@
 			[/TRIPPA/i, '8,9,12'],
 			[/STOCCAFISSO/i, '4,8,9,12'],
 			[/CAPRESE/i, '7,8'],
-			[/ACCIUGHE/i, '4,7']
+			[/ACCIUGHE/i, '4,7'],
+			[/SALSICCIA/i, '1,7']
 		];
 		function apply() {
 			var heads = document.querySelectorAll('.tp-menu-section .tp-menu-name h4, .tp-menu-section h4.et_pb_module_header');

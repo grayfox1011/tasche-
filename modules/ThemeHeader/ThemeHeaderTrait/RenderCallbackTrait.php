@@ -49,8 +49,8 @@ trait RenderCallbackTrait {
 
 		$nav_style = tp_child_chrome_style_from_vars(
 			[
-				'--tp-nav-bg'         => tp_child_chrome_get_string( $attrs, 'navBackgroundColor', '' ),
-				'--tp-nav-link-color' => tp_child_chrome_get_string( $attrs, 'navLinkColor', '' ),
+				'--tp-nav-bg'         => tp_child_chrome_get_color( $attrs, 'navBackgroundColor', '' ),
+				'--tp-nav-link-color' => tp_child_chrome_get_color( $attrs, 'navLinkColor', '' ),
 			]
 		);
 

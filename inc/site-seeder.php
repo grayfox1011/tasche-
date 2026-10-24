@@ -9,6 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 define( 'TP_CHILD_SEED_VERSION', '2026-06-19.1' );
 define( 'TP_CHILD_SEED_BUILDER_VERSION', '5.5.2' );
+define( 'TP_CHILD_SEED_LOCK', 'tp_child_seed_site.lock' );
 
 function tp_child_seed_raw_home_content(): string {
 	$file = TP_CHILD_PATH . 'inc/seed/home-content.php';
@@ -658,11 +659,35 @@ function tp_child_seed_site( bool $force = false ): array {
 		return [ 'skipped' => true ];
 	}
 
+	// One request at a time: a second click on "Crea/aggiorna home" while the first request works
+	// would not find the pages, menus and images that one is creating, and would create them again.
+	if ( ! tp_child_lock( TP_CHILD_SEED_LOCK ) ) {
+		return [ 'skipped' => true, 'busy' => true ];
+	}
+
+	try {
+		return tp_child_seed_site_locked( $force );
+	} finally {
+		delete_option( TP_CHILD_SEED_LOCK );
+	}
+}
+
+function tp_child_seed_site_locked( bool $force ): array {
+	// The request that held the lock may have just finished.
+	wp_cache_delete( 'alloptions', 'options' );
+	wp_cache_delete( 'notoptions', 'options' );
+
+	if ( ! $force && TP_CHILD_SEED_VERSION === get_option( 'tp_child_seed_site_version' ) ) {
+		return [ 'skipped' => true ];
+	}
+
 	// Importing the media and building the pages takes about 40 s on a slow host,
-	// more than the usual 30 s limit.
+	// more than the usual 30 s limit; it goes on if the browser leaves the page.
 	if ( function_exists( 'set_time_limit' ) ) {
 		@set_time_limit( 300 );
 	}
+
+	ignore_user_abort( true );
 
 	if ( function_exists( 'tp_child_seed_nav_menus' ) ) {
 		tp_child_seed_nav_menus();
@@ -774,11 +799,15 @@ function tp_child_seed_site_admin_fallback(): void {
 		return;
 	}
 
-	tp_child_seed_site( $manual_request );
-	delete_option( "tp_child_seed_site_pending" );
+	$result = tp_child_seed_site( $manual_request );
+	$busy   = ! empty( $result['busy'] );
+
+	if ( ! $busy ) {
+		delete_option( "tp_child_seed_site_pending" );
+	}
 
 	if ( $manual_request && ! headers_sent() ) {
-		wp_safe_redirect( add_query_arg( "tp_child_seeded", "1", admin_url( "themes.php" ) ) );
+		wp_safe_redirect( add_query_arg( $busy ? "tp_child_seeding" : "tp_child_seeded", "1", admin_url( "themes.php" ) ) );
 		exit;
 	}
 }
@@ -789,17 +818,27 @@ function tp_child_seed_site_admin_notice(): void {
 		return;
 	}
 
-	if ( ! empty( $_GET["tp_child_seeded"] ) ) {
+	$seeded = TP_CHILD_SEED_VERSION === get_option( "tp_child_seed_site_version" );
+
+	// A request that found another one at work lands here with tp_child_seeding: that one may be done now.
+	if ( ! empty( $_GET["tp_child_seeded"] ) || ( $seeded && ! empty( $_GET["tp_child_seeding"] ) ) ) {
 		echo "<div class=\"notice notice-success is-dismissible\"><p>" . esc_html__( "Seed Tasche Piene completato.", "tasche-piene-divi-child" ) . "</p></div>";
 	}
 
-	if ( TP_CHILD_SEED_VERSION === get_option( "tp_child_seed_site_version" ) ) {
+	if ( $seeded ) {
+		return;
+	}
+
+	if ( tp_child_lock_held( TP_CHILD_SEED_LOCK ) ) {
+		echo "<div class=\"notice notice-info\"><p>" . esc_html__( "La home Tasche Piene e in preparazione: ci vuole circa un minuto. Ricarica questa pagina tra poco.", "tasche-piene-divi-child" ) . "</p></div>";
+
 		return;
 	}
 
 	$url = tp_child_seed_site_admin_url();
 
-	echo "<div class=\"notice notice-warning\"><p>" . esc_html__( "Il tema Tasche Piene e attivo, ma la home non e ancora stata creata o aggiornata.", "tasche-piene-divi-child" ) . "</p><p><a class=\"button button-primary\" href=\"" . esc_url( $url ) . "\">" . esc_html__( "Crea/aggiorna home Tasche Piene", "tasche-piene-divi-child" ) . "</a></p></div>";
+	// After the first click the button turns grey and takes no more clicks until the page changes.
+	echo "<div class=\"notice notice-warning\"><p>" . esc_html__( "Il tema Tasche Piene e attivo, ma la home non e ancora stata creata o aggiornata.", "tasche-piene-divi-child" ) . "</p><p><a class=\"button button-primary\" href=\"" . esc_url( $url ) . "\" onclick=\"if(this.getAttribute('aria-disabled')){return false;}this.setAttribute('aria-disabled','true');this.classList.add('disabled');this.textContent=this.getAttribute('data-busy-label');\" data-busy-label=\"" . esc_attr__( "Creazione della home in corso...", "tasche-piene-divi-child" ) . "\">" . esc_html__( "Crea/aggiorna home Tasche Piene", "tasche-piene-divi-child" ) . "</a></p></div>";
 }
 add_action( "admin_notices", "tp_child_seed_site_admin_notice" );
 
@@ -823,6 +862,11 @@ if ( defined( "WP_CLI" ) && WP_CLI && class_exists( "WP_CLI" ) ) {
 		"tp seed",
 		static function (): void {
 			$result = tp_child_seed_site( true );
+
+			if ( ! empty( $result['busy'] ) ) {
+				WP_CLI::error( "Un'altra richiesta sta creando la home: riprova tra un minuto." );
+			}
+
 			delete_option( "tp_child_seed_site_pending" );
 
 			WP_CLI::success( wp_json_encode( $result ) );

@@ -11,6 +11,7 @@ module.exports = {
 		'react-dom': ['vendor', 'ReactDOM'],
 		'@wordpress/hooks': ['vendor', 'wp', 'hooks'],
 		'@divi/data': ['divi', 'data'],
+		'@divi/global-data': ['divi', 'globalData'],
 		'@divi/module': ['divi', 'module'],
 		'@divi/module-library': ['divi', 'moduleLibrary'],
 	},

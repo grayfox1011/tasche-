@@ -25,6 +25,21 @@ function tp_child_chrome_get_string( array $attrs, string $key, string $fallback
 }
 
 /**
+ * Read a color attribute. Divi saves a global color as `$variable({...})$` and turns the plain ones into
+ * `var(--gcid-...)` before the module renders, but not those with a variation (lighter, transparent...):
+ * they go through Divi's resolver, as for its own modules. A value it cannot resolve gives the fallback.
+ */
+function tp_child_chrome_get_color( array $attrs, string $key, string $fallback = '' ): string {
+	$value = tp_child_chrome_get_string( $attrs, $key, $fallback );
+
+	if ( str_contains( $value, '$variable(' ) && class_exists( '\\ET\\Builder\\Packages\\StyleLibrary\\Utils\\Utils' ) ) {
+		$value = \ET\Builder\Packages\StyleLibrary\Utils\Utils::resolve_dynamic_variable( $value );
+	}
+
+	return str_contains( $value, '$variable(' ) ? $fallback : $value;
+}
+
+/**
  * Resolve an uploaded image URL with legacy text URL and theme default fallbacks.
  */
 function tp_child_chrome_get_image_url( array $attrs, string $upload_key, string $legacy_key, string $default_url ): string {

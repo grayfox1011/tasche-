@@ -3,7 +3,7 @@ import { ModuleContainer } from '@divi/module';
 
 import { ThemeFooterAttrs, ThemeFooterEditProps } from './types';
 import { createModuleClassnames, createModuleScriptData, createModuleStyles } from '../../utils/module-boilerplate';
-import { buildStyleVars, getString, getUploadUrl } from '../../utils/attrs';
+import { buildStyleVars, getColor, getString, getUploadUrl } from '../../utils/attrs';
 import { getWpMenuItems } from '../../utils/wp-menus';
 
 const MODULE_CLASSNAME = 'tp_theme_footer';
@@ -59,8 +59,8 @@ export const ThemeFooterEdit = (props: ThemeFooterEditProps): ReactElement => {
 	const { attrs, elements, id, name } = props;
 
 	const footerStyle = buildStyleVars({
-		'--tp-footer-bg': getString(attrs.footerBackgroundColor, '#054726'),
-		'--tp-footer-link-color': getString(attrs.footerLinkColor, '#fff5e9'),
+		'--tp-footer-bg': getColor(attrs.footerBackgroundColor, '#054726'),
+		'--tp-footer-link-color': getColor(attrs.footerLinkColor, '#fff5e9'),
 	});
 	const navAriaLabel = getString(attrs.navAriaLabel, 'Footer');
 	const logoLink = getString(attrs.logoLink, '#home');

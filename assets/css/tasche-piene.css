@@ -20420,6 +20420,46 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 	}
 }
 
+/*
+ * Titles "Siamo nei caruggi..." and "Il nostro menù" from 981 px up: where the longest word no longer
+ * fits at 64 px (NASCOSTI. is 6.09 times the font size, NOSTRO 4.58 times), the title gets smaller
+ * with its column instead of breaking the word in two, with a margin for other browsers' fonts.
+ * The menu title has the width the header leaves beside the legend (its boxes, 527.14 px, and the
+ * 32 px gap). Browsers without container queries keep 64 px.
+ * The location text column is never narrower than the Mappe button's box (277.52 px): below 1090 px
+ * the map gives up its left margin (107 px at most) so that the column stays inside the page.
+ */
+@media (min-width: 981px) {
+
+	.tp-child-theme :where(#page-container .tp-location-map-column) {
+		margin-left: clamp(0px, calc(100% - 922.52px), 107px);
+	}
+
+	.tp-child-theme :where(#page-container .tp-location-title) {
+		container: tp-location-title / inline-size;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-header) {
+		container: tp-menu-header / inline-size;
+	}
+}
+
+@container tp-location-title (max-width: 402px) {
+
+	.tp-child-theme :where(#page-container .tp-location-title h2) {
+		font-size: 15.9cqi;
+		line-height: 1;
+	}
+}
+
+@container tp-menu-header (max-width: 862px) {
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-title h2) {
+		font-size: calc((100cqi - 559.14px) * .211);
+		line-height: 1;
+	}
+}
+
 @keyframes tp-marquee-scroll {
 	0% {
 		transform: translate3d(0, 0, 0);

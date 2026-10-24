@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'react';
+import { processGlobalVariableColor } from '@divi/global-data';
 
 export const getVal = (attr: unknown, fallback: unknown = ''): unknown => {
 	const value = (attr as any)?.innerContent?.desktop?.value ?? (attr as any)?.desktop?.value;
@@ -14,6 +15,21 @@ export const getString = (attr: unknown, fallback = ''): string => {
 	}
 
 	return String(value);
+};
+
+/**
+ * A color field. Divi saves a global color as `$variable({...})$`, which becomes `var(--gcid-...)` on the
+ * site; the builder passes the saved value as it is, so it is turned here with Divi's own function, as
+ * tp_child_chrome_get_color() does on the site. A value it cannot resolve gives the fallback.
+ */
+export const getColor = (attr: unknown, fallback = ''): string => {
+	let value = getString(attr, fallback);
+
+	if (value.includes('$variable(') && typeof processGlobalVariableColor === 'function') {
+		value = processGlobalVariableColor(value);
+	}
+
+	return value.includes('$variable(') ? fallback : value;
 };
 
 export const clampNumber = (value: string, fallback: number, min: number, max: number): number => {

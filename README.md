@@ -8,6 +8,7 @@ Installazione su un nuovo WordPress:
 - Installare e attivare questo child theme.
 - Alla prima attivazione il tema crea la pagina `Home`, la imposta come home primaria, crea header/footer nel Divi Theme Builder e assegna i menu footer modificabili.
 - Gli asset della landing sono inclusi nel child theme, ottimizzati in WebP/WebM e non dipendono dal vecchio sito locale.
+- "Crea/aggiorna home" lavora in una richiesta alla volta (blocco `tp_child_seed_site.lock` nella tabella delle opzioni, lo stesso meccanismo delle operazioni una tantum): dopo il primo clic il pulsante si disattiva, e una seconda richiesta (da un'altra scheda o ricaricando la pagina) non crea pagine, menu o immagini doppie ma porta all'avviso "La home Tasche Piene e in preparazione". Un blocco lasciato da una richiesta interrotta scade dopo 10 minuti.
 
 Aggiornamento di un sito esistente:
 
@@ -50,6 +51,7 @@ Cosa resta fisso:
 - La figura sopra il riquadro Piatto sale al suo posto quando il menu entra nello schermo (`tp-menu.js`); nel Visual Builder, dove lo script non gira, e' gia' al suo posto.
 - Sui telefoni (sotto i 768 px) la card del menu segue il Figma: scritte Tasca e Piatto inclinate, icone, lettere accanto alle ciotole, prezzi in una riga. Con il prezzo S la card ha quattro colonne (tavola per iPhone 17), senza ne ha tre (tavola "mobilw"). Sono regole CSS in fondo al foglio, uguali su tutti i browser: i valori impostati in Divi su scritte e prezzi prevalgono.
 - Sui tablet (da 768 a 980 px) la sezione menu segue la tavola "iPad Pro 11" - 1" (834 px): foto, card, contorni, dolci e bevande a tutta larghezza, titolo a sinistra, card larghe e basse con Tasca e Piatto a destra delle icone e frecce curve (`menu-arrow-green-tablet.svg`, `menu-arrow-bordeaux-tablet.svg`). Misure e distanze sono quelle del Figma a 834 px e crescono con lo schermo; i nomi dei piatti stanno su una riga e uno piu' lungo va a capo dentro la card. Da 981 px in su (anche iPad in orizzontale) vale il layout desktop.
+- I titoli "Siamo nei caruggi..." e "Il nostro menù", da 981 px in su, diventano piu' piccoli con la loro colonna quando la parola piu' lunga non ci starebbe a 64 px, invece di spezzarla a meta' (regole `@container` in fondo al foglio; i browser senza container query restano a 64 px; una dimensione impostata in Divi prevale). Nella sezione Dove siamo, sotto i 1090 px la mappa riduce il margine sinistro (da 107 px fino a 0) perche' la colonna del testo, larga almeno quanto il pulsante Mappe (277,52 px), resti dentro la pagina.
 - Misura S del piatto: in ogni riga del menu principale un modulo Testo con classe `tp-menu-label tp-menu-label-s` (la lettera) e uno con classe `tp-menu-price tp-menu-price-value-s` (il prezzo), prima della M. Su desktop, se almeno un piatto ha la S, i prezzi stanno in colonne fisse (Tasca, S, M, L): un piatto senza S lascia vuota la sua cella. Per togliere la S a un piatto basta eliminare i suoi due moduli. I browser senza il selettore `:has()` (Safari prima del 15.4, Firefox prima del 121) non mostrano la S e tengono la card a tre colonne.
 - L'allineamento del testo di alcuni moduli (prezzi, card Materie, link "Torna alla home") resta quello del tema.
 
@@ -57,6 +59,7 @@ Moduli custom:
 
 - I moduli `tp/*` hanno gruppi Design propri (testo della striscia, logo, link, copyright...). I valori impostati vincono sempre sul tema: Divi li stampa con `!important` dentro `@layer tp-authored`.
 - Gli stili dei moduli custom sono in `assets/css/tasche-piene.css`; `npm run build` compila solo `scripts/bundle.js` per il Visual Builder.
+- I colori di Header e Footer (sfondo e scritte) accettano i colori globali di Divi, anche con una variazione (piu' chiaro, piu' scuro, trasparente): il tema li risolve con le funzioni di Divi sul sito (`tp_child_chrome_get_color()` in `inc/theme-chrome-helpers.php`) e nell'anteprima del Visual Builder (`getColor()` in `src/utils/attrs.ts`, con `divi.globalData`). Un valore che Divi non sa risolvere lascia il colore del tema.
 - Ogni modulo PHP estende `modules/ModuleBase.php`, che registra il modulo e ne stampa classi, stili e dati script: la classe del modulo dichiara solo la cartella del `module.json`, la classe CSS e i gruppi Design, e tiene il proprio render.
 
 Script del sito pubblico:

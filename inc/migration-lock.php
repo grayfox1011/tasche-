@@ -48,7 +48,7 @@ function tp_child_migrations_gate(): void {
 		return;
 	}
 
-	if ( tp_child_migration_lock() ) {
+	if ( tp_child_lock( TP_CHILD_MIGRATION_LOCK ) ) {
 		wp_cache_delete( 'alloptions', 'options' );
 		wp_cache_delete( 'notoptions', 'options' );
 		add_action( 'init', 'tp_child_migrations_done', PHP_INT_MAX );
@@ -69,24 +69,43 @@ function tp_child_migrations_gate(): void {
 add_action( 'after_setup_theme', 'tp_child_migrations_gate', 2 );
 
 /**
- * The lock, as WordPress takes it for its updates: a row of the options table that only one request
+ * A lock, as WordPress takes it for its updates: a row of the options table that only one request
  * can insert. A lock older than ten minutes belongs to a request that died, and is taken over.
+ * The migrations use it, and so does "Crea/aggiorna home" (inc/site-seeder.php).
  */
-function tp_child_migration_lock(): bool {
+function tp_child_lock( string $name ): bool {
 	global $wpdb;
 
-	if ( $wpdb->query( $wpdb->prepare( "INSERT IGNORE INTO `$wpdb->options` ( `option_name`, `option_value`, `autoload` ) VALUES ( %s, %s, 'off' )", TP_CHILD_MIGRATION_LOCK, (string) time() ) ) ) {
+	if ( $wpdb->query( $wpdb->prepare( "INSERT IGNORE INTO `$wpdb->options` ( `option_name`, `option_value`, `autoload` ) VALUES ( %s, %s, 'off' )", $name, (string) time() ) ) ) {
 		return true;
 	}
 
-	$since = (string) $wpdb->get_var( $wpdb->prepare( "SELECT `option_value` FROM `$wpdb->options` WHERE `option_name` = %s", TP_CHILD_MIGRATION_LOCK ) );
+	$since = tp_child_lock_since( $name );
 
 	if ( '' === $since || (int) $since > time() - 600 ) {
 		return false;
 	}
 
 	// Only one of the requests that find the same stale lock gets it.
-	return (bool) $wpdb->query( $wpdb->prepare( "UPDATE `$wpdb->options` SET `option_value` = %s WHERE `option_name` = %s AND `option_value` = %s", (string) time(), TP_CHILD_MIGRATION_LOCK, $since ) );
+	return (bool) $wpdb->query( $wpdb->prepare( "UPDATE `$wpdb->options` SET `option_value` = %s WHERE `option_name` = %s AND `option_value` = %s", (string) time(), $name, $since ) );
+}
+
+/**
+ * When the lock was taken, read from the table (the options cache may be older); empty if it is free.
+ */
+function tp_child_lock_since( string $name ): string {
+	global $wpdb;
+
+	return (string) $wpdb->get_var( $wpdb->prepare( "SELECT `option_value` FROM `$wpdb->options` WHERE `option_name` = %s", $name ) );
+}
+
+/**
+ * Whether a request is working under the lock now: a lock older than ten minutes does not count.
+ */
+function tp_child_lock_held( string $name ): bool {
+	$since = tp_child_lock_since( $name );
+
+	return '' !== $since && (int) $since > time() - 600;
 }
 
 /**

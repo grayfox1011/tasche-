@@ -1,4 +1,111 @@
-TASCHE PIENE — VERSIONE 0.4.7, CANDIDATA AL COLLAUDO
+TASCHE PIENE — VERSIONE 0.4.8, CANDIDATA AL COLLAUDO
+
+La 0.4.8 risolve i quattro punti decisi dopo la 0.4.7: gli allergeni della
+salsiccia (1,7), le parole spezzate nei titoli "Siamo nei caruggi..." e "Il
+nostro menu'" sui computer stretti, i colori globali di Divi nei moduli Header
+e Footer, i doppioni con un doppio clic su "Crea/aggiorna home". Le note delle
+versioni precedenti, piu' in basso, restano valide.
+
+COSA CAMBIA RISPETTO ALLA 0.4.7
+- Allergeni: la salsiccia mostra l'apice 1,7 come gli altri piatti, nella
+  stessa posizione. Si cambia in Divi come per gli altri, scrivendo i numeri
+  tra parentesi quadre in fondo al nome.
+- Titoli "Siamo nei caruggi. Non troppo nascosti." e "Il nostro menu'": da
+  981 px in su, quando la parola piu' lunga non ci sta a 64 px, il titolo
+  diventa piu' piccolo con la sua colonna invece di spezzare la parola (prima:
+  CARUG / GI., NASCO / STI., NOSTR / O). "Siamo nei caruggi" scende fino a
+  44 px tra 981 e 1090 px e torna a 64 px verso 1220 px; "Il nostro menu'" e'
+  piu' piccolo solo tra 981 e 1010 px circa (56-60 px). Sopra queste
+  larghezze, sui tablet e sui telefoni non cambia niente. Una dimensione
+  impostata in Divi prevale.
+- Sezione Dove siamo tra 981 e 1090 px: la colonna del testo non scendeva
+  sotto la larghezza del pulsante Mappe (277,52 px) e, con i 107 px di margine
+  a sinistra della mappa, fino a circa 1060 px usciva dallo schermo a destra
+  (fino a 79 px a 981 px: titolo e testo tagliati, anche con la 0.4.7). Ora la
+  mappa riduce quel margine quanto serve e la colonna resta dentro la pagina,
+  con il suo bordo di 30 px.
+- Colori globali di Divi in Header e Footer (sfondo e scritte):
+  nell'anteprima del Visual Builder si vedono come sul sito; prima lo sfondo
+  diventava trasparente. Sul sito ora funzionano anche i colori globali con
+  una variazione (piu' chiaro, piu' scuro, trasparente): prima il valore
+  finiva nella pagina non risolto e restava il colore del tema.
+- "Crea/aggiorna home" lavora in una richiesta alla volta. Dopo il primo clic
+  il pulsante diventa grigio, con la scritta "Creazione della home in
+  corso...", e non accetta altri clic; una seconda richiesta (da un'altra
+  scheda o ricaricando la pagina) non crea niente e porta all'avviso "La home
+  Tasche Piene e in preparazione". Un blocco lasciato da una richiesta
+  interrotta scade dopo 10 minuti. Anche "wp tp seed" rispetta il blocco.
+
+VERIFICHE EFFETTUATE SULLA 0.4.8
+Riferimento: la 0.4.7 sullo stesso sito di prova.
+- Suite completa. Home a 20 larghezze: stessa altezza della pagina a tutte le
+  larghezze. Sotto i 981 px cambia solo l'apice della salsiccia (un elemento
+  in piu', nient'altro si sposta). Da 1280 px in su cambia solo la riga della
+  salsiccia: il nome si allarga per l'apice e la descrizione si sposta di 7-19
+  px; a 1440 px il nome, il piu' lungo del menu, va su due righe (a 1366 px
+  succede gia' al pollo, a 1280 px a quasi tutti i piatti; a 1512 px tutto su
+  una riga come nel Figma). Tra 981 e 1200 px cambiano anche i titoli e la
+  sezione Dove siamo, come descritto sopra. Privacy e cookie identiche al
+  pixel; hover e focus identici; Visual Builder (computer, tablet, telefono,
+  privacy) identico; modifica dal builder 8 su 8; HTML dei moduli e query al
+  database invariati; iPhone 13 in emulazione senza errori. Modificabilita':
+  stessi esiti della 0.4.7, tranne l'apice nuovo della salsiccia, che come gli
+  altri apici mantiene il suo stile.
+- Titoli, misurati dopo l'animazione a 17 larghezze tra 981 e 1920 px:
+  nessuna parola spezzata e colonna del testo sempre dentro la pagina; con la
+  0.4.7, tra 981 e 1200 px, CARUGGI., TROPPO, NASCOSTI. e NOSTRO andavano a
+  capo a meta'. Da 1220 px in su misure identiche alla 0.4.7. Nel Visual
+  Builder, con la tela larga 1025 e 1112 px, titolo intero e colonna dentro
+  la tela (con la 0.4.7 usciva di 60-147 px).
+- Colori globali, su Header e Footer del sito di prova: colori globali di
+  Divi in sfondo e scritte, anche uno creato a mano con trasparenza al 50% e
+  uno piu' chiaro del 30%. Builder (editor di Header, di Footer e della
+  pagina): i colori si vedono come sul sito; con la 0.4.7 lo sfondo era
+  trasparente. Sito: il colore piu' chiaro del Footer con la 0.4.7 restava
+  quello del tema, ora e' giusto. Un valore che Divi non sa risolvere lascia
+  il colore del tema. Header e Footer del sito di prova poi riportati com'erano.
+- Doppio clic su "Crea/aggiorna home", su WordPress nuovi con il tema attivo:
+  con la 0.4.7 sono partite due richieste e 2 immagini sono state importate due
+  volte (33 invece di 31); con la 0.4.8 parte una sola richiesta. Con 3
+  richieste nello stesso istante: una crea la home, una viene respinta subito
+  con l'avviso "in preparazione", la terza trova la home gia' pronta; risultato
+  identico a un clic singolo (una home, un header, un footer, un template, 31
+  immagini, 3 menu). Provati anche: l'avviso con un blocco attivo, un blocco di
+  11 minuti ripreso dal clic, "wp tp seed" con il blocco attivo e libero.
+- Aggiornamento caricando lo zip da wp-admin: da 0.4.7 la home resta identica
+  byte per byte, senza revisioni nuove; da 0.4.6 e 0.4.4 diventa quella
+  prevista, la stessa della 0.4.7; una seconda richiesta non cambia niente;
+  blocco rilasciato; nessun errore PHP.
+- Installazione nuova (WordPress e Divi nuovi, zip caricato, attivato e
+  "Crea/aggiorna home"): home creata in circa 45 s, nessun doppione, stili e
+  posizioni uguali al sito di sviluppo a 1440 e 390 px.
+- Non provati: Safari vero e un browser vecchio vero; un database MySQL (le
+  prove usano SQLite, che mette in fila le richieste che scrivono: la prova
+  con 3 richieste insieme dice che il blocco funziona, non quanto aspetta chi
+  arriva per secondo).
+
+INSTALLAZIONE DELLO ZIP
+Provata caricando lo zip da wp-admin (Aspetto > Temi > Carica tema) su copie
+del sito di prova con la 0.4.7, la 0.4.6 e la 0.4.4 e su un WordPress nuovo.
+WordPress sostituisce il tema senza errori e alla prima richiesta la home
+viene aggiornata. Nessun errore PHP del tema.
+
+DA DECIDERE
+- iOS: il preloader sparisce di colpo 1,2 s dopo il caricamento, a meta'
+  animazione.
+- Moduli custom: alcune opzioni del modulo Onda non hanno effetto; il
+  separatore della striscia non si puo' togliere; la striscia Materie salta se
+  le ripetizioni non sono 4; le opzioni Design delle singole scritte non hanno
+  effetto; una striscia senza scritte mostra frasi predefinite sul sito.
+- Visual Builder: i campi con contenuto dinamico non si vedono nell'anteprima
+  del builder (sul sito si'); i segnaposto usano un percorso fisso del tema.
+- Titoli: la riduzione e' calcolata sulle parole di oggi ("NASCOSTI.",
+  "NOSTRO"); una parola piu' lunga scritta in Divi puo' ancora andare a capo a
+  meta' tra 981 e 1220 px.
+
+==============================================================================
+
+NOTE DELLA 0.4.7
 
 La 0.4.7 risolve i quattro punti trovati con le verifiche della 0.4.6: gli
 apici degli allergeni non toccano piu' la riga sopra, la salsiccia prende il
