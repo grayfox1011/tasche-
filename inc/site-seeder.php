@@ -672,7 +672,14 @@ function tp_child_seed_site( bool $force = false ): array {
 
 	$home_id       = tp_child_seed_home_page();
 	$theme_builder = tp_child_seed_theme_builder();
-	$legal_pages   = function_exists( 'tp_child_seed_legal_pages' ) ? tp_child_seed_legal_pages() : [];
+	// Legal pages that already exist keep what the owner wrote; the footer rebuilt
+	// above gets their links.
+	$set_up        = (bool) get_option( 'tp_child_legal_pages_v2' );
+	$legal_pages   = function_exists( 'tp_child_seed_legal_pages' ) ? tp_child_seed_legal_pages( $set_up ) : [];
+
+	if ( $set_up && function_exists( 'tp_child_update_footer_legal_links' ) ) {
+		tp_child_update_footer_legal_links( $legal_pages );
+	}
 
 	update_option( 'tp_child_seed_site_version', TP_CHILD_SEED_VERSION );
 	flush_rewrite_rules( false );

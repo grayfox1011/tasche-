@@ -91,7 +91,8 @@
 			injected = true;
 			// The video chosen in Divi for this breakpoint: Divi prints one span per
 			// breakpoint with its own value (an empty one when the video is removed
-			// there). The theme files stay the fallback when the hero has none.
+			// there), and none at all when the hero has no video. The theme data only
+			// supplies the poster.
 			var media = window.tpHeroVideo || {};
 			var own = function (suffix) {
 				for (var i = 0; i < hero.children.length; i++) {
@@ -103,13 +104,12 @@
 				return null;
 			};
 			var span = (window.matchMedia('(max-width: 767px)').matches && own('_phone')) || own('_tablet') || own('');
-			if (span) {
-				var pick = function (type) {
-					var s = span.querySelector('source[type="video/' + type + '"]');
-					return s ? (s.getAttribute('data-src') || s.getAttribute('src') || '') : '';
-				};
-				media = { mp4: pick('mp4'), webm: pick('webm'), poster: media.poster };
-			}
+			if (!span) { return; }
+			var pick = function (type) {
+				var s = span.querySelector('source[type="video/' + type + '"]');
+				return s ? (s.getAttribute('data-src') || s.getAttribute('src') || '') : '';
+			};
+			media = { mp4: pick('mp4'), webm: pick('webm'), poster: media.poster };
 			if (!media.mp4 && !media.webm) { return; }
 			var v = document.createElement('video');
 			v.className = 'tp-hero-native-video';

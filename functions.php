@@ -17,27 +17,35 @@ define( 'TP_CHILD_MODULES_JSON_PATH', TP_CHILD_PATH . 'modules-json/' );
  * pages are not served with CSS built from their old content. Divi 5 has no
  * et_core_clear_cache(), and ET_Core_PageResource is ready only from wp_loaded; the
  * public do_remove_static_resources() also works for visitors, cron and WP-CLI.
+ * The request is stored in the database, so a request that ends before wp_loaded
+ * (a redirect plugin that exits on init) does not lose it.
  */
 function tp_child_clear_divi_static_css(): void {
-	static $scheduled = false;
+	update_option( 'tp_child_divi_css_clear_pending', '1', true );
 
-	if ( $scheduled ) {
+	if ( did_action( 'wp_loaded' ) ) {
+		tp_child_run_pending_divi_css_clear();
+	}
+}
+
+/**
+ * Run the invalidation requested by tp_child_clear_divi_static_css().
+ */
+function tp_child_run_pending_divi_css_clear(): void {
+	$options = wp_load_alloptions(); // no query when nothing is pending
+
+	if ( empty( $options['tp_child_divi_css_clear_pending'] ) ) {
 		return;
 	}
 
-	$scheduled = true;
-	$clear     = static function (): void {
-		if ( class_exists( 'ET_Core_PageResource' ) && ET_Core_PageResource::can_write_to_filesystem() ) {
-			ET_Core_PageResource::do_remove_static_resources( 'all', 'all' );
-		}
-	};
-
-	if ( did_action( 'wp_loaded' ) ) {
-		$clear();
-	} else {
-		add_action( 'wp_loaded', $clear );
+	if ( ! class_exists( 'ET_Core_PageResource' ) || ! ET_Core_PageResource::can_write_to_filesystem() ) {
+		return;
 	}
+
+	ET_Core_PageResource::do_remove_static_resources( 'all', 'all' );
+	delete_option( 'tp_child_divi_css_clear_pending' );
 }
+add_action( 'wp_loaded', 'tp_child_run_pending_divi_css_clear' );
 
 require_once TP_CHILD_PATH . 'inc/media-upload-fallback.php';
 require_once TP_CHILD_PATH . 'inc/svg-upload-support.php';
@@ -142,17 +150,35 @@ function tp_child_nav_menu_defaults( string $location ): array {
  * menus onto the new locations (_wp_menus_changed, priority 10).
  */
 function tp_child_capture_own_nav_menu_locations(): void {
-	$GLOBALS['tp_child_own_nav_menu_locations'] = (array) get_theme_mod( 'nav_menu_locations', [] );
+	$own = (array) get_theme_mod( 'nav_menu_locations', [] );
+
+	// Switched from the Customizer: WordPress has already copied the previous theme's
+	// menus into these locations and skips _wp_menus_changed, so those menus are not
+	// the owner's choice for this theme.
+	if ( false === has_action( 'after_switch_theme', '_wp_menus_changed' ) ) {
+		$previous = array_map( 'intval', (array) get_option( 'theme_switch_menu_locations', [] ) );
+
+		foreach ( $own as $location => $menu_id ) {
+			if ( in_array( (int) $menu_id, $previous, true ) ) {
+				unset( $own[ $location ] );
+			}
+		}
+	}
+
+	$GLOBALS['tp_child_own_nav_menu_locations'] = $own;
 }
 add_action( 'after_switch_theme', 'tp_child_capture_own_nav_menu_locations', 5 );
 
 /**
  * Create default editable nav menus if they do not exist yet.
- * A location the owner already assigned to an existing menu keeps it.
+ * Once the site has been set up by the theme, a location the owner already
+ * assigned to an existing menu keeps it. On the first set-up the Tasche Piene menus
+ * are assigned, whatever WordPress or the Customizer carried over from the
+ * previous theme.
  */
 function tp_child_seed_nav_menus(): void {
 	$locations = get_theme_mod( 'nav_menu_locations', [] );
-	$own       = $GLOBALS['tp_child_own_nav_menu_locations'] ?? $locations;
+	$own       = get_option( 'tp_child_seed_site_version' ) ? ( $GLOBALS['tp_child_own_nav_menu_locations'] ?? $locations ) : [];
 
 	foreach ( tp_child_nav_menu_config() as $location => $menu_config ) {
 		if ( ! empty( $own[ $location ] ) && wp_get_nav_menu_object( (int) $own[ $location ] ) ) {
@@ -1139,8 +1165,6 @@ function tp_child_print_layout_script(): void {
 		'tp-layout',
 		'window.tpHeroVideo = ' . wp_json_encode(
 			[
-				'mp4'    => esc_url( TP_CHILD_URL . 'assets/video/videodefinitivo.mp4' ),
-				'webm'   => esc_url( TP_CHILD_URL . 'assets/video/videodefinitivo.webm' ),
 				'poster' => esc_url( TP_CHILD_URL . 'assets/images/hero-poster.webp' ),
 			]
 		) . ';',
