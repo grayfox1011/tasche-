@@ -4322,21 +4322,21 @@ body.et-fb :where(.tp-menu-legend-piatto)::after {
 	color: var(--tp-cream);
 }
 
-.tp-child-theme :where(.tp-menu-table--sides .tp-menu-row:nth-child(1) .tp-menu-row-image) {
+.tp-child-theme :where(.tp-menu-table--sides .tp-menu-row:nth-of-type(1) .tp-menu-row-image) {
 	--tp-menu-row-image-left: 50.45%;
 	--tp-menu-row-image-top: 61.73%;
 	--tp-menu-row-image-width: 361px;
 	--tp-menu-row-image-height: 250px;
 }
 
-.tp-child-theme :where(.tp-menu-table--sides .tp-menu-row:nth-child(2) .tp-menu-row-image) {
+.tp-child-theme :where(.tp-menu-table--sides .tp-menu-row:nth-of-type(2) .tp-menu-row-image) {
 	--tp-menu-row-image-left: 57.19%;
 	--tp-menu-row-image-top: 63.99%;
 	--tp-menu-row-image-width: 422px;
 	--tp-menu-row-image-height: 311px;
 }
 
-.tp-child-theme :where(.tp-menu-table--desserts .tp-menu-row:nth-child(1) .tp-menu-row-image) {
+.tp-child-theme :where(.tp-menu-table--desserts .tp-menu-row:nth-of-type(1) .tp-menu-row-image) {
 	--tp-menu-row-image-left: 49.40%;
 	--tp-menu-row-image-top: 45.92%;
 	--tp-menu-row-image-width: 300px;
@@ -15251,6 +15251,7 @@ body.tp-child-theme.tp-child-theme.tp-child-theme :where(html body.tp-child-them
 	color: #89515e;
 }
 
+/* At the top of its own line, level with the capitals as in the Figma: raised higher, it touched the line above when the name wraps. */
 .tp-child-theme :where(html body.tp-child-theme #page-container .tp-menu-section h4 .tp-allergeni) {
 	font-size: 12px;
 	font-weight: 400;
@@ -15258,7 +15259,8 @@ body.tp-child-theme.tp-child-theme.tp-child-theme :where(html body.tp-child-them
 	color: #3e372e;
 	margin-left: 5px;
 	line-height: 1;
-	vertical-align: 0.45em;
+	vertical-align: top;
+	top: 0;
 	text-transform: none;
 	white-space: nowrap;
 }
@@ -19006,8 +19008,8 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 
 @media (max-width:767px) {
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5))::after,
-.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6))::after {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5))::after,
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6))::after {
 		position: absolute;
 		z-index: 3;
 		display: flex;
@@ -19026,22 +19028,22 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 		pointer-events: none;
 	}
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5))::after {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5))::after {
 		content: "DI VENERDÌ";
 		background: #874e5a;
 	}
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6))::after {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6))::after {
 		content: "DI GIOVEDÌ";
 		background: #4e785c;
 	}
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5))::after {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5))::after {
 		left: 220.48px;
 		top: 61.25px;
 	}
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6))::after {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6))::after {
 		left: 213.9px;
 		top: 61.25px;
 	}
@@ -19075,8 +19077,8 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 
 @media (min-width:768px) and (max-width:980px) {
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5))::after,
-.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6))::after {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5))::after,
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6))::after {
 		position: absolute;
 		z-index: 3;
 		display: flex;
@@ -19092,18 +19094,18 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 		pointer-events: none;
 	}
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5))::after {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5))::after {
 		content: "DI VENERDÌ";
 		background: #874e5a;
 	}
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6))::after {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6))::after {
 		content: "DI GIOVEDÌ";
 		background: #4e785c;
 	}
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5))::after,
-.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6))::after {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5))::after,
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6))::after {
 		top: 25.1%;
 		width: 33%;
 		height: 23.2%;
@@ -19111,11 +19113,11 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 		line-height: 1;
 	}
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5))::after {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5))::after {
 		left: 61.6%;
 	}
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6))::after {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6))::after {
 		left: 59.7%;
 	}
 }
@@ -19143,8 +19145,8 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 
 @media (max-width: 767px) {
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5))::after,
-.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6))::after {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5))::after,
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6))::after {
 		font-size: clamp(11.8px, 3.35vw, 13.5px);
 		line-height: 1;
 	}
@@ -19178,19 +19180,19 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 
 @media (max-width: 767px) {
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5))::after,
-.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6))::after {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5))::after,
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6))::after {
 		top: 24%;
 		width: 32%;
 		height: 17%;
 		font-size: clamp(11.8px, 3.25vw, 13.2px);
 	}
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5))::after {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5))::after {
 		left: 63%;
 	}
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6))::after {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6))::after {
 		left: 61%;
 	}
 
@@ -19432,8 +19434,8 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 
 @media (max-width:767px) {
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5) .tp-menu-meta),
-.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6) .tp-menu-meta) {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5) .tp-menu-meta),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6) .tp-menu-meta) {
 		width: 188px;
 		max-width: 188px;
 	}
@@ -19459,10 +19461,10 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 
 @media (min-width: 768px) and (max-width: 980px) and (min-height: 700px) {
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5) .tp-menu-name),
-.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6) .tp-menu-name),
-.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5) .tp-menu-meta),
-.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6) .tp-menu-meta) {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5) .tp-menu-name),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6) .tp-menu-name),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5) .tp-menu-meta),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6) .tp-menu-meta) {
 		width: 52.5%;
 		max-width: 52.5%;
 	}
@@ -19476,10 +19478,10 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 
 @media (max-width: 767px) {
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5) .tp-menu-name),
-.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6) .tp-menu-name),
-.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5) .tp-menu-meta),
-.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6) .tp-menu-meta) {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5) .tp-menu-name),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6) .tp-menu-name),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5) .tp-menu-meta),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6) .tp-menu-meta) {
 		width: 55%;
 		max-width: 55%;
 	}
@@ -19556,8 +19558,8 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 
 @media (max-width:767px) {
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5) .tp-menu-name h4),
-.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6) .tp-menu-name h4) {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5) .tp-menu-name h4),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6) .tp-menu-name h4) {
 		font-size: 0;
 		line-height: 0;
 		color: transparent;
@@ -19575,8 +19577,8 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 
 @media (min-width:768px) and (max-width:980px) {
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5) .tp-menu-name h4),
-.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6) .tp-menu-name h4) {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5) .tp-menu-name h4),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6) .tp-menu-name h4) {
 		font-size: 0;
 		line-height: 0;
 		color: transparent;
@@ -19604,8 +19606,8 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 
 @media (max-width:767px) {
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5) .tp-menu-name h4)::before,
-.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6) .tp-menu-name h4)::before {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5) .tp-menu-name h4)::before,
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6) .tp-menu-name h4)::before {
 		display: block;
 		color: #3e372e;
 		font-family: var(--tp-font-body),Arial,sans-serif;
@@ -19614,11 +19616,11 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 		text-transform: uppercase;
 	}
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5) .tp-menu-name h4)::before {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5) .tp-menu-name h4)::before {
 		content: "TRIPPA - OGNI VENERDI";
 	}
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6) .tp-menu-name h4)::before {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6) .tp-menu-name h4)::before {
 		content: "STOCCAFISSO - OGNI GIOVEDI";
 	}
 }
@@ -19634,8 +19636,8 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 
 @media (min-width:768px) and (max-width:980px) {
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5) .tp-menu-name h4)::before,
-.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6) .tp-menu-name h4)::before {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5) .tp-menu-name h4)::before,
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6) .tp-menu-name h4)::before {
 		display: block;
 		color: #3e372e;
 		font-family: var(--tp-font-body),Arial,sans-serif;
@@ -19646,16 +19648,16 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 		white-space: nowrap;
 	}
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5) .tp-menu-name h4)::before {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5) .tp-menu-name h4)::before {
 		content: "TRIPPA - OGNI VENERDI";
 	}
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6) .tp-menu-name h4)::before {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6) .tp-menu-name h4)::before {
 		content: "STOCCAFISSO - OGNI GIOVEDI";
 	}
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5) .tp-menu-name h4)::before,
-.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6) .tp-menu-name h4)::before {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5) .tp-menu-name h4)::before,
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6) .tp-menu-name h4)::before {
 		font-size: clamp(18px,2.25vw,21px);
 		line-height: 1;
 	}
@@ -19672,8 +19674,8 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 
 @media (max-width:767px) {
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5) .tp-menu-name h4)::before,
-.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6) .tp-menu-name h4)::before {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5) .tp-menu-name h4)::before,
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6) .tp-menu-name h4)::before {
 		white-space: normal;
 		font-size: 14.6px;
 		line-height: 15.2px;
@@ -19682,16 +19684,16 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 
 @media (max-width: 767px) {
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5) .tp-menu-name h4)::before,
-.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6) .tp-menu-name h4)::before {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5) .tp-menu-name h4)::before,
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6) .tp-menu-name h4)::before {
 		font-size: clamp(12.6px, 3.85vw, 14.2px);
 	}
 }
 
 @media (min-width: 768px) and (max-width: 980px) and (min-height: 700px) {
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5) .tp-menu-name h4)::before,
-.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6) .tp-menu-name h4)::before {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5) .tp-menu-name h4)::before,
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6) .tp-menu-name h4)::before {
 		white-space: normal;
 		overflow-wrap: normal;
 		text-wrap: balance;
@@ -19702,8 +19704,8 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 
 @media (max-width: 767px) {
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5) .tp-menu-name h4)::before,
-.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6) .tp-menu-name h4)::before {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5) .tp-menu-name h4)::before,
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6) .tp-menu-name h4)::before {
 		font-size: clamp(17px, 4.55vw, 18.6px);
 		line-height: 1.06;
 		white-space: normal;
@@ -19718,8 +19720,8 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 		display: inline;
 	}
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5) .tp-menu-name .et_pb_module_header),
-.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6) .tp-menu-name .et_pb_module_header) {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5) .tp-menu-name .et_pb_module_header),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6) .tp-menu-name .et_pb_module_header) {
 		font-size: 0;
 		line-height: 0;
 		color: transparent;
@@ -19728,8 +19730,8 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 
 @media (min-width:768px) and (max-width:980px) {
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5) .tp-menu-name .et_pb_module_header),
-.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6) .tp-menu-name .et_pb_module_header) {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5) .tp-menu-name .et_pb_module_header),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6) .tp-menu-name .et_pb_module_header) {
 		font-size: 0;
 		line-height: 0;
 		color: transparent;
@@ -19738,8 +19740,8 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 
 @media (max-width:767px) {
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5) .tp-menu-name .et_pb_module_header)::before,
-.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6) .tp-menu-name .et_pb_module_header)::before {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5) .tp-menu-name .et_pb_module_header)::before,
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6) .tp-menu-name .et_pb_module_header)::before {
 		display: block;
 		color: #3e372e;
 		font-family: var(--tp-font-body),Arial,sans-serif;
@@ -19748,19 +19750,19 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 		text-transform: uppercase;
 	}
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5) .tp-menu-name .et_pb_module_header)::before {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5) .tp-menu-name .et_pb_module_header)::before {
 		content: "TRIPPA - OGNI VENERDI";
 	}
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6) .tp-menu-name .et_pb_module_header)::before {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6) .tp-menu-name .et_pb_module_header)::before {
 		content: "STOCCAFISSO - OGNI GIOVEDI";
 	}
 }
 
 @media (min-width:768px) and (max-width:980px) {
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5) .tp-menu-name .et_pb_module_header)::before,
-.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6) .tp-menu-name .et_pb_module_header)::before {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5) .tp-menu-name .et_pb_module_header)::before,
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6) .tp-menu-name .et_pb_module_header)::before {
 		display: block;
 		color: #3e372e;
 		font-family: var(--tp-font-body),Arial,sans-serif;
@@ -19771,16 +19773,16 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 		white-space: nowrap;
 	}
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5) .tp-menu-name .et_pb_module_header)::before {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5) .tp-menu-name .et_pb_module_header)::before {
 		content: "TRIPPA - OGNI VENERDI";
 	}
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6) .tp-menu-name .et_pb_module_header)::before {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6) .tp-menu-name .et_pb_module_header)::before {
 		content: "STOCCAFISSO - OGNI GIOVEDI";
 	}
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5) .tp-menu-name .et_pb_module_header)::before,
-.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6) .tp-menu-name .et_pb_module_header)::before {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5) .tp-menu-name .et_pb_module_header)::before,
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6) .tp-menu-name .et_pb_module_header)::before {
 		font-size: clamp(18px,2.25vw,21px);
 		line-height: 1;
 	}
@@ -19788,8 +19790,8 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 
 @media (max-width:767px) {
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5) .tp-menu-name .et_pb_module_header)::before,
-.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6) .tp-menu-name .et_pb_module_header)::before {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5) .tp-menu-name .et_pb_module_header)::before,
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6) .tp-menu-name .et_pb_module_header)::before {
 		white-space: normal;
 		font-size: 14.6px;
 		line-height: 15.2px;
@@ -19798,16 +19800,16 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 
 @media (max-width: 767px) {
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5) .tp-menu-name .et_pb_module_header)::before,
-.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6) .tp-menu-name .et_pb_module_header)::before {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5) .tp-menu-name .et_pb_module_header)::before,
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6) .tp-menu-name .et_pb_module_header)::before {
 		font-size: clamp(12.6px, 3.85vw, 14.2px);
 	}
 }
 
 @media (min-width: 768px) and (max-width: 980px) and (min-height: 700px) {
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5) .tp-menu-name .et_pb_module_header)::before,
-.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6) .tp-menu-name .et_pb_module_header)::before {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5) .tp-menu-name .et_pb_module_header)::before,
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6) .tp-menu-name .et_pb_module_header)::before {
 		white-space: normal;
 		overflow-wrap: normal;
 		text-wrap: balance;
@@ -19818,8 +19820,8 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 
 @media (max-width: 767px) {
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5) .tp-menu-name .et_pb_module_header)::before,
-.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6) .tp-menu-name .et_pb_module_header)::before {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5) .tp-menu-name .et_pb_module_header)::before,
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6) .tp-menu-name .et_pb_module_header)::before {
 		font-size: clamp(17px, 4.55vw, 18.6px);
 		line-height: 1.06;
 		white-space: normal;
@@ -20233,20 +20235,20 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 		line-height: 1;
 	}
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5) .tp-menu-name .et_pb_module_header),
-.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6) .tp-menu-name .et_pb_module_header) {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5) .tp-menu-name .et_pb_module_header),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6) .tp-menu-name .et_pb_module_header) {
 		color: #3e372e;
 	}
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5) .tp-menu-name h4)::before,
-.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5) .tp-menu-name .et_pb_module_header)::before,
-.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6) .tp-menu-name h4)::before,
-.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6) .tp-menu-name .et_pb_module_header)::before {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5) .tp-menu-name h4)::before,
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5) .tp-menu-name .et_pb_module_header)::before,
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6) .tp-menu-name h4)::before,
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6) .tp-menu-name .et_pb_module_header)::before {
 		content: none;
 	}
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(5))::after,
-.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-child(6))::after {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5))::after,
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6))::after {
 		left: auto;
 		right: calc(var(--tp-ipad) * 33.4);
 		top: calc(var(--tp-ipad) * 22);
@@ -20265,11 +20267,17 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-name h4) {
 		font-size: calc(var(--tp-ipad) * 19.7);
 		line-height: 1.08;
-		white-space: nowrap;
 	}
 
 	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-name) {
 		max-width: 86%;
+	}
+
+	/* Trippa and stoccafisso: the name reaches the day label, so it stays on one line; a longer one wraps. */
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(5) .tp-menu-name),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:nth-of-type(6) .tp-menu-name) {
+		width: 78%;
+		max-width: 78%;
 	}
 
 	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-meta) {

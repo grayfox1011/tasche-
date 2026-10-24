@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( "TP_CHILD_VERSION", "0.4.6" );
+define( "TP_CHILD_VERSION", "0.4.7" );
 define( 'TP_CHILD_PATH', trailingslashit( get_stylesheet_directory() ) );
 define( 'TP_CHILD_URL', trailingslashit( get_stylesheet_directory_uri() ) );
 define( 'TP_CHILD_MODULES_JSON_PATH', TP_CHILD_PATH . 'modules-json/' );
@@ -51,6 +51,7 @@ require_once TP_CHILD_PATH . 'inc/media-upload-fallback.php';
 require_once TP_CHILD_PATH . 'inc/svg-upload-support.php';
 require_once TP_CHILD_PATH . 'inc/theme-chrome-helpers.php';
 require_once TP_CHILD_PATH . 'inc/chrome-menu-config.php';
+require_once TP_CHILD_PATH . 'inc/migration-lock.php';
 require_once TP_CHILD_PATH . 'inc/chrome-image-migration.php';
 require_once TP_CHILD_PATH . 'inc/chrome-nav-migration.php';
 require_once TP_CHILD_PATH . 'inc/chrome-menu-cleanup.php';

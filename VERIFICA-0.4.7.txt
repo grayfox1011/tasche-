@@ -1,4 +1,128 @@
-TASCHE PIENE — VERSIONE 0.4.6, CANDIDATA AL COLLAUDO
+TASCHE PIENE — VERSIONE 0.4.7, CANDIDATA AL COLLAUDO
+
+La 0.4.7 risolve i quattro punti trovati con le verifiche della 0.4.6: gli
+apici degli allergeni non toccano piu' la riga sopra, la salsiccia prende il
+nome del Figma, nel Visual Builder le scritte del giorno e i titoli di trippa
+e stoccafisso stanno sulle card giuste, sui tablet un nome lungo va a capo
+dentro la card. Le note delle versioni precedenti, piu' in basso, restano
+valide.
+
+COSA CAMBIA RISPETTO ALLA 0.4.6
+- Allergeni: i numeri stanno in cima alla riga del nome, all'altezza delle
+  maiuscole come nel Figma; prima stavano 6-8 px piu' in alto. Quando il
+  nome va a capo non toccano piu' le lettere della riga sopra: succedeva sul
+  telefono con "Pollo alla ligure..." e "Le acciughe di Luciano..." e sul
+  computer tra 981 e 1366 px con quasi tutti i piatti. Vale a ogni larghezza.
+- Salsiccia: il nome diventa "SALSICCIA, ALLORO E POMODORI CONFIT", come
+  nella tavola desktop del Figma. Alla prima richiesta dopo l'aggiornamento il
+  tema cambia solo quella parola nella home salvata in Divi, una sola volta,
+  chiunque apra il sito per primo; un nome cambiato a mano resta com'e' e
+  WordPress conserva la home precedente tra le revisioni. Descrizione e prezzi
+  non cambiano e il piatto resta senza numeri di allergeni, come deciso. Da
+  una 0.4.4 o 0.4.5 il tema fa prima i passaggi delle versioni precedenti.
+  "Crea/aggiorna home" e le installazioni nuove usano gia' il nome nuovo.
+- Visual Builder: le scritte "Di venerdi'" e "Di giovedi'" e il titolo di
+  trippa e stoccafisso sui telefoni compaiono sulle stesse card del sito, in
+  tutte le anteprime. Prima finivano una card prima (pollo e trippa), perche'
+  il builder aggiunge un elemento in testa alla tabella e le regole contavano
+  anche quello. Sul sito non cambia niente.
+- Tablet: un nome di piatto piu' lungo dello spazio va a capo dentro la card
+  invece di uscirne; per trippa e stoccafisso il nome puo' arrivare fino alla
+  scritta del giorno. I nomi di oggi restano su una riga.
+- Aggiornamenti piu' sicuri: le operazioni una tantum sulla home e sulle altre
+  pagine (queste e quelle delle versioni precedenti) girano in una richiesta
+  alla volta. Le prove hanno mostrato che due richieste arrivate insieme
+  subito dopo l'aggiornamento (per esempio un visitatore e il cron di
+  WordPress) potevano salvare la home una sopra l'altra: in una prova da una
+  0.4.4 il nome della salsiccia era rimasto "peperoni" anche se il passaggio
+  risultava fatto. Ora la prima richiesta prende un blocco e fa tutto; le
+  altre mostrano la pagina com'e' finche' non ha finito. Un blocco lasciato da
+  una richiesta interrotta scade dopo 10 minuti.
+
+VERIFICHE EFFETTUATE SULLA 0.4.7
+Riferimento: la 0.4.6 sullo stesso sito di prova.
+- Suite completa. Home a 20 larghezze: stessa altezza della pagina a tutte le
+  larghezze; cambiano solo gli apici, il nome della salsiccia e, sui tablet,
+  il ritorno a capo dei titoli e la larghezza del nome di trippa e
+  stoccafisso. Nessun altro elemento si sposta. Privacy e cookie identiche al
+  pixel. Hover e focus: cambia solo la posizione degli apici. Visual Builder:
+  cambiano il nome della salsiccia e le card che prima ricevevano le regole
+  della riga sbagliata (scritte del giorno, titoli, immagini al passaggio del
+  mouse di contorni e dolci); privacy identica; modifica dal builder 8 su 8.
+  Stato attivo, scale, menu di navigazione aperto, HTML dei moduli e query al
+  database invariati, anche con il blocco degli aggiornamenti attivo. iPhone
+  13 in emulazione senza errori.
+- Apici, controllati sui pixel con le cifre colorate: dove il nome va a capo
+  (computer da 981 a 1366 px, telefono da 320 a 700 px) restano 3-5,5 px
+  liberi sotto le lettere della riga sopra; con la regola della 0.4.6 le
+  cifre le coprivano. Sui nomi su una riga stanno all'altezza delle
+  maiuscole, come nel Figma.
+- Visual Builder, anteprime computer, tablet e telefono: "Di venerdi'" e
+  "Di giovedi'" e i titoli stanno su trippa e stoccafisso, come sul sito.
+- Tablet a 768, 834 e 980 px: i nomi di oggi restano su una riga. Con nomi
+  piu' lunghi scritti nella pagina ("... pinoli e patate al forno",
+  "Stoccafisso alla genovese - ogni giovedi'") il titolo va a capo dentro la
+  card, senza toccare la scritta del giorno ne' le scritte Tasca e Piatto.
+- Emulazione (iPad mini 768, iPad 810, iPad Pro 11 834, tablet Android 800,
+  900 e 980): in tutti e nove i piatti nessuna scritta sovrapposta o fuori
+  dalla card, nessun errore.
+- Modificabilita': su pagine di prova costruite dalla home aggiornata tutti
+  i moduli danno gli stessi esiti della 0.4.6, modulo per modulo, a 1440, 820
+  e 390 px.
+- Browser senza :has(), simulato in Chromium a 768, 820 e 834 px: come nella
+  0.4.6, card a tre colonne senza la S.
+- Nome della salsiccia, su copie della home: cambia solo la parola nel
+  titolo; un nome scritto in minuscolo viene riconosciuto; un altro nome non
+  viene toccato; una seconda esecuzione non cambia niente; il "peperone" nella
+  descrizione dei ripieni resta. I tre passaggi in fila sulla home della
+  0.4.4 danno lo stesso contenuto del nuovo "Crea/aggiorna home".
+- Aggiornamento caricando lo zip da wp-admin, su copie del sito installate
+  dallo zip: da 0.4.6, 0.4.5 e 0.4.4 la home e' identica byte per byte a
+  quella prevista, con una revisione in piu' per ogni passaggio fatto; una
+  seconda richiesta non cambia niente; nessun errore PHP.
+- Prima visita di un utente non collegato, con i file del tema copiati come
+  via FTP su una copia della 0.4.6: home identica byte per byte a quella
+  prevista, gia' con il nome nuovo nella prima pagina servita.
+- Richieste contemporanee: copia della 0.4.4 con i file della 0.4.7 e 6-8
+  visite nello stesso istante. Senza il blocco le richieste salvavano la home
+  in parallelo (da 5 a 11 revisioni in piu' invece di 3); con il blocco, in 8
+  prove su 8, home esatta e un salvataggio per passaggio. Un blocco recente fa
+  saltare le operazioni alle richieste che arrivano; uno vecchio di 11 minuti
+  viene ripreso e le operazioni si completano.
+- Installazione nuova (WordPress e Divi nuovi, zip caricato, attivato e
+  "Crea/aggiorna home"): salsiccia gia' con il nome nuovo, nessuna revisione
+  aggiunta, blocco rilasciato; stili e posizioni uguali al sito di sviluppo a
+  1440 e 390 px.
+- Non provati: Safari vero (le prove su iPhone e iPad usano Chromium con il
+  profilo del dispositivo) e un browser vecchio vero.
+
+INSTALLAZIONE DELLO ZIP
+Provata caricando lo zip da wp-admin (Aspetto > Temi > Carica tema) su copie
+del sito di prova con la 0.4.6, la 0.4.5 e la 0.4.4 installate dallo zip e su
+un WordPress nuovo. WordPress sostituisce il tema senza errori e alla prima
+richiesta la home viene aggiornata. Nessun errore PHP del tema.
+
+DA DECIDERE
+- Allergeni della salsiccia: per ora nessun numero, come deciso. Quando si
+  conoscono si aggiungono in Divi scrivendoli tra parentesi quadre in fondo al
+  nome, per esempio [1,7].
+- iOS: il preloader sparisce di colpo 1,2 s dopo il caricamento, a meta'
+  animazione.
+- Titoli "Siamo nei caruggi..." e "Il nostro menu'" tra 981 e 1180 px: le
+  parole vanno a capo a meta' (CARUG / GI.).
+- Moduli custom: alcune opzioni del modulo Onda non hanno effetto; il
+  separatore della striscia non si puo' togliere; la striscia Materie salta se
+  le ripetizioni non sono 4; le opzioni Design delle singole scritte non hanno
+  effetto; una striscia senza scritte mostra frasi predefinite sul sito.
+- Visual Builder: i colori globali di Divi nei moduli Header/Footer e i campi
+  con contenuto dinamico non si vedono nell'anteprima del builder (sul sito
+  si'); i segnaposto usano un percorso fisso del tema.
+- "Crea/aggiorna home": un doppio clic durante i circa 40 s di lavoro puo'
+  creare doppioni.
+
+==============================================================================
+
+NOTE DELLA 0.4.6
 
 La 0.4.6 risolve i primi tre punti "da decidere" della 0.4.5: la salsiccia
 diventa un piatto come gli altri, come nel Figma desktop; sui tablet il menu

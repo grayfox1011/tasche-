@@ -3,8 +3,9 @@
  * Menu: the S size of the plate, as in the Figma (frame "statico per copy"). Every main menu row
  * gets an S letter and an S price before the M ones, the M and L prices move to the Figma's where
  * the row still has the previous ones, and the legend reads "S - 150g", "M - 200g", "L - 400g".
- * Since 0.4.6 the salsiccia row "in rotazione" is a normal row with S, M and L too.
- * Rows and prices changed by hand in Divi stay as they are.
+ * Since 0.4.6 the salsiccia row "in rotazione" is a normal row with S, M and L too, and since
+ * 0.4.7 the dish is named as in the Figma ("pomodori confit" instead of "peperoni confit").
+ * Rows, names and prices changed by hand in Divi stay as they are.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -223,6 +224,44 @@ function tp_child_menu_proposal_row_transform( string $content ): string {
 }
 
 /**
+ * The salsiccia dish named as in the Figma (frame "statico per copy"): "pomodori confit" instead of
+ * "peperoni confit", with the case the name was typed in. Any other name stays as it is.
+ */
+function tp_child_menu_salsiccia_name_row( string $row ): string {
+	if ( 'SALSICCIA, ALLORO E PEPERONI CONFIT' !== tp_child_menu_size_s_row_name( $row ) ) {
+		return $row;
+	}
+
+	return preg_replace_callback(
+		'/("class":"(?:[^"]* )?tp-menu-name(?: [^"]*)?".*?"title":\{"innerContent":\{"desktop":\{"value":"[^"]*?)(peperoni)/si',
+		static function ( array $match ): string {
+			$word = 'pomodori';
+
+			foreach ( str_split( $match[2] ) as $i => $letter ) {
+				if ( ctype_upper( $letter ) ) {
+					$word[ $i ] = strtoupper( $word[ $i ] );
+				}
+			}
+
+			return $match[1] . $word;
+		},
+		$row,
+		1
+	);
+}
+
+/**
+ * The home content with the salsiccia dish named as in the Figma.
+ */
+function tp_child_menu_salsiccia_name_transform( string $content ): string {
+	foreach ( tp_child_menu_size_s_main_rows( $content ) as list( $from, $length ) ) {
+		$content = substr_replace( $content, tp_child_menu_salsiccia_name_row( substr( $content, $from, $length ) ), $from, $length );
+	}
+
+	return $content;
+}
+
+/**
  * Once per $flag: $transform applied to the home page. WordPress keeps the previous content as a revision.
  */
 function tp_child_menu_size_s_migrate_home( string $flag, callable $transform ): void {
@@ -262,3 +301,9 @@ function tp_child_migrate_menu_proposal_row(): void {
 }
 
 add_action( 'init', 'tp_child_migrate_menu_proposal_row', 27 );
+
+function tp_child_migrate_menu_salsiccia_name(): void {
+	tp_child_menu_size_s_migrate_home( 'tp_child_menu_salsiccia_name_v1', 'tp_child_menu_salsiccia_name_transform' );
+}
+
+add_action( 'init', 'tp_child_migrate_menu_salsiccia_name', 28 );

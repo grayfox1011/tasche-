@@ -334,7 +334,7 @@ return '<!-- wp:divi/placeholder --><!-- wp:divi/section {"module":{"advanced":{
 
 <!-- wp:divi/group {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-row"}}}}},"builderVersion":"5.2.0"} -->
 <!-- wp:divi/group {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-item"}}}}},"builderVersion":"5.2.0"} -->
-<!-- wp:divi/heading {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-name"}}}}},"title":{"innerContent":{"desktop":{"value":"SALSICCIA, ALLORO E PEPERONI CONFIT"}},"decoration":{"font":{"font":{"desktop":{"value":{"headingLevel":"h4"}}}}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/heading {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-name"}}}}},"title":{"innerContent":{"desktop":{"value":"SALSICCIA, ALLORO E POMODORI CONFIT"}},"decoration":{"font":{"font":{"desktop":{"value":{"headingLevel":"h4"}}}}}},"builderVersion":"5.2.0"} /-->
 
 <!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-meta"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cspan\u003eIN ROTAZIONE · PULLED PORK, CAVOLO VIOLA E MAYO SPICY\u003c/span\u003e"}}},"builderVersion":"5.2.0"} /-->
 
