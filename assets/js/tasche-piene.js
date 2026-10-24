@@ -11,7 +11,7 @@
 		}
 	}
 
-	// The iPhone fixes below write inline styles. An iPad at 981 px or more (landscape,
+	// The iPhone header fix below writes inline styles. An iPad at 981 px or more (landscape,
 	// iPad Pro) shows the desktop layout, so it drops them; they come back below 981 px.
 	var desktopMq = window.matchMedia ? window.matchMedia('(min-width: 981px)') : null;
 
@@ -167,124 +167,6 @@
 	}
 
 	window.tpBindActiveState = bindActiveState;
-
-	function initIOSMenuPriceLayout() {
-		if (!isIOSWebKit) {
-			return;
-		}
-
-		var styled = [];
-
-		function setMenuStyle(element, property, value) {
-			setTracked(styled, element, property, value);
-		}
-
-		var selectors = {
-			tascaLabel: '.tp-menu-label-tasca p, .tp-menu-label-tasca .et_pb_text_inner, .tp-menu-price-label-tasca .tp-menu-price-label-text',
-			sLabel: '.tp-menu-label-piatto p, .tp-menu-label-piatto .et_pb_text_inner, .tp-menu-price-label-s .tp-menu-price-label-text',
-			mLabel: '.tp-menu-price-label-m .tp-menu-price-label-text',
-			lLabel: '.tp-menu-price-label-l .tp-menu-price-label-text',
-			tascaValue: '.tp-menu-price-value-tasca p, .tp-menu-price-value-tasca .et_pb_text_inner, .tp-menu-price-label-tasca .tp-menu-price-value',
-			mValue: '.tp-menu-price-label-m .tp-menu-price-value',
-			lValue: '.tp-menu-price-label-l .tp-menu-price-value',
-			sValue: '.tp-menu-price-label-s .tp-menu-price-value'
-		};
-
-		function placeNode(row, selector, x, y, width, display) {
-			var node = row.querySelector(selector);
-
-			if (!node) {
-				return;
-			}
-
-			setMenuStyle(node, 'position', 'absolute');
-			setMenuStyle(node, 'left', x);
-			setMenuStyle(node, 'top', y);
-			setMenuStyle(node, 'width', width || 'auto');
-			setMenuStyle(node, 'min-width', '0');
-			setMenuStyle(node, 'max-width', 'none');
-			setMenuStyle(node, 'height', 'auto');
-			setMenuStyle(node, 'min-height', '0');
-			setMenuStyle(node, 'margin', '0');
-			setMenuStyle(node, 'padding', '0');
-			setMenuStyle(node, 'display', display || 'block');
-			setMenuStyle(node, 'visibility', 'visible');
-			setMenuStyle(node, 'opacity', '1');
-			setMenuStyle(node, 'transform', 'none');
-			setMenuStyle(node, 'z-index', '6');
-			setMenuStyle(node, 'text-align', 'center');
-			setMenuStyle(node, 'white-space', 'nowrap');
-		}
-
-		function layout() {
-			if (isDesktopWidth()) {
-				clearTracked(styled);
-				return;
-			}
-
-			var rows = document.querySelectorAll('.tp-menu-table--main .tp-menu-row');
-
-			rows.forEach(function (row) {
-				var prices = row.querySelector('.tp-menu-prices');
-				var wrappers = row.querySelectorAll('.tp-menu-price, .tp-menu-price p, .tp-menu-price .et_pb_text_inner, .tp-menu-label, .tp-menu-label p, .tp-menu-label .et_pb_text_inner');
-
-				if (!prices || row.classList.contains('tp-menu-row--proposal')) {
-					return;
-				}
-
-				setMenuStyle(prices, 'position', 'absolute');
-				setMenuStyle(prices, 'inset', '0');
-				setMenuStyle(prices, 'display', 'block');
-				setMenuStyle(prices, 'width', '100%');
-				setMenuStyle(prices, 'height', '100%');
-				setMenuStyle(prices, 'margin', '0');
-				setMenuStyle(prices, 'padding', '0');
-				setMenuStyle(prices, 'pointer-events', 'none');
-				setMenuStyle(prices, 'background-position', '9.5% 76%, 49.6% 77%, 86.5% 76%, 22% 65%, 46% 69%');
-				setMenuStyle(prices, 'background-size', '14.37% auto, 11.33% auto, 12.52% auto, 3.86% 10.2%, 3.52% 10.8%');
-
-				wrappers.forEach(function (wrapper) {
-					setMenuStyle(wrapper, 'position', 'static');
-					setMenuStyle(wrapper, 'display', 'block');
-					setMenuStyle(wrapper, 'width', '0');
-					setMenuStyle(wrapper, 'min-width', '0');
-					setMenuStyle(wrapper, 'height', '0');
-					setMenuStyle(wrapper, 'min-height', '0');
-					setMenuStyle(wrapper, 'margin', '0');
-					setMenuStyle(wrapper, 'padding', '0');
-				});
-
-				placeNode(row, selectors.tascaLabel, '11.66%', '55%', '72px');
-				placeNode(row, selectors.sLabel, '37.64%', 'calc(60.5% - 14px)', '82px');
-				placeNode(row, selectors.tascaValue, '7.51%', '88%', '15.64%');
-				placeNode(row, selectors.mValue, '41.86%', '88%', '15.64%');
-				placeNode(row, selectors.lValue, '72.67%', '88%', '18.43%');
-
-				placeNode(row, selectors.mLabel, '52.16%', '67.3%', '24px', 'none');
-				placeNode(row, selectors.lLabel, '72.2%', '67.3%', '24px', 'none');
-
-				var sValue = row.querySelector(selectors.sValue);
-				setMenuStyle(sValue, 'display', 'none');
-			});
-		}
-
-		// Resize events can fire many times per frame: lay out once, before the next paint.
-		var frame = 0;
-
-		function scheduleLayout() {
-			if (!frame) {
-				frame = window.requestAnimationFrame(function () {
-					frame = 0;
-					layout();
-				});
-			}
-		}
-
-		layout();
-		window.addEventListener('load', layout, { once: true });
-		window.addEventListener('resize', scheduleLayout);
-		window.setTimeout(layout, 600);
-	}
 
 	function initIOSHeaderFallback() {
 		if (!isIOSWebKit) {
@@ -492,7 +374,6 @@
 	}
 
 	initIOSHeaderFallback();
-	initIOSMenuPriceLayout();
 	initThemeNav();
 	initIntroButtons();
 	initHoursItems();

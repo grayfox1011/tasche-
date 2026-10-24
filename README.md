@@ -45,7 +45,7 @@ Cosa resta fisso:
 - La sezione Tasca/Piatto viene ricostruita dal tema: dai moduli Divi si modificano testi e immagini, non il design.
 - Gli apici degli allergeni nei nomi del menu sono aggiunti via JavaScript e mantengono il loro stile.
 - Orari e legenda del menu usano due span con dimensioni diverse: il colore si modifica, le due dimensioni restano distinte.
-- Su iPhone e iPad in verticale i prezzi del menu sono posizionati via JavaScript; da 981 px in su (iPad in orizzontale) vale il layout desktop.
+- Sotto i 981 px la card del menu segue la tavola "mobilw" del Figma: scritte Tasca e Piatto inclinate, icone, lettere M e L accanto alle ciotole, prezzi Tasca, M e L in una riga. Sono regole CSS in fondo al foglio, uguali su tutti i browser: i valori impostati in Divi su scritte e prezzi prevalgono. Le regole del menu per tablet valgono da 768 px; da 981 px in su (anche iPad in orizzontale) vale il layout desktop.
 - L'allineamento del testo di alcuni moduli (prezzi, card Materie, link "Torna alla home") resta quello del tema.
 
 Moduli custom:
@@ -56,7 +56,7 @@ Moduli custom:
 
 Script del sito pubblico:
 
-- `assets/js/tasche-piene.js`: header e menu, pulsanti, orari, prezzi su iOS e lo stato attivo comune a orari, card Tasca/Piatto e Materie.
+- `assets/js/tasche-piene.js`: header e menu, pulsanti, orari e lo stato attivo comune a orari, card Tasca/Piatto e Materie.
 - `assets/js/tp-layout.js`: scale delle sezioni a 1512 px e della card del menu, video della hero su mobile (usa il video impostato in Divi per quel breakpoint; se in Divi non c'e' video, non ne mostra), ordine mobile della sezione Alberto, allergeni. Viene stampato prima di jQuery, dove stavano gli script inline, perche' deve girare prima degli script di Divi.
 
 Pulizia una tantum (`inc/design-cleanup-migration.php`):
