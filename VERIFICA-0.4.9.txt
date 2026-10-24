@@ -1,4 +1,65 @@
-TASCHE PIENE — VERSIONE 0.4.8, CANDIDATA AL COLLAUDO
+TASCHE PIENE — VERSIONE 0.4.9, CANDIDATA AL COLLAUDO
+
+La 0.4.9 fa vedere sul computer l'accento di "MENU'" nel titolo del menu, come
+deciso dopo la 0.4.8. Il resto e' identico alla 0.4.8. Le note delle versioni
+precedenti, piu' in basso, restano valide.
+
+COSA CAMBIA RISPETTO ALLA 0.4.8
+- Titoli animati sul computer: ogni riga nasconde le lettere mentre salgono,
+  come prima; a fine animazione non le taglia piu' e l'accento della U di "IL
+  NOSTRO MENU'" si vede intero (prima ne restava un trattino). Negli altri
+  titoli cambiano al massimo 1-2 pixel ai bordi di qualche lettera, invisibili.
+- "Il nostro menu'" quando va a capo sul computer (tra 981 e 1330 px circa):
+  le righe hanno il 10% di spazio in piu' (70,4 px invece di 64 con il
+  carattere a 64 px), perche' l'accento, che sale 17 px sopra le maiuscole, non
+  tocchi le lettere della riga sopra: restano 4-5 px liberi. Il titolo e' piu'
+  alto di 13-19 px e il resto del menu scende di altrettanto dentro il suo
+  riquadro, che ha altezza fissa (in fondo restano 145-245 px liberi). Con il
+  titolo su una riga (da 1340 px) e sotto i 981 px non cambia niente.
+
+VERIFICHE EFFETTUATE SULLA 0.4.9
+Riferimento: la 0.4.8 sullo stesso sito di prova.
+- Suite completa. Home a 20 larghezze: stessa altezza della pagina ovunque;
+  posizioni e dimensioni identiche sotto i 981 px e da 1440 px in su; tra 981
+  e 1280 px cambiano solo l'altezza del titolo del menu e la posizione di cio'
+  che sta sotto, nel riquadro del menu. Privacy e cookie identiche al pixel;
+  hover e focus identici; HTML dei moduli identico tranne la versione; stesse
+  query; modificabilita' con gli stessi esiti; modifica dal builder 8 su 8;
+  iPhone 13 in emulazione senza errori. Visual Builder: nell'anteprima
+  computer il titolo, che li' va a capo, ha lo stesso spazio tra le righe del
+  sito; anteprime tablet e telefono identiche.
+- Accento, misurato sui pixel a 12 larghezze tra 981 e 1512 px: sempre
+  intero; quando il titolo va a capo restano 4-5 px tra l'accento e le lettere
+  della riga sopra.
+- Animazione: mentre le lettere salgono le righe le nascondono come prima; il
+  taglio si toglie alla fine, circa 0,8 s dopo l'inizio.
+- Aggiornamento caricando lo zip da wp-admin su copie con la 0.4.8 e la 0.4.7:
+  home identica byte per byte, una seconda richiesta non cambia niente,
+  blocco rilasciato, nessun errore PHP; l'accento si vede anche li'.
+- Non provati: Safari vero e un browser vecchio vero.
+
+INSTALLAZIONE DELLO ZIP
+Provata caricando lo zip da wp-admin (Aspetto > Temi > Carica tema) su copie
+del sito di prova con la 0.4.8 e la 0.4.7. WordPress sostituisce il tema senza
+errori. Nessun errore PHP del tema.
+
+DA DECIDERE
+- iOS: il preloader sparisce di colpo 1,2 s dopo il caricamento, a meta'
+  animazione.
+- Moduli custom: alcune opzioni del modulo Onda non hanno effetto; il
+  separatore della striscia non si puo' togliere; la striscia Materie salta se
+  le ripetizioni non sono 4; le opzioni Design delle singole scritte non hanno
+  effetto; una striscia senza scritte mostra frasi predefinite sul sito.
+- Visual Builder: i campi con contenuto dinamico non si vedono nell'anteprima
+  del builder (sul sito si'); i segnaposto usano un percorso fisso del tema.
+- Titoli: la riduzione e' calcolata sulle parole di oggi ("NASCOSTI.",
+  "NOSTRO"), e lo spazio in piu' tra le righe sul titolo di oggi del menu: con
+  un titolo diverso scritto in Divi una parola piu' lunga puo' ancora andare a
+  capo a meta' tra 981 e 1220 px, e un accento puo' avvicinarsi alla riga sopra.
+
+==============================================================================
+
+NOTE DELLA 0.4.8
 
 La 0.4.8 risolve i quattro punti decisi dopo la 0.4.7: gli allergeni della
 salsiccia (1,7), le parole spezzate nei titoli "Siamo nei caruggi..." e "Il

@@ -189,7 +189,8 @@
 
 		return {
 			splits: [split],
-			targets: getTargets(split, splitType)
+			targets: getTargets(split, splitType),
+			masks: split.lines || []
 		};
 	}
 
@@ -255,6 +256,12 @@
 			element.classList.remove('is-animating');
 			reveal(element);
 			window.gsap.set(result.targets, { clearProps: 'transform,opacity,visibility,will-change' });
+
+			// The lines hide the letters while they rise; once the title is still, a line as tall as the
+			// font would go on cutting what reaches above it, like the accent of MENÙ.
+			if (result.masks && result.masks.length) {
+				window.gsap.set(result.masks, { overflow: 'visible' });
+			}
 		};
 
 		window.gsap.to(result.targets, {

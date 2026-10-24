@@ -20428,6 +20428,9 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
  * 32 px gap). Browsers without container queries keep 64 px.
  * The location text column is never narrower than the Mappe button's box (277.52 px): below 1090 px
  * the map gives up its left margin (107 px at most) so that the column stays inside the page.
+ * Where "Il nostro menù" goes on more lines (a header narrower than the legend and its gap, 559.14 px,
+ * plus the title on one line, 617.5 px), the lines get 10% more room: the accent of the Ù reaches
+ * 65 px above its baseline at 64 px and would touch the letters of the line above.
  */
 @media (min-width: 981px) {
 
@@ -20452,11 +20455,17 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 	}
 }
 
+@container tp-menu-header (max-width: 1176.6px) {
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-title h2) {
+		line-height: 1.1;
+	}
+}
+
 @container tp-menu-header (max-width: 862px) {
 
 	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-title h2) {
 		font-size: calc((100cqi - 559.14px) * .211);
-		line-height: 1;
 	}
 }
 
