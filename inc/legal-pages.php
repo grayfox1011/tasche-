@@ -269,8 +269,11 @@ function tp_child_legal_page_url( string $type ): string {
 
 /**
  * Create or update legal pages.
+ *
+ * With $only_missing (repair after the first setup) a page that still exists is left
+ * as the owner edited it, and the footer only gets the link to a page created now.
  */
-function tp_child_seed_legal_pages(): array {
+function tp_child_seed_legal_pages( bool $only_missing = false ): array {
 	$pages = [
 		'privacy' => [
 			'slug'  => tp_child_legal_page_slugs()['privacy'],
@@ -282,24 +285,40 @@ function tp_child_seed_legal_pages(): array {
 		],
 	];
 
-	$ids = [];
+	$ids     = [];
+	$created = [];
 
 	foreach ( $pages as $type => $config ) {
+		if ( $only_missing ) {
+			$existing = tp_child_seed_find_post_id( 'page', $config['slug'] );
+
+			if ( $existing ) {
+				$ids[ $type ] = $existing;
+				continue;
+			}
+		}
+
 		$content = tp_child_legal_page_content( $type );
 		$post_id = tp_child_seed_upsert_post( 'page', $config['slug'], $config['title'], $content );
 
 		if ( $post_id ) {
 			tp_child_seed_apply_divi_meta( $post_id, $config['title'], 'page', 'off', false );
 			tp_child_seed_clear_divi_cache_meta( $post_id );
-			$ids[ $type ] = $post_id;
+			$ids[ $type ]     = $post_id;
+			$created[ $type ] = $post_id;
 		}
 	}
 
-	if ( ! empty( $ids['privacy'] ) ) {
-		update_option( 'wp_page_for_privacy_policy', (int) $ids['privacy'] );
+	if ( ! empty( $created['privacy'] ) ) {
+		update_option( 'wp_page_for_privacy_policy', (int) $created['privacy'] );
 	}
 
-	tp_child_update_footer_legal_links( $ids );
+	if ( ! $only_missing ) {
+		tp_child_update_footer_legal_links( $ids );
+	} elseif ( $created ) {
+		tp_child_update_footer_legal_links( $created, true );
+	}
+
 	flush_rewrite_rules( false );
 
 	return $ids;
@@ -307,14 +326,17 @@ function tp_child_seed_legal_pages(): array {
 
 /**
  * Point footer copyright lines to legal pages.
+ *
+ * With $links_only only the links of the pages in $ids change: labels and the last
+ * line keep what the owner wrote.
  */
-function tp_child_update_footer_legal_links( array $ids = [] ): void {
-	if ( empty( $ids['privacy'] ) ) {
+function tp_child_update_footer_legal_links( array $ids = [], bool $links_only = false ): void {
+	if ( empty( $ids['privacy'] ) && ! $links_only ) {
 		$privacy = get_page_by_path( tp_child_legal_page_slugs()['privacy'], OBJECT, 'page' );
 		$ids['privacy'] = $privacy instanceof WP_Post ? (int) $privacy->ID : 0;
 	}
 
-	if ( empty( $ids['cookie'] ) ) {
+	if ( empty( $ids['cookie'] ) && ! $links_only ) {
 		$cookie = get_page_by_path( tp_child_legal_page_slugs()['cookie'], OBJECT, 'page' );
 		$ids['cookie'] = $cookie instanceof WP_Post ? (int) $cookie->ID : 0;
 	}
@@ -347,7 +369,7 @@ function tp_child_update_footer_legal_links( array $ids = [] ): void {
 		}
 
 		$blocks          = parse_blocks( $content );
-		$updated_blocks  = tp_child_legal_patch_footer_blocks( $blocks, $privacy_url, $cookie_url );
+		$updated_blocks  = tp_child_legal_patch_footer_blocks( $blocks, $privacy_url, $cookie_url, $links_only );
 		$updated_content = serialize_blocks( $updated_blocks );
 
 		if ( $updated_content === $content ) {
@@ -366,14 +388,14 @@ function tp_child_update_footer_legal_links( array $ids = [] ): void {
 /**
  * Patch tp/theme-footer attrs with legal links.
  */
-function tp_child_legal_patch_footer_blocks( array $blocks, string $privacy_url, string $cookie_url ): array {
+function tp_child_legal_patch_footer_blocks( array $blocks, string $privacy_url, string $cookie_url, bool $links_only = false ): array {
 	foreach ( $blocks as $index => $block ) {
 		if ( ! is_array( $block ) ) {
 			continue;
 		}
 
 		if ( ! empty( $block['innerBlocks'] ) && is_array( $block['innerBlocks'] ) ) {
-			$blocks[ $index ]['innerBlocks'] = tp_child_legal_patch_footer_blocks( $block['innerBlocks'], $privacy_url, $cookie_url );
+			$blocks[ $index ]['innerBlocks'] = tp_child_legal_patch_footer_blocks( $block['innerBlocks'], $privacy_url, $cookie_url, $links_only );
 		}
 
 		if ( 'tp/theme-footer' !== ( $block['blockName'] ?? '' ) || empty( $block['attrs'] ) || ! is_array( $block['attrs'] ) ) {
@@ -381,6 +403,17 @@ function tp_child_legal_patch_footer_blocks( array $blocks, string $privacy_url,
 		}
 
 		$attrs = $block['attrs'];
+
+		if ( $links_only ) {
+			foreach ( [ 'copyrightLink3' => $privacy_url, 'copyrightLink4' => $cookie_url ] as $key => $url ) {
+				if ( $url ) {
+					$attrs[ $key ] = [ 'innerContent' => [ 'desktop' => [ 'value' => $url ] ] ];
+				}
+			}
+
+			$blocks[ $index ]['attrs'] = $attrs;
+			continue;
+		}
 
 		if ( $privacy_url ) {
 			$attrs['copyrightLine3'] = [
@@ -482,15 +515,16 @@ function tp_child_legal_pages_exist(): bool {
 
 /**
  * Create legal pages when missing; refresh footer links when present.
+ * $only_missing: see tp_child_seed_legal_pages().
  */
-function tp_child_ensure_legal_pages(): array {
+function tp_child_ensure_legal_pages( bool $only_missing = false ): array {
 	if ( tp_child_legal_pages_exist() ) {
 		tp_child_update_footer_legal_links();
 
 		return [];
 	}
 
-	return tp_child_seed_legal_pages();
+	return tp_child_seed_legal_pages( $only_missing );
 }
 
 /**
@@ -512,7 +546,9 @@ function tp_child_migrate_legal_pages(): void {
 		return;
 	}
 
-	tp_child_ensure_legal_pages();
+	// After the first setup a missing page is the owner's choice or an accident: put
+	// back only that page, never overwrite the one still there.
+	tp_child_ensure_legal_pages( (bool) get_option( 'tp_child_legal_pages_v2' ) );
 	update_option( 'tp_child_legal_pages_v1', '1', false );
 	update_option( 'tp_child_legal_pages_v2', '1', true );
 

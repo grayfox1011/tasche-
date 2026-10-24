@@ -138,12 +138,28 @@ function tp_child_nav_menu_defaults( string $location ): array {
 }
 
 /**
+ * The theme's own menu assignments, read before WordPress maps the previous theme's
+ * menus onto the new locations (_wp_menus_changed, priority 10).
+ */
+function tp_child_capture_own_nav_menu_locations(): void {
+	$GLOBALS['tp_child_own_nav_menu_locations'] = (array) get_theme_mod( 'nav_menu_locations', [] );
+}
+add_action( 'after_switch_theme', 'tp_child_capture_own_nav_menu_locations', 5 );
+
+/**
  * Create default editable nav menus if they do not exist yet.
+ * A location the owner already assigned to an existing menu keeps it.
  */
 function tp_child_seed_nav_menus(): void {
 	$locations = get_theme_mod( 'nav_menu_locations', [] );
+	$own       = $GLOBALS['tp_child_own_nav_menu_locations'] ?? $locations;
 
 	foreach ( tp_child_nav_menu_config() as $location => $menu_config ) {
+		if ( ! empty( $own[ $location ] ) && wp_get_nav_menu_object( (int) $own[ $location ] ) ) {
+			$locations[ $location ] = (int) $own[ $location ];
+			continue;
+		}
+
 		$menu = tp_child_get_nav_menu_by_config( $location );
 
 		if ( ! $menu ) {

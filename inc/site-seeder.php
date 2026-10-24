@@ -65,7 +65,11 @@ function tp_child_seed_media_title_from_filename( string $filename ): string {
 	return ucwords( $title );
 }
 
-function tp_child_seed_import_media_asset( string $relative_path ): array {
+/**
+ * Import one theme image or video into the Media Library (or refresh the copy made
+ * before). With $create false an asset that has no attachment is not imported again.
+ */
+function tp_child_seed_import_media_asset( string $relative_path, bool $create = true ): array {
 	if ( ! preg_match( '~^assets/(?:images|video)/~', $relative_path ) ) {
 		return [];
 	}
@@ -112,6 +116,10 @@ function tp_child_seed_import_media_asset( string $relative_path ): array {
 		}
 	}
 
+	if ( ! $create ) {
+		return [];
+	}
+
 	require_once ABSPATH . 'wp-admin/includes/file.php';
 	require_once ABSPATH . 'wp-admin/includes/image.php';
 
@@ -154,6 +162,10 @@ function tp_child_seed_import_media_asset( string $relative_path ): array {
 		return [];
 	}
 
+	// Recorded before the slow thumbnail generation, so a request stopped by the time
+	// limit leaves an attachment the next run reuses instead of a duplicate.
+	update_post_meta( (int) $attachment_id, '_tp_child_seed_asset_path', $relative_path );
+
 	$metadata = wp_generate_attachment_metadata( (int) $attachment_id, $dest );
 
 	if ( is_array( $metadata ) ) {
@@ -173,24 +185,24 @@ function tp_child_seed_import_media_asset( string $relative_path ): array {
 		: [];
 }
 
-function tp_child_seed_media_assets(): array {
-	static $assets = null;
+function tp_child_seed_media_assets( bool $create = true ): array {
+	static $cache = [];
 
-	if ( is_array( $assets ) ) {
-		return $assets;
+	if ( isset( $cache[ $create ] ) ) {
+		return $cache[ $create ];
 	}
 
 	$assets = [];
 
 	foreach ( tp_child_seed_media_asset_references() as $relative_path ) {
-		$asset = tp_child_seed_import_media_asset( $relative_path );
+		$asset = tp_child_seed_import_media_asset( $relative_path, $create );
 
 		if ( ! empty( $asset['id'] ) && ! empty( $asset['url'] ) ) {
 			$assets[ $relative_path ] = $asset;
 		}
 	}
 
-	return $assets;
+	return $cache[ $create ] = $assets;
 }
 
 function tp_child_seed_media_asset_url( string $relative_path ): string {
@@ -615,8 +627,21 @@ function tp_child_seed_theme_builder(): array {
 		clean_post_cache( $template_id );
 	}
 
+	// Divi keeps one _et_template row per template: replace only the other default
+	// templates, so the owner's own templates stay linked to the Theme Builder.
 	if ( $builder_id && $template_id ) {
-		update_post_meta( $builder_id, '_et_template', (string) $template_id );
+		$linked = array_map( 'intval', (array) get_post_meta( $builder_id, '_et_template', false ) );
+
+		foreach ( array_unique( $linked ) as $linked_id ) {
+			if ( $linked_id !== $template_id && '1' === get_post_meta( $linked_id, '_et_default', true ) ) {
+				delete_post_meta( $builder_id, '_et_template', (string) $linked_id );
+			}
+		}
+
+		if ( ! in_array( $template_id, $linked, true ) ) {
+			add_post_meta( $builder_id, '_et_template', (string) $template_id );
+		}
+
 		clean_post_cache( $builder_id );
 	}
 
@@ -631,6 +656,12 @@ function tp_child_seed_theme_builder(): array {
 function tp_child_seed_site( bool $force = false ): array {
 	if ( ! $force && TP_CHILD_SEED_VERSION === get_option( 'tp_child_seed_site_version' ) ) {
 		return [ 'skipped' => true ];
+	}
+
+	// Importing the media and building the pages takes about 40 s on a slow host,
+	// more than the usual 30 s limit.
+	if ( function_exists( 'set_time_limit' ) ) {
+		@set_time_limit( 300 );
 	}
 
 	if ( function_exists( 'tp_child_seed_nav_menus' ) ) {
@@ -688,8 +719,10 @@ function tp_child_seed_site_manual_requested(): bool {
 function tp_child_seed_site_after_switch(): void {
 	update_option( "tp_child_seed_site_pending", "1", false );
 
-	if ( function_exists( 'tp_child_seed_legal_pages' ) ) {
-		tp_child_seed_legal_pages();
+	// The legal pages are created on the first request (tp_child_migrate_legal_pages);
+	// re-activating the theme must not overwrite what the owner edited since then.
+	if ( function_exists( 'tp_child_legal_pages_exist' ) && ! tp_child_legal_pages_exist() ) {
+		tp_child_ensure_legal_pages( (bool) get_option( 'tp_child_legal_pages_v2' ) );
 	}
 
 	if ( ! tp_child_seed_site_auto_enabled() ) {
@@ -772,7 +805,9 @@ function tp_child_seed_media_library_fallback(): void {
 		return;
 	}
 
-	tp_child_seed_media_assets();
+	// Refresh the copies already in the library; a theme file the owner deleted from
+	// the library stays deleted (the seed imported everything once).
+	tp_child_seed_media_assets( false );
 }
 add_action( "load-upload.php", "tp_child_seed_media_library_fallback", 1 );
 
