@@ -11,6 +11,37 @@
 		}
 	}
 
+	// The iPhone fixes below write inline styles. An iPad at 981 px or more (landscape,
+	// iPad Pro) shows the desktop layout, so it drops them; they come back below 981 px.
+	var desktopMq = window.matchMedia ? window.matchMedia('(min-width: 981px)') : null;
+
+	function isDesktopWidth() {
+		return !!(desktopMq && desktopMq.matches);
+	}
+
+	function setTracked(list, element, property, value) {
+		if (!element) {
+			return;
+		}
+
+		setImportant(element, property, value);
+
+		for (var i = 0; i < list.length; i++) {
+			if (list[i][0] === element && list[i][1] === property) {
+				return;
+			}
+		}
+
+		list.push([element, property]);
+	}
+
+	function clearTracked(list) {
+		list.forEach(function (entry) {
+			entry[0].style.removeProperty(entry[1]);
+		});
+		list.length = 0;
+	}
+
 	if (document.body && document.body.classList.contains('et-fb')) {
 		return;
 	}
@@ -142,6 +173,12 @@
 			return;
 		}
 
+		var styled = [];
+
+		function setMenuStyle(element, property, value) {
+			setTracked(styled, element, property, value);
+		}
+
 		var selectors = {
 			tascaLabel: '.tp-menu-label-tasca p, .tp-menu-label-tasca .et_pb_text_inner, .tp-menu-price-label-tasca .tp-menu-price-label-text',
 			sLabel: '.tp-menu-label-piatto p, .tp-menu-label-piatto .et_pb_text_inner, .tp-menu-price-label-s .tp-menu-price-label-text',
@@ -160,26 +197,31 @@
 				return;
 			}
 
-			setImportant(node, 'position', 'absolute');
-			setImportant(node, 'left', x);
-			setImportant(node, 'top', y);
-			setImportant(node, 'width', width || 'auto');
-			setImportant(node, 'min-width', '0');
-			setImportant(node, 'max-width', 'none');
-			setImportant(node, 'height', 'auto');
-			setImportant(node, 'min-height', '0');
-			setImportant(node, 'margin', '0');
-			setImportant(node, 'padding', '0');
-			setImportant(node, 'display', display || 'block');
-			setImportant(node, 'visibility', 'visible');
-			setImportant(node, 'opacity', '1');
-			setImportant(node, 'transform', 'none');
-			setImportant(node, 'z-index', '6');
-			setImportant(node, 'text-align', 'center');
-			setImportant(node, 'white-space', 'nowrap');
+			setMenuStyle(node, 'position', 'absolute');
+			setMenuStyle(node, 'left', x);
+			setMenuStyle(node, 'top', y);
+			setMenuStyle(node, 'width', width || 'auto');
+			setMenuStyle(node, 'min-width', '0');
+			setMenuStyle(node, 'max-width', 'none');
+			setMenuStyle(node, 'height', 'auto');
+			setMenuStyle(node, 'min-height', '0');
+			setMenuStyle(node, 'margin', '0');
+			setMenuStyle(node, 'padding', '0');
+			setMenuStyle(node, 'display', display || 'block');
+			setMenuStyle(node, 'visibility', 'visible');
+			setMenuStyle(node, 'opacity', '1');
+			setMenuStyle(node, 'transform', 'none');
+			setMenuStyle(node, 'z-index', '6');
+			setMenuStyle(node, 'text-align', 'center');
+			setMenuStyle(node, 'white-space', 'nowrap');
 		}
 
 		function layout() {
+			if (isDesktopWidth()) {
+				clearTracked(styled);
+				return;
+			}
+
 			var rows = document.querySelectorAll('.tp-menu-table--main .tp-menu-row');
 
 			rows.forEach(function (row) {
@@ -190,26 +232,26 @@
 					return;
 				}
 
-				setImportant(prices, 'position', 'absolute');
-				setImportant(prices, 'inset', '0');
-				setImportant(prices, 'display', 'block');
-				setImportant(prices, 'width', '100%');
-				setImportant(prices, 'height', '100%');
-				setImportant(prices, 'margin', '0');
-				setImportant(prices, 'padding', '0');
-				setImportant(prices, 'pointer-events', 'none');
-				setImportant(prices, 'background-position', '9.5% 76%, 49.6% 77%, 86.5% 76%, 22% 65%, 46% 69%');
-				setImportant(prices, 'background-size', '14.37% auto, 11.33% auto, 12.52% auto, 3.86% 10.2%, 3.52% 10.8%');
+				setMenuStyle(prices, 'position', 'absolute');
+				setMenuStyle(prices, 'inset', '0');
+				setMenuStyle(prices, 'display', 'block');
+				setMenuStyle(prices, 'width', '100%');
+				setMenuStyle(prices, 'height', '100%');
+				setMenuStyle(prices, 'margin', '0');
+				setMenuStyle(prices, 'padding', '0');
+				setMenuStyle(prices, 'pointer-events', 'none');
+				setMenuStyle(prices, 'background-position', '9.5% 76%, 49.6% 77%, 86.5% 76%, 22% 65%, 46% 69%');
+				setMenuStyle(prices, 'background-size', '14.37% auto, 11.33% auto, 12.52% auto, 3.86% 10.2%, 3.52% 10.8%');
 
 				wrappers.forEach(function (wrapper) {
-					setImportant(wrapper, 'position', 'static');
-					setImportant(wrapper, 'display', 'block');
-					setImportant(wrapper, 'width', '0');
-					setImportant(wrapper, 'min-width', '0');
-					setImportant(wrapper, 'height', '0');
-					setImportant(wrapper, 'min-height', '0');
-					setImportant(wrapper, 'margin', '0');
-					setImportant(wrapper, 'padding', '0');
+					setMenuStyle(wrapper, 'position', 'static');
+					setMenuStyle(wrapper, 'display', 'block');
+					setMenuStyle(wrapper, 'width', '0');
+					setMenuStyle(wrapper, 'min-width', '0');
+					setMenuStyle(wrapper, 'height', '0');
+					setMenuStyle(wrapper, 'min-height', '0');
+					setMenuStyle(wrapper, 'margin', '0');
+					setMenuStyle(wrapper, 'padding', '0');
 				});
 
 				placeNode(row, selectors.tascaLabel, '11.66%', '55%', '72px');
@@ -222,7 +264,7 @@
 				placeNode(row, selectors.lLabel, '72.2%', '67.3%', '24px', 'none');
 
 				var sValue = row.querySelector(selectors.sValue);
-				setImportant(sValue, 'display', 'none');
+				setMenuStyle(sValue, 'display', 'none');
 			});
 		}
 
@@ -249,6 +291,13 @@
 			return;
 		}
 
+		var styled = [];
+		var revealed = false;
+
+		function setHeaderStyle(element, property, value) {
+			setTracked(styled, element, property, value);
+		}
+
 		function forceHeaderVisible() {
 			var header = document.querySelector(".site-header.tp-theme-header, .tp-theme-header");
 			var headerShell = document.querySelector(".et-l--header");
@@ -261,31 +310,53 @@
 				document.body.classList.add("tp-preloader-revealing", "tp-preloader-nav-ready");
 			}
 
+			revealed = true;
+
+			if (isDesktopWidth()) {
+				return;
+			}
+
 			[headerShell, header, nav, toggle].forEach(function (element) {
 				if (!element) {
 					return;
 				}
 
-				setImportant(element, "display", element === toggle ? "flex" : "block");
-				setImportant(element, "visibility", "visible");
-				setImportant(element, "opacity", "1");
-				setImportant(element, "pointer-events", element === headerShell ? "none" : "auto");
+				setHeaderStyle(element, "display", element === toggle ? "flex" : "block");
+				setHeaderStyle(element, "visibility", "visible");
+				setHeaderStyle(element, "opacity", "1");
+				setHeaderStyle(element, "pointer-events", element === headerShell ? "none" : "auto");
 			});
 
 			if (header) {
-				setImportant(header, "position", "absolute");
-				setImportant(header, "top", "32.7px");
-				setImportant(header, "left", "0");
-				setImportant(header, "width", "100%");
-				setImportant(header, "z-index", "3000");
-				setImportant(header, "transform", "none");
-				setImportant(header, "-webkit-transform", "none");
+				setHeaderStyle(header, "position", "absolute");
+				setHeaderStyle(header, "top", "32.7px");
+				setHeaderStyle(header, "left", "0");
+				setHeaderStyle(header, "width", "100%");
+				setHeaderStyle(header, "z-index", "3000");
+				setHeaderStyle(header, "transform", "none");
+				setHeaderStyle(header, "-webkit-transform", "none");
 			}
 
 			if (toggle) {
-				setImportant(toggle, "position", "absolute");
-				setImportant(toggle, "top", "0");
-				setImportant(toggle, "right", "10.8px");
+				setHeaderStyle(toggle, "position", "absolute");
+				setHeaderStyle(toggle, "top", "0");
+				setHeaderStyle(toggle, "right", "10.8px");
+			}
+		}
+
+		if (desktopMq) {
+			var onWidthChange = function () {
+				if (isDesktopWidth()) {
+					clearTracked(styled);
+				} else if (revealed) {
+					forceHeaderVisible();
+				}
+			};
+
+			if (desktopMq.addEventListener) {
+				desktopMq.addEventListener('change', onWidthChange);
+			} else if (desktopMq.addListener) {
+				desktopMq.addListener(onWidthChange);
 			}
 		}
 
