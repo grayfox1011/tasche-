@@ -87,8 +87,24 @@
 		var desktop = window.matchMedia ? window.matchMedia('(min-width: 981px)') : null;
 		var frame = 0;
 
+		// The words as written in Divi, read also while the title waits for its font or makes its entrance
+		// (innerText leaves out what is hidden): lines, <br> and blocks part them.
+		function titleWords(title) {
+			var walker = document.createTreeWalker(title, NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT);
+			var text = '';
+			var node;
+			while ((node = walker.nextNode())) {
+				if (node.nodeType === 3) {
+					text += node.nodeValue;
+				} else if (node.nodeName === 'BR' || window.getComputedStyle(node).display.indexOf('inline') !== 0) {
+					text += ' ';
+				}
+			}
+			return text.split(/\s+/).filter(Boolean);
+		}
+
 		function longestWordEm(title) {
-			var words = (title.innerText || title.textContent || '').split(/\s+/).filter(Boolean);
+			var words = titleWords(title);
 			var size = parseFloat(window.getComputedStyle(title).fontSize);
 			var probe = document.createElement('span');
 			var widest = 0;
@@ -106,17 +122,21 @@
 			var style = window.getComputedStyle(title);
 			var size = parseFloat(style.fontSize);
 			var upper = style.textTransform === 'uppercase';
+			// While the title makes its entrance its letters rise into place: the line they are in says
+			// where they stand.
+			var entering = !title.classList.contains('is-revealed') && Boolean(title.querySelector('.tp-split-line'));
 			var walker = document.createTreeWalker(title, NodeFilter.SHOW_TEXT);
 			var range = document.createRange();
 			var firstTop = null;
 			var node;
 			while ((node = walker.nextNode())) {
+				var line = entering ? node.parentNode.closest('.tp-split-line') : null;
 				for (var i = 0; i < node.textContent.length; i++) {
 					var ch = node.textContent.charAt(i);
 					if (!/\S/.test(ch)) { continue; }
 					range.setStart(node, i);
 					range.setEnd(node, i + 1);
-					var top = range.getBoundingClientRect().top;
+					var top = (line || range).getBoundingClientRect().top;
 					if (firstTop === null) { firstTop = top; }
 					if (top > firstTop + size / 2 && (upper || ch !== ch.toLowerCase()) && ACCENT_ABOVE.test(ch.normalize ? ch.normalize('NFD') : ch)) {
 						return true;
@@ -145,6 +165,9 @@
 		function schedule() {
 			if (!frame) { frame = window.requestAnimationFrame(update); }
 		}
+
+		// tp-split-text.js is about to cut a title into lines, now that its font is loaded: the sizes first.
+		document.addEventListener('tp:split-text:lines', update);
 
 		onReady(function () {
 			update();

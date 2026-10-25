@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( "TP_CHILD_VERSION", "0.5.1" );
+define( "TP_CHILD_VERSION", "0.5.2" );
 define( 'TP_CHILD_PATH', trailingslashit( get_stylesheet_directory() ) );
 define( 'TP_CHILD_URL', trailingslashit( get_stylesheet_directory_uri() ) );
 define( 'TP_CHILD_MODULES_JSON_PATH', TP_CHILD_PATH . 'modules-json/' );
@@ -901,17 +901,39 @@ function tp_child_choice_standalone_markup( array $data = [] ): string {
 HTML;
 }
 
+/**
+ * Where the Tasca/Piatto section is in the page: from its opening tag to the one that closes it, with the
+ * blank lines after it. Whatever comes before or after it (another section, nothing) is left as it is, so the
+ * section can stand anywhere, also alone on a new page.
+ */
+function tp_child_choice_section_bounds( string $content ): ?array {
+	if ( ! preg_match( "/<div class=\"[^\"]*\btp-choice-section\b[^\"]*\"[^>]*>/", $content, $open, PREG_OFFSET_CAPTURE ) ) {
+		return null;
+	}
+
+	$start  = $open[0][1];
+	$depth  = 0;
+	$offset = $start;
+
+	while ( preg_match( "/<div\b|<\/div\s*>/i", $content, $tag, PREG_OFFSET_CAPTURE, $offset ) ) {
+		$depth += '/' === $tag[0][0][1] ? -1 : 1;
+		$offset = $tag[0][1] + strlen( $tag[0][0] );
+
+		if ( 0 === $depth ) {
+			return [ $start, $offset + strspn( $content, " \t\r\n", $offset ) ];
+		}
+	}
+
+	return null;
+}
+
 function tp_child_replace_choice_section( string $content ): string {
 	if ( tp_child_is_visual_builder() || false === strpos( $content, "tp-choice-section" ) || false !== strpos( $content, "tp-choice-standalone" ) ) {
 		return $content;
 	}
 
-	$pattern       = "/<div class=\"[^\"]*\btp-choice-section\b[^\"]*\"[^>]*>.*?(?=<div class=\"[^\"]*\btp-menu-section\b)/s";
-	$choice_source = '';
-
-	if ( preg_match( $pattern, $content, $matches ) ) {
-		$choice_source = $matches[0];
-	}
+	$bounds        = tp_child_choice_section_bounds( $content );
+	$choice_source = $bounds ? substr( $content, $bounds[0], $bounds[1] - $bounds[0] ) : '';
 
 	$data      = tp_child_choice_data_from_divi_section( $choice_source );
 	$extracted = ! empty( $data['_extracted'] );
@@ -926,25 +948,8 @@ function tp_child_replace_choice_section( string $content ): string {
 		return $content;
 	}
 
-	// A callback, so "$1" or "\1" written in the editorial text is kept as text.
-	$replacement = tp_child_choice_standalone_markup( $data ) . "\n";
-	$updated     = preg_replace_callback(
-		$pattern,
-		static function () use ( $replacement ): string {
-			return $replacement;
-		},
-		$content,
-		1,
-		$replaced
-	);
-
-	if ( is_string( $updated ) && $replaced > 0 ) {
-		return $updated;
-	}
-
-	// Replacement failed unexpectedly: keep the editable Divi source visible
-	// rather than hiding it behind an unverified standalone.
-	return $content;
+	// Spliced in, not passed through a regex replacement: "$1" or "\1" written in the editorial text stays text.
+	return substr( $content, 0, $bounds[0] ) . tp_child_choice_standalone_markup( $data ) . "\n" . substr( $content, $bounds[1] );
 }
 add_filter( "the_content", "tp_child_replace_choice_section", 99 );
 

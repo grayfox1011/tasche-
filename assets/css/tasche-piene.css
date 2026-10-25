@@ -179,6 +179,35 @@ body.tp-legal-document:not(.et-fb) #main-content {
 	background: var(--tp-cream) !important;
 }
 
+/*
+ * Every page but the home (pages with the hero section): the content starts below the header, which stays
+ * on top of the page. --tp-header-space is how far the header reaches: 10 px + the 76 px bar from 981 px
+ * up; the top and the height of the menu button between 768 and 980 px; 32.7 px + 54 px on phones. It has
+ * no weight, so a page can set its own value (for example 0) in its custom CSS. On the home the hero is
+ * drawn under the header on purpose.
+ */
+:where(body.tp-child-theme:not(.tp-landing-page):not(.et-fb)) {
+	--tp-header-space: 86.7px;
+}
+
+@media (min-width: 768px) {
+
+	:where(body.tp-child-theme:not(.tp-landing-page):not(.et-fb)) {
+		--tp-header-space: calc(clamp(27px, 7.4vw, 62px) + clamp(54px, 9.1vw, 76px));
+	}
+}
+
+@media (min-width: 981px) {
+
+	:where(body.tp-child-theme:not(.tp-landing-page):not(.et-fb)) {
+		--tp-header-space: 86px;
+	}
+}
+
+body.tp-child-theme:not(.tp-landing-page):not(.et-fb) #et-main-area {
+	padding-top: var(--tp-header-space, 0px) !important;
+}
+
 body.tp-child-theme:has(.tp-choice-standalone) {
 	overflow-x: hidden !important;
 }
@@ -11471,10 +11500,11 @@ body.tp-child-theme.tp-child-theme :where(body.et-fb #page-container .tp-materie
 	color: #fff5e9;
 }
 
+/* The text inside takes it from the module (Divi sets its colour on .et_pb_text_inner, which wins over this). */
 body.tp-child-theme.tp-child-theme.tp-child-theme :where(html body.tp-child-theme #page-container .tp-menu-legend-tasca),
-.tp-child-theme :where(html body.tp-child-theme #page-container .tp-menu-legend-tasca *),
+.tp-child-theme :where(html body.tp-child-theme #page-container .tp-menu-legend-tasca .et_pb_text_inner),
 body.tp-child-theme.tp-child-theme.tp-child-theme :where(html body.tp-child-theme #page-container .tp-menu-legend-piatto),
-.tp-child-theme :where(html body.tp-child-theme #page-container .tp-menu-legend-piatto *) {
+.tp-child-theme :where(html body.tp-child-theme #page-container .tp-menu-legend-piatto .et_pb_text_inner) {
 	color: #fff5e9;
 }
 
@@ -14961,7 +14991,7 @@ body.tp-child-theme.tp-child-theme.tp-child-theme :where(html body.tp-child-them
 	}
 
 	body.tp-child-theme.tp-child-theme.tp-child-theme :where(html body.tp-child-theme #page-container .tp-menu-sectionhead--drinks .tp-menu-sectionhead-subtitle),
-.tp-child-theme :where(html body.tp-child-theme #page-container .tp-menu-sectionhead--drinks .tp-menu-sectionhead-subtitle *) {
+.tp-child-theme :where(html body.tp-child-theme #page-container .tp-menu-sectionhead--drinks .tp-menu-sectionhead-subtitle .et_pb_text_inner) {
 		color: #4e7555;
 	}
 }
@@ -20598,6 +20628,24 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 
 .tp-child-theme :where(.tp-shape-wave--flip-x.tp-shape-wave--flip-y .tp-shape-wave__svg) {
 	transform: scale(-1);
+}
+
+/*
+ * Phones, every page but the home: the logo and the menu button are cream to stand on the hero video of
+ * the home; on a light page they would not show. There they take the bordeaux of the header from 768 px up,
+ * with the same shape, size and place.
+ */
+@media (max-width: 767px) {
+
+	.tp-child-theme :where(body:not(.tp-landing-page):not(.et-fb) .tp-theme-nav-logo)::before {
+		background: var(--tp-bordeaux);
+		-webkit-mask: url("../svg/mobile-header-logo.svg") center / contain no-repeat;
+		mask: url("../svg/mobile-header-logo.svg") center / contain no-repeat;
+	}
+
+	.tp-child-theme :where(body:not(.tp-landing-page):not(.et-fb) .tp-theme-nav-toggle span) {
+		background: var(--tp-bordeaux);
+	}
 }
 
 @keyframes tp-marquee-scroll {

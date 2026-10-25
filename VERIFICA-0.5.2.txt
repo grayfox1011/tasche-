@@ -1,4 +1,114 @@
-TASCHE PIENE — VERSIONE 0.5.1, CANDIDATA AL COLLAUDO
+TASCHE PIENE — VERSIONE 0.5.2, CANDIDATA AL COLLAUDO
+
+La 0.5.2 lavora sui tre criteri dati dopo la 0.5.1: uguale al Figma, tutto
+modificabile da Divi, ricreabile anche da una pagina nuova. La home resta
+identica alla 0.5.1 (nel Figma ci sono solo le tavole della home: computer,
+iPad, iPhone e le versioni "statico"). Le note delle versioni precedenti, piu'
+in basso, restano valide.
+
+COSA CAMBIA RISPETTO ALLA 0.5.1
+- Ricreare da una pagina nuova:
+  - Tasca/Piatto: il tema la ricostruiva solo se subito dopo c'era la sezione
+    del menu. Da sola, o in un altro punto della pagina, restavano i moduli
+    Divi com'erano (card una sotto l'altra, titolo in un riquadro). Ora viene
+    come nella home dovunque sia, anche da sola su una pagina nuova.
+  - Titoli in cima a una pagina nuova (per esempio la sezione Dove siamo da
+    sola): tra 981 e circa 1200 px "Siamo nei caruggi..." veniva misurato
+    mentre entrava, con parte delle lettere ancora nascoste, e restava a 64 px
+    con le parole spezzate. Ora viene come nella home. Con la rete lenta, poi,
+    un titolo gia' visibile al caricamento si divideva in righe sul carattere
+    di riserva, prima che arrivasse il suo: andava a capo in punti diversi
+    dalla home, a volte a meta' parola. Ora aspetta il suo carattere, al
+    massimo 3 secondi.
+  - Il resto era gia' ricreabile, e lo e' ancora: una pagina nuova con il
+    contenuto della home (per esempio clonata in Divi) e' identica alla home;
+    le altre sezioni, ognuna da sola su una pagina nuova, sono identiche a
+    quelle della home.
+- Pagine che non sono la home (pagine legali, pagine nuove, articoli, archivi,
+  ricerca, pagina non trovata):
+  - Il contenuto comincia sotto l'header. Prima l'header lo copriva: sul
+    computer la parte alta del titolo "Privacy Policy" e, in una pagina nuova,
+    tutto il titolo. Lo spazio e' alto quanto l'header: 86 px sul computer,
+    127-138 px tra 768 e 980 px, 87 px sui telefoni. Si puo' cambiare per una
+    pagina dal suo CSS personalizzato (variabile --tp-header-space).
+  - Sui telefoni logo e pulsante del menu sono bordeaux, come sui tablet e sul
+    computer. Erano crema, pensati per il video della home: su una pagina
+    chiara non si vedevano, e il menu non si trovava.
+- Modificabili da Divi: il colore del testo della legenda Tasca/Piatto nel
+  menu e, sui telefoni, del sottotitolo delle bevande ("Hai sete?"). Prima
+  restava quello del tema.
+
+VERIFICHE EFFETTUATE SULLA 0.5.2
+Riferimento: la 0.5.1 sullo stesso sito di prova.
+- Ricreare da una pagina nuova:
+  - Una pagina nuova con il contenuto della home: identica alla home (887
+    elementi, stili e posizioni) a 1440, 1024, 981, 820 e 390 px.
+  - Ogni sezione della home da sola su una pagina nuova, confrontata con la
+    stessa sezione nella home (stili e posizioni di ogni elemento, a 1440,
+    1024, 820 e 390 px): hero, striscia, introduzione, Alberto, menu, Materie
+    e orari identiche (nella Materie lo scorrimento della scritta e l'entrata
+    delle card avvengono agli stessi punti); Dove siamo identica anche a 1100
+    e 990 px, dove prima della correzione il titolo era a 64 px; Tasca/Piatto
+    diversa nella 0.5.1, identica nella 0.5.2 a 9 larghezze tra 320 e 1920 px.
+    Restano solo proprieta' senza effetto visibile, con gli stessi riquadri:
+    sotto i 981 px la sezione Materie da sola taglia cio' che esce dai suoi
+    bordi (solo la scritta che scorre, che esce comunque dallo schermo).
+  - Titoli in cima a una pagina nuova (introduzione, Alberto, Materie, menu e
+    Dove siamo, a 1440, 1100 e 1024 px): righe, dimensione e altezza uguali
+    alla home al caricamento, con il carattere dei titoli in ritardo di 2,5
+    secondi e con la finestra ridimensionata durante l'animazione. Prima della
+    correzione: Dove siamo a 64 px con tre parole spezzate; con il carattere
+    in ritardo introduzione, Alberto e Materie a capo in punti diversi, con
+    una o due parole spezzate. Con il carattere in ritardo di 6 secondi il
+    titolo compare dopo 3 secondi. Nessun errore JavaScript.
+  - Tasca/Piatto anche come ultima sezione di una pagina: HTML integro.
+  - HTML della home identico byte per byte alla 0.5.1 (cambia solo un codice
+    di sicurezza di WordPress che ruota da solo).
+- Header: nelle pagine legali, nelle pagine nuove, negli articoli il primo
+  testo comincia sotto l'header a 10 larghezze tra 320 e 1920 px. Nella
+  privacy cambia solo questo: tutto scende dell'altezza dell'header (86 px sul
+  computer, 127-138 px sui tablet, 87 px sui telefoni) e sui telefoni logo e
+  pulsante del menu diventano bordeaux. Home invariata.
+- Suite completa: home a 20 larghezze identica alla 0.5.1 (stili e
+  posizioni; le sole differenze di pixel sono foto delle card Materie
+  caricate o no al momento dello scatto); hover e focus identici; Visual
+  Builder (computer, tablet, telefono, privacy) identico; modifica dal builder
+  8 su 8; iPhone 13 in emulazione senza errori; menu aperto sul telefono
+  identico; stesse query.
+- Modificabilita': con i valori di prova impostati in Divi, il colore arriva
+  alla legenda Tasca/Piatto e al sottotitolo delle bevande sui telefoni
+  (prima restava quello del tema); il resto con gli stessi esiti della 0.5.1.
+- Aggiornamento caricando lo zip da wp-admin su copie con la 0.5.1 e la 0.4.9:
+  home identica byte per byte, senza revisioni nuove; una seconda richiesta
+  non cambia niente; nessun errore PHP; stili e posizioni della home identici
+  a quelli delle stesse copie prima dell'aggiornamento.
+
+INSTALLAZIONE DELLO ZIP
+Provata caricando lo zip da wp-admin (Aspetto > Temi > Carica tema) su copie
+del sito di prova con la 0.5.1 e la 0.4.9. WordPress sostituisce il tema senza
+errori. Nessun errore PHP del tema.
+
+DA DECIDERE
+- Tasca/Piatto, modificabile come le altre sezioni: oggi da Divi se ne
+  cambiano testi e immagini; colori, caratteri, spaziature e sfondi impostati
+  sui suoi moduli non hanno effetto, perche' il tema la ricostruisce (anche
+  nel builder si vede come un modulo da compilare, non com'e' sul sito). Per
+  renderla modificabile va rifatta con i moduli Divi, identica alla
+  ricostruzione a tutte le larghezze e con le stesse animazioni. Lavoro
+  grosso: serve un ok.
+- Testi a due misure (legenda Tasca/Piatto, giorni e orari, prezzo Tasca sui
+  telefoni) e apici degli allergeni: il colore si cambia da Divi (gli apici
+  no), le due misure no. Per cambiarle una per una le due parti andrebbero
+  scritte come due elementi che Divi imposta separatamente (per esempio titolo
+  e testo del modulo Testo). Cambia il contenuto della home, con un passaggio
+  automatico all'aggiornamento: serve un ok.
+- Non provati: Safari e un iPhone veri (il preloader e' provato in Chromium
+  con l'agente utente di iPhone e iPad) e un database MySQL (le prove usano
+  SQLite).
+
+==============================================================================
+
+NOTE DELLA 0.5.1
 
 La 0.5.1 mette sul computer il footer delle pagine nuove in fondo, dopo il
 contenuto, come nelle pagine legali, come deciso dopo la 0.5.0. Home e pagine

@@ -60,6 +60,51 @@
 		element.classList.add('is-revealed');
 	}
 
+	function dispatch(name) {
+		if (typeof window.CustomEvent === 'function') {
+			document.dispatchEvent(new window.CustomEvent(name));
+		} else {
+			var event = document.createEvent('CustomEvent');
+			event.initCustomEvent(name, false, false, null);
+			document.dispatchEvent(event);
+		}
+	}
+
+	// Calls back once the font of the element is loaded, keeping the element hidden meanwhile: at most 3 seconds,
+	// as long as browsers hide a text whose font is late.
+	function whenFontLoaded(element, callback) {
+		var style = window.getComputedStyle(element);
+		var font = [style.fontStyle, style.fontWeight, style.fontSize, style.fontFamily].join(' ');
+		var text = element.textContent;
+		var visibility = element.style.visibility;
+		var loaded = true;
+		var done = false;
+		var ready = function () {
+			if (done) {
+				return;
+			}
+
+			done = true;
+			element.style.visibility = visibility;
+			callback();
+		};
+
+		try {
+			loaded = !document.fonts || document.fonts.check(font, text);
+		} catch (error) {
+			loaded = true; // a font the browser cannot read: nothing to wait for
+		}
+
+		if (loaded) {
+			callback();
+			return;
+		}
+
+		element.style.visibility = 'hidden';
+		document.fonts.load(font, text).then(ready, ready);
+		window.setTimeout(ready, 3000);
+	}
+
 	function getTargets(split, type) {
 		if (type.indexOf('chars') !== -1) {
 			return split.chars;
@@ -219,6 +264,22 @@
 		window.gsap.registerPlugin(window.SplitText);
 
 		var splitType = getDataValue(element, 'tpSplitType', settings.splitType || 'chars');
+
+		if (splitType.indexOf('lines') === -1) {
+			play(element, settings, splitType);
+			return;
+		}
+
+		// The lines are cut where the text wraps at the moment of the split. A title in view while its font is
+		// still loading (at the top of a page) waits for it, or its lines would be cut on the fallback font and
+		// its words could break once the font arrives; then the scripts that size titles measure them again.
+		whenFontLoaded(element, function () {
+			dispatch('tp:split-text:lines');
+			play(element, settings, splitType);
+		});
+	}
+
+	function play(element, settings, splitType) {
 		var duration = getNumber(element, 'tpSplitDuration', settings.duration || 0.52);
 		var stagger = getNumber(element, 'tpSplitStagger', settings.stagger || 0.018);
 		var delay = getNumber(element, 'tpSplitDelay', settings.delay || 0);
