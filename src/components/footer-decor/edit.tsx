@@ -2,19 +2,21 @@ import React, { ReactElement } from 'react';
 import { ModuleContainer } from '@divi/module';
 
 import { FooterDecorAttrs, FooterDecorEditProps } from './types';
+import metadata from '../../../modules-json/footer-decor/module.json';
 import { createModuleClassnames, createModuleScriptData, createModuleStyles } from '../../utils/module-boilerplate';
 import { getString, getUploadUrl } from '../../utils/attrs';
+import { useDynamicText } from '../../utils/dynamic';
 
 const MODULE_CLASSNAME = 'tp_footer_decor';
 
-const ModuleStyles = createModuleStyles(['tpDesignImage', 'tpDesignContent']);
+const ModuleStyles = createModuleStyles(['tpDesignImage', 'tpDesignContent'], metadata.customCssFields);
 const moduleClassnames = createModuleClassnames(MODULE_CLASSNAME);
 const ModuleScriptData = createModuleScriptData();
 
 export const FooterDecorEdit = (props: FooterDecorEditProps): ReactElement => {
 	const { attrs, elements, id, name } = props;
-	const url = getUploadUrl(attrs.image, getString(attrs.imageUrl, ''), '');
-	const alt = getString(attrs.alt, '');
+	const url = useDynamicText(getUploadUrl(attrs.image, getString(attrs.imageUrl, ''), ''));
+	const alt = useDynamicText(getString(attrs.alt, ''));
 	const top = getString(attrs.posTop, '0');
 	const left = getString(attrs.posLeft, '0');
 	const width = getString(attrs.width, '120');

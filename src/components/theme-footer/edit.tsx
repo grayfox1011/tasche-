@@ -2,14 +2,16 @@ import React, { ReactElement } from 'react';
 import { ModuleContainer } from '@divi/module';
 
 import { ThemeFooterAttrs, ThemeFooterEditProps } from './types';
+import metadata from '../../../modules-json/theme-footer/module.json';
 import { createModuleClassnames, createModuleScriptData, createModuleStyles } from '../../utils/module-boilerplate';
 import { buildStyleVars, getColor, getString, getUploadUrl } from '../../utils/attrs';
+import { ASSET_BASE } from '../../utils/asset-base';
+import { DynamicText, useDynamicText } from '../../utils/dynamic';
 import { getWpMenuItems } from '../../utils/wp-menus';
 
 const MODULE_CLASSNAME = 'tp_theme_footer';
-const ASSET_BASE = '/wp-content/themes/tasche-piene-divi-child/assets';
 
-const ModuleStyles = createModuleStyles(['tpDesignText', 'tpDesignCopyright', 'tpDesignLogo', 'tpDesignCharacterOne', 'tpDesignCharacterFour', 'tpDesignCharacterThree', 'tpDesignContent']);
+const ModuleStyles = createModuleStyles(['tpDesignText', 'tpDesignCopyright', 'tpDesignLogo', 'tpDesignCharacterOne', 'tpDesignCharacterFour', 'tpDesignCharacterThree', 'tpDesignContent'], metadata.customCssFields);
 const moduleClassnames = createModuleClassnames(MODULE_CLASSNAME);
 const ModuleScriptData = createModuleScriptData();
 
@@ -55,6 +57,12 @@ const COPYRIGHT_LINES: Array<{ textKey: keyof ThemeFooterAttrs; linkKey: keyof T
 	{ textKey: 'copyrightLine5', linkKey: 'copyrightLink5', fallback: 'Designed By Mochi' },
 ];
 
+const CopyrightLine = ({ text, link }: { text: string; link: string }): ReactElement => {
+	const href = useDynamicText(link);
+
+	return <span>{href ? <a href={href}><DynamicText value={text} /></a> : <DynamicText value={text} />}</span>;
+};
+
 export const ThemeFooterEdit = (props: ThemeFooterEditProps): ReactElement => {
 	const { attrs, elements, id, name } = props;
 
@@ -62,8 +70,8 @@ export const ThemeFooterEdit = (props: ThemeFooterEditProps): ReactElement => {
 		'--tp-footer-bg': getColor(attrs.footerBackgroundColor, '#054726'),
 		'--tp-footer-link-color': getColor(attrs.footerLinkColor, '#fff5e9'),
 	});
-	const navAriaLabel = getString(attrs.navAriaLabel, 'Footer');
-	const logoLink = getString(attrs.logoLink, '#home');
+	const navAriaLabel = useDynamicText(getString(attrs.navAriaLabel, 'Footer'));
+	const logoLink = useDynamicText(getString(attrs.logoLink, '#home'));
 	const menuLeftLocation = getString(attrs.menuLeftLocation, 'tp_footer_left');
 	const menuRightLocation = getString(attrs.menuRightLocation, 'tp_footer_right');
 	const navLeft = getWpMenuItems(menuLeftLocation, DEFAULT_NAV_LEFT);
@@ -132,15 +140,13 @@ export const ThemeFooterEdit = (props: ThemeFooterEditProps): ReactElement => {
 						</div>
 					</nav>
 					<div className="tp-theme-footer-copyright">
-						{COPYRIGHT_LINES.map((line) => {
-							const text = getString(attrs[line.textKey], line.fallback);
-							const link = getString(attrs[line.linkKey], '');
-							return (
-								<span key={line.textKey}>
-									{link ? <a href={link}>{text}</a> : text}
-								</span>
-							);
-						})}
+						{COPYRIGHT_LINES.map((line) => (
+							<CopyrightLine
+								key={line.textKey}
+								text={getString(attrs[line.textKey], line.fallback)}
+								link={getString(attrs[line.linkKey], '')}
+							/>
+						))}
 					</div>
 				</div>
 			</footer>

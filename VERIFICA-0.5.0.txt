@@ -1,4 +1,149 @@
-TASCHE PIENE — VERSIONE 0.4.9, CANDIDATA AL COLLAUDO
+TASCHE PIENE — VERSIONE 0.5.0, CANDIDATA AL COLLAUDO
+
+La 0.5.0 sistema i punti rimasti da decidere dopo la 0.4.9: il preloader su
+iPhone e iPad, le opzioni dei moduli custom (Onda, Striscia scorrevole e le sue
+Scritte, CSS personalizzato), l'anteprima del Visual Builder (contenuto
+dinamico, percorso dei segnaposto) e i titoli con un testo diverso da quello di
+oggi. Con i contenuti di oggi la pagina resta identica alla 0.4.9; cambia solo
+l'apertura su iPhone e iPad, che ora si vede intera. Le note delle versioni
+precedenti, piu' in basso, restano valide.
+
+COSA CAMBIA RISPETTO ALLA 0.4.9
+- iPhone e iPad: il preloader non sparisce piu' di colpo 1,2 s dopo il
+  caricamento. Lo faceva il controllo che tiene visibile l'header se il
+  preloader si blocca: ora, se il preloader sta ancora girando, aspetta che
+  finisca. L'apertura si vede intera (logo, pannello che sale, titolo), come
+  gia' su Android e sul computer; lo stato finale e' identico.
+- Modulo Onda (TP Shape Wave), da aggiungere a mano: le sue opzioni ora hanno
+  effetto. Colore wave, Colore sfondo (una fascia dietro l'onda), Larghezza e
+  Altezza disegno (vuoti: la misura della forma scelta), Offset verticale,
+  Allineamento, Specchia orizzontale e verticale. Nella forma a due colori il
+  Colore wave vale per lo strato davanti. L'onda non si deforma: in una colonna
+  piu' stretta la fascia la taglia ai lati e la pagina non scorre di lato.
+  Prima l'onda era larga quanto la colonna, del colore del testo, e nessuna
+  opzione cambiava niente. Nessuna pagina del tema usa questo modulo.
+- Striscia scorrevole:
+  - "Simbolo tra le scritte" si puo' svuotare: le scritte restano separate
+    dallo stesso spazio, senza simbolo (prima il puntino restava).
+  - Variante Materie: scorre senza salti con qualunque "Lunghezza nastro"
+    (prima solo con 4 o 8). La striscia Materie della home usa 4: identica.
+  - Singole Scritte: le opzioni arrivano alla scritta, sul sito e
+    nell'anteprima del builder: sfondo (colore, sfumatura, immagine),
+    spaziature, bordo, ombra, filtri, trasformazioni, CSS personalizzato,
+    "Disattiva su" (la scritta sparisce con il suo separatore) e
+    Visualizzazione condizionale (per esempio una scritta solo il venerdi'; se
+    nessuna Scritta compare, la striscia non c'e'). Le opzioni che dentro una
+    striscia non possono funzionare (animazione, posizione, scorrimento, link,
+    ordine...) non sono piu' nel pannello.
+  - Contenuto dinamico in una Scritta: nel builder si vede il valore, come
+    gia' sul sito.
+  - Una striscia senza Scritte: nel builder mostra le stesse frasi
+    predefinite del sito (prima mostrava "Modifica la scritta...").
+  - Sul sito ogni frase della striscia porta la classe della sua Scritta
+    (per esempio tp_marquee_item_3): unica differenza nell'HTML della home,
+    senza effetti sull'aspetto.
+- CSS personalizzato (scheda Avanzate): ora funziona su tutti i moduli del
+  tema (Header, Footer, Striscia, Testo animato...), sul sito e nel builder.
+  Prima non veniva stampato.
+- Visual Builder:
+  - I campi con contenuto dinamico (data, titolo del sito...) nei moduli del
+    tema mostrano il valore e non il codice $variable(...), come sul sito.
+  - I segnaposto di Header e Footer e le figure del footer usano il percorso
+    vero del tema: giusto anche con WordPress in una sottocartella o con la
+    cartella del tema rinominata (in quei casi il logo di un Header nuovo
+    restava rotto, anche sul sito). Sul sito di oggi il percorso e' lo stesso.
+- Titoli "Siamo nei caruggi..." e "Il nostro menu'" sul computer: la riduzione
+  che evita le parole spezzate a meta' e' misurata sul testo scritto in Divi,
+  non piu' sulle parole di oggi; lo spazio in piu' tra le righe vale per
+  qualunque accento sopra una maiuscola su una riga dopo la prima. Con i testi
+  di oggi misure identiche alla 0.4.9. Nel Visual Builder, dove lo script non
+  gira, valgono le misure di oggi.
+
+VERIFICHE EFFETTUATE SULLA 0.5.0
+Riferimento: la 0.4.9 sullo stesso sito di prova.
+- Suite completa. Home a 20 larghezze, privacy e cookie a 10: stili,
+  posizioni e dimensioni identici alla 0.4.9, stessa altezza della pagina;
+  privacy e cookie identiche al pixel. Hover e focus identici, menu aperto sul
+  telefono identico, stesse query al database, modificabilita' con gli stessi
+  esiti, modifica dal builder 8 su 8, iPhone 13 in emulazione senza errori.
+  HTML della home: cambiano solo la versione e la classe della Scritta su ogni
+  frase della striscia; per le Scritte della home non viene stampato nessuno
+  stile in piu'. Visual Builder (computer, tablet, telefono, privacy):
+  posizioni e dimensioni identiche.
+- Preloader, in Chromium con i profili di iPhone 13, iPad Pro 11 (verticale e
+  orizzontale) e Pixel 5, e su iPhone 13 anche con il caricamento ritardato di
+  2,5 s. Con la 0.4.9, sui profili Apple, a 1,6 s la pagina era gia' scoperta
+  e il titolo ripartiva da capo; con la 0.5.0 a 1,6 s c'e' il logo, a 2,3 s il
+  pannello che sale, poi la pagina come prima. Schermo finale identico al
+  pixel su tutti i profili.
+- Onda, su una pagina di prova con sei onde (forme semplici, a due colori e a
+  strati; colori e sfondo, misure 300 x 80, spostamento di 40 px, allineamento
+  a sinistra e a destra, specchi), a 1440 e 390 px: ogni opzione cambia quello
+  che dice; la forma tiene le sue proporzioni e, nella colonna stretta, la
+  fascia la taglia ai lati; la pagina non scorre di lato. Nel builder l'onda e'
+  uguale al sito.
+- Striscia, su una pagina di prova con cinque strisce, sul sito (da non
+  collegati a 1440 e 390 px, da collegati a 1440) e nel builder:
+  - Scritte: il contenuto dinamico mostra il titolo del sito; quella "solo per
+    utenti collegati" si vede solo da collegati; quella disattivata sul
+    telefono sparisce a 390 px con il suo separatore; sfondo e CSS
+    personalizzato arrivano alla scritta; una Scritta con un'animazione
+    salvata prima della 0.5.0 scorre come le altre; una Scritta vuota non
+    lascia buchi.
+  - Simbolo vuoto: nessun simbolo, stesso spazio tra le scritte.
+  - Materie con 2, 3 e 6 ripetizioni: a fine giro il nastro si e' spostato
+    esattamente di una ripetizione (1704 px a 1440, 239 px a 390): riparte
+    senza salto.
+  - Tutte le Scritte nascoste: sul sito nessuna striscia; nel builder la
+    striscia resta, per poterla modificare.
+  - Nessuna Scritta: le frasi predefinite, sul sito e nel builder.
+  - Pannello di una Scritta: Contenuto (testo, sfondo), Design (spaziature,
+    bordo, ombra, filtri, trasformazioni), Avanzate (CSS, condizioni,
+    visibilita', transizioni).
+- CSS personalizzato, su Testo animato, Striscia, Onda, Footer e Header: con
+  la 0.4.9 non arrivava ne' sul sito ne' nel builder, con la 0.5.0 arriva in
+  tutti e due.
+- Contenuto dinamico nel builder, su Testo animato, riga del Footer e Scritta:
+  con la 0.4.9 si vedeva il codice $variable(...), con la 0.5.0 il valore,
+  come sul sito.
+- Segnaposto, su una copia del sito con la cartella del tema rinominata: il
+  logo dei segnaposto di Header e Footer punta alla cartella nuova (con la
+  0.4.9 restava "tasche-piene-divi-child", che li' non esiste). Sul sito di
+  prova il percorso e' lo stesso di prima.
+- Titoli, con i testi di oggi a 22 larghezze tra 981 e 1920 px: misure
+  identiche alla 0.4.9 (dimensione, interlinea, righe). Con altri testi, a 13
+  larghezze: "Siamo nei caruggi. Praticamente introvabili." e "Il nostro menu'
+  e' squisito" senza parole spezzate e dentro la colonna; il titolo del menu
+  ha lo spazio in piu' quando la "E'" o la "U'" va su una riga dopo la prima,
+  non quando stanno sulla prima. "Le nostre specialita'" a 1024 px: con la
+  0.4.9 SPECIAL / ITA', con la 0.5.0 intera.
+- Aggiornamento caricando lo zip da wp-admin su copie con la 0.4.9 e la 0.4.7:
+  home identica byte per byte, senza revisioni nuove; una seconda richiesta
+  non cambia niente; nessun errore PHP; stili e posizioni della home identici
+  a quelli delle stesse copie aggiornate alla 0.4.9.
+
+INSTALLAZIONE DELLO ZIP
+Provata caricando lo zip da wp-admin (Aspetto > Temi > Carica tema) su copie
+del sito di prova con la 0.4.9 e la 0.4.7. WordPress sostituisce il tema senza
+errori. Nessun errore PHP del tema.
+
+DA DECIDERE
+- Pagine nuove: sul computer (da 981 px) il footer del tema resta fisso in
+  basso, alto quanto la scena del footer (982 px), e copre il contenuto di ogni
+  pagina che non sia la home o una pagina legale: per esempio una pagina
+  creata nuova in Divi, o la "Pagina di esempio" di WordPress, di cui si vede
+  solo il footer. Sui telefoni e sui tablet il footer sta in fondo alla pagina.
+  C'era gia' nelle versioni precedenti; trovato provando i moduli su una pagina
+  nuova. Si puo' fare come nelle pagine legali (footer in fondo, dopo il
+  contenuto) o come nella home (la pagina scorre sopra il footer e lo scopre
+  alla fine). Cambia l'aspetto di quelle pagine: serve una scelta.
+- Non provati: Safari e un iPhone veri (il preloader e' provato in Chromium con
+  l'agente utente di iPhone e iPad; dipende solo da timer e classi, non dal
+  motore del browser) e un database MySQL (le prove usano SQLite).
+
+==============================================================================
+
+NOTE DELLA 0.4.9
 
 La 0.4.9 fa vedere sul computer l'accento di "MENU'" nel titolo del menu, come
 deciso dopo la 0.4.8. Il resto e' identico alla 0.4.8. Le note delle versioni

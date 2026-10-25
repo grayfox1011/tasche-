@@ -6,6 +6,7 @@ import { ModuleStyles } from './styles';
 import { moduleClassnames } from './module-classnames';
 import { ModuleScriptData } from './module-script-data';
 import { getString } from '../../utils/attrs';
+import { DynamicText, withoutDynamicContent } from '../../utils/dynamic';
 
 const MODULE_CLASSNAME = 'tp_split_text';
 const ALLOWED_TAGS = ['h1', 'h2', 'h3', 'p', 'div'];
@@ -27,7 +28,7 @@ export const SplitTextEdit = (props: SplitTextEditProps): ReactElement => {
 	const lines = LINE_FIELDS.map(({ attrName, fallback }) =>
 		getString(attrs[attrName as keyof typeof attrs], fallback).trim()
 	).filter(Boolean);
-	const label = lines.join(' ') || 'Titolo animato';
+	const label = lines.map(withoutDynamicContent).filter(Boolean).join(' ') || 'Titolo animato';
 
 	return (
 		<ModuleContainer
@@ -52,7 +53,9 @@ export const SplitTextEdit = (props: SplitTextEditProps): ReactElement => {
 
 					return (
 						<span className="tp-split-text__line" aria-hidden="true" key={attrName}>
-							<span className="tp-split-text__line-inner">{line}</span>
+							<span className="tp-split-text__line-inner">
+								<DynamicText value={line} />
+							</span>
 						</span>
 					);
 				})}

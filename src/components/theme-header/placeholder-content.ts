@@ -1,6 +1,6 @@
 import { ThemeHeaderAttrs } from './types';
 
-const ASSET_BASE = '/wp-content/themes/tasche-piene-divi-child/assets';
+import { ASSET_BASE } from '../../utils/asset-base';
 
 export const placeholderContent: ThemeHeaderAttrs = {
 	logoImage: {

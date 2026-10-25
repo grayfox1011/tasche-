@@ -57,8 +57,9 @@ trait RenderCallbackTrait {
 						'd'     => 'M999.447 217.19C1300.56 148.011 1608.33 129.375 1724.58 128.705L1811.76 178.981L1711.82 428.348L0 428.348L0 281.543L0 0C207.686 101.221 698.337 286.369 999.447 217.19Z',
 					],
 					[
+						// The front layer takes "Colore wave" (burgundy, the shape's own fill, by default).
 						'class' => 'tp-shape-wave__path tp-shape-wave__path--burgundy',
-						'fill'  => 'burgundy',
+						'fill'  => 'auto',
 						'd'     => 'M846.006 243.417C479.085 140.469 222.372 125.73 139.881 131.229L149.78 414.999L1664.32 414.999L1664.32 332.508C1544.43 345.707 1212.93 346.366 846.006 243.417Z',
 					],
 				],
@@ -134,11 +135,13 @@ trait RenderCallbackTrait {
 					continue;
 				}
 
+				$path_fill = (string) ( $path['fill'] ?? 'auto' );
+
 				$paths .= sprintf(
 					'<path class="%1$s" d="%2$s" fill="%3$s"></path>',
 					esc_attr( $path['class'] ?? 'tp-shape-wave__path' ),
 					esc_attr( $path['d'] ),
-					esc_attr( self::get_color_value( (string) ( $path['fill'] ?? 'auto' ), (string) ( $path['fill'] ?? 'green' ) ) )
+					esc_attr( 'auto' === $path_fill ? 'currentColor' : self::get_color_value( $path_fill, $path_fill ) )
 				);
 			}
 

@@ -11,9 +11,11 @@ module.exports = {
 		'react-dom': ['vendor', 'ReactDOM'],
 		'@wordpress/hooks': ['vendor', 'wp', 'hooks'],
 		'@divi/data': ['divi', 'data'],
+		'@divi/dynamic-data': ['divi', 'dynamicData'],
 		'@divi/global-data': ['divi', 'globalData'],
 		'@divi/module': ['divi', 'module'],
 		'@divi/module-library': ['divi', 'moduleLibrary'],
+		'@divi/module-utils': ['divi', 'moduleUtils'],
 	},
 	module: {
 		rules: [

@@ -74,6 +74,85 @@
 	onReady(updateScales);
 	window.addEventListener('resize', updateScales, { passive: true });
 
+	/* Titles ---------------------------------------------------------------- */
+
+	// "Siamo nei caruggi..." and "Il nostro menù" get smaller with their column from 981px up, so that
+	// their longest word never breaks in two (CSS: --tp-title-fit). The CSS default suits today's words;
+	// here the rate is measured on the text written in Divi. A title that wraps gets 10% more room
+	// between its lines when a later line has an accent above a capital (it would touch the line above).
+	(function () {
+		var TITLES = '.tp-location-title h2, .tp-menu-section .tp-menu-title h2';
+		var MARGIN = 1.033; // other browsers may draw the font a little wider
+		var ACCENT_ABOVE = /[\u0300-\u0315\u031a\u031b]/;
+		var desktop = window.matchMedia ? window.matchMedia('(min-width: 981px)') : null;
+		var frame = 0;
+
+		function longestWordEm(title) {
+			var words = (title.innerText || title.textContent || '').split(/\s+/).filter(Boolean);
+			var size = parseFloat(window.getComputedStyle(title).fontSize);
+			var probe = document.createElement('span');
+			var widest = 0;
+			probe.style.cssText = 'position:absolute;left:0;top:0;visibility:hidden;white-space:nowrap';
+			title.appendChild(probe);
+			words.forEach(function (word) {
+				probe.textContent = word;
+				widest = Math.max(widest, probe.getBoundingClientRect().width);
+			});
+			title.removeChild(probe);
+			return size > 0 ? widest / size : 0;
+		}
+
+		function accentOnLaterLine(title) {
+			var style = window.getComputedStyle(title);
+			var size = parseFloat(style.fontSize);
+			var upper = style.textTransform === 'uppercase';
+			var walker = document.createTreeWalker(title, NodeFilter.SHOW_TEXT);
+			var range = document.createRange();
+			var firstTop = null;
+			var node;
+			while ((node = walker.nextNode())) {
+				for (var i = 0; i < node.textContent.length; i++) {
+					var ch = node.textContent.charAt(i);
+					if (!/\S/.test(ch)) { continue; }
+					range.setStart(node, i);
+					range.setEnd(node, i + 1);
+					var top = range.getBoundingClientRect().top;
+					if (firstTop === null) { firstTop = top; }
+					if (top > firstTop + size / 2 && (upper || ch !== ch.toLowerCase()) && ACCENT_ABOVE.test(ch.normalize ? ch.normalize('NFD') : ch)) {
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+
+		function update() {
+			frame = 0;
+			if (!desktop || !desktop.matches) { return; }
+			var titles = document.querySelectorAll(TITLES);
+			for (var i = 0; i < titles.length; i++) {
+				var em = longestWordEm(titles[i]);
+				if (em > 0) {
+					titles[i].style.setProperty('--tp-title-fit', (1 / (em * MARGIN)).toFixed(3));
+				}
+			}
+			// After the sizes: the lines depend on them.
+			for (var j = 0; j < titles.length; j++) {
+				titles[j].classList.toggle('tp-title-accent-room', accentOnLaterLine(titles[j]));
+			}
+		}
+
+		function schedule() {
+			if (!frame) { frame = window.requestAnimationFrame(update); }
+		}
+
+		onReady(function () {
+			update();
+			if (document.fonts && document.fonts.ready) { document.fonts.ready.then(update); }
+			window.addEventListener('resize', schedule, { passive: true });
+		});
+	})();
+
 	/* Hero ------------------------------------------------------------------ */
 
 	// Divi's background video uses MediaElement.js, which on iOS Safari resizes the

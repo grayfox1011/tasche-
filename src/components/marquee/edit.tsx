@@ -2,15 +2,27 @@ import React, { ReactElement, useMemo } from 'react';
 import { useSelect } from '@divi/data';
 import { ChildModulesContainer, ModuleContainer } from '@divi/module';
 
+import { getModuleOrderClassName } from '@divi/module-utils';
+
 import { MarqueeEditProps } from './types';
+import metadata from '../../../modules-json/marquee/module.json';
 import { createModuleClassnames, createModuleScriptData, createModuleStyles } from '../../utils/module-boilerplate';
 import { clampNumber, getString } from '../../utils/attrs';
+import { DynamicText, withoutDynamicContent } from '../../utils/dynamic';
 
 const MODULE_CLASSNAME = 'tp_marquee';
-const EMPTY_PREVIEW = 'Modifica la scritta a scorrimento qui sotto';
-const MATERIE_EMPTY_PREVIEW = 'Scritta obliqua a scorrimento';
 
-const ModuleStyles = createModuleStyles(['tpDesignText', 'tpDesignStrip']);
+// A strip without Scritte shows these on the site (RenderCallbackTrait::get_phrases()): the preview too.
+const DEFAULT_PHRASES = ['Stocco ogni giovedì', 'Trippa ogni venerdì', 'Polpette al sugo', 'Le acciughe di Luciano', 'Tasche piene di cucinato'];
+const MATERIE_DEFAULT_PHRASES = ['Le cose che finiscono in tasca'];
+
+type PreviewPhrase = { text: string; className: string };
+
+// The class of a Scritta: its options (background, spacing, custom CSS...) reach its phrase, as on the site.
+const getChildClass = (childId: string): string =>
+	typeof getModuleOrderClassName === 'function' ? getModuleOrderClassName(childId) : '';
+
+const ModuleStyles = createModuleStyles(['tpDesignText', 'tpDesignStrip'], metadata.customCssFields);
 const moduleClassnames = createModuleClassnames(MODULE_CLASSNAME);
 const ModuleScriptData = createModuleScriptData();
 
@@ -29,6 +41,7 @@ export const MarqueeEdit = (props: MarqueeEditProps): ReactElement => {
 	);
 	const childrenKey = childrenIds.join('|');
 
+	// One phrase per child, in order (empty ones included), so that each keeps its child's id.
 	const storePhrases = useSelect(
 		(select) => {
 			if (!childrenIds.length) {
@@ -37,18 +50,23 @@ export const MarqueeEdit = (props: MarqueeEditProps): ReactElement => {
 
 			const getAttrs = select('divi/edit-post').getModuleAttrs;
 
-			return childrenIds
-				.map((childId) => getPhrase(getAttrs(childId) as Parameters<typeof getPhrase>[0]))
-				.filter(Boolean);
+			return childrenIds.map((childId) => getPhrase(getAttrs(childId) as Parameters<typeof getPhrase>[0]));
 		},
 		[childrenKey]
 	);
 
-	const phrases = childrenIds.length ? storePhrases : fallbackPhrases;
+	const childPhrases: PreviewPhrase[] = childrenIds.length
+		? childrenIds
+				.map((childId, index) => ({ text: storePhrases[index] ?? '', className: getChildClass(childId) }))
+				.filter((phrase) => phrase.text)
+		: fallbackPhrases.map((text) => ({ text, className: '' }));
 
-	const isEmpty = phrases.length === 0;
+	const isEmpty = childPhrases.length === 0;
 	const variantValue = getString(attrs.variant, 'green');
 	const variant = ['green', 'burgundy', 'cream', 'materie'].includes(variantValue) ? variantValue : 'green';
+	const phrases: PreviewPhrase[] = isEmpty
+		? (variant === 'materie' ? MATERIE_DEFAULT_PHRASES : DEFAULT_PHRASES).map((text) => ({ text, className: '' }))
+		: childPhrases;
 	const isMaterieLayout = variant === 'materie' || getModuleClass(attrs).includes('tp-materie-marquee');
 	const duration = clampNumber(getString(attrs.speed, isMaterieLayout ? '10' : '28'), isMaterieLayout ? 10 : 28, 8, 120);
 	const repeatCount = Math.max(
@@ -56,14 +74,15 @@ export const MarqueeEdit = (props: MarqueeEditProps): ReactElement => {
 		Math.min(8, Math.round(clampNumber(getString(attrs.repeatCount, isMaterieLayout ? '4' : '2'), isMaterieLayout ? 4 : 2, 2, 8)))
 	);
 	const direction = getString(attrs.direction, 'left') === 'right' ? 'right' : 'left';
-	const separator = getString(attrs.separator, '·');
+	// Emptied on purpose: no symbol, the space between the phrases stays (as on the site).
+	const rawSeparator = attrs?.separator?.innerContent?.desktop?.value;
+	const separator = typeof rawSeparator === 'string' && rawSeparator.trim() === '' ? '' : getString(attrs.separator, '·');
 	const pauseOnHover = getString(attrs.pauseOnHover, isMaterieLayout ? 'off' : 'on') === 'on';
-	const loopItems = isEmpty ? [EMPTY_PREVIEW] : Array.from({ length: repeatCount }).flatMap(() => phrases);
-	const previewItems = isMaterieLayout
-		? isEmpty
-			? [MATERIE_EMPTY_PREVIEW]
-			: phrases.slice(0, 1)
-		: loopItems;
+	const loopItems = Array.from({ length: repeatCount }).flatMap(() => phrases);
+	const ariaLabel = phrases
+		.map((phrase) => withoutDynamicContent(phrase.text))
+		.filter(Boolean)
+		.join(separator ? ` ${separator} ` : ' ');
 	const shift = -100 / repeatCount;
 
 	return (
@@ -90,7 +109,7 @@ export const MarqueeEdit = (props: MarqueeEditProps): ReactElement => {
 									{childrenIds.length ? (
 										<ChildModulesContainer ids={childrenIds} />
 									) : (
-										<span className="tp-marquee__phrase tp-marquee__phrase--placeholder">{MATERIE_EMPTY_PREVIEW}</span>
+										<span className="tp-marquee__phrase">{MATERIE_DEFAULT_PHRASES[0]}</span>
 									)}
 								</div>
 							</div>
@@ -107,22 +126,17 @@ export const MarqueeEdit = (props: MarqueeEditProps): ReactElement => {
 										'--tp-marquee-shift': `${shift}%`,
 									} as React.CSSProperties
 								}
-								aria-label={isEmpty ? EMPTY_PREVIEW : phrases.join(separator ? ` ${separator} ` : ' ')}
+								aria-label={ariaLabel}
 							>
 								<div className="tp-marquee__track">
-									{previewItems.map((phrase, index) => (
-										<React.Fragment key={`${phrase}-${index}`}>
-											<span
-												className={`tp-marquee__phrase${isEmpty ? ' tp-marquee__phrase--placeholder' : ''}`}
-												aria-hidden="true"
-											>
-												{phrase}
+									{loopItems.map((phrase, index) => (
+										<React.Fragment key={`${phrase.text}-${index}`}>
+											<span className={`tp-marquee__phrase${phrase.className ? ` ${phrase.className}` : ''}`} aria-hidden="true">
+												<DynamicText value={phrase.text} />
 											</span>
-											{!isEmpty && separator ? (
-												<span className="tp-marquee__separator" aria-hidden="true">
-													{separator}
-												</span>
-											) : null}
+											<span className="tp-marquee__separator" aria-hidden="true">
+												{separator}
+											</span>
 										</React.Fragment>
 									))}
 								</div>
@@ -135,7 +149,9 @@ export const MarqueeEdit = (props: MarqueeEditProps): ReactElement => {
 								{childrenIds.length ? (
 									<ChildModulesContainer ids={childrenIds} />
 								) : (
-									<p className="tp-marquee-vb__list-empty">Nessuna scritta ancora. Usa il pulsante + per aggiungerne una.</p>
+									<p className="tp-marquee-vb__list-empty">
+										Nessuna scritta ancora: sul sito scorrono le frasi qui sopra. Usa il pulsante + per aggiungerne una.
+									</p>
 								)}
 							</div>
 						</div>

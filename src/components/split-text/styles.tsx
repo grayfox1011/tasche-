@@ -1,21 +1,4 @@
-import React, { ReactElement } from 'react';
-import { StyleContainer } from '@divi/module';
-import { optionalDesignStyles } from '../../utils/optional-design-styles';
+import metadata from '../../../modules-json/split-text/module.json';
+import { createModuleStyles } from '../../utils/module-boilerplate';
 
-export const ModuleStyles = (props: any): ReactElement => {
-	const { attrs, elements, settings, mode, state, noStyleTag } = props;
-
-	return (
-		<StyleContainer mode={mode} state={state} noStyleTag={noStyleTag}>
-			{elements.style({
-				attrName: 'module',
-				styleProps: {
-					disabledOn: {
-						disabledModuleVisibility: settings?.disabledModuleVisibility ?? null,
-					},
-				},
-			})}
-			{optionalDesignStyles(elements, attrs, ['tpDesignTitle', 'tpDesignContent'])}
-		</StyleContainer>
-	);
-};
+export const ModuleStyles = createModuleStyles(['tpDesignTitle', 'tpDesignContent'], metadata.customCssFields);

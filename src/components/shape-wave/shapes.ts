@@ -18,9 +18,10 @@ export const SHAPE_DEFINITIONS: Record<string, ShapeDefinition> = {
 				fill: 'green',
 			},
 			{
+				// The front layer takes "Colore wave" (burgundy, the shape's own fill, by default).
 				className: 'tp-shape-wave__path tp-shape-wave__path--burgundy',
 				path: 'M846.006 243.417C479.085 140.469 222.372 125.73 139.881 131.229L149.78 414.999L1664.32 414.999L1664.32 332.508C1544.43 345.707 1212.93 346.366 846.006 243.417Z',
-				fill: 'burgundy',
+				fill: 'auto',
 			},
 		],
 		fill: 'burgundy',

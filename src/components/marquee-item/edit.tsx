@@ -2,13 +2,18 @@ import React, { ReactElement } from 'react';
 import { ModuleContainer } from '@divi/module';
 
 import { MarqueeItemEditProps } from './types';
+import metadata from '../../../modules-json/marquee-item/module.json';
 import { createModuleClassnames, createModuleScriptData, createModuleStyles } from '../../utils/module-boilerplate';
 
 const MODULE_CLASSNAME = 'tp_marquee_item';
 
-const ModuleStyles = createModuleStyles();
-const moduleClassnames = createModuleClassnames(MODULE_CLASSNAME);
-const ModuleScriptData = createModuleScriptData();
+// What a phrase in the strip can take (module.json; MarqueeItem::PHRASE_DECORATIONS on the site): values saved
+// earlier for other options stay out of the preview too.
+const PHRASE_DECORATIONS = ['background', 'spacing', 'border', 'boxShadow', 'filters', 'transform', 'overflow', 'transition', 'disabledOn'];
+
+const ModuleStyles = createModuleStyles([], metadata.customCssFields, PHRASE_DECORATIONS);
+const moduleClassnames = createModuleClassnames(MODULE_CLASSNAME, PHRASE_DECORATIONS);
+const ModuleScriptData = createModuleScriptData(PHRASE_DECORATIONS);
 
 export const MarqueeItemEdit = (props: MarqueeItemEditProps): ReactElement => {
 	const { attrs, elements, id, name } = props;

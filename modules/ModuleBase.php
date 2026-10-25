@@ -14,8 +14,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use ET\Builder\Framework\DependencyManagement\Interfaces\DependencyInterface;
 use ET\Builder\FrontEnd\Module\Style;
+use ET\Builder\Packages\Module\Options\Css\CssStyle;
 use ET\Builder\Packages\Module\Options\Element\ElementClassnames;
 use ET\Builder\Packages\ModuleLibrary\ModuleRegistration;
+use WP_Block_Type_Registry;
 
 abstract class ModuleBase implements DependencyInterface {
 
@@ -65,17 +67,31 @@ abstract class ModuleBase implements DependencyInterface {
 		);
 	}
 
+	/** Style props of the module element; a module can add its own selectors or filters. */
+	protected static function module_style_props( array $args ): array {
+		return [
+			'disabledOn' => [
+				'disabledModuleVisibility' => $args['settings']['disabledModuleVisibility'] ?? null,
+			],
+		];
+	}
+
 	public static function module_styles( array $args ): void {
 		$elements = $args['elements'];
+		$block    = WP_Block_Type_Registry::get_instance()->get_registered( $args['name'] ?? '' );
 		$styles   = [
 			$elements->style(
 				[
 					'attrName'   => 'module',
-					'styleProps' => [
-						'disabledOn' => [
-							'disabledModuleVisibility' => $args['settings']['disabledModuleVisibility'] ?? null,
-						],
-					],
+					'styleProps' => static::module_style_props( $args ),
+				]
+			),
+			// "CSS personalizzato" (Advanced tab), printed as Divi's own modules do.
+			CssStyle::style(
+				[
+					'selector'  => $args['orderClass'] ?? '',
+					'attr'      => $args['attrs']['css'] ?? [],
+					'cssFields' => $block->customCssFields ?? [],
 				]
 			),
 		];

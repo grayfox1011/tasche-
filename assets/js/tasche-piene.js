@@ -244,7 +244,15 @@
 
 		window.setTimeout(forceHeaderVisible, 5200);
 		window.addEventListener("load", function () {
-			window.setTimeout(forceHeaderVisible, 1200);
+			window.setTimeout(function () {
+				// Dropping tp-preloader-enabled while the preloader still runs (it has is-loading
+				// until it finishes) would hide it mid-animation: wait for it to end.
+				if (document.body && document.body.classList.contains("is-loading")) {
+					document.addEventListener("tp:preloader:finished", forceHeaderVisible, { once: true });
+				} else {
+					forceHeaderVisible();
+				}
+			}, 1200);
 		}, { once: true });
 	}
 

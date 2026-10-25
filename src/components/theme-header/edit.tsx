@@ -2,13 +2,15 @@ import React, { ReactElement } from 'react';
 import { ModuleContainer } from '@divi/module';
 
 import { NavPreviewItem, ThemeHeaderEditProps } from './types';
+import metadata from '../../../modules-json/theme-header/module.json';
 import { createModuleClassnames, createModuleScriptData, createModuleStyles } from '../../utils/module-boilerplate';
 import { buildStyleVars, getColor, getString } from '../../utils/attrs';
+import { useDynamicText } from '../../utils/dynamic';
 import { getWpMenuItems } from '../../utils/wp-menus';
 
 const MODULE_CLASSNAME = 'tp_theme_header';
 
-const ModuleStyles = createModuleStyles(['tpDesignText', 'tpDesignLogo', 'tpDesignContent']);
+const ModuleStyles = createModuleStyles(['tpDesignText', 'tpDesignLogo', 'tpDesignContent'], metadata.customCssFields);
 const moduleClassnames = createModuleClassnames(MODULE_CLASSNAME);
 const ModuleScriptData = createModuleScriptData();
 
@@ -23,10 +25,10 @@ const DEFAULT_NAV: NavPreviewItem[] = [
 export const ThemeHeaderEdit = (props: ThemeHeaderEditProps): ReactElement => {
 	const { attrs, elements, id, name } = props;
 
-	const logoAlt = getString(attrs.logoAlt, 'Tasche Piene');
-	const logoLink = getString(attrs.logoLink, '#home');
-	const burgerOpenLabel = getString(attrs.burgerOpenLabel, 'Apri menu');
-	const burgerCloseLabel = getString(attrs.burgerCloseLabel, 'Chiudi menu');
+	const logoAlt = useDynamicText(getString(attrs.logoAlt, 'Tasche Piene'));
+	const logoLink = useDynamicText(getString(attrs.logoLink, '#home'));
+	const burgerOpenLabel = useDynamicText(getString(attrs.burgerOpenLabel, 'Apri menu'));
+	const burgerCloseLabel = useDynamicText(getString(attrs.burgerCloseLabel, 'Chiudi menu'));
 	const menuLocation = getString(attrs.menuLocation, 'tp_main_nav');
 	const navItems = getWpMenuItems(menuLocation, DEFAULT_NAV);
 	const navStyle = buildStyleVars({

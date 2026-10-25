@@ -14,33 +14,27 @@
       "selector": "{{selector}}",
       "settings": {
         "meta": { "meta": {} },
-        "advanced": {
-          "elements": {},
-          "html": {},
-          "link": {},
-          "loop": {}
-        },
+        "advanced": {},
         "decoration": {
-          "layout": {},
-          "animation": {},
-          "attributes": {},
-          "background": {},
+          "background": {
+            "component": {
+              "type": "group",
+              "name": "divi/background",
+              "props": {
+                "hidePanels": ["mask", "pattern", "video"],
+                "fields": { "image": { "parallaxEnabled": { "render": false }, "parallaxMethod": { "render": false } } }
+              }
+            }
+          },
           "conditions": {},
-          "sizing": {},
           "spacing": {},
           "border": {},
           "boxShadow": {},
           "filters": {},
-          "interactions": {},
-          "order": {},
           "transform": {},
           "overflow": {},
           "disabledOn": {},
-          "transition": {},
-          "position": {},
-          "scroll": {},
-          "zIndex": {},
-          "sticky": {}
+          "transition": {}
         }
       }
     },
@@ -63,9 +57,7 @@
       }
     }
   },
-  "customCssFields": {
-    "label": { "subName": "label", "selectorSuffix": " .tp-marquee-item__label" }
-  },
+  "customCssFields": {},
   "settings": {
     "content": "auto",
     "design": "auto",

@@ -20422,15 +20422,18 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 
 /*
  * Titles "Siamo nei caruggi..." and "Il nostro menù" from 981 px up: where the longest word no longer
- * fits at 64 px (NASCOSTI. is 6.09 times the font size, NOSTRO 4.58 times), the title gets smaller
- * with its column instead of breaking the word in two, with a margin for other browsers' fonts.
+ * fits at 64 px, the title gets smaller with its column instead of breaking the word in two.
+ * --tp-title-fit is 1 / (longest word in font sizes x 1.033, a margin for other browsers' fonts):
+ * tp-layout.js measures it on the text written in Divi; the default is today's (NASCOSTI., 6.09 font
+ * sizes; NOSTRO, 4.58), used where the script does not run, like the Visual Builder.
  * The menu title has the width the header leaves beside the legend (its boxes, 527.14 px, and the
  * 32 px gap). Browsers without container queries keep 64 px.
  * The location text column is never narrower than the Mappe button's box (277.52 px): below 1090 px
  * the map gives up its left margin (107 px at most) so that the column stays inside the page.
- * Where "Il nostro menù" goes on more lines (a header narrower than the legend and its gap, 559.14 px,
- * plus the title on one line, 617.5 px), the lines get 10% more room: the accent of the Ù reaches
- * 65 px above its baseline at 64 px and would touch the letters of the line above.
+ * A title that wraps with an accent above a capital on a later line (the Ù of "menù") gets 10% more
+ * room between its lines: at 64 px the accent reaches 65 px above its baseline and would touch the
+ * letters of the line above. tp-layout.js sets tp-title-accent-room; without it, today's menu title
+ * wraps where the header is narrower than the legend and its gap (559.14 px) plus the title (617.5 px).
  */
 @media (min-width: 981px) {
 
@@ -20445,28 +20448,69 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-header) {
 		container: tp-menu-header / inline-size;
 	}
-}
-
-@container tp-location-title (max-width: 402px) {
 
 	.tp-child-theme :where(#page-container .tp-location-title h2) {
-		font-size: 15.9cqi;
+		font-size: min(64px, calc(100cqi * var(--tp-title-fit, .159)));
 		line-height: 1;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-title h2) {
+		font-size: min(64px, calc((100cqi - 559.14px) * var(--tp-title-fit, .211)));
+	}
+
+	.tp-child-theme :where(#page-container .tp-location-title h2.tp-title-accent-room),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-title h2.tp-title-accent-room) {
+		line-height: 1.1;
 	}
 }
 
 @container tp-menu-header (max-width: 1176.6px) {
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-title h2) {
+	.tp-child-theme :where(html:not(.tp-js) #page-container .tp-menu-section .tp-menu-title h2) {
 		line-height: 1.1;
 	}
 }
 
-@container tp-menu-header (max-width: 862px) {
+/*
+ * TP Shape Wave: a band in "Colore sfondo" with the wave drawn in "Colore wave", at the module's width and
+ * height (those of the chosen shape when empty). The drawing never gets squeezed: in a narrower column the
+ * band cuts its sides, by the alignment, so the page does not scroll sideways.
+ */
+.tp-child-theme :where(.tp-shape-wave) {
+	display: flex;
+	justify-content: center;
+	overflow: hidden;
+	color: var(--tp-shape-wave-fill);
+	background: var(--tp-shape-wave-bg);
+	transform: translateY(var(--tp-shape-wave-offset-y, 0px));
+}
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-title h2) {
-		font-size: calc((100cqi - 559.14px) * .211);
-	}
+.tp-child-theme :where(.tp-shape-wave--align-left) {
+	justify-content: flex-start;
+}
+
+.tp-child-theme :where(.tp-shape-wave--align-right) {
+	justify-content: flex-end;
+}
+
+.tp-child-theme :where(.tp-shape-wave__svg) {
+	display: block;
+	flex: none;
+	width: var(--tp-shape-wave-width);
+	max-width: none;
+	height: var(--tp-shape-wave-height);
+}
+
+.tp-child-theme :where(.tp-shape-wave--flip-x .tp-shape-wave__svg) {
+	transform: scaleX(-1);
+}
+
+.tp-child-theme :where(.tp-shape-wave--flip-y .tp-shape-wave__svg) {
+	transform: scaleY(-1);
+}
+
+.tp-child-theme :where(.tp-shape-wave--flip-x.tp-shape-wave--flip-y .tp-shape-wave__svg) {
+	transform: scale(-1);
 }
 
 @keyframes tp-marquee-scroll {
@@ -20479,13 +20523,14 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 	}
 }
 
+/* One copy of the phrases per loop, whatever "Lunghezza nastro" says (the module sets the shift). */
 @keyframes tp-materie-marquee-loop {
 	0% {
 		transform: translateX(0);
 	}
 
 	100% {
-		transform: translateX(-25%);
+		transform: translateX(var(--tp-marquee-shift, -25%));
 	}
 }
 

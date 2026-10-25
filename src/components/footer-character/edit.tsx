@@ -2,19 +2,21 @@ import React, { ReactElement } from 'react';
 import { ModuleContainer } from '@divi/module';
 
 import { FooterCharacterAttrs, FooterCharacterEditProps } from './types';
+import metadata from '../../../modules-json/footer-character/module.json';
 import { createModuleClassnames, createModuleScriptData, createModuleStyles } from '../../utils/module-boilerplate';
 import { getString, getUploadUrl } from '../../utils/attrs';
+import { useDynamicText } from '../../utils/dynamic';
 
 const MODULE_CLASSNAME = 'tp_footer_character';
 
-const ModuleStyles = createModuleStyles(['tpDesignImage']);
+const ModuleStyles = createModuleStyles(['tpDesignImage'], metadata.customCssFields);
 const moduleClassnames = createModuleClassnames(MODULE_CLASSNAME);
 const ModuleScriptData = createModuleScriptData();
 
 export const FooterCharacterEdit = (props: FooterCharacterEditProps): ReactElement => {
 	const { attrs, elements, id, name } = props;
 	const slot = getString(attrs.slot, 'one');
-	const url = getUploadUrl(attrs.image, getString(attrs.imageUrl, ''), '');
+	const url = useDynamicText(getUploadUrl(attrs.image, getString(attrs.imageUrl, ''), ''));
 
 	return (
 		<ModuleContainer

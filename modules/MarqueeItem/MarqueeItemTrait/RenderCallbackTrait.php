@@ -18,20 +18,6 @@ use WP_Block;
 
 trait RenderCallbackTrait {
 
-	private static function get_string( array $attrs, string $key, string $fallback = '' ): string {
-		$value = $attrs[ $key ]['innerContent']['desktop']['value']
-			?? $attrs[ $key ]['desktop']['value']
-			?? $fallback;
-
-		if ( is_array( $value ) || is_object( $value ) ) {
-			return $fallback;
-		}
-
-		$value = trim( (string) $value );
-
-		return '' !== $value ? $value : $fallback;
-	}
-
 	public static function render_callback(
 		array $attrs,
 		string $content,
@@ -39,20 +25,24 @@ trait RenderCallbackTrait {
 		ModuleElements $elements,
 		array $default_printed_style_attrs
 	): string {
-		$phrase = sanitize_text_field( self::get_string( $attrs, 'phrase', 'Nuova scritta' ) );
+		$parsed_block = is_array( $block->parsed_block ?? null ) ? $block->parsed_block : [];
+		$block_id     = $parsed_block['id'] ?? '';
+		$store        = $parsed_block['storeInstance'] ?? '';
+		$parent       = $block_id && $store ? BlockParserStore::get_parent( $block_id, $store ) : null;
+		$saved        = $attrs['phrase']['innerContent']['desktop']['value'] ?? '';
+		$phrase       = is_string( $saved ) ? sanitize_text_field( $saved ) : '';
+
+		// The strip shows its phrases itself: it reads them here, with dynamic content already resolved
+		// (the saved text only: the "Nuova scritta" default of module.json is for the builder).
+		MarqueeItem::remember_phrase( $store . ':' . $block_id, $phrase );
 
 		$item_html = HTMLUtility::render(
 			[
 				'tag'        => 'span',
 				'attributes' => [ 'class' => 'tp-marquee-item__label' ],
-				'children'   => esc_html( $phrase ),
+				'children'   => esc_html( '' !== $phrase ? $phrase : 'Nuova scritta' ),
 			]
 		);
-
-		$parsed_block = is_array( $block->parsed_block ?? null ) ? $block->parsed_block : [];
-		$block_id     = $parsed_block['id'] ?? '';
-		$store        = $parsed_block['storeInstance'] ?? '';
-		$parent       = $block_id && $store ? BlockParserStore::get_parent( $block_id, $store ) : null;
 
 		return Module::render(
 			[

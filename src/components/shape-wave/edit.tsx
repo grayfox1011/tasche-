@@ -2,13 +2,14 @@ import React, { ReactElement } from 'react';
 import { ModuleContainer } from '@divi/module';
 
 import { ShapeWaveEditProps } from './types';
+import metadata from '../../../modules-json/shape-wave/module.json';
 import { createModuleClassnames, createModuleScriptData, createModuleStyles } from '../../utils/module-boilerplate';
 import { clampNumber, getString } from '../../utils/attrs';
 import { resolveShapeColor, SHAPE_DEFINITIONS } from './shapes';
 
 const MODULE_CLASSNAME = 'tp_shape_wave';
 
-const ModuleStyles = createModuleStyles(['tpDesignContent']);
+const ModuleStyles = createModuleStyles(['tpDesignContent'], metadata.customCssFields);
 const moduleClassnames = createModuleClassnames(MODULE_CLASSNAME);
 const ModuleScriptData = createModuleScriptData();
 
@@ -68,7 +69,7 @@ export const ShapeWaveEdit = (props: ShapeWaveEditProps): ReactElement => {
 									key={pathDef.path}
 									className={pathDef.className ?? 'tp-shape-wave__path'}
 									d={pathDef.path}
-									fill={resolveShapeColor(pathDef.fill, pathDef.fill)}
+									fill={pathDef.fill === 'auto' ? 'currentColor' : resolveShapeColor(pathDef.fill, pathDef.fill)}
 								/>
 							))
 						: (

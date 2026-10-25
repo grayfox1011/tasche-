@@ -13,7 +13,9 @@ use ET\Builder\Framework\Utility\HTMLUtility;
 use ET\Builder\FrontEnd\BlockParser\BlockParserStore;
 use ET\Builder\Packages\Module\Layout\Components\ModuleElements\ModuleElements;
 use ET\Builder\Packages\Module\Module;
+use ET\Builder\Packages\ModuleUtils\ModuleUtils;
 use TaschePieneDiviChild\Modules\Marquee\Marquee;
+use TaschePieneDiviChild\Modules\MarqueeItem\MarqueeItem;
 use WP_Block;
 
 trait RenderCallbackTrait {
@@ -40,8 +42,14 @@ trait RenderCallbackTrait {
 		return sanitize_text_field( self::get_string( $child_attrs, 'phrase', '' ) );
 	}
 
-	private static function get_phrases( array $parsed_block, string $variant = 'green' ): array {
+	/**
+	 * The phrases of the Scritte, each with the class of its module, so that the options set on a Scritta
+	 * (background, spacing, "Disattiva su", custom CSS...) reach it. A Scritta that Divi leaves out of the
+	 * page (display conditions, disabled everywhere) is skipped. Null when every Scritta is left out.
+	 */
+	private static function get_phrases( array $parsed_block, string $variant, string $content ): ?array {
 		$phrases = [];
+		$hidden  = false;
 
 		if ( ! empty( $parsed_block['innerBlocks'] ) && is_array( $parsed_block['innerBlocks'] ) ) {
 			foreach ( $parsed_block['innerBlocks'] as $inner_block ) {
@@ -49,16 +57,34 @@ trait RenderCallbackTrait {
 					continue;
 				}
 
-				$phrase = self::get_child_phrase( $inner_block['attrs'] ?? [] );
+				$child_id    = (string) ( $inner_block['id'] ?? '' );
+				$store       = $inner_block['storeInstance'] ?? ( $parsed_block['storeInstance'] ?? null );
+				$order_class = '' !== $child_id && class_exists( ModuleUtils::class ) ? ModuleUtils::get_module_order_class_name( $child_id, $store ) : '';
+				$rendered    = MarqueeItem::rendered_phrase( $store . ':' . $child_id );
+
+				// Divi renders every Scritta, then drops the output of those it does not show.
+				if ( null !== $rendered && '' !== $order_class && ! preg_match( '/\b' . preg_quote( $order_class, '/' ) . '\b/', $content ) ) {
+					$hidden = true;
+					continue;
+				}
+
+				$phrase = $rendered ?? self::get_child_phrase( $inner_block['attrs'] ?? [] );
 
 				if ( '' !== $phrase ) {
-					$phrases[] = $phrase;
+					$phrases[] = [
+						'text'  => $phrase,
+						'class' => $order_class,
+					];
 				}
 			}
 		}
 
 		if ( empty( $phrases ) ) {
-			$phrases = 'materie' === $variant
+			if ( $hidden ) {
+				return null;
+			}
+
+			$defaults = 'materie' === $variant
 				? [ 'Le cose che finiscono in tasca' ]
 				: [
 					'Stocco ogni giovedì',
@@ -67,9 +93,16 @@ trait RenderCallbackTrait {
 					'Le acciughe di Luciano',
 					'Tasche piene di cucinato',
 				];
+
+			foreach ( $defaults as $text ) {
+				$phrases[] = [
+					'text'  => $text,
+					'class' => '',
+				];
+			}
 		}
 
-		return array_values( $phrases );
+		return $phrases;
 	}
 
 	private static function render_track_items( array $phrases, string $separator, int $repeat_count ): string {
@@ -81,25 +114,24 @@ trait RenderCallbackTrait {
 					[
 						'tag'        => 'span',
 						'attributes' => [
-							'class'       => 'tp-marquee__phrase',
+							'class'       => trim( 'tp-marquee__phrase ' . $phrase['class'] ),
 							'aria-hidden' => 'true',
 						],
-						'children'   => esc_html( $phrase ),
+						'children'   => esc_html( $phrase['text'] ),
 					]
 				);
 
-				if ( '' !== $separator ) {
-					$items .= HTMLUtility::render(
-						[
-							'tag'        => 'span',
-							'attributes' => [
-								'class'       => 'tp-marquee__separator',
-								'aria-hidden' => 'true',
-							],
-							'children'   => esc_html( $separator ),
-						]
-					);
-				}
+				// Kept when the separator is empty: its padding is the space between the phrases.
+				$items .= HTMLUtility::render(
+					[
+						'tag'        => 'span',
+						'attributes' => [
+							'class'       => 'tp-marquee__separator',
+							'aria-hidden' => 'true',
+						],
+						'children'   => esc_html( $separator ),
+					]
+				);
 			}
 		}
 
@@ -113,13 +145,22 @@ trait RenderCallbackTrait {
 		ModuleElements $elements,
 		array $default_printed_style_attrs
 	): string {
-		$parsed_block = is_array( $block->parsed_block ?? null ) ? $block->parsed_block : [];
-		$variant      = self::get_string( $attrs, 'variant', 'green' );
-		$direction    = self::get_string( $attrs, 'direction', 'left' );
-		$is_materie   = 'materie' === $variant;
-		$phrases      = self::get_phrases( $parsed_block, $variant );
-		$separator    = sanitize_text_field( self::get_string( $attrs, 'separator', $is_materie ? '•' : '·' ) );
-		$repeat_count = max( 2, min( 8, absint( self::get_string( $attrs, 'repeatCount', $is_materie ? '4' : '2' ) ) ) );
+		$parsed_block  = is_array( $block->parsed_block ?? null ) ? $block->parsed_block : [];
+		$variant       = self::get_string( $attrs, 'variant', 'green' );
+		$direction     = self::get_string( $attrs, 'direction', 'left' );
+		$is_materie    = 'materie' === $variant;
+		$phrases       = self::get_phrases( $parsed_block, $variant, $content );
+		$raw_separator = $attrs['separator']['innerContent']['desktop']['value'] ?? null;
+		$separator     = is_string( $raw_separator ) && '' === trim( $raw_separator )
+			? ''
+			: sanitize_text_field( self::get_string( $attrs, 'separator', $is_materie ? '•' : '·' ) );
+		$repeat_count  = max( 2, min( 8, absint( self::get_string( $attrs, 'repeatCount', $is_materie ? '4' : '2' ) ) ) );
+
+		// Every Scritta is hidden right now (display conditions): no strip.
+		if ( null === $phrases ) {
+			return '';
+		}
+
 		$duration     = max( 8, min( 120, (float) self::get_string( $attrs, 'speed', $is_materie ? '10' : '28' ) ) );
 		$pause        = 'on' === self::get_string( $attrs, 'pauseOnHover', $is_materie ? 'off' : 'on' );
 		$shift        = -1 * ( 100 / $repeat_count );
@@ -145,7 +186,7 @@ trait RenderCallbackTrait {
 						]
 					),
 					'style'      => '--tp-marquee-duration:' . $duration . 's;--tp-marquee-shift:' . $shift . '%',
-					'aria-label' => implode( ' ' . $separator . ' ', $phrases ),
+					'aria-label' => implode( '' !== $separator ? ' ' . $separator . ' ' : ' ', array_column( $phrases, 'text' ) ),
 				],
 				'childrenSanitizer' => 'et_core_esc_previously',
 				'children'          => HTMLUtility::render(
