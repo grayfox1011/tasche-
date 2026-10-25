@@ -9278,6 +9278,93 @@ body.tp-child-theme :where(body.tp-legal-document:not(.et-fb) .tp-theme-builder-
 	transform: none;
 }
 
+/*
+ * Every other page (a page made in Divi, posts, archives, search, 404), from 981 px up: the footer of the
+ * legal pages above, after the content. The fixed footer is the home's, whose content slides over it and
+ * leaves room for it; on any other page it would cover the content. Below 981 px these pages keep theirs.
+ */
+@media (min-width: 981px) {
+
+	.tp-child-theme :where(body:not(.tp-landing-page):not(.tp-legal-document):not(.et-fb) .et-l--post) {
+		min-height: 50vh;
+	}
+
+	.tp-child-theme :where(body:not(.tp-landing-page):not(.tp-legal-document):not(.et-fb) .et-l--footer) {
+		position: relative;
+		z-index: 1;
+	}
+
+	.tp-child-theme :where(body:not(.tp-landing-page):not(.tp-legal-document):not(.et-fb) .tp-theme-builder-footer-shell) {
+		position: relative;
+		left: auto;
+		right: auto;
+		bottom: auto;
+		width: 100%;
+		height: auto;
+		min-height: 0;
+		margin: 0;
+		overflow: visible;
+		transform: none;
+	}
+
+	body.tp-child-theme :where(body:not(.tp-landing-page):not(.tp-legal-document):not(.et-fb) .tp-theme-builder-footer-shell) {
+		padding: clamp(108px, 14vw, 160px) 0 clamp(32px, 5vw, 48px);
+	}
+
+	.tp-child-theme :where(body:not(.tp-landing-page):not(.tp-legal-document):not(.et-fb) .site-footer.tp-theme-footer) {
+		position: relative;
+		left: auto;
+		right: auto;
+		bottom: auto;
+		width: 100%;
+		height: auto;
+		min-height: 0;
+		margin: 0;
+		padding: clamp(108px, 14vw, 160px) 0 clamp(32px, 5vw, 48px);
+		overflow: visible;
+		transform: none;
+	}
+
+	.tp-child-theme :where(body:not(.tp-landing-page):not(.tp-legal-document):not(.et-fb) .tp-theme-footer > .tp-theme-footer-container) {
+		position: relative;
+		left: auto;
+		width: 100%;
+		max-width: min(100%, var(--tp-page-max, 1512px));
+		height: auto;
+		margin: 0 auto;
+		padding-left: clamp(16px, 4.8vw, 40px);
+		padding-right: clamp(16px, 4.8vw, 40px);
+		transform: none;
+	}
+
+	.tp-child-theme :where(body:not(.tp-landing-page):not(.tp-legal-document):not(.et-fb) .tp-theme-footer-logo),
+.tp-child-theme :where(body:not(.tp-landing-page):not(.tp-legal-document):not(.et-fb) .tp-theme-footer-nav),
+.tp-child-theme :where(body:not(.tp-landing-page):not(.tp-legal-document):not(.et-fb) .tp-theme-footer-copyright) {
+		position: relative;
+		left: auto;
+		top: auto;
+		width: 100%;
+		transform: none;
+	}
+
+	.tp-child-theme :where(body:not(.tp-landing-page):not(.tp-legal-document):not(.et-fb) .tp-theme-footer-characters) {
+		display: none;
+	}
+
+	.tp-child-theme :where(body:not(.tp-landing-page):not(.tp-legal-document):not(.et-fb) .tp-theme-footer-nav) {
+		display: flex;
+		gap: 24px;
+		justify-content: space-between;
+		margin: 0 0 clamp(60px, 9vw, 86px);
+	}
+
+	.tp-child-theme :where(body:not(.tp-landing-page):not(.tp-legal-document):not(.et-fb) .tp-theme-footer-copyright) {
+		display: grid;
+		grid-template-columns: repeat(4, auto);
+		gap: 18px clamp(30px, 7vw, 88px);
+	}
+}
+
 @media (max-width: 767px) {
 
 	.tp-child-theme :where(html.tp-preloader-enabled body.tp-preloader-page:not(.tp-preloader-revealing) .tp-theme-header) {

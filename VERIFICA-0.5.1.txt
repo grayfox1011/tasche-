@@ -1,4 +1,71 @@
-TASCHE PIENE — VERSIONE 0.5.0, CANDIDATA AL COLLAUDO
+TASCHE PIENE — VERSIONE 0.5.1, CANDIDATA AL COLLAUDO
+
+La 0.5.1 mette sul computer il footer delle pagine nuove in fondo, dopo il
+contenuto, come nelle pagine legali, come deciso dopo la 0.5.0. Home e pagine
+legali sono identiche alla 0.5.0. Le note delle versioni precedenti, piu' in
+basso, restano valide.
+
+COSA CAMBIA RISPETTO ALLA 0.5.0
+- Pagine che non sono la home o una pagina legale (una pagina nuova fatta in
+  Divi, la "Pagina di esempio" di WordPress, articoli, archivi, ricerca,
+  pagina non trovata), da 981 px in su: il footer non resta piu' fisso in
+  basso sopra il contenuto (prima si vedeva solo il footer). Viene dopo il
+  contenuto, come nelle pagine legali: senza le figure, con logo, voci e righe
+  del copyright in fila, 108-160 px di spazio prima e 32-48 px dopo. Come
+  nelle pagine legali, il contenuto e' alto almeno meta' della finestra, cosi'
+  in una pagina corta il footer non sale fino all'header.
+- Sotto i 981 px quelle pagine tengono il footer di prima (lo stesso della
+  home).
+- Home (il footer fisso che la pagina scopre alla fine), pagine legali e
+  Visual Builder non cambiano.
+
+VERIFICHE EFFETTUATE SULLA 0.5.1
+Riferimento: la 0.5.0 sullo stesso sito di prova.
+- Footer, elemento per elemento (34 elementi, 40 proprieta' ciascuno e la
+  loro posizione): su una pagina nuova fatta in Divi, sulla "Pagina di
+  esempio", su un articolo, un archivio, la ricerca e la pagina non trovata,
+  a 1920, 1440, 1280, 1024 e 981 px, e' identico a quello della privacy alla
+  stessa larghezza. Rispetto alla 0.5.0: privacy e cookie identiche a 9
+  larghezze tra 320 e 1920 px; le altre pagine identiche sotto i 981 px (980,
+  820, 768, 390 e 320 px) e cambiate solo da 981 px in su. Il logo del footer,
+  che si carica quando si arriva in fondo, si vede su tutte.
+- Suite completa. Home a 20 larghezze, privacy e cookie a 10: stili e
+  posizioni identici alla 0.5.0, privacy e cookie identiche al pixel. Nella
+  home le sole differenze di pixel sono foto delle card Materie caricate o no
+  al momento dello scatto: rifatti, gli scatti sono identici, e due passaggi
+  della stessa versione differiscono allo stesso modo. Hover e focus
+  identici, menu aperto sul telefono identico, stesse query, modificabilita'
+  con gli stessi esiti, modifica dal builder 8 su 8, iPhone 13 in emulazione
+  senza errori; HTML uguale tranne la versione. Visual Builder (computer,
+  tablet, telefono, privacy) identico.
+- Aggiornamento caricando lo zip da wp-admin su copie con la 0.5.0 e la 0.4.9:
+  home identica byte per byte, senza revisioni nuove; una seconda richiesta
+  non cambia niente; nessun errore PHP; stili e posizioni della home identici
+  a quelli delle stesse copie prima dell'aggiornamento. Sulla "Pagina di
+  esempio" della copia aggiornata il footer sta dopo il contenuto.
+
+INSTALLAZIONE DELLO ZIP
+Provata caricando lo zip da wp-admin (Aspetto > Temi > Carica tema) su copie
+del sito di prova con la 0.5.0 e la 0.4.9. WordPress sostituisce il tema senza
+errori. Nessun errore PHP del tema.
+
+DA DECIDERE
+- Header sopra l'inizio delle pagine che non sono la home: l'header fisso
+  copre la parte alta della pagina. Nella privacy e nella cookie, sul
+  computer, copre la parte alta del titolo (di "Privacy Policy" si vede solo
+  la parte bassa delle lettere); tra 768 e 980 px il riquadro del logo ne
+  copre l'inizio; sui telefoni non lo tocca. In una pagina nuova copre quello
+  che c'e' in cima: sul computer il titolo non si vede. C'era gia' nelle
+  versioni precedenti. Si puo' lasciare in cima a quelle pagine uno spazio
+  alto quanto l'header, cosi' il contenuto comincia sotto: cambia l'aspetto
+  delle pagine legali, serve un ok.
+- Non provati: Safari e un iPhone veri (il preloader e' provato in Chromium con
+  l'agente utente di iPhone e iPad) e un database MySQL (le prove usano
+  SQLite).
+
+==============================================================================
+
+NOTE DELLA 0.5.0
 
 La 0.5.0 sistema i punti rimasti da decidere dopo la 0.4.9: il preloader su
 iPhone e iPad, le opzioni dei moduli custom (Onda, Striscia scorrevole e le sue
