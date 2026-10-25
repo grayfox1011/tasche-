@@ -35,6 +35,7 @@ function tp_child_migration_callbacks(): array {
 			'tp_child_migrate_menu_size_s',
 			'tp_child_migrate_menu_proposal_row',
 			'tp_child_migrate_menu_salsiccia_name',
+			'tp_child_migrate_two_size_texts',
 		],
 	];
 }

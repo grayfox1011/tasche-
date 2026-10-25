@@ -102,9 +102,9 @@ return '<!-- wp:divi/placeholder --><!-- wp:divi/section {"module":{"advanced":{
 <!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-title"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003ch2\u003eIl nostro menù\u003c/h2\u003e"}}},"builderVersion":"5.2.0"} /-->
 
 <!-- wp:divi/group {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-legend"}}}}},"builderVersion":"5.2.0"} -->
-<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-legend-box tp-menu-legend-tasca"}}}},"decoration":{"boxShadow":{"desktop":{"value":{"style":"none"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cspan class=\u0022tp-menu-legend-main\u0022\u003eTASCA\u003c/span\u003e\u003cspan class=\u0022tp-menu-legend-sub\u0022\u003eIL PANINO\u003c/span\u003e"}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-legend-box tp-menu-legend-tasca"}}}},"decoration":{"boxShadow":{"desktop":{"value":{"style":"none"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003ch4\u003eTASCA\u003c/h4\u003e\u003cp\u003eIL PANINO\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
 
-<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-legend-box tp-menu-legend-piatto"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cspan class=\u0022tp-menu-legend-main\u0022\u003ePIATTO\u003c/span\u003e\u003cspan class=\u0022tp-menu-legend-sizes\u0022\u003e\u003cspan\u003eS - 150g\u003c/span\u003e\u003cspan\u003eM - 200g\u003c/span\u003e\u003cspan\u003eL - 400g\u003c/span\u003e\u003c/span\u003e"}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-legend-box tp-menu-legend-piatto"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003ch4\u003ePIATTO\u003c/h4\u003e\u003cp\u003eS - 150g\u003c/p\u003e\u003cp\u003eM - 200g\u003c/p\u003e\u003cp\u003eL - 400g\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
 <!-- /wp:divi/group -->
 <!-- /wp:divi/group -->
 
@@ -114,6 +114,7 @@ return '<!-- wp:divi/placeholder --><!-- wp:divi/section {"module":{"advanced":{
 <!-- wp:divi/group {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-row"}}}}},"builderVersion":"5.2.0"} -->
 <!-- wp:divi/group {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-item"}}}}},"builderVersion":"5.2.0"} -->
 <!-- wp:divi/heading {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-name"}}}}},"title":{"innerContent":{"desktop":{"value":"MELANZANA ALLA PARMIGIANA"}},"decoration":{"font":{"font":{"desktop":{"value":{"headingLevel":"h4"}}}}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-allergeni"}}}},"meta":{"adminLabel":{"desktop":{"value":"Allergeni"}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e7,8\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
 
 <!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-meta"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cspan\u003eRipieni liguri stagionali. Cambia con la stagione\u003c/span\u003e"}}},"builderVersion":"5.2.0"} /-->
 
@@ -139,6 +140,7 @@ return '<!-- wp:divi/placeholder --><!-- wp:divi/section {"module":{"advanced":{
 <!-- wp:divi/group {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-row"}}}}},"builderVersion":"5.2.0"} -->
 <!-- wp:divi/group {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-item"}}}}},"builderVersion":"5.2.0"} -->
 <!-- wp:divi/heading {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-name"}}}}},"title":{"innerContent":{"desktop":{"value":"RIPIENI LIGURI DI STAGIONE"}},"decoration":{"font":{"font":{"desktop":{"value":{"headingLevel":"h4"}}}}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-allergeni"}}}},"meta":{"adminLabel":{"desktop":{"value":"Allergeni"}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e1,3,7,12\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
 
 <!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-meta"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cspan\u003eZucchina, cipolla, peperone. Cambia con la stagione\u003c/span\u003e"}}},"builderVersion":"5.2.0"} /-->
 
@@ -167,6 +169,7 @@ return '<!-- wp:divi/placeholder --><!-- wp:divi/section {"module":{"advanced":{
 <!-- wp:divi/group {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-row"}}}}},"builderVersion":"5.2.0"} -->
 <!-- wp:divi/group {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-item"}}}}},"builderVersion":"5.2.0"} -->
 <!-- wp:divi/heading {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-name"}}}}},"title":{"innerContent":{"desktop":{"value":"POLPETTE AL SUGO"}},"decoration":{"font":{"font":{"desktop":{"value":{"headingLevel":"h4"}}}}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-allergeni"}}}},"meta":{"adminLabel":{"desktop":{"value":"Allergeni"}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e1,3,7\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
 
 <!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-meta"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cspan\u003eTre polpette, circa 100 g, ricetta nostra\u003c/span\u003e"}}},"builderVersion":"5.2.0"} /-->
 
@@ -195,6 +198,7 @@ return '<!-- wp:divi/placeholder --><!-- wp:divi/section {"module":{"advanced":{
 <!-- wp:divi/group {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-row"}}}}},"builderVersion":"5.2.0"} -->
 <!-- wp:divi/group {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-item"}}}}},"builderVersion":"5.2.0"} -->
 <!-- wp:divi/heading {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-name"}}}}},"title":{"innerContent":{"desktop":{"value":"POLLO ALLA LIGURE, OLIVE TAGGIASCHE, PINOLI"}},"decoration":{"font":{"font":{"desktop":{"value":{"headingLevel":"h4"}}}}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-allergeni"}}}},"meta":{"adminLabel":{"desktop":{"value":"Allergeni"}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e8,12\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
 
 <!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-meta"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cspan\u003ePollo doc, olive della Riviera e pinoli\u003c/span\u003e"}}},"builderVersion":"5.2.0"} /-->
 
@@ -223,6 +227,7 @@ return '<!-- wp:divi/placeholder --><!-- wp:divi/section {"module":{"advanced":{
 <!-- wp:divi/group {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-row"}}}}},"builderVersion":"5.2.0"} -->
 <!-- wp:divi/group {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-item"}}}}},"builderVersion":"5.2.0"} -->
 <!-- wp:divi/heading {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-name"}}}}},"title":{"innerContent":{"desktop":{"value":"TRIPPA - OGNI VENERDI"}},"decoration":{"font":{"font":{"desktop":{"value":{"headingLevel":"h4"}}}}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-allergeni"}}}},"meta":{"adminLabel":{"desktop":{"value":"Allergeni"}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e8,9,12\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
 
 <!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-meta"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cspan\u003eQuella genovese. Max 10-12 porzioni\u003c/span\u003e"}}},"builderVersion":"5.2.0"} /-->
 
@@ -251,6 +256,7 @@ return '<!-- wp:divi/placeholder --><!-- wp:divi/section {"module":{"advanced":{
 <!-- wp:divi/group {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-row"}}}}},"builderVersion":"5.2.0"} -->
 <!-- wp:divi/group {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-item"}}}}},"builderVersion":"5.2.0"} -->
 <!-- wp:divi/heading {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-name"}}}}},"title":{"innerContent":{"desktop":{"value":"STOCCAFISSO - OGNI GIOVEDI"}},"decoration":{"font":{"font":{"desktop":{"value":{"headingLevel":"h4"}}}}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-allergeni"}}}},"meta":{"adminLabel":{"desktop":{"value":"Allergeni"}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e4,8,9,12\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
 
 <!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-meta"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cspan\u003eRicetta tradizionale ligure. Max 10-12 porzioni\u003c/span\u003e"}}},"builderVersion":"5.2.0"} /-->
 
@@ -279,6 +285,7 @@ return '<!-- wp:divi/placeholder --><!-- wp:divi/section {"module":{"advanced":{
 <!-- wp:divi/group {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-row"}}}}},"builderVersion":"5.2.0"} -->
 <!-- wp:divi/group {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-item"}}}}},"builderVersion":"5.2.0"} -->
 <!-- wp:divi/heading {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-name"}}}}},"title":{"innerContent":{"desktop":{"value":"CAPRESE, PESTO GENOVESE, BUFALA"}},"decoration":{"font":{"font":{"desktop":{"value":{"headingLevel":"h4"}}}}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-allergeni"}}}},"meta":{"adminLabel":{"desktop":{"value":"Allergeni"}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e7,8\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
 
 <!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-meta"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cspan\u003ePomodoro fresco, stracciatella e pesto\u003c/span\u003e"}}},"builderVersion":"5.2.0"} /-->
 
@@ -307,6 +314,7 @@ return '<!-- wp:divi/placeholder --><!-- wp:divi/section {"module":{"advanced":{
 <!-- wp:divi/group {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-row"}}}}},"builderVersion":"5.2.0"} -->
 <!-- wp:divi/group {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-item"}}}}},"builderVersion":"5.2.0"} -->
 <!-- wp:divi/heading {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-name"}}}}},"title":{"innerContent":{"desktop":{"value":"LE ACCIUGHE DI LUCIANO + STRACCIATELLA"}},"decoration":{"font":{"font":{"desktop":{"value":{"headingLevel":"h4"}}}}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-allergeni"}}}},"meta":{"adminLabel":{"desktop":{"value":"Allergeni"}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e4,7\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
 
 <!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-meta"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cspan\u003eOlive, capperi e ricetta di Luciano\u003c/span\u003e"}}},"builderVersion":"5.2.0"} /-->
 
@@ -335,6 +343,7 @@ return '<!-- wp:divi/placeholder --><!-- wp:divi/section {"module":{"advanced":{
 <!-- wp:divi/group {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-row"}}}}},"builderVersion":"5.2.0"} -->
 <!-- wp:divi/group {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-item"}}}}},"builderVersion":"5.2.0"} -->
 <!-- wp:divi/heading {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-name"}}}}},"title":{"innerContent":{"desktop":{"value":"SALSICCIA, ALLORO E POMODORI CONFIT"}},"decoration":{"font":{"font":{"desktop":{"value":{"headingLevel":"h4"}}}}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-allergeni"}}}},"meta":{"adminLabel":{"desktop":{"value":"Allergeni"}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e1,7\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
 
 <!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-meta"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cspan\u003eIN ROTAZIONE · PULLED PORK, CAVOLO VIOLA E MAYO SPICY\u003c/span\u003e"}}},"builderVersion":"5.2.0"} /-->
 
@@ -592,15 +601,15 @@ return '<!-- wp:divi/placeholder --><!-- wp:divi/section {"module":{"advanced":{
 <!-- wp:divi/group {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-hours-card"}}}}},"builderVersion":"5.2.0"} -->
 <!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-hours-title"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003ch2\u003eQuando siamo aperti?\u003c/h2\u003e"}}},"builderVersion":"5.2.0"} /-->
 
-<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-hours-item tp-hours-item\u002d\u002dgreen"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e\u003cspan data-mobile=\u0022Lun-Mer\u0022\u003eLunedì-Martedì-Mercoledì\u003c/span\u003e\u003cspan\u003e12:00-15:30\u003c/span\u003e\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-hours-item tp-hours-item\u002d\u002dgreen"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003ch4\u003eLunedì-Martedì-Mercoledì\u003c/h4\u003e\u003ch5\u003eLun-Mer\u003c/h5\u003e\u003cp\u003e12:00-15:30\u003c/p\u003e"}},"decoration":{"headingFont":{"h4":{"font":{"desktop":{"value":{"size":"20px"}}}}}}},"builderVersion":"5.2.0"} /-->
 
-<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-hours-item tp-hours-item\u002d\u002dburgundy"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e\u003cspan data-mobile=\u0022Gio\u0022\u003eGiovedì\u003c/span\u003e\u003cspan\u003e12:00-15:30 c’è lo stocco\u003c/span\u003e\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-hours-item tp-hours-item\u002d\u002dburgundy"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003ch4\u003eGiovedì\u003c/h4\u003e\u003ch5\u003eGio\u003c/h5\u003e\u003cp\u003e12:00-15:30 c’è lo stocco\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
 
-<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-hours-item tp-hours-item\u002d\u002dgreen"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e\u003cspan data-mobile=\u0022Ven\u0022\u003eVenerdì\u003c/span\u003e\u003cspan\u003e12:00-15:30 c’è la trippa\u003c/span\u003e\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-hours-item tp-hours-item\u002d\u002dgreen"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003ch4\u003eVenerdì\u003c/h4\u003e\u003ch5\u003eVen\u003c/h5\u003e\u003cp\u003e12:00-15:30 c’è la trippa\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
 
-<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-hours-item tp-hours-item\u002d\u002dburgundy"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e\u003cspan data-mobile=\u0022Sab\u0022\u003eSabato\u003c/span\u003e\u003cspan\u003e12:00-16:00\u003c/span\u003e\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-hours-item tp-hours-item\u002d\u002dburgundy"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003ch4\u003eSabato\u003c/h4\u003e\u003ch5\u003eSab\u003c/h5\u003e\u003cp\u003e12:00-16:00\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
 
-<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-hours-item tp-hours-item\u002d\u002dgreen"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003cp\u003e\u003cspan data-mobile=\u0022Dom\u0022\u003eDomenica\u003c/span\u003e\u003cspan\u003eChiusi\u003c/span\u003e\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-hours-item tp-hours-item\u002d\u002dgreen"}}}}},"content":{"innerContent":{"desktop":{"value":"\u003ch4\u003eDomenica\u003c/h4\u003e\u003ch5\u003eDom\u003c/h5\u003e\u003cp\u003eChiusi\u003c/p\u003e"}}},"builderVersion":"5.2.0"} /-->
 <!-- /wp:divi/group -->
 <!-- /wp:divi/column -->
 <!-- /wp:divi/row -->

@@ -323,9 +323,11 @@
 
 	/* Menu ------------------------------------------------------------------ */
 
-	// Allergens are typed in the Divi dish title between square brackets, e.g.
-	// "MELANZANA ALLA PARMIGIANA [7,8]": the brackets are removed and the numbers
-	// shown as a superscript. Titles without brackets use the map below (Figma 10:314; the
+	// Allergens: since 0.5.3 each dish has a Text module of its own with the class
+	// tp-menu-allergeni next to its name, set in Divi as any text: it goes at the end of the
+	// name, where the superscript was. Without it, the numbers typed in the dish title between
+	// square brackets, e.g. "MELANZANA ALLA PARMIGIANA [7,8]", are removed from the title and
+	// shown as a superscript; titles without brackets use the map below (Figma 10:314; the
 	// salsiccia's numbers come from the owner).
 	// The short mobile name is the part of the title before " - " (data-tp-short,
 	// read by the CSS). The Visual Builder shows the titles as typed.
@@ -341,6 +343,15 @@
 			[/ACCIUGHE/i, '4,7'],
 			[/SALSICCIA/i, '1,7']
 		];
+		// The dish's Allergeni module: already at the end of the name, or among the modules next to it.
+		function allergensModule(h) {
+			var own = h.querySelector('.tp-menu-allergeni');
+			var name = h.closest('.tp-menu-name');
+			for (var c = name && !own ? name.parentNode.firstElementChild : null; c; c = c.nextElementSibling) {
+				if (c.classList.contains('tp-menu-allergeni')) { own = c; break; }
+			}
+			return own;
+		}
 		function apply() {
 			var heads = document.querySelectorAll('.tp-menu-section .tp-menu-name h4, .tp-menu-section h4.et_pb_module_header');
 			for (var i = 0; i < heads.length; i++) {
@@ -355,13 +366,17 @@
 					}
 				}
 				var t = h.textContent || '';
-				if (nums === null) {
+				var own = allergensModule(h);
+				if (nums === null && !own) {
 					for (var m = 0; m < MAP.length; m++) {
 						if (MAP[m][0].test(t)) { nums = MAP[m][1]; break; }
 					}
 				}
 				var sup = h.querySelector('.tp-allergeni');
-				if (nums) {
+				if (own) {
+					if (own.parentNode !== h) { h.appendChild(own); }
+					if (sup) { sup.parentNode.removeChild(sup); }
+				} else if (nums) {
 					if (!sup) {
 						sup = document.createElement('sup');
 						sup.className = 'tp-allergeni';

@@ -1,4 +1,93 @@
-TASCHE PIENE — VERSIONE 0.5.2, CANDIDATA AL COLLAUDO
+TASCHE PIENE — VERSIONE 0.5.3, CANDIDATA AL COLLAUDO
+
+La 0.5.3 rende modificabili da Divi, parte per parte, i testi che avevano
+due misure fisse: legenda Tasca/Piatto del menu, orari, apici degli allergeni
+e prezzi delle bevande sui telefoni. L'aspetto del sito non cambia: e'
+identico alla 0.5.2. Le note delle versioni precedenti, piu' in basso,
+restano valide.
+
+COSA CAMBIA RISPETTO ALLA 0.5.2
+- Legenda Tasca/Piatto del menu: la parola grande (TASCA, PIATTO) e' un titolo
+  H4 del modulo, il resto e' il testo del modulo; nel Piatto ogni misura
+  (S - 150g, M - 200g, L - 400g) e' un paragrafo. Da Divi: Design > Testo dei
+  titoli > H4 per la parola grande, Design > Testo per il resto. Prima le due
+  parti erano due span con le misure del tema: si cambiava solo il colore.
+- Orari: il giorno e' un titolo H4, il giorno abbreviato dei telefoni
+  (LUN-MER, GIO...) un titolo H5, l'orario il testo del modulo. Ognuno si
+  cambia da solo (H4, H5, Testo). Il giorno abbreviato prima era nascosto in
+  un attributo: ora si vede e si scrive nel modulo, come il resto.
+  Lunedi'-mercoledi' ha nel suo modulo la misura H4 di 20 px, che prima il
+  tema dava solo a quel giorno.
+- Allergeni dei piatti: ogni piatto ha dopo il nome un modulo Testo
+  "Allergeni" con i numeri. Sul sito compare dove stava l'apice, in alto alla
+  fine del nome, anche quando il nome va a capo; da Divi se ne cambiano
+  numeri, colore, carattere e grandezza. Nel Visual Builder compare in alto a
+  destra del nome: prima non si vedeva. I numeri tra parentesi quadre nel
+  nome, per esempio [1,7], funzionano ancora dove il modulo non c'e'.
+- Prezzi delle bevande sui telefoni: la grandezza impostata in Divi per i
+  telefoni ora vale (prima restava quella del tema, 24 px).
+- Aggiornamento: alla prima richiesta dopo l'aggiornamento la home passa da
+  sola alla struttura nuova; l'aspetto non cambia e WordPress tiene la
+  versione di prima tra le revisioni. Un modulo gia' cambiato a mano, che non
+  ha piu' la struttura di prima, resta com'e'. "Crea/aggiorna home" crea la
+  home gia' con la struttura nuova.
+
+VERIFICHE EFFETTUATE SULLA 0.5.3
+Riferimento: la 0.5.2 (CSS e contenuto) sullo stesso sito di prova.
+- Aspetto, parte per parte, contro la 0.5.2: legenda Tasca/Piatto, orari
+  (anche con il puntatore su una riga verde e su una bordeaux), tabella del
+  menu principale e bevande, identici al pixel a 21 larghezze tra 320 e 1920
+  px (tolleranza di 3 unita' di colore sugli angoli arrotondati). Le parole
+  della legenda e gli apici sono negli stessi punti, al centesimo di pixel.
+- Suite completa sulla home migrata contro la 0.5.2: home a 20 larghezze
+  identica al pixel (le sole differenze sono foto delle card Materie caricate
+  o no al momento dello scatto); privacy e cookie identiche; menu aperto sul
+  telefono e iPhone 13 in emulazione identici, senza errori; modifica dal
+  builder 8 su 8; stesse query. Il confronto elemento per elemento segna i
+  moduli convertiti, come atteso: titoli e paragrafi al posto degli span.
+- Modificabilita' (pagine di prova fatte dalla home migrata, con un valore di
+  prova di colore e grandezza su ogni modulo Testo, per il computer, il tablet
+  e il telefono): ogni testo prende i valori di Divi, nessun caso non superato
+  a 1440, 820 e 390 px. Con la 0.5.2 i casi non superati erano 16, 9 e 17:
+  legenda, orari, prezzi delle bevande sui telefoni, apici. Con valori diversi
+  per ogni parte (parola grande e testo della legenda, giorno, giorno
+  abbreviato e orario, allergeni di un piatto) ogni parte prende il suo e le
+  altre restano come sono.
+- Visual Builder (computer, tablet, telefono): stessa altezza della pagina e
+  stessa disposizione della 0.5.2; legenda e orari come sul sito; gli
+  allergeni compaiono in alto a destra del nome di ogni piatto.
+- Migrazione sul sito di prova: alla prima richiesta la home passa alla
+  struttura nuova (7 moduli convertiti, 9 moduli Allergeni con i numeri di
+  oggi), una revisione in piu', nessun errore PHP; le richieste dopo non
+  cambiano piu' niente. Fuori dai moduli convertiti il contenuto resta
+  identico byte per byte; una seconda conversione non cambia niente.
+- Aggiornamento caricando lo zip da wp-admin su copie con la 0.5.2 e la 0.4.9:
+  alla prima richiesta la home e' convertita esattamente come previsto (lo
+  stesso contenuto, byte per byte, della conversione fatta a parte), con una
+  revisione in piu'; una seconda richiesta non cambia niente; nessun errore
+  PHP; la home e' identica al pixel a quella di prima dell'aggiornamento, a 7
+  larghezze tra 390 e 1440 px.
+
+INSTALLAZIONE DELLO ZIP
+Provata caricando lo zip da wp-admin (Aspetto > Temi > Carica tema) su copie
+del sito di prova con la 0.5.2 e la 0.4.9. WordPress sostituisce il tema senza
+errori. Nessun errore PHP del tema.
+
+DA DECIDERE
+- Tasca/Piatto, modificabile come le altre sezioni: oggi da Divi se ne
+  cambiano testi e immagini; colori, caratteri, spaziature e sfondi impostati
+  sui suoi moduli non hanno effetto, perche' il tema la ricostruisce (anche
+  nel builder si vede come un modulo da compilare, non com'e' sul sito). Per
+  renderla modificabile va rifatta con i moduli Divi, identica alla
+  ricostruzione a tutte le larghezze e con le stesse animazioni. Lavoro
+  grosso: serve un ok.
+- Non provati: Safari e un iPhone veri (il preloader e' provato in Chromium
+  con l'agente utente di iPhone e iPad) e un database MySQL (le prove usano
+  SQLite).
+
+==============================================================================
+
+NOTE DELLA 0.5.2
 
 La 0.5.2 lavora sui tre criteri dati dopo la 0.5.1: uguale al Figma, tutto
 modificabile da Divi, ricreabile anche da una pagina nuova. La home resta

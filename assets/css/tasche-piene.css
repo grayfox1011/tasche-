@@ -18168,7 +18168,8 @@ body #page-container .et_pb_section a.et_pb_button.tp-location-button:hover {
 
 @media (max-width:767px) {
 
-	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-menu-section .tp-menu-table--drinks .tp-menu-row p) {
+	/* On the text of the module, not on its paragraphs: Divi's own size for phones wins. */
+	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-menu-section .tp-menu-table--drinks .tp-menu-row .et_pb_text_inner) {
 		font-size: 24px;
 	}
 
@@ -20645,6 +20646,289 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 
 	.tp-child-theme :where(body:not(.tp-landing-page):not(.et-fb) .tp-theme-nav-toggle span) {
 		background: var(--tp-bordeaux);
+	}
+}
+
+/*
+ * Texts with two sizes, as Divi's Text module sets them apart (inc/two-size-text-migration.php):
+ * - legend of the menu: the big word is a heading 4, the rest the text of the module;
+ * - opening hours: the day is a heading 4, the short day for phones a heading 5, the time the
+ *   text of the module.
+ * These values are only the starting point: what the module sets in Design > Heading Text (H4, H5)
+ * and Design > Text wins, part by part. The two spans of before keep their own rules above.
+ */
+.tp-child-theme :where(.tp-menu-legend-box h4) {
+	margin: 0;
+	padding: 0;
+	color: inherit;
+	font-family: var(--tp-font-display), Impact, sans-serif;
+	font-size: 32px;
+	font-weight: 400;
+	line-height: 32px;
+	letter-spacing: 0;
+	text-transform: none;
+	white-space: nowrap;
+}
+
+/* The big word and the line under it touch, as when WordPress put the two spans in one paragraph. */
+.tp-child-theme :where(.tp-menu-legend-box .et_pb_text_inner) {
+	gap: 0;
+	font-family: var(--tp-font-body), Arial, sans-serif;
+	font-size: 20px;
+	font-weight: 900;
+	line-height: 20px;
+	letter-spacing: 0;
+	white-space: nowrap;
+}
+
+.tp-child-theme :where(.tp-menu-legend-box p) {
+	margin: 0;
+	padding: 0;
+}
+
+/* Piatto: under the heading the sizes side by side, one paragraph each (the spans of before, outside a paragraph: one line each). */
+.tp-child-theme :where(.tp-menu-legend-piatto .et_pb_text_inner) {
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	align-content: center;
+	gap: 0 40px;
+}
+
+.tp-child-theme :where(.tp-menu-legend-piatto h4),
+.tp-child-theme :where(.tp-menu-legend-piatto .tp-menu-legend-main),
+.tp-child-theme :where(.tp-menu-legend-piatto .tp-menu-legend-sizes) {
+	flex: 0 0 100%;
+}
+
+@media (min-width: 981px) {
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-legend-piatto .et_pb_text_inner:has(> p:nth-of-type(3))) {
+		column-gap: 24px;
+	}
+}
+
+/* As with the spans: browsers without :has() show the menu without the S size. */
+@supports not selector(:has(*)) {
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-legend-piatto .et_pb_text_inner > p:first-of-type:nth-last-of-type(3)) {
+		display: none;
+	}
+}
+
+.tp-child-theme :where(.tp-hours-item h4),
+.tp-child-theme :where(.tp-hours-item h5) {
+	margin: 0;
+	padding: 0;
+	color: inherit;
+	font-family: var(--tp-font-body), Arial, sans-serif;
+	font-size: 20px;
+	font-weight: 900;
+	line-height: 1;
+	letter-spacing: 0;
+	text-transform: none;
+}
+
+.tp-child-theme :where(.tp-hours-item h5) {
+	display: none;
+}
+
+/* The time: next to the day in the row of the module, where the second span was. */
+.tp-child-theme :where(.tp-hours-item h4 ~ p) {
+	display: block;
+	width: auto;
+	text-align: right;
+}
+
+.tp-child-theme :where(body.tp-child-theme:not(.et-fb) #page-container .tp-hours-item h4),
+.tp-child-theme :where(body.tp-child-theme:not(.et-fb) #page-container .tp-hours-item h5) {
+	position: relative;
+	z-index: 1;
+	transition: color 520ms cubic-bezier(.22, 1, .36, 1), transform 640ms cubic-bezier(.22, 1, .36, 1);
+}
+
+.tp-child-theme :where(body.tp-child-theme:not(.et-fb) #page-container .tp-hours-item:hover h4),
+.tp-child-theme :where(body.tp-child-theme:not(.et-fb) #page-container .tp-hours-item:hover h5),
+.tp-child-theme :where(body.tp-child-theme:not(.et-fb) #page-container .tp-hours-item:focus-visible h4),
+.tp-child-theme :where(body.tp-child-theme:not(.et-fb) #page-container .tp-hours-item:focus-visible h5) {
+	color: var(--tp-cream);
+}
+
+@media (min-width: 981px) {
+
+	.tp-child-theme :where(.tp-hours-item h4) {
+		font-size: 24px;
+		line-height: 1.15;
+	}
+}
+
+@media (max-width: 767px) {
+
+	.tp-child-theme :where(.tp-hours-item .et_pb_text_inner) {
+		font-size: 16px;
+	}
+
+	/* The day as the short day was shown: a day without a short one keeps its full name. */
+	.tp-child-theme :where(.tp-hours-item h4) {
+		flex: 0 1 45%;
+		font-size: 16px;
+		line-height: 1.08;
+	}
+
+	.tp-child-theme :where(.tp-hours-item h4:has(+ h5)) {
+		display: none;
+	}
+
+	.tp-child-theme :where(.tp-hours-item h5) {
+		display: block;
+		flex: 0 1 45%;
+		font-size: 16px;
+		line-height: 1.25;
+		white-space: nowrap;
+		text-transform: uppercase;
+	}
+
+	.tp-child-theme :where(.tp-hours-item h4 ~ p) {
+		display: block;
+		flex: 1 1 auto;
+		font-size: inherit;
+		white-space: nowrap;
+	}
+
+	.tp-child-theme :where(body.tp-child-theme:not(.et-fb) #page-container .tp-hours-item:hover h4),
+.tp-child-theme :where(body.tp-child-theme:not(.et-fb) #page-container .tp-hours-item:hover h5),
+.tp-child-theme :where(body.tp-child-theme:not(.et-fb) #page-container .tp-hours-item:focus-visible h4),
+.tp-child-theme :where(body.tp-child-theme:not(.et-fb) #page-container .tp-hours-item:focus-visible h5),
+.tp-child-theme :where(body.tp-child-theme:not(.et-fb) #page-container .tp-hours-item.is-active h4),
+.tp-child-theme :where(body.tp-child-theme:not(.et-fb) #page-container .tp-hours-item.is-active h5) {
+		transform: none;
+	}
+
+	.tp-child-theme :where(body.tp-child-theme:not(.et-fb) #page-container .tp-hours-item--green:hover h4),
+.tp-child-theme :where(body.tp-child-theme:not(.et-fb) #page-container .tp-hours-item--green:hover h5),
+.tp-child-theme :where(body.tp-child-theme:not(.et-fb) #page-container .tp-hours-item--green:focus-visible h4),
+.tp-child-theme :where(body.tp-child-theme:not(.et-fb) #page-container .tp-hours-item--green:focus-visible h5) {
+		color: var(--tp-green);
+	}
+
+	.tp-child-theme :where(body.tp-child-theme:not(.et-fb) #page-container .tp-hours-item--burgundy:hover h4),
+.tp-child-theme :where(body.tp-child-theme:not(.et-fb) #page-container .tp-hours-item--burgundy:hover h5),
+.tp-child-theme :where(body.tp-child-theme:not(.et-fb) #page-container .tp-hours-item--burgundy:focus-visible h4),
+.tp-child-theme :where(body.tp-child-theme:not(.et-fb) #page-container .tp-hours-item--burgundy:focus-visible h5) {
+		color: var(--tp-bordeaux);
+	}
+}
+
+/* Without :has() a phone shows the full day, as with a day without a short one. */
+@supports not selector(:has(*)) {
+
+	@media (max-width: 767px) {
+
+		.tp-child-theme :where(.tp-hours-item h5) {
+			display: none;
+		}
+	}
+}
+
+/*
+ * Allergens of a dish: a Text module of their own (class tp-menu-allergeni) next to the name. On the
+ * site tp-layout.js puts it at the end of the name, where it is drawn as the superscript of before;
+ * Design > Text of the module changes it. In the Visual Builder, where the script does not run, it
+ * stays under the name.
+ */
+.tp-child-theme :where(.tp-menu-allergeni .et_pb_text_inner) {
+	font-family: var(--tp-font-body), Arial, sans-serif;
+	font-size: 12px;
+	font-weight: 400;
+	line-height: 1;
+	letter-spacing: .04em;
+	color: #3e372e;
+	text-transform: none;
+	white-space: nowrap;
+}
+
+.tp-child-theme :where(.tp-menu-allergeni p) {
+	margin: 0;
+	padding: 0;
+}
+
+/* In the name the module has no box of its own: its text is one more piece of the name's line. */
+.tp-child-theme.tp-child-theme .tp-menu-name h4 > .tp-menu-allergeni {
+	display: contents;
+}
+
+.tp-child-theme :where(.tp-menu-name h4 > .tp-menu-allergeni .et_pb_text_inner),
+.tp-child-theme :where(.tp-menu-name h4 > .tp-menu-allergeni p) {
+	display: inline;
+}
+
+.tp-child-theme :where(.tp-menu-name h4 > .tp-menu-allergeni .et_pb_text_inner) {
+	margin-left: 5px;
+	vertical-align: top;
+}
+
+@media (max-width: 767px) {
+
+	.tp-child-theme :where(.tp-menu-allergeni .et_pb_text_inner) {
+		font-size: 10.5px;
+	}
+}
+
+/*
+ * Visual Builder. It wraps the text of a module in one more element: that element takes the place the
+ * module's text has on the site (the Piatto sizes side by side, day and time on one line). The
+ * allergens stay a module of their own after the name, at its top.
+ */
+body.et-fb :where(.tp-menu-legend-piatto .et_pb_text_inner > div) {
+	display: flex;
+	flex-wrap: wrap;
+	align-content: center;
+	column-gap: 40px;
+	width: 100%;
+}
+
+body.et-fb :where(.tp-menu-legend-piatto .et_pb_text_inner > div:has(> p:nth-of-type(3))) {
+	column-gap: 24px;
+}
+
+body.et-fb :where(.tp-hours-item .et_pb_text_inner > div) {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 24px;
+	width: 100%;
+}
+
+body.et-fb :where(.tp-menu-item > .tp-menu-allergeni) {
+	order: 1;
+	flex: 0 0 auto;
+	align-self: flex-start;
+	margin-left: 5px;
+}
+
+/* Where the browser can, at the top right of the name without moving anything, as on the site. */
+@supports (anchor-name: --tp-dish-name) and (anchor-scope: --tp-dish-name) {
+
+	body.et-fb :where(.tp-menu-item) {
+		anchor-scope: --tp-dish-name;
+	}
+
+	body.et-fb :where(.tp-menu-item .tp-menu-name h4) {
+		anchor-name: --tp-dish-name;
+	}
+
+	body.et-fb :where(.tp-menu-item > .tp-menu-allergeni) {
+		position: absolute;
+		position-anchor: --tp-dish-name;
+		top: anchor(top);
+		left: anchor(right);
+	}
+}
+
+@media (max-width: 767px) {
+
+	body.et-fb :where(.tp-hours-item .et_pb_text_inner > div) {
+		gap: 12px;
 	}
 }
 
