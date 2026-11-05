@@ -41,12 +41,14 @@ function tp_child_footer_render_characters_html( array $attrs, $elements ): stri
 		]
 	);
 
+	// The third place has no character since 0.5.9 (the Figma has the couple and the pigeons only): it shows the
+	// image set in Divi, if any.
 	$person_three = tp_child_chrome_render_footer_character_slot(
 		$elements,
 		$attrs,
 		'characterThreeImage',
 		'characterThreeUrl',
-		$asset_base . 'images/footer/personaggi-3.webp',
+		'',
 		'three',
 		[
 			'aria-hidden' => 'true',

@@ -36,7 +36,8 @@ const FOOTER_CHARACTERS: Array<{
 	{
 		attrName: 'characterThreeImage',
 		slotClass: 'tp-theme-footer-character-slot--three',
-		fallbackSrc: `${ASSET_BASE}/images/footer/personaggi-3.webp`,
+		// Empty since 0.5.9: the Figma has the couple and the pigeons only.
+		fallbackSrc: '',
 	},
 ];
 

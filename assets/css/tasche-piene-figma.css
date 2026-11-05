@@ -1472,3 +1472,80 @@
 		color: var(--tp-bordeaux);
 	}
 }
+
+/* ------------------------------------------------------------------------------------------------ */
+/* Footer of the home (and of the Theme Builder): the couple on the "ch" of Tasche, the pigeons on  */
+/* the "ne" of Piene, the logo, the links and the line of the copyright where the Figma has them.   */
+/* ------------------------------------------------------------------------------------------------ */
+
+@media (min-width: 981px) {
+
+	.tp-child-theme :where(body.tp-landing-page:not(.et-fb) .tp-theme-footer-character-slot--four, body.et-fb .tp-theme-footer-character-slot--four) {
+		left: 243.444px;
+		top: 80.7px;
+		width: 209.6px;
+	}
+
+	.tp-child-theme :where(body.tp-landing-page:not(.et-fb) .tp-theme-footer-character-slot--one, body.et-fb .tp-theme-footer-character-slot--one) {
+		left: 908.654px;
+		top: 122.63px;
+		width: 141.2px;
+	}
+
+	.tp-child-theme :where(body.tp-landing-page:not(.et-fb) .tp-theme-footer-logo, body.et-fb .tp-theme-footer-logo) {
+		left: 40.2px;
+		top: 626.3px;
+		width: 1442px;
+	}
+
+	.tp-child-theme :where(body.tp-landing-page:not(.et-fb) .tp-theme-footer-nav, body.et-fb .tp-theme-footer-nav) {
+		left: 36.4px;
+		top: 869.5px;
+		width: 1439.1px;
+	}
+
+	.tp-child-theme :where(body.tp-landing-page:not(.et-fb) .tp-theme-footer-nav-col, body.et-fb .tp-theme-footer-nav-col) {
+		gap: 34.69px;
+	}
+
+	.tp-child-theme :where(body.tp-landing-page:not(.et-fb) .tp-theme-footer-nav a, body.et-fb .tp-theme-footer-nav a) {
+		font-size: 23.787px;
+		opacity: 1;
+	}
+
+	/* Copyright, P.IVA, Privacy-Cookie, Designed By Mochi: 38 px apart, the two links joined by a dash. */
+	.tp-child-theme :where(body.tp-landing-page:not(.et-fb) .tp-theme-footer-copyright, body.et-fb .tp-theme-footer-copyright) {
+		left: 37px;
+		top: 942.4px;
+		gap: 38px;
+	}
+
+	.tp-child-theme :where(body.tp-landing-page:not(.et-fb) .tp-theme-footer-copyright span, body.tp-landing-page:not(.et-fb) .tp-theme-footer-copyright a, body.et-fb .tp-theme-footer-copyright span, body.et-fb .tp-theme-footer-copyright a) {
+		color: #fff;
+	}
+
+	.tp-child-theme :where(body.tp-landing-page:not(.et-fb) .tp-theme-footer-copyright > span:nth-child(4), body.et-fb .tp-theme-footer-copyright > span:nth-child(4)) {
+		margin-left: -38px;
+	}
+
+	.tp-child-theme :where(body.tp-landing-page:not(.et-fb) .tp-theme-footer-copyright > span:nth-child(3) + span:nth-child(4))::before,
+	.tp-child-theme :where(body.et-fb .tp-theme-footer-copyright > span:nth-child(3) + span:nth-child(4))::before {
+		content: "-";
+	}
+}
+
+/* At the end of the home the Figma still shows the last 124.5 px of the opening hours: the content leaves room
+   for 857.5 px of the footer, whose top (empty green) stays under it. */
+@media (min-width: 1512px) {
+
+	.tp-child-theme :where(body.tp-landing-page:not(.et-fb) .et-l--post) {
+		margin-bottom: 857.5px;
+	}
+}
+
+@media (min-width: 981px) and (max-width: 1511px) {
+
+	.tp-child-theme :where(body.tp-landing-page:not(.et-fb) .et-l--post) {
+		margin-bottom: calc(857.5px * var(--tp-fit-scale, 1));
+	}
+}

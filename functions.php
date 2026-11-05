@@ -372,7 +372,6 @@ function tp_child_render_footer_menu_column( string $location ): string {
 function tp_child_theme_footer_shortcode(): string {
 	$logo     = esc_url( TP_CHILD_URL . 'assets/images/logo-footer.webp' );
 	$person_1 = esc_url( TP_CHILD_URL . 'assets/images/footer/personaggi-1.webp' );
-	$person_3 = esc_url( TP_CHILD_URL . 'assets/images/footer/personaggi-3.webp' );
 	$person_4 = esc_url( TP_CHILD_URL . 'assets/images/footer/personaggi-4.webp' );
 
 	ob_start();
@@ -382,7 +381,6 @@ function tp_child_theme_footer_shortcode(): string {
 			<div class="tp-theme-footer-characters">
 				<img class="tp-theme-footer-character tp-theme-footer-character--one" src="<?php echo $person_1; ?>" alt="" aria-hidden="true">
 				<img class="tp-theme-footer-character tp-theme-footer-character--four" src="<?php echo $person_4; ?>" alt="" aria-hidden="true">
-				<img class="tp-theme-footer-character tp-theme-footer-character--three" src="<?php echo $person_3; ?>" alt="" aria-hidden="true">
 			</div>
 			<div class="tp-theme-footer-logo">
 				<img src="<?php echo $logo; ?>" alt="Tasche Piene">
