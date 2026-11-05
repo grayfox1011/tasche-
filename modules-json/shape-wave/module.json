@@ -91,6 +91,12 @@
                   },
                   "choice-burgundy-wave": {
                     "label": "Choice onda bordeaux"
+                  },
+                  "materie-burgundy-wave": {
+                    "label": "Materie onda bordeaux"
+                  },
+                  "materie-green-wave": {
+                    "label": "Materie onda verde"
                   }
                 }
               }

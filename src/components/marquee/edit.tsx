@@ -68,7 +68,7 @@ export const MarqueeEdit = (props: MarqueeEditProps): ReactElement => {
 		? (variant === 'materie' ? MATERIE_DEFAULT_PHRASES : DEFAULT_PHRASES).map((text) => ({ text, className: '' }))
 		: childPhrases;
 	const isMaterieLayout = variant === 'materie' || getModuleClass(attrs).includes('tp-materie-marquee');
-	const duration = clampNumber(getString(attrs.speed, isMaterieLayout ? '10' : '28'), isMaterieLayout ? 10 : 28, 8, 120);
+	const duration = clampNumber(getString(attrs.speed, isMaterieLayout ? '5' : '10'), isMaterieLayout ? 5 : 10, 4, 120);
 	const repeatCount = Math.max(
 		2,
 		Math.min(8, Math.round(clampNumber(getString(attrs.repeatCount, isMaterieLayout ? '4' : '2'), isMaterieLayout ? 4 : 2, 2, 8)))

@@ -645,6 +645,84 @@ function tp_child_f59_drinks_order( string $content ): string {
 /**
  * The home content with the texts, photos and dishes of the new Figma where it still has the theme's.
  */
+/**
+ * A TP Shape Wave module of the theme, closing on itself, as the theme writes them.
+ */
+function tp_child_f59_wave_block( string $class, string $admin_label, string $variant, bool $flip_x, bool $flip_y, string $builder_version ): string {
+	$attrs = (object) [
+		'variant' => (object) [ 'innerContent' => (object) [ 'desktop' => (object) [ 'value' => $variant ] ] ],
+	];
+
+	if ( $flip_x ) {
+		$attrs->flipHorizontal = (object) [ 'innerContent' => (object) [ 'desktop' => (object) [ 'value' => 'on' ] ] ];
+	}
+
+	if ( $flip_y ) {
+		$attrs->flipVertical = (object) [ 'innerContent' => (object) [ 'desktop' => (object) [ 'value' => 'on' ] ] ];
+	}
+
+	$attrs->module = (object) [
+		'advanced' => (object) [ 'htmlAttributes' => (object) [ 'desktop' => (object) [ 'value' => (object) [ 'class' => $class ] ] ] ],
+		'meta'     => (object) [ 'adminLabel' => (object) [ 'desktop' => (object) [ 'value' => $admin_label ] ] ],
+	];
+
+	if ( '' !== $builder_version ) {
+		$attrs->builderVersion = $builder_version;
+	}
+
+	return '<!-- wp:tp/shape-wave ' . serialize_block_attributes( $attrs ) . ' /-->';
+}
+
+/**
+ * Under the menu the Figma has two waves (0.5.9): the burgundy of the board goes on in a wave over the cream of
+ * Materie prime, a green one behind it. Two modules at the top of the column of the section, once.
+ */
+function tp_child_f59_materie_waves( string $content ): string {
+	$blocks   = tp_child_f59_blocks( $content );
+	$sections = tp_child_f59_find( $blocks, 'tp-materie-section' );
+
+	if ( ! $sections || tp_child_f59_find( $blocks, 'tp-materie-onda' ) ) {
+		return $content;
+	}
+
+	foreach ( $blocks as $index => $block ) {
+		if ( 'divi/column' !== $block['name'] || $block['void'] || ! tp_child_f59_inside( $blocks, $index, $sections[0] ) ) {
+			continue;
+		}
+
+		$version = (string) ( tp_child_f59_get( $block['attrs'], 'builderVersion' ) ?? '' );
+		$waves   = "\n" . tp_child_f59_wave_block( 'tp-materie-onda tp-materie-onda--verde', 'Onda verde', 'materie-green-wave', false, true, $version )
+			. "\n\n" . tp_child_f59_wave_block( 'tp-materie-onda tp-materie-onda--bordeaux', 'Onda bordeaux', 'materie-burgundy-wave', true, true, $version ) . "\n";
+
+		return substr_replace( $content, $waves, $block['open_end'], 0 );
+	}
+
+	return $content;
+}
+
+/**
+ * The two strips at the speed of the Figma: the one under the hero goes through its phrases in 10 seconds (it
+ * took 28), the one of Materie prime through two of its phrases in 10 seconds, 5 for each (it took 10).
+ */
+function tp_child_f59_marquee_speeds( string $content ): string {
+	foreach ( [ 'tp-marquee-module' => [ '28', '10' ], 'tp-materie-marquee' => [ '10', '5' ] ] as $class => list( $from, $to ) ) {
+		$blocks = tp_child_f59_blocks( $content );
+
+		foreach ( array_reverse( tp_child_f59_find( $blocks, $class ) ) as $index ) {
+			$block = $blocks[ $index ];
+
+			if ( 'tp/marquee' !== $block['name'] || $from !== (string) tp_child_f59_get( $block['attrs'], 'speed.innerContent.desktop.value' ) ) {
+				continue;
+			}
+
+			tp_child_f59_set( $block['attrs'], 'speed.innerContent.desktop.value', $to );
+			$content = tp_child_f59_save( $content, $block );
+		}
+	}
+
+	return $content;
+}
+
 function tp_child_f59_home_transform( string $content ): string {
 	if ( false === strpos( $content, 'tp-menu-section' ) && false === strpos( $content, 'tp-hero-section' ) ) {
 		return $content;
@@ -873,6 +951,9 @@ function tp_child_f59_home_transform( string $content ): string {
 			}
 		}
 	}
+
+	$content = tp_child_f59_materie_waves( $content );
+	$content = tp_child_f59_marquee_speeds( $content );
 
 	// Dove siamo.
 	$location = [

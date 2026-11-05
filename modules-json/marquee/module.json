@@ -54,7 +54,7 @@
       "type": "object",
       "default": {
         "desktop": {
-          "value": "28"
+          "value": "10"
         }
       },
       "settings": {
@@ -75,7 +75,7 @@
               "name": "divi/range",
               "type": "field",
               "props": {
-                "min": 8,
+                "min": 4,
                 "max": 120,
                 "step": 1,
                 "allowedUnits": [],

@@ -126,6 +126,28 @@ trait RenderCallbackTrait {
 				'height'     => 284.7612,
 				'aspect'     => 'xMinYMin meet',
 			],
+			// Under the menu (0.5.9): the burgundy of the board ends in this wave (the Tasca/Piatto one, upside
+			// down); it follows the size of its box, so it can cover a wider window.
+			'materie-burgundy-wave' => [
+				'label'      => 'Materie onda bordeaux',
+				'view_box'   => '0 0 1524.4385 284.7612',
+				'path'       => 'M706.125 113.179C339.204 10.2306 82.4911 -4.50822 0 0.990986L9.89911 284.761L1524.44 284.761L1524.44 202.27C1404.55 215.469 1073.05 216.128 706.125 113.179Z',
+				'fill'       => 'burgundy',
+				'background' => 'transparent',
+				'width'      => 1524.4385,
+				'height'     => 284.7612,
+			],
+			// Under the menu (0.5.9): the green wave behind the burgundy one, where the board's burgundy becomes the
+			// cream of Materie prime (Figma: Vector 61, drawn upside down).
+			'materie-green-wave'   => [
+				'label'      => 'Materie onda verde',
+				'view_box'   => '0 0 1708.0251 202.0957',
+				'path'       => 'M942.22 71.903C1181.679 -9.978 1505.012 -7.982 1625.83 17.346L1708.025 48.344L1613.803 202.096L0 202.096L0 111.581L6.779 0C202.574 62.41 716.828 148.974 942.22 71.903Z',
+				'fill'       => 'green',
+				'background' => 'transparent',
+				'width'      => 1708.0251,
+				'height'     => 202.0957,
+			],
 		];
 	}
 

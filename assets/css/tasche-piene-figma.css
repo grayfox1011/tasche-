@@ -930,3 +930,276 @@
 		max-width: 399.4px;
 	}
 }
+
+/* ------------------------------------------------------------------------------------------------ */
+/* Materie: the title in capitals 402 px under the top of the section, the text under it, the cards */
+/* where the frame has them, their titles as typed, the tags in dark green with the icon of each.   */
+/* ------------------------------------------------------------------------------------------------ */
+
+@media (min-width: 981px) {
+
+	/* The title and the text from the top of the section; the cards start 919 px under it. */
+	.tp-child-theme :where(#page-container .tp-materie-header) {
+		justify-content: flex-start;
+		row-gap: 0;
+		height: 919px;
+		min-height: 919px;
+		padding-top: 396.85px;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-materie-header > .tp-materie-title) {
+		margin-bottom: 20.75px;
+	}
+
+	/* In capitals "ASTRATTI, SONO SCELTE." is 888 px: the title takes the width of the text under it. */
+	.tp-child-theme :where(#page-container .tp-materie-title) {
+		width: 946.231px;
+		max-width: 100%;
+	}
+
+	.tp-child-theme :where(#page-container .tp-materie-title h2) {
+		width: auto;
+		max-width: 100%;
+		line-height: 65.7px;
+		text-transform: uppercase;
+	}
+
+	.tp-child-theme :where(#page-container .tp-materie-desc) {
+		padding-left: 1.3px;
+	}
+
+	/* The cards take the places of the frame of 1512 px: 30 px to the left of the column. */
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-materie-cards) {
+		margin-left: -30px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-materie-marquee) {
+		top: 832.6px;
+	}
+
+	/* The cards: a line of 3 px (1 px for the olives), no shadow; their titles as they are typed. */
+	.tp-child-theme :where(#page-container .tp-materie-card)::before {
+		border-width: 3px;
+		box-shadow: none;
+	}
+
+	.tp-child-theme :where(#page-container .tp-materie-card--2)::before {
+		border-width: 1px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-materie-card:hover)::before,
+	.tp-child-theme :where(#page-container .tp-materie-card.is-active)::before {
+		box-shadow: none;
+	}
+
+	.tp-child-theme :where(#page-container .tp-materie-card-title h3) {
+		text-transform: none;
+	}
+
+	/* The card cuts what grows out of it while the mouse is on it: the green fills the card, as in the Figma. */
+	.tp-child-theme :where(body.tp-child-theme:not(.et-fb) #page-container .tp-materie-card) {
+		overflow: hidden;
+	}
+
+	/*
+	 * The photos turn a little while the mouse is on the card, as in the Figma (the chicken is turned already):
+	 * the box of the Figma with its angle, instead of the box around the turned photo.
+	 */
+	.tp-child-theme :where(#page-container .tp-materie-card-image .et_pb_image_wrap) {
+		rotate: var(--tp-mp-img-rotate, 0deg);
+		transition-property: left, top, width, height, rotate;
+		transition-duration: var(--tp-materie-card-duration);
+		transition-timing-function: var(--tp-materie-card-ease);
+	}
+
+	.tp-child-theme :where(#page-container .tp-materie-card:hover),
+	.tp-child-theme :where(#page-container .tp-materie-card.is-active) {
+		--tp-mp-img-rotate: var(--tp-mp-hover-img-rotate, 0deg);
+	}
+
+	.tp-child-theme :where(#page-container .tp-materie-card--1) {
+		--tp-mp-hover-img-left: 74.345px;
+		--tp-mp-hover-img-top: 47.832px;
+		--tp-mp-hover-img-width: 273.52px;
+		--tp-mp-hover-img-height: 217.486px;
+		--tp-mp-hover-img-rotate: 1.5deg;
+	}
+
+	.tp-child-theme :where(#page-container .tp-materie-card--2) {
+		--tp-mp-hover-img-left: 54.003px;
+		--tp-mp-hover-img-top: 46.101px;
+		--tp-mp-hover-img-width: 293.824px;
+		--tp-mp-hover-img-height: 233.63px;
+		--tp-mp-hover-img-rotate: 2deg;
+	}
+
+	.tp-child-theme :where(#page-container .tp-materie-card--3) {
+		--tp-mp-hover-img-left: 52.103px;
+		--tp-mp-hover-img-top: 48.315px;
+		--tp-mp-hover-img-width: 297.623px;
+		--tp-mp-hover-img-height: 236.651px;
+		--tp-mp-hover-img-rotate: 2.33deg;
+	}
+
+	.tp-child-theme :where(#page-container .tp-materie-card--4) {
+		--tp-mp-hover-img-left: 64.155px;
+		--tp-mp-hover-img-top: 47.833px;
+		--tp-mp-hover-img-width: 273.52px;
+		--tp-mp-hover-img-height: 217.486px;
+		--tp-mp-hover-img-rotate: -3deg;
+	}
+
+	.tp-child-theme :where(#page-container .tp-materie-card--5) {
+		--tp-mp-img-rotate: -61.67deg;
+		--tp-mp-hover-img-left: 64.155px;
+		--tp-mp-hover-img-top: 47.819px;
+		--tp-mp-hover-img-width: 273.52px;
+		--tp-mp-hover-img-height: 217.486px;
+		--tp-mp-hover-img-rotate: -64deg;
+	}
+
+	.tp-child-theme :where(#page-container .tp-materie-card--6) {
+		--tp-mp-hover-img-left: 46.017px;
+		--tp-mp-hover-img-top: -15.291px;
+		--tp-mp-hover-img-width: 309.795px;
+		--tp-mp-hover-img-height: 246.329px;
+		--tp-mp-hover-img-rotate: 2.33deg;
+	}
+
+	/* The olives in their bowl, whole as in the Figma. */
+	.tp-child-theme :where(#page-container .tp-materie-card--2) {
+		--tp-mp-img-fit: contain;
+	}
+
+	/* The tags: dark green, light green while the mouse is on the card, with the icon of each card. */
+	.tp-child-theme :where(#page-container .tp-materie-chip) {
+		--tp-chip-icon: url("../svg/icons/tp-icon-chef-hat.svg");
+		--tp-chip-icon-box: 21.5px;
+		--tp-chip-icon-size: 19.6px 21.4px;
+		background-color: var(--tp-green);
+	}
+
+	.tp-child-theme :where(#page-container .tp-materie-card:hover .tp-materie-chip),
+	.tp-child-theme :where(#page-container .tp-materie-card.is-active .tp-materie-chip) {
+		background-color: var(--tp-lime);
+	}
+
+	.tp-child-theme :where(#page-container .tp-materie-chip .et_pb_text_inner) {
+		gap: 6px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-materie-chip .et_pb_text_inner)::before {
+		width: var(--tp-chip-icon-box);
+		height: var(--tp-chip-icon-box);
+		background: var(--tp-cream);
+		-webkit-mask: var(--tp-chip-icon) center / var(--tp-chip-icon-size) no-repeat;
+		mask: var(--tp-chip-icon) center / var(--tp-chip-icon-size) no-repeat;
+	}
+
+	.tp-child-theme :where(#page-container .tp-materie-card--1 .tp-materie-chip) {
+		--tp-chip-icon: url("../svg/icons/tp-icon-fish-symbol.svg");
+		--tp-chip-icon-box: 25.9px;
+		--tp-chip-icon-size: 24px 24px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-materie-card--2 .tp-materie-chip) {
+		--tp-chip-icon: url("../svg/icons/tp-icon-olive.svg");
+		--tp-chip-icon-box: 18.5px;
+		--tp-chip-icon-size: 16.8px 16.8px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-materie-card--4 .tp-materie-chip) {
+		--tp-chip-icon: url("../svg/icons/tp-icon-leafy-green.svg");
+		--tp-chip-icon-box: 22.2px;
+		--tp-chip-icon-size: 16.8px 16.8px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-materie-card--5 .tp-materie-chip) {
+		--tp-chip-icon: url("../svg/icons/tp-icon-drumstick.svg");
+		--tp-chip-icon-box: 19px;
+		--tp-chip-icon-size: 17.6px 17.6px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-materie-card--6 .tp-materie-chip) {
+		--tp-chip-icon: url("../svg/icons/tp-icon-sprout.svg");
+		--tp-chip-icon-box: 25.9px;
+		--tp-chip-icon-size: 17.1px 17.1px;
+	}
+}
+
+/*
+ * Under the menu: the burgundy of the board goes on in a wave over the cream of Materie prime, a green wave
+ * behind it (two TP Shape Wave modules at the top of the section). In the frame of 1512 px they start at the
+ * edge of the menu; on a wider window they follow its width. With the pointer on it the burgundy wave grows
+ * from the menu, as in the Figma.
+ */
+@media (min-width: 981px) {
+
+	.tp-child-theme :where(.tp-materie-onda) {
+		position: absolute;
+		top: 0;
+		display: block;
+		margin: 0;
+	}
+
+	.tp-child-theme :where(.tp-materie-onda .tp-shape-wave),
+	.tp-child-theme :where(.tp-materie-onda .tp-shape-wave__svg) {
+		width: 100%;
+		height: 100%;
+	}
+
+	.tp-child-theme :where(.tp-materie-onda--verde) {
+		top: 41.33px;
+		left: -128.01px;
+		z-index: 0;
+		width: 1708.03px;
+		height: 202.1px;
+		pointer-events: none;
+	}
+
+	.tp-child-theme :where(.tp-materie-onda--bordeaux) {
+		left: -30.44px;
+		z-index: 1;
+		width: 1524.44px;
+		height: 284.76px;
+	}
+
+	.tp-child-theme :where(.tp-materie-onda--bordeaux .tp-shape-wave) {
+		overflow: visible;
+	}
+
+	/* Upside down (both flips of the module) and, with the pointer on it, 1.29 times as tall from its top edge. */
+	.tp-child-theme :where(.tp-materie-onda--bordeaux .tp-shape-wave--flip-x.tp-shape-wave--flip-y .tp-shape-wave__svg) {
+		transform: translateY(100%) scale(-1, -1);
+		transform-origin: center top;
+		transition: transform 2396ms cubic-bezier(.34, 1.56, .64, 1);
+	}
+
+	.tp-child-theme :where(.tp-materie-onda--bordeaux:hover .tp-shape-wave--flip-x.tp-shape-wave--flip-y .tp-shape-wave__svg) {
+		transform: translateY(128.88%) scale(-1, -1.2888);
+	}
+
+	.tp-child-theme :where(.tp-materie-header),
+	.tp-child-theme :where(.tp-materie-cards) {
+		z-index: 2;
+	}
+
+	/* The phrases of the strip as far apart as in the Figma: one turn (phrase and dot) of 1449.75 px. */
+	.tp-child-theme :where(#page-container .tp-materie-marquee.tp_marquee .tp-marquee__separator) {
+		padding-right: 33.9px;
+		padding-left: 33.9px;
+	}
+}
+
+@media (min-width: 1513px) {
+
+	.tp-child-theme :where(.tp-materie-onda--verde) {
+		left: calc(726px - 50vw - 6.4822vw);
+		width: 112.965vw;
+	}
+
+	.tp-child-theme :where(.tp-materie-onda--bordeaux) {
+		left: calc(726px - 50vw);
+		width: 100.8227vw;
+	}
+}

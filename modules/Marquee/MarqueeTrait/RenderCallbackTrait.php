@@ -161,7 +161,7 @@ trait RenderCallbackTrait {
 			return '';
 		}
 
-		$duration     = max( 8, min( 120, (float) self::get_string( $attrs, 'speed', $is_materie ? '10' : '28' ) ) );
+		$duration     = max( 4, min( 120, (float) self::get_string( $attrs, 'speed', $is_materie ? '5' : '10' ) ) );
 		$pause        = 'on' === self::get_string( $attrs, 'pauseOnHover', $is_materie ? 'off' : 'on' );
 		$shift        = -1 * ( 100 / $repeat_count );
 

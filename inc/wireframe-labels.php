@@ -116,6 +116,8 @@ function tp_child_wireframe_label_map(): array {
 		'tp-menu-price'                   => 'Prezzo',
 		'tp-menu-note'                    => 'Note e allergeni',
 		// Materie prime.
+		'tp-materie-onda--verde'          => 'Onda verde',
+		'tp-materie-onda--bordeaux'       => 'Onda bordeaux',
 		'tp-materie-header'               => 'Intestazione',
 		'tp-materie-title'                => 'Titolo',
 		'tp-materie-desc'                 => 'Testo',
