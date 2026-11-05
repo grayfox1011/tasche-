@@ -50,21 +50,21 @@ function tp_child_wireframe_label_map(): array {
 		'tp-location-row'                 => 'Riga dove siamo',
 		'tp-hours-row'                    => 'Riga orari',
 		// Columns.
-		'tp-intro-media-column'           => 'Colonna mappa',
+		'tp-intro-media-column'           => 'Colonna foto',
 		'tp-intro-copy-column'            => 'Colonna testi',
 		'tp-alberto-copy-column'          => 'Colonna testi',
 		'tp-alberto-photos-column'        => 'Colonna foto',
 		'tp-scelta-scheda--tasca'         => 'Tasca',
 		'tp-scelta-scheda--piatto'        => 'Piatto',
 		'tp-menu-column'                  => 'Colonna menù',
-		'tp-location-map-column'          => 'Colonna mappa',
+		'tp-location-map-column'          => 'Colonna foto',
 		'tp-location-content-column'      => 'Colonna testi',
 		// Hero, striscia, introduzione, Alberto.
 		'tp-hero-title'                   => 'Titolo animato',
 		'tp-hero-button'                  => 'Pulsante',
-		'tp-hero-subline'                 => 'Indirizzo',
+		'tp-hero-subline'                 => 'Sottotitolo',
 		'tp-marquee-module'               => 'Striscia scorrevole',
-		'tp-intro-image'                  => 'Mappa',
+		'tp-intro-image'                  => 'Foto',
 		'tp-intro-title'                  => 'Titolo',
 		'tp-intro-copy'                   => 'Testo',
 		'tp-intro-button'                 => 'Pulsante',
@@ -126,7 +126,7 @@ function tp_child_wireframe_label_map(): array {
 		'tp-materie-card-body'            => 'Testo',
 		'tp-materie-chip'                 => 'Parola in genovese',
 		// Dove siamo, orari.
-		'tp-location-map-frame'           => 'Mappa',
+		'tp-location-map-frame'           => 'Foto',
 		'tp-location-title'               => 'Titolo',
 		'tp-location-text'                => 'Testo',
 		'tp-location-address'             => 'Indirizzo',
@@ -162,11 +162,18 @@ function tp_child_wireframe_proper_names(): array {
 /**
  * Plain text of a piece of the content (a title, a phrase), on one line, without tags; a name all in capitals
  * reads as a sentence ("POLPETTE AL SUGO" -> "Polpette al sugo", "LE ACCIUGHE DI LUCIANO" -> "Le acciughe di
- * Luciano").
+ * Luciano"), also when a note in brackets follows it as typed ("TRIPPA IN UMIDO (di Venerdì)" -> "Trippa in
+ * umido (di Venerdì)").
  */
 function tp_child_wireframe_plain( string $html ): string {
 	$text = (string) preg_replace( '#<br\s*/?>#i', ' ', $html );
 	$text = trim( (string) preg_replace( '/\s+/u', ' ', html_entity_decode( wp_strip_all_tags( $text ), ENT_QUOTES, 'UTF-8' ) ) );
+
+	if ( preg_match( '/^(.*\S)\s*(\([^()]*\))$/u', $text, $note ) && preg_match( '/\p{Lu}/u', $note[1] ) && ! preg_match( '/\p{Ll}/u', $note[1] ) ) {
+		$text = tp_child_wireframe_plain( $note[1] ) . ' ' . $note[2];
+
+		return mb_strlen( $text, 'UTF-8' ) > 60 ? rtrim( mb_substr( $text, 0, 59, 'UTF-8' ) ) . '…' : $text;
+	}
 
 	if ( '' !== $text && ! preg_match( '/\p{Ll}/u', $text ) ) {
 		$text = mb_strtolower( $text, 'UTF-8' );

@@ -15,7 +15,7 @@ function tp_child_chrome_image_definitions( string $module_name ): array {
 
 	if ( 'tp/theme-header' === $module_name ) {
 		return [
-			[ 'logoImage', 'logoUrl', $base . 'svg/logo-tasche-piene-nav.svg' ],
+			[ 'logoImage', 'logoUrl', $base . 'svg/logo-tasche-piene-line.svg' ],
 		];
 	}
 

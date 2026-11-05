@@ -49,7 +49,7 @@ trait RenderCallbackTrait {
 			$attrs,
 			'logoImage',
 			'logoUrl',
-			TP_CHILD_URL . 'assets/svg/logo-tasche-piene-nav.svg',
+			TP_CHILD_URL . 'assets/svg/logo-tasche-piene-line.svg',
 			[
 				'alt' => $logo_alt,
 			]

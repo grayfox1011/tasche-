@@ -516,12 +516,12 @@ function tp_child_seed_header_block(): string {
 			'innerContent' => [ 'desktop' => [ 'value' => '#fef5e9' ] ],
 		],
 		'navLinkColor' => [
-			'innerContent' => [ 'desktop' => [ 'value' => '#054726' ] ],
+			'innerContent' => [ 'desktop' => [ 'value' => '#404040' ] ],
 		],
 		'logoUrl' => [
-			'innerContent' => [ 'desktop' => [ 'value' => TP_CHILD_URL . 'assets/svg/logo-tasche-piene-nav.svg' ] ],
+			'innerContent' => [ 'desktop' => [ 'value' => TP_CHILD_URL . 'assets/svg/logo-tasche-piene-line.svg' ] ],
 		],
-		'logoImage' => tp_child_chrome_seed_image_value( TP_CHILD_URL . 'assets/svg/logo-tasche-piene-nav.svg' ),
+		'logoImage' => tp_child_chrome_seed_image_value( TP_CHILD_URL . 'assets/svg/logo-tasche-piene-line.svg' ),
 		'logoAlt' => [
 			'innerContent' => [ 'desktop' => [ 'value' => 'Tasche Piene' ] ],
 		],

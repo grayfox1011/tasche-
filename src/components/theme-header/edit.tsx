@@ -18,11 +18,11 @@ const moduleClassnames = createModuleClassnames(MODULE_CLASSNAME);
 const ModuleScriptData = createModuleScriptData();
 
 const DEFAULT_NAV: NavPreviewItem[] = [
-	{ title: 'Home', url: '#home' },
-	{ title: 'I tramezzini', url: '#menu' },
-	{ title: 'La nostra idea', url: '#chi-siamo' },
-	{ title: 'Zena', url: '#materie' },
-	{ title: 'Dove siamo', url: '#location' },
+	{ title: 'Chi siamo', url: '#chi-siamo' },
+	{ title: 'Menù', url: '#menu' },
+	{ title: 'Ingredienti', url: '#materie' },
+	{ title: 'Come mangi', url: '#come-mangi' },
+	{ title: 'Dove trovarci', url: '#location' },
 ];
 
 export const ThemeHeaderEdit = (props: ThemeHeaderEditProps): ReactElement => {

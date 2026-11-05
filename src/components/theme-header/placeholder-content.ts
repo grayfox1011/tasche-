@@ -7,7 +7,7 @@ export const placeholderContent: ThemeHeaderAttrs = {
 		innerContent: {
 			desktop: {
 				value: {
-					src: `${ASSET_BASE}/svg/logo-tasche-piene-nav.svg`,
+					src: `${ASSET_BASE}/svg/logo-tasche-piene-line.svg`,
 				},
 			},
 		},

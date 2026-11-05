@@ -125,11 +125,11 @@ add_action( 'after_setup_theme', 'tp_child_register_nav_menus' );
 function tp_child_nav_menu_defaults( string $location ): array {
 	$menus = [
 		'tp_main_nav'     => [
-			[ 'title' => 'Home', 'url' => '#home' ],
-			[ 'title' => 'I tramezzini', 'url' => '#menu' ],
-			[ 'title' => 'La nostra idea', 'url' => '#chi-siamo' ],
-			[ 'title' => 'Zena', 'url' => '#materie' ],
-			[ 'title' => 'Dove siamo', 'url' => '#location' ],
+			[ 'title' => 'Chi siamo', 'url' => '#chi-siamo' ],
+			[ 'title' => 'Menù', 'url' => '#menu' ],
+			[ 'title' => 'Ingredienti', 'url' => '#materie' ],
+			[ 'title' => 'Come mangi', 'url' => '#come-mangi' ],
+			[ 'title' => 'Dove trovarci', 'url' => '#location' ],
 		],
 		'tp_footer_left'  => [
 			[ 'title' => 'MENÙ', 'url' => '#menu' ],
@@ -299,6 +299,7 @@ require_once TP_CHILD_PATH . 'inc/intro-link-migration.php';
 require_once TP_CHILD_PATH . 'inc/wireframe-labels.php';
 require_once TP_CHILD_PATH . 'inc/header-nav-items-migration.php';
 require_once TP_CHILD_PATH . 'inc/footer-nav-items-migration.php';
+require_once TP_CHILD_PATH . 'inc/figma-059-migration.php';
 require_once TP_CHILD_PATH . 'inc/legal-pages.php';
 require_once TP_CHILD_PATH . 'inc/footer-layout-helpers.php';
 require_once TP_CHILD_PATH . 'inc/materie-marquee-migration.php';
@@ -579,6 +580,14 @@ function tp_child_enqueue_assets(): void {
 		TP_CHILD_URL . 'assets/css/tasche-piene.css',
 		[],
 		tp_child_asset_version( 'assets/css/tasche-piene.css' )
+	);
+
+	// The new Figma (0.5.9), after the stylesheet it changes.
+	wp_enqueue_style(
+		'tp-site-figma',
+		TP_CHILD_URL . 'assets/css/tasche-piene-figma.css',
+		[ 'tp-site' ],
+		tp_child_asset_version( 'assets/css/tasche-piene-figma.css' )
 	);
 
 	if ( tp_child_is_visual_builder() ) {

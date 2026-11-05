@@ -13,7 +13,7 @@ import { DynamicText, withoutDynamicContent } from '../../utils/dynamic';
 const MODULE_CLASSNAME = 'tp_marquee';
 
 // A strip without Scritte shows these on the site (RenderCallbackTrait::get_phrases()): the preview too.
-const DEFAULT_PHRASES = ['Stocco ogni giovedì', 'Trippa ogni venerdì', 'Polpette al sugo', 'Le acciughe di Luciano', 'Tasche piene di cucinato'];
+const DEFAULT_PHRASES = ['Stocco ogni giovedì', 'Trippa ogni venerdì', 'Polpette al sugo', 'Acciughe di Luciano', 'Tasche piene di cucinato'];
 const MATERIE_DEFAULT_PHRASES = ['Le cose che finiscono in tasca'];
 
 type PreviewPhrase = { text: string; className: string };

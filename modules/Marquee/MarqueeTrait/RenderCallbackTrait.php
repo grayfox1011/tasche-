@@ -90,7 +90,7 @@ trait RenderCallbackTrait {
 					'Stocco ogni giovedì',
 					'Trippa ogni venerdì',
 					'Polpette al sugo',
-					'Le acciughe di Luciano',
+					'Acciughe di Luciano',
 					'Tasche piene di cucinato',
 				];
 

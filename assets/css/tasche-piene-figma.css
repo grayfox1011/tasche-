@@ -1,0 +1,416 @@
+/*
+ * Tasche Piene — the new Figma (0.5.9).
+ *
+ * The frame "desktop" of the prototype (flow 2, 1512 px wide, MacBook Pro 14") as it is now: what changed
+ * from the Figma the site was made on. It loads after tasche-piene.css and uses the same low specificity
+ * (:where), so the settings changed in Divi still win.
+ *
+ * Measures: px of the 1512 frame. Between 981 and 1512 px they follow the width of the window (the value
+ * in vw is the px one / 15.12), above 1512 they stay as in the frame, like the rest of the site.
+ */
+
+/*
+ * The arrow of the buttons in DM Sans, as in the Figma: the font of the theme has no "→" (it came from another
+ * font). Same family, style and weights as the theme's face, so the two make one font and only "→" comes from here.
+ */
+@font-face {
+	font-family: "TP DM Sans";
+	font-style: normal;
+	font-weight: 100 900;
+	font-display: swap;
+	src: url("../fonts/tp-dm-sans-arrow.woff2") format("woff2");
+	unicode-range: U+2192;
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* Header: the bar 14 px from the top, the logo on one line, the links of the Figma in its grey.    */
+/* ------------------------------------------------------------------------------------------------ */
+
+@media (min-width: 981px) {
+
+	.tp-child-theme :where(.site-header.tp-theme-header) {
+		top: min(14px, 0.926vw);
+	}
+
+	.tp-child-theme :where(.tp-theme-nav-logo img) {
+		height: min(33.38px, 2.2077vw);
+	}
+
+	/* From 440 to 1376 px of the frame: the first link where the Figma has it, the last one 86 px from the end. */
+	.tp-child-theme :where(.tp-theme-nav-links) {
+		justify-content: space-between;
+		width: min(936px, 61.905vw);
+		margin-right: min(54.2px, 3.585vw);
+		gap: 0;
+	}
+
+	.tp-child-theme :where(.tp-theme-nav-links a) {
+		color: var(--tp-nav-link-color, #404040);
+		font-size: clamp(14px, 1.3228vw, 20px);
+	}
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* Hero: the title at 96 px on four lines, "Scopri il menù" in cream and bordeaux, the line under.  */
+/* ------------------------------------------------------------------------------------------------ */
+
+@media (min-width: 981px) {
+
+	/*
+	 * One px of the frame: 1 px at 1512x982 and less on a narrower or lower window, so the title, the button
+	 * and the line under them keep the Figma's proportions and fit in the video (as the site did before).
+	 */
+	.tp-child-theme :where(.tp-hero-section) {
+		--tp-hero-k: min(1px, 0.066138vw, 0.101833vh);
+	}
+
+	/* The stack ends 48 px from the bottom of the video, 50 px from the left of the frame. */
+	.tp-child-theme :where(.tp-hero-section .et_pb_row),
+	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-hero-section .et_pb_row) {
+		top: auto;
+		left: max(calc(50.6 * var(--tp-hero-k)), calc((100vw - var(--tp-page-max)) / 2 + 50.6px));
+		bottom: calc(47.85 * var(--tp-hero-k));
+	}
+
+	.tp-child-theme :where(.tp-hero-title),
+	.tp-child-theme :where(.tp-hero-title h1),
+	.tp-child-theme :where(.tp-hero-title .et_pb_module_header),
+	.tp-child-theme :where(.tp-hero-title .tp-split-text),
+	.tp-child-theme :where(.tp-hero-title .tp-split-text *),
+	.tp-child-theme :where(.tp_split_text .tp-split-text--hero),
+	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-hero-section h1),
+	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-hero-section .tp-hero-title),
+	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-hero-section .tp-split-text--hero),
+	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-hero-section .tp-split-text--hero .tp-split-text__line),
+	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-hero-section .tp-split-text--hero .tp-split-text__line-inner),
+	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-hero-section .tp-hero-title .tp-split-text),
+	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-hero-section .tp-hero-title .tp-split-text *) {
+		color: var(--tp-cream);
+		font-size: calc(96 * var(--tp-hero-k));
+		line-height: calc(100 * var(--tp-hero-k));
+	}
+
+	/* The Figma has the first line 8 px higher than the rhythm of the others. */
+	.tp-child-theme :where(.tp-hero-title .tp-split-text__line:first-child) {
+		margin-bottom: calc(8.1 * var(--tp-hero-k));
+	}
+
+	/* The spaces between title, button and line are the Figma's, not Divi's gap of the column. */
+	.tp-child-theme :where(.tp-hero-section .tp-hero-content > .et_pb_column) {
+		row-gap: 0;
+	}
+
+	.tp-child-theme :where(.tp-hero-section .et_pb_button_module_wrapper) {
+		margin-top: calc(38.4 * var(--tp-hero-k));
+		line-height: 0;
+	}
+
+	.tp-child-theme :where(.tp-hero-button.et_pb_button),
+	.tp-child-theme :where(.tp-hero-button .et_pb_button) {
+		--tp-intro-button-label-width: 217px;
+		--tp-intro-button-arrow-left: 163px;
+		width: 217px;
+		vertical-align: top;
+	}
+
+	.tp-child-theme :where(.tp-hero-button .tp-intro-button__label) {
+		padding-top: 14px;
+		padding-bottom: 14px;
+	}
+
+	.tp-child-theme :where(.tp-hero-button.tp-figma-button--enhanced .tp-intro-button__label),
+	.tp-child-theme :where(.tp-hero-button.tp-figma-button--enhanced .tp-intro-button__arrow) {
+		background-color: var(--tp-cream);
+		background-image: linear-gradient(var(--tp-green), var(--tp-green)), linear-gradient(var(--tp-cream), var(--tp-cream));
+		color: var(--tp-bordeaux);
+	}
+
+	.tp-child-theme :where(.tp-hero-button.tp-figma-button--enhanced:hover .tp-intro-button__label),
+	.tp-child-theme :where(.tp-hero-button.tp-figma-button--enhanced:focus-visible .tp-intro-button__label),
+	.tp-child-theme :where(.tp-hero-button.tp-figma-button--enhanced:hover .tp-intro-button__arrow),
+	.tp-child-theme :where(.tp-hero-button.tp-figma-button--enhanced:focus-visible .tp-intro-button__arrow) {
+		color: var(--tp-cream);
+	}
+
+	.tp-child-theme :where(.tp-hero-subline) {
+		margin: calc(73.55 * var(--tp-hero-k)) 0 0;
+	}
+
+	.tp-child-theme :where(.tp-hero-subline p) {
+		margin: 0;
+	}
+
+	.tp-child-theme :where(.tp-hero-subline),
+	.tp-child-theme :where(.tp-hero-subline .et_pb_text_inner) {
+		color: var(--tp-cream);
+		font-size: calc(24 * var(--tp-hero-k));
+		line-height: calc(26 * var(--tp-hero-k));
+	}
+
+	body.tp-child-theme.tp-child-theme.tp-child-theme :where(.tp-hero-subline) {
+		color: var(--tp-cream);
+	}
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* Introduzione: the photo of Alberto where the Figma has it, the title at 64 px, three paragraphs.  */
+/* ------------------------------------------------------------------------------------------------ */
+
+@media (min-width: 981px) {
+
+	/* Same size and angle as before; the Figma has it 23 px further right and 16 px higher. */
+	.tp-child-theme :where(.tp-intro-image) {
+		translate: 23.3px -16.3px;
+	}
+
+	.tp-child-theme :where(.tp-intro-title),
+	.tp-child-theme :where(.tp-intro-title h2),
+	.tp-child-theme :where(.tp-intro-title .et_pb_module_header) {
+		font-size: 64px;
+		line-height: 64px;
+	}
+
+	/* Divi zeroes the margins of the modules in a column with a stronger rule: four classes, as the theme does. */
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(.tp-intro-title) {
+		margin: -1.4px 0 17.4px;
+	}
+
+	/* 700.5 px instead of the 701 of the Figma: DM Sans comes out a hair narrower in the browser. */
+	.tp-child-theme :where(.tp-intro-copy) {
+		max-width: 700.5px;
+	}
+
+	/* A blank line between the paragraphs, as the Figma's text has. */
+	.tp-child-theme :where(.tp-intro-copy p + p) {
+		margin-top: 28px;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(.tp-intro-copy) {
+		margin: 0;
+	}
+
+	.tp-child-theme :where(#page-container .tp-intro-section .et_pb_button_module_wrapper) {
+		margin-top: 35px;
+	}
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* Alberto: the title at 64 px, the text a line lower, the photos of the pot and of the tomatoes.   */
+/* ------------------------------------------------------------------------------------------------ */
+
+@media (min-width: 981px) {
+
+	/* The section starts with the photo of the tomatoes, 153 px under the button of the introduction. */
+	.tp-child-theme :where(.tp-alberto-section.et_pb_section) {
+		margin-top: 94px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-alberto-section .tp-alberto-copy-column) {
+		row-gap: 0;
+		top: 27.05px;
+		width: 702.2px;
+		max-width: 702.2px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-alberto-title .et_pb_module_header),
+	.tp-child-theme :where(.tp-alberto-title h2) {
+		font-size: 64px;
+		line-height: 65.7px;
+	}
+
+	/* "com'era una volta." is 743 px long, wider than the text under it: the title has its own width. */
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-alberto-title) {
+		width: 760px;
+		max-width: none;
+		margin: 0 0 24.35px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-alberto-copy),
+	.tp-child-theme :where(#page-container .tp-alberto-copy .et_pb_text_inner),
+	.tp-child-theme :where(.tp-alberto-copy p) {
+		max-width: 702.2px;
+		font-size: 20px;
+		line-height: 27.8px;
+	}
+
+	.tp-child-theme :where(.tp-alberto-copy p + p) {
+		margin-top: 27.8px;
+	}
+
+	/* The photos over the whole row, each where the Figma has it (they turn around their top left corner, as there). */
+	.tp-child-theme :where(#page-container .tp-alberto-section .tp-alberto-photos-column) {
+		left: 0;
+		width: 100%;
+		max-width: none;
+	}
+
+	/* No shadow in the Figma. */
+	.tp-child-theme :where(.tp-alberto-photo-main),
+	.tp-child-theme :where(.tp-alberto-photo-sub) {
+		box-shadow: none;
+	}
+
+	.tp-child-theme :where(#page-container .tp-alberto-photo-main) {
+		left: 884px;
+		top: 248.5px;
+		width: 525.1px;
+		height: 350.4px;
+		border-radius: 20px;
+		transform: rotate(-3.99deg);
+	}
+
+	.tp-child-theme :where(#page-container .tp-alberto-photo-sub) {
+		left: 1021.4px;
+		top: 4px;
+		width: 358.9px;
+		height: 239.3px;
+		border-radius: 20px;
+		transform: rotate(5.14deg);
+	}
+
+	/* The cream frame of the small photo, inside it. */
+	.tp-child-theme :where(#page-container .tp-alberto-photo-sub .et_pb_image_wrap) {
+		box-sizing: border-box;
+		border: 6px solid var(--tp-cream);
+		border-radius: 20px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-alberto-photo-main .et_pb_image_wrap) {
+		border-radius: 20px;
+	}
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* Tasca o piatto: the board (1263 px, waves on top) from the green wave of the Figma, 2607 px.     */
+/* ------------------------------------------------------------------------------------------------ */
+
+@media (min-width: 981px) {
+
+	.tp-child-theme :where(.tp-scelta.et_pb_section) {
+		margin-top: 4px;
+	}
+}
+
+@media (min-width: 981px) {
+
+	/* The title at 96 px on three lines, without full stops, as in the Figma. */
+	.tp-child-theme :where(.tp-scelta-titolo) {
+		top: 311.4px;
+	}
+
+	.tp-child-theme :where(.tp-scelta-titolo h2) {
+		font-size: 96px;
+		line-height: 106.8px;
+	}
+
+	.tp-child-theme :where(.tp-scelta-nome .et_pb_module_header) {
+		font-size: 37.5px;
+		line-height: 37.575px;
+	}
+
+	.tp-child-theme :where(.tp-scelta-chip) {
+		margin-top: 19.3px;
+	}
+
+	/* The features: rounded tags in Bowlby One, each with its icon (Lucide) as in the Figma. */
+	.tp-child-theme :where(.tp-scelta-chip .et_pb_text_inner) {
+		font-family: var(--tp-font-display, "TP Bowlby One", Impact, sans-serif);
+		font-size: 14.93px;
+		line-height: 23px;
+		letter-spacing: 0;
+	}
+
+	.tp-child-theme :where(.tp-scelta-chip li) {
+		gap: 11.2px;
+		height: 23px;
+		padding: 0 13.06px;
+		border-radius: 9.33px;
+		line-height: 23px;
+	}
+
+	.tp-child-theme :where(.tp-scelta-chip li)::before {
+		content: "";
+		flex: 0 0 auto;
+		width: 19.6px;
+		height: 21.4px;
+		background-color: currentColor;
+		-webkit-mask: var(--tp-chip-icon) center / contain no-repeat;
+		mask: var(--tp-chip-icon) center / contain no-repeat;
+		opacity: 1;
+	}
+
+	.tp-child-theme :where(.tp-scelta-scheda--tasca .tp-scelta-chip li:nth-child(1)) {
+		--tp-chip-icon: url("../svg/icons/tp-icon-astroid.svg");
+		gap: 5px;
+	}
+
+	.tp-child-theme :where(.tp-scelta-scheda--tasca .tp-scelta-chip li:nth-child(1))::before {
+		width: 25.9px;
+		height: 25.9px;
+		-webkit-mask-size: 24px 24px;
+		mask-size: 24px 24px;
+	}
+
+	.tp-child-theme :where(.tp-scelta-scheda--tasca .tp-scelta-chip li:nth-child(2)) {
+		--tp-chip-icon: url("../svg/icons/tp-icon-chef-hat.svg");
+	}
+
+	.tp-child-theme :where(.tp-scelta-scheda--tasca .tp-scelta-chip li:nth-child(3)) {
+		--tp-chip-icon: url("../svg/icons/tp-icon-cooking-pot.svg");
+	}
+
+	.tp-child-theme :where(.tp-scelta-scheda--tasca .tp-scelta-chip li:nth-child(2))::before,
+	.tp-child-theme :where(.tp-scelta-scheda--tasca .tp-scelta-chip li:nth-child(3))::before {
+		width: 21.5px;
+		height: 23.2px;
+		-webkit-mask-size: 19.6px 21.4px;
+		mask-size: 19.6px 21.4px;
+	}
+
+	/* At least as long as the tags of the Figma (a longer text makes them longer). */
+	.tp-child-theme :where(.tp-scelta-scheda--tasca .tp-scelta-chip li:nth-child(1)) { min-width: 223px; }
+	.tp-child-theme :where(.tp-scelta-scheda--tasca .tp-scelta-chip li:nth-child(2)) { min-width: 165px; }
+	.tp-child-theme :where(.tp-scelta-scheda--tasca .tp-scelta-chip li:nth-child(3)) { min-width: 200px; }
+	.tp-child-theme :where(.tp-scelta-scheda--piatto .tp-scelta-chip li:nth-child(1)) { min-width: 223.5px; }
+	.tp-child-theme :where(.tp-scelta-scheda--piatto .tp-scelta-chip li:nth-child(2)) { min-width: 167.1px; }
+
+	.tp-child-theme :where(.tp-scelta-scheda--piatto .tp-scelta-chip .et_pb_text_inner) {
+		font-size: 14.26px;
+		line-height: 22px;
+	}
+
+	.tp-child-theme :where(.tp-scelta-scheda--piatto .tp-scelta-chip li) {
+		gap: 10.69px;
+		height: 22px;
+		padding: 0 12.48px;
+		border-radius: 8.91px;
+		line-height: 22px;
+	}
+
+	.tp-child-theme :where(.tp-scelta-scheda--piatto .tp-scelta-chip li:nth-child(1)) {
+		--tp-chip-icon: url("../svg/icons/tp-icon-proportions.svg");
+	}
+
+	.tp-child-theme :where(.tp-scelta-scheda--piatto .tp-scelta-chip li:nth-child(1))::before {
+		width: 19.6px;
+		height: 19.6px;
+	}
+
+	.tp-child-theme :where(.tp-scelta-scheda--piatto .tp-scelta-chip li:nth-child(2)) {
+		--tp-chip-icon: url("../svg/icons/tp-icon-shopping-bag.svg");
+	}
+
+	.tp-child-theme :where(.tp-scelta-scheda--piatto .tp-scelta-chip li:nth-child(2))::before {
+		width: 17.1px;
+		height: 17.1px;
+	}
+
+	.tp-child-theme :where(.tp-scelta-scheda--piatto .tp-scelta-chip li:nth-child(3)) {
+		--tp-chip-icon: url("../svg/icons/tp-icon-salad.svg");
+	}
+
+	.tp-child-theme :where(.tp-scelta-scheda--piatto .tp-scelta-chip li:nth-child(3))::before {
+		width: 20.2px;
+		height: 20.2px;
+	}
+}
