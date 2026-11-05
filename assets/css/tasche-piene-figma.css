@@ -2395,3 +2395,235 @@
 		content: "-";
 	}
 }
+
+/* ------------------------------------------------------------------------------------------------ */
+/* Tablets (768-980 px, no frame in the new Figma): the footer of the computer in one column, the    */
+/* six links on as many lines as they need without breaking a word, the couple and the pigeons on   */
+/* the logo as on computer and phone, the copyright with Privacy-Cookie joined.                     */
+/* ------------------------------------------------------------------------------------------------ */
+
+@media (min-width: 768px) and (max-width: 980px) {
+
+	.tp-child-theme :where(.tp-theme-footer-nav) {
+		flex-wrap: wrap;
+		row-gap: 14px;
+	}
+
+	.tp-child-theme :where(.tp-theme-footer-nav-col) {
+		flex-wrap: wrap;
+		row-gap: 14px;
+	}
+
+	.tp-child-theme :where(.tp-theme-footer-nav a) {
+		white-space: nowrap;
+	}
+
+	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-characters) {
+		position: absolute;
+		top: 0;
+		right: clamp(16px, 4.8vw, 40px);
+		left: clamp(16px, 4.8vw, 40px);
+		display: block;
+		width: auto;
+		height: 0;
+		margin: 0;
+		pointer-events: none;
+	}
+
+	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-character-slot) {
+		position: absolute;
+		top: 0;
+		height: auto;
+	}
+
+	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-character-slot img) {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+
+	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-character-slot--four) {
+		left: 35.256%;
+		width: 14.536%;
+		margin-top: -9.334%;
+	}
+
+	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-character-slot--one) {
+		left: 81.387%;
+		width: 9.792%;
+		margin-top: -6.426%;
+	}
+
+	.tp-child-theme :where(.tp-theme-footer-copyright) {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 18px 38px;
+	}
+
+	.tp-child-theme :where(.tp-theme-footer-copyright > span) {
+		white-space: nowrap;
+	}
+
+	.tp-child-theme :where(.tp-theme-footer-copyright > span:first-child),
+	.tp-child-theme :where(.tp-theme-footer-copyright > span:last-child) {
+		flex: 0 0 100%;
+	}
+
+	.tp-child-theme :where(.tp-theme-footer-copyright > span:nth-child(3) + span:nth-child(4)) {
+		margin-left: -38px;
+	}
+
+	.tp-child-theme :where(.tp-theme-footer-copyright > span:nth-child(3) + span:nth-child(4))::before {
+		content: "-";
+	}
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* Tablets: the features of "La tasca ripiena" and "Il piatto" as on the computer, at the size of    */
+/* the card (its photo is 41.67 vw wide against 630.2 px on the computer: one px = 0.06612 vw); the  */
+/* three of a card fit on its line instead of the third being cut.                                    */
+/* ------------------------------------------------------------------------------------------------ */
+
+@media (min-width: 768px) and (max-width: 980px) {
+
+	.tp-child-theme :where(.tp-scelta-chip .et_pb_text_inner) {
+		font-family: var(--tp-font-display, "TP Bowlby One", Impact, sans-serif);
+		font-size: calc(14.93 * .06612vw);
+		line-height: calc(23 * .06612vw);
+		letter-spacing: 0;
+	}
+
+	.tp-child-theme.tp-child-theme :where(.tp-scelta-chip ul) {
+		flex-wrap: nowrap;
+		gap: calc(10 * .06612vw);
+	}
+
+	.tp-child-theme :where(.tp-scelta-chip li) {
+		gap: calc(11.2 * .06612vw);
+		height: calc(23 * .06612vw);
+		padding: 0 calc(13.06 * .06612vw);
+		border-radius: calc(9.33 * .06612vw);
+		line-height: calc(23 * .06612vw);
+	}
+
+	.tp-child-theme :where(.tp-scelta-scheda--piatto .tp-scelta-chip .et_pb_text_inner) {
+		font-size: calc(14.26 * .06612vw);
+		line-height: calc(22 * .06612vw);
+	}
+
+	.tp-child-theme :where(.tp-scelta-scheda--piatto .tp-scelta-chip li) {
+		gap: calc(10.69 * .06612vw);
+		height: calc(22 * .06612vw);
+		padding: 0 calc(12.48 * .06612vw);
+		border-radius: calc(8.91 * .06612vw);
+		line-height: calc(22 * .06612vw);
+	}
+
+	.tp-child-theme :where(.tp-scelta-scheda--tasca .tp-scelta-chip li:nth-child(1)) {
+		--tp-chip-icon: url("../svg/icons/tp-icon-astroid.svg");
+		gap: calc(5 * .06612vw);
+	}
+
+	.tp-child-theme :where(.tp-scelta-scheda--tasca .tp-scelta-chip li:nth-child(2)) {
+		--tp-chip-icon: url("../svg/icons/tp-icon-chef-hat.svg");
+	}
+
+	.tp-child-theme :where(.tp-scelta-scheda--tasca .tp-scelta-chip li:nth-child(3)) {
+		--tp-chip-icon: url("../svg/icons/tp-icon-cooking-pot.svg");
+	}
+
+	.tp-child-theme :where(.tp-scelta-scheda--piatto .tp-scelta-chip li:nth-child(1)) {
+		--tp-chip-icon: url("../svg/icons/tp-icon-proportions.svg");
+	}
+
+	.tp-child-theme :where(.tp-scelta-scheda--piatto .tp-scelta-chip li:nth-child(2)) {
+		--tp-chip-icon: url("../svg/icons/tp-icon-shopping-bag.svg");
+	}
+
+	.tp-child-theme :where(.tp-scelta-scheda--piatto .tp-scelta-chip li:nth-child(3)) {
+		--tp-chip-icon: url("../svg/icons/tp-icon-salad.svg");
+	}
+
+	.tp-child-theme :where(.tp-scelta-chip li:nth-child(-n+3))::before {
+		content: "";
+		flex: 0 0 auto;
+		width: calc(21.5 * .06612vw);
+		height: calc(23.2 * .06612vw);
+		background-color: currentColor;
+		-webkit-mask: var(--tp-chip-icon) center / calc(19.6 * .06612vw) calc(21.4 * .06612vw) no-repeat;
+		mask: var(--tp-chip-icon) center / calc(19.6 * .06612vw) calc(21.4 * .06612vw) no-repeat;
+		font-size: 0;
+		opacity: 1;
+	}
+
+	.tp-child-theme :where(.tp-scelta-scheda--tasca .tp-scelta-chip li:nth-child(1))::before {
+		width: calc(25.9 * .06612vw);
+		height: calc(25.9 * .06612vw);
+		-webkit-mask-size: calc(24 * .06612vw) calc(24 * .06612vw);
+		mask-size: calc(24 * .06612vw) calc(24 * .06612vw);
+	}
+
+	.tp-child-theme :where(.tp-scelta-scheda--piatto .tp-scelta-chip li:nth-child(1))::before {
+		width: calc(19.6 * .06612vw);
+		height: calc(19.6 * .06612vw);
+		-webkit-mask-size: contain;
+		mask-size: contain;
+	}
+
+	.tp-child-theme :where(.tp-scelta-scheda--piatto .tp-scelta-chip li:nth-child(2))::before {
+		width: calc(17.1 * .06612vw);
+		height: calc(17.1 * .06612vw);
+		-webkit-mask-size: contain;
+		mask-size: contain;
+	}
+
+	.tp-child-theme :where(.tp-scelta-scheda--piatto .tp-scelta-chip li:nth-child(3))::before {
+		width: calc(20.2 * .06612vw);
+		height: calc(20.2 * .06612vw);
+		-webkit-mask-size: contain;
+		mask-size: contain;
+	}
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* Computer between 981 and 1511 px: "Dove siamo" and the opening hours are the Figma's 1512 px      */
+/* board scaled to the window (--tp-fit-scale), as Materie prime and the footer; their texts do not  */
+/* run out of the window any more.                                                                     */
+/* ------------------------------------------------------------------------------------------------ */
+
+@media (min-width: 981px) and (max-width: 1511px) {
+
+	.tp-child-theme :where(html body.tp-child-theme:not(.et-fb) #page-container .tp-location-section.et_pb_section) {
+		height: calc(995px * var(--tp-fit-scale, 1));
+		min-height: calc(995px * var(--tp-fit-scale, 1));
+		overflow: hidden;
+	}
+
+	body.tp-child-theme :where(html body.tp-child-theme:not(.et-fb) #page-container .tp-location-section.et_pb_section) {
+		padding-top: calc(200px * var(--tp-fit-scale, 1));
+	}
+
+	.tp-child-theme.tp-child-theme :where(html body.tp-child-theme:not(.et-fb) #page-container .tp-location-section .et_pb_row.tp-location-row) {
+		width: 1452px;
+		max-width: 1452px;
+		margin: 0;
+		margin-left: max(30px, calc((100vw - 1452px * var(--tp-fit-scale, 1)) / 2));
+	}
+
+	.tp-child-theme :where(html body.tp-child-theme:not(.et-fb) #page-container .tp-location-section .et_pb_row.tp-location-row) {
+		transform: scale(var(--tp-fit-scale, 1));
+		transform-origin: top left;
+	}
+
+	.tp-child-theme :where(html body.tp-child-theme:not(.et-fb) #page-container .tp-hours-section.et_pb_section) {
+		height: calc(821px * var(--tp-fit-scale, 1));
+		min-height: calc(821px * var(--tp-fit-scale, 1));
+		overflow: hidden;
+	}
+
+	.tp-child-theme :where(html body.tp-child-theme:not(.et-fb) #page-container .tp-hours-section .et_pb_row.tp-hours-row) {
+		translate: calc(-47px * var(--tp-fit-scale, 1)) 0;
+		transform: scale(var(--tp-fit-scale, 1));
+		transform-origin: center;
+	}
+}
