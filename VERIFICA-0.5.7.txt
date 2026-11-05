@@ -1,4 +1,74 @@
-TASCHE PIENE — VERSIONE 0.5.6, CANDIDATA AL COLLAUDO
+TASCHE PIENE — VERSIONE 0.5.7, CANDIDATA AL COLLAUDO
+
+La 0.5.7 rende modificabili da Divi le voci del menu in alto (le ancore
+dell'header: Home, I tramezzini, La nostra idea, Zena, Dove siamo). Fino alla
+0.5.6 venivano dal menu WordPress "Tasche Piene — Header" (Aspetto > Menu) e
+nel Theme Builder non si potevano cambiare. L'aspetto del sito non cambia. Le
+note delle versioni precedenti, piu' in basso, restano valide.
+
+COSA CAMBIA RISPETTO ALLA 0.5.6
+- Voci del menu in alto: nel Theme Builder, Header Globale > Header sito >
+  Contenuto > Elementi c'e' una "Voce del menu" per link, con Testo, Link o
+  ancora (#home, #chi-siamo, #menu, #materie, #location, #orari oppure un
+  indirizzo) e Apri in una nuova scheda. Si aggiungono con "Add Voce del
+  menu", si duplicano, si tolgono e si riordinano trascinandole; l'header nel
+  builder si aggiorna mentre si scrive. Valgono anche per il menu del
+  telefono. Lo stesso elenco si apre anche dal Visual Builder di una pagina
+  (Header sito nell'intestazione).
+- Nell'elenco ogni voce si chiama "Voce: <testo>": il nome segue il testo
+  alla prossima apertura del builder, come i piatti ("Piatto: ...") della
+  0.5.6. I nomi si aggiornano ora anche nei layout del Theme Builder.
+- Aggiornamento: alla prima richiesta l'header del Theme Builder riceve una
+  voce per ogni link che mostra oggi (stesse scritte, stessi link); l'HTML
+  dell'header resta identico. Da li' il menu WordPress "Tasche Piene —
+  Header" non cambia piu' il sito: resta di riserva, se a Header sito si
+  tolgono tutte le voci. I due menu del footer si cambiano ancora da
+  Aspetto > Menu. "Crea/aggiorna home" ricrea l'header con le voci del menu
+  WordPress.
+
+VERIFICHE EFFETTUATE SULLA 0.5.7
+- Builder (Divi 5.15.1, in italiano), dal Visual Builder di una pagina e dal
+  Theme Builder (Header Globale, matita): in Header sito > Elementi ci sono
+  le cinque voci ("Voce: Home"...), ognuna con Testo, Link o ancora e Apri
+  in una nuova scheda. Cambiato "Home" in "Casa": l'header nel builder si
+  aggiorna subito e, salvato, il sito mostra "Casa". Aggiunta una voce
+  "Orari" (#orari) e una lasciata com'e' ("Nuova voce", #home): compaiono in
+  fondo al menu nel builder e sul sito. Eliminata una voce e trascinata
+  "Zena" in testa: il sito segue. Alla riapertura del builder i nomi
+  nell'elenco seguono i testi ("Voce: Casa", "Voce: Orari").
+- Aggiornamento dell'header: le voci nate dalla migrazione hanno le stesse
+  scritte e gli stessi link del menu WordPress, e l'HTML dell'header e'
+  identico a prima, carattere per carattere, sulla home, sulla Privacy Policy
+  e su altre pagine (dove le ancore portano alla home). Home identica al pixel
+  a 9 larghezze su 10 tra 1920 e 320 px; a 1920 px solo la foto delle card
+  Materie arrivata o no in tempo per lo scatto, come nelle prove precedenti.
+- "Crea/aggiorna home": l'header che crea ha le cinque voci del menu
+  WordPress.
+- Aggiornamento caricando lo zip da wp-admin su copie con la 0.5.6 e la
+  0.4.9: alla prima richiesta l'header del Theme Builder riceve le cinque
+  voci (Home > #home, I tramezzini > #menu, La nostra idea > #chi-siamo,
+  Zena > #materie, Dove siamo > #location); HTML dell'header identico prima e
+  dopo; la home e' quella prevista (dalla 0.5.6 non cambia, dalla 0.4.9
+  passa per i passaggi delle versioni precedenti e i nomi, come nella
+  0.5.6); una seconda richiesta non cambia niente; nessun errore PHP. Sulla
+  copia con la 0.5.6 la home e' identica al pixel prima e dopo
+  l'aggiornamento a 8 larghezze tra 1920 e 320 px.
+
+INSTALLAZIONE DELLO ZIP
+Provata caricando lo zip da wp-admin (Aspetto > Temi > Carica tema) su copie
+del sito di prova con la 0.5.6 e la 0.4.9. WordPress sostituisce il tema senza
+errori.
+
+NON PROVATI
+- Safari e un iPhone veri, un database MySQL e il video di sfondo nel
+  builder, come per la 0.5.6.
+- Un menu WordPress dell'header con voci annidate o con attributi "rel" o
+  classi CSS: le voci create dalla migrazione prendono scritta, link e nuova
+  scheda (come mostrava l'header); il menu di oggi non ne ha.
+
+==============================================================================
+
+NOTE DELLA 0.5.6
 
 La 0.5.6 rende piu' facile trovare dove modificare: nel Visual Builder ogni
 parte della home ha un nome che dice cos'e' ("Menù", "Piatto: Polpette al

@@ -163,6 +163,73 @@ function tp_child_chrome_resolve_nav_items( array $attrs, string $prefix, int $c
 }
 
 /**
+ * The links of the menu at the top when nothing else gives them (no Voci in Header sito, no WordPress menu).
+ */
+function tp_child_header_default_nav_items(): array {
+	return [
+		[ 'title' => 'Home', 'url' => '#home', 'target' => '', 'xfn' => '' ],
+		[ 'title' => 'I tramezzini', 'url' => '#menu', 'target' => '', 'xfn' => '' ],
+		[ 'title' => 'La nostra idea', 'url' => '#chi-siamo', 'target' => '', 'xfn' => '' ],
+		[ 'title' => 'Zena', 'url' => '#materie', 'target' => '', 'xfn' => '' ],
+		[ 'title' => 'Dove siamo', 'url' => '#location', 'target' => '', 'xfn' => '' ],
+	];
+}
+
+/**
+ * A field of a Voce as saved, or the default of its module.json when Divi did not save it (a field never
+ * changed); a field emptied by hand stays empty.
+ */
+function tp_child_header_nav_item_value( array $attrs, string $key, string $default ): string {
+	$value = $attrs[ $key ]['innerContent']['desktop']['value'] ?? ( $attrs[ $key ]['desktop']['value'] ?? null );
+
+	return is_string( $value ) ? trim( $value ) : $default;
+}
+
+/**
+ * The links of the menu at the top from the Voci of a Header sito block (0.5.7: Header sito > Voci del menu),
+ * in their order; a Voce without text is left out. Null when the block has no Voci: then the menu comes from
+ * the WordPress menu, as before.
+ */
+function tp_child_header_nav_items_from_block( array $parsed_block ): ?array {
+	$items = null;
+
+	foreach ( $parsed_block['innerBlocks'] ?? [] as $inner_block ) {
+		if ( 'tp/header-nav-item' !== ( $inner_block['blockName'] ?? '' ) ) {
+			continue;
+		}
+
+		$items  = $items ?? [];
+		$attrs  = is_array( $inner_block['attrs'] ?? null ) ? $inner_block['attrs'] : [];
+		$title  = tp_child_header_nav_item_value( $attrs, 'text', 'Nuova voce' );
+		$url    = tp_child_header_nav_item_value( $attrs, 'link', '#home' );
+		$target = 'on' === tp_child_header_nav_item_value( $attrs, 'target', 'off' ) ? '_blank' : '';
+
+		if ( '' === $title ) {
+			continue;
+		}
+
+		$items[] = (object) [
+			'title'  => $title,
+			'url'    => '' !== $url ? $url : '#',
+			'target' => $target,
+			'xfn'    => '',
+		];
+	}
+
+	return $items;
+}
+
+/**
+ * The links Header sito shows today without Voci: the WordPress menu of its location, the old fields of the
+ * module, the default links (the order of tp_child_chrome_resolve_nav_items()).
+ */
+function tp_child_header_nav_items_without_voci( array $attrs ): array {
+	$location = sanitize_key( tp_child_chrome_get_string( $attrs, 'menuLocation', 'tp_main_nav' ) );
+
+	return tp_child_chrome_resolve_nav_items( $attrs, 'navItem', 6, $location, tp_child_header_default_nav_items() );
+}
+
+/**
  * Serialize nav items for the Visual Builder preview.
  */
 function tp_child_chrome_nav_items_as_arrays( string $location ): array {

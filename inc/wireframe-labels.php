@@ -10,8 +10,9 @@
  * of the sections ("Marquee Verde", "Location"...) become the ones of the guide. The labels that older versions
  * wrote where Divi does not read them (module.advanced.meta) move to module.meta.
  *
- * The names made from the content ("Piatto: ...", "Card: ...", "Giorno: ...", "Scritta: ...") follow it: every
- * time the builder opens a page, a dish renamed or copied from another one shows its own name, and a piece added
+ * The names made from the content ("Piatto: ...", "Card: ...", "Giorno: ...", "Scritta: ...", "Voce: ..." for the
+ * links of the menu at the top) follow it: every time the builder opens a page or the header of the Theme
+ * Builder, a dish renamed or copied from another one shows its own name, and a piece added
  * by hand with one of the theme's classes (a photo on the hover of a dish) gets its name; the page keeps them when
  * the owner saves. Divi does the same with its own updates of the content (on load, not on save: the builder
  * checks that the page saved is the one it sent).
@@ -216,6 +217,12 @@ function tp_child_wireframe_label( array $block, array $ancestors ): string {
 		return '' !== $phrase ? 'Scritta: ' . $phrase : 'Scritta';
 	}
 
+	if ( 'tp/header-nav-item' === ( $block['blockName'] ?? '' ) ) {
+		$text = tp_child_wireframe_plain( tp_child_header_nav_item_value( $attrs, 'text', 'Nuova voce' ) );
+
+		return '' !== $text ? 'Voce: ' . $text : 'Voce';
+	}
+
 	if ( in_array( 'tp-menu-row', $classes, true ) ) {
 		$kind = 'Piatto';
 
@@ -264,11 +271,11 @@ function tp_child_wireframe_label( array $block, array $ancestors ): string {
  * label is one of those names made by the theme: those follow the text; any other label the owner wrote stays.
  */
 function tp_child_wireframe_named_by_content( array $block, array $classes ): bool {
-	return 'tp/marquee-item' === ( $block['blockName'] ?? '' ) || [] !== array_intersect( [ 'tp-menu-row', 'tp-materie-card', 'tp-hours-item' ], $classes );
+	return in_array( $block['blockName'] ?? '', [ 'tp/marquee-item', 'tp/header-nav-item' ], true ) || [] !== array_intersect( [ 'tp-menu-row', 'tp-materie-card', 'tp-hours-item' ], $classes );
 }
 
 function tp_child_wireframe_is_content_name( string $label ): bool {
-	return 1 === preg_match( '/^(?:Piatto|Contorno|Dolce|Bevanda|Card|Giorno|Scritta)(?:: |$)/u', $label );
+	return 1 === preg_match( '/^(?:Piatto|Contorno|Dolce|Bevanda|Card|Giorno|Scritta|Voce)(?:: |$)/u', $label );
 }
 
 /**
@@ -375,7 +382,9 @@ function tp_child_migrate_wireframe_labels(): void {
 add_action( 'init', 'tp_child_migrate_wireframe_labels', 40 );
 
 /**
- * The content the builder opens, with the names up to date (any page with the theme's pieces).
+ * The content the builder opens, with the names up to date: any page with the theme's pieces and the
+ * header and footer of the Theme Builder (Divi runs this filter on both, before its own updates of the
+ * content are used).
  *
  * @param mixed $content Raw post content for the builder.
  * @return mixed
@@ -384,4 +393,4 @@ function tp_child_wireframe_labels_for_builder( $content ) {
 	return is_string( $content ) && false !== strpos( $content, 'tp-' ) ? tp_child_wireframe_labels_transform( $content ) : $content;
 }
 
-add_filter( 'divi_visual_builder_settings_data_post_content', 'tp_child_wireframe_labels_for_builder', 20 );
+add_filter( 'et_fb_load_raw_post_content', 'tp_child_wireframe_labels_for_builder', 20 );

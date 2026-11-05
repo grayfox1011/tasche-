@@ -14,6 +14,7 @@ use TaschePieneDiviChild\Modules\FooterCopyrightLine\FooterCopyrightLine;
 use TaschePieneDiviChild\Modules\FooterDecor\FooterDecor;
 use TaschePieneDiviChild\Modules\FooterLogo\FooterLogo;
 use TaschePieneDiviChild\Modules\FooterNavItem\FooterNavItem;
+use TaschePieneDiviChild\Modules\HeaderNavItem\HeaderNavItem;
 use TaschePieneDiviChild\Modules\Marquee\Marquee;
 use TaschePieneDiviChild\Modules\MarqueeItem\MarqueeItem;
 use TaschePieneDiviChild\Modules\ShapeWave\ShapeWave;
@@ -29,6 +30,7 @@ add_action(
 		$dependency_tree->add_dependency( new MarqueeItem() );
 		$dependency_tree->add_dependency( new ShapeWave() );
 		$dependency_tree->add_dependency( new ThemeHeader() );
+		$dependency_tree->add_dependency( new HeaderNavItem() );
 		$dependency_tree->add_dependency( new ThemeFooter() );
 
 		// Footer child modules (modular, parent = tp/theme-footer).

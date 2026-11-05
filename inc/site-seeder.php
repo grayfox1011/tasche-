@@ -540,7 +540,12 @@ function tp_child_seed_header_block(): string {
 		'builderVersion' => TP_CHILD_SEED_BUILDER_VERSION,
 	];
 
-	return tp_child_seed_block_single( 'tp/theme-header', $attrs );
+	// The links of the menu as Voci of Header sito (Contenuto > Elementi), from the menu the site has.
+	$voci = tp_child_header_nav_item_blocks( tp_child_header_nav_items_without_voci( $attrs ), TP_CHILD_SEED_BUILDER_VERSION );
+
+	return '' !== $voci
+		? tp_child_seed_block_open( 'tp/theme-header', $attrs ) . $voci . tp_child_seed_block_close( 'tp/theme-header' )
+		: tp_child_seed_block_single( 'tp/theme-header', $attrs );
 }
 
 function tp_child_seed_footer_block(): string {

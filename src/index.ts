@@ -6,6 +6,7 @@ import { marquee } from './components/marquee';
 import { marqueeItem } from './components/marquee-item';
 import { shapeWave } from './components/shape-wave';
 import { themeHeader } from './components/theme-header';
+import { headerNavItem } from './components/header-nav-item';
 import { themeFooter } from './components/theme-footer';
 import { footerCharacter } from './components/footer-character';
 import { footerLogo } from './components/footer-logo';
@@ -20,6 +21,7 @@ addAction('divi.moduleLibrary.registerModuleLibraryStore.after', 'taschePieneChi
 		marquee,
 		shapeWave,
 		themeHeader,
+		headerNavItem,
 		themeFooter,
 		footerCharacter,
 		footerLogo,

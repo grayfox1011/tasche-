@@ -31,20 +31,10 @@ trait RenderCallbackTrait {
 		$burger_open_label  = esc_attr( tp_child_chrome_get_string( $attrs, 'burgerOpenLabel', 'Apri menu' ) );
 		$burger_close_label = esc_attr( tp_child_chrome_get_string( $attrs, 'burgerCloseLabel', 'Chiudi menu' ) );
 
-		$menu_location = sanitize_key( tp_child_chrome_get_string( $attrs, 'menuLocation', 'tp_main_nav' ) );
-		$nav_items     = tp_child_chrome_resolve_nav_items(
-			$attrs,
-			'navItem',
-			6,
-			$menu_location,
-			[
-				[ 'title' => 'Home', 'url' => '#home', 'target' => '', 'xfn' => '' ],
-				[ 'title' => 'I tramezzini', 'url' => '#menu', 'target' => '', 'xfn' => '' ],
-				[ 'title' => 'La nostra idea', 'url' => '#chi-siamo', 'target' => '', 'xfn' => '' ],
-				[ 'title' => 'Zena', 'url' => '#materie', 'target' => '', 'xfn' => '' ],
-				[ 'title' => 'Dove siamo', 'url' => '#location', 'target' => '', 'xfn' => '' ],
-			]
-		);
+		$parsed_block = is_array( $block->parsed_block ?? null ) ? $block->parsed_block : [];
+
+		// The Voci of the module (Header sito > Voci del menu); without Voci, the WordPress menu as before.
+		$nav_items = tp_child_header_nav_items_from_block( $parsed_block ) ?? tp_child_header_nav_items_without_voci( $attrs );
 		$nav_links = tp_child_chrome_render_header_links( $nav_items );
 
 		$nav_style = tp_child_chrome_style_from_vars(
@@ -121,7 +111,6 @@ trait RenderCallbackTrait {
 			]
 		);
 
-		$parsed_block = is_array( $block->parsed_block ?? null ) ? $block->parsed_block : [];
 		$block_id     = $parsed_block['id'] ?? '';
 		$store        = $parsed_block['storeInstance'] ?? '';
 		$parent       = $block_id && $store ? BlockParserStore::get_parent( $block_id, $store ) : null;
@@ -139,7 +128,16 @@ trait RenderCallbackTrait {
 				'id'                       => $block_id,
 				'name'                     => $block->block_type->name,
 				'moduleCategory'           => $block->block_type->category,
-				'childrenIds'              => [],
+				'childrenIds'              => array_values(
+					array_filter(
+						array_map(
+							static function ( $inner_block ) {
+								return $inner_block['id'] ?? '';
+							},
+							$parsed_block['innerBlocks'] ?? []
+						)
+					)
+				),
 				'parentAttrs'              => $parent->attrs ?? [],
 				'parentId'                 => $parent->id ?? '',
 				'parentName'               => $parent->blockName ?? '',

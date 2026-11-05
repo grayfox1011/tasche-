@@ -7,7 +7,9 @@
   "moduleClassName": "tp_theme_header",
   "moduleOrderClassName": "tp_theme_header",
   "category": "module",
-  "childrenName": [],
+  "childrenName": ["tp/header-nav-item"],
+  "childModuleName": "tp/header-nav-item",
+  "childModuleTitle": "Voce del menu",
   "attributes": {
     "module": {
       "type": "object",
