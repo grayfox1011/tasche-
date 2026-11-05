@@ -1045,13 +1045,42 @@ function tp_child_menu_name_note( string $block_content, array $block ): string 
 	}
 
 	return (string) preg_replace(
-		'#(<(h[1-6])\b[^>]*>)((?:(?!</?h[1-6]\b).)*?\S)\s*(\((?=[^()<>]*\p{Ll})[^()<>]+\))\s*(</\2>)#su',
-		'$1$3 <span class="tp-menu-name-note">$4</span>$5',
+		'#(<(h[1-6])\b[^>]*>)((?:(?!</?h[1-6]\b).)*?\S)\s*\(((?=[^()<>]*\p{Ll})[^()<>]+)\)\s*(</\2>)#su',
+		'$1$3<span class="tp-menu-name-space"> </span><span class="tp-menu-name-note">(<span class="tp-menu-name-note__text">$4</span>)</span>$5',
 		$block_content,
 		1
 	);
 }
 add_filter( 'render_block', 'tp_child_menu_name_note', 10, 2 );
+
+/**
+ * On phones and tablets the note of a dish, "(di Venerdì)", is the day label of its card, as in the
+ * Figma (frame "mobilw"): the row of the dish carries the note without brackets in data-tp-note, which
+ * the stylesheet draws in a coloured oval (green when the note names Thursday, burgundy otherwise).
+ * Runs after tp_child_menu_name_note(), on the row (the Group module with the class tp-menu-row).
+ */
+function tp_child_menu_row_note( string $block_content, array $block ): string {
+	if ( 'divi/group' !== ( $block['blockName'] ?? '' ) || false === strpos( $block_content, 'tp-menu-name-note__text' ) ) {
+		return $block_content;
+	}
+
+	if ( ! preg_match( '/^\s*<div\b[^>]*\bclass="[^"]*(?<![\w-])tp-menu-row(?![\w-])/', $block_content ) ) {
+		return $block_content;
+	}
+
+	if ( ! preg_match( '#<span class="tp-menu-name-note__text">([^<]+)</span>#u', $block_content, $match ) ) {
+		return $block_content;
+	}
+
+	$note = trim( html_entity_decode( $match[1], ENT_QUOTES | ENT_HTML5, 'UTF-8' ) );
+
+	if ( '' === $note || preg_match( '/^\s*<div\b[^>]*\sdata-tp-note=/', $block_content ) ) {
+		return $block_content;
+	}
+
+	return (string) preg_replace( '/^(\s*<div\b)/', '$1 data-tp-note="' . esc_attr( $note ) . '"', $block_content, 1 );
+}
+add_filter( 'render_block', 'tp_child_menu_row_note', 11, 2 );
 
 /**
  * Load the GSAP preloader runtime on landing pages.

@@ -66,7 +66,7 @@
 	}
 
 	// Footer scene (1512x982) between 981 and 1511px; menu main card drawn at the
-	// iPhone 16 width (346px) and zoomed to every phone so the prices keep their layout.
+	// Figma's width (357.7px, frame "mobilw") and zoomed to narrower phones so the prices keep their layout.
 	function updateFooterScale() {
 		var w = window.innerWidth || document.documentElement.clientWidth || 0;
 		var r = document.documentElement;
@@ -76,7 +76,7 @@
 			r.style.removeProperty('--tp-fit-scale');
 		}
 		if (w <= 767) {
-			r.style.setProperty('--tp-menu-zoom', Math.min(1, (w - 32) / 346).toFixed(4));
+			r.style.setProperty('--tp-menu-zoom', Math.min(1, (w - 32) / 357.7).toFixed(4));
 		} else {
 			r.style.removeProperty('--tp-menu-zoom');
 		}
@@ -345,8 +345,7 @@
 	// square brackets, e.g. "MELANZANA ALLA PARMIGIANA [7,8]", are removed from the title and
 	// shown as a superscript; titles without brackets use the map below (Figma 10:314; the
 	// salsiccia's numbers come from the owner).
-	// The short mobile name is the part of the title before " - " (data-tp-short,
-	// read by the CSS). The Visual Builder shows the titles as typed.
+	// The Visual Builder shows the titles as typed.
 	(function () {
 		var MAP = [
 			[/MELANZAN/i, '7,8'],
@@ -401,11 +400,6 @@
 					sup.textContent = nums;
 				} else if (sup) {
 					sup.parentNode.removeChild(sup);
-				}
-				if (t.indexOf(' - ') > 0) {
-					h.setAttribute('data-tp-short', t.split(' - ')[0].replace(/\s+$/, ''));
-				} else {
-					h.removeAttribute('data-tp-short');
 				}
 			}
 		}

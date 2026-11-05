@@ -1549,3 +1549,378 @@
 		margin-bottom: calc(857.5px * var(--tp-fit-scale, 1));
 	}
 }
+
+/* ------------------------------------------------------------------------------------------------ */
+/* Phones (the frame "mobilw" of the Figma).                                                         */
+/* ------------------------------------------------------------------------------------------------ */
+
+@media (max-width: 767px) {
+
+	/*
+	 * Introduzione: the title, the text, the button and the photo one after the other, the text as long as it is
+	 * (the three paragraphs of 0.5.9 do not fit the box of before); the photo wider than tall, as in the Figma.
+	 */
+	.tp-child-theme :where(#page-container .tp-intro-section.et_pb_section) {
+		height: auto;
+		min-height: 0;
+	}
+
+	body.tp-child-theme :where(#page-container .tp-intro-section.et_pb_section) {
+		padding-bottom: 43px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-intro-section .et_pb_row.tp-intro-row) {
+		display: flex;
+		flex-direction: column;
+		row-gap: 0;
+		height: auto;
+		min-height: 0;
+	}
+
+	.tp-child-theme :where(#page-container .tp-intro-section .tp-intro-copy-column) {
+		order: 1;
+		height: auto;
+	}
+
+	.tp-child-theme :where(#page-container .tp-intro-section .tp-intro-media-column) {
+		order: 2;
+		height: auto;
+	}
+
+	.tp-child-theme :where(#page-container .tp-intro-section .tp-intro-title),
+	.tp-child-theme :where(#page-container .tp-intro-section .tp-intro-copy),
+	.tp-child-theme :where(#page-container .tp-intro-section .tp-intro-image) {
+		position: relative;
+		top: auto;
+		left: auto;
+		height: auto;
+		transform: none;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-intro-section .tp-intro-title) {
+		margin: 45px 0 0;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-intro-section .tp-intro-copy) {
+		margin: 22px 0 0;
+	}
+
+	.tp-child-theme :where(#page-container .tp-intro-section .et_pb_button_module_wrapper) {
+		position: relative;
+		top: auto;
+		margin-top: 32px;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-intro-section .tp-intro-image) {
+		margin: 33px 0 0;
+	}
+
+	.tp-child-theme :where(#page-container .tp-intro-section .tp-intro-image) {
+		width: min(357.28px, 100%);
+		aspect-ratio: 357.28 / 268.1;
+	}
+}
+
+/* The waves under the menu are the computer's: on tablets and phones the menu ends straight, as in the Figma. */
+@media (max-width: 980px) {
+
+	.tp-child-theme :where(body:not(.et-fb) .tp-materie-onda) {
+		display: none;
+	}
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* Day label of a dish on phones and tablets: the note of its name, "(di Venerdì)", in an oval         */
+/* (data-tp-note, written on the row by functions.php). Green when the note says Thursday.            */
+/* ------------------------------------------------------------------------------------------------ */
+
+@media (max-width: 980px) {
+
+	/* The oval says it: the note does not repeat in the name. */
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-name-space),
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-name-note) {
+		display: none;
+	}
+}
+
+@media (min-width: 768px) and (max-width: 980px) {
+
+	/* Tablets: the oval of the iPad frame, at the right of the name (--tp-ipad: one pixel of the 834 px frame). */
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row[data-tp-note])::after {
+		content: attr(data-tp-note);
+		position: absolute;
+		z-index: 3;
+		top: calc(var(--tp-ipad) * 22);
+		right: calc(var(--tp-ipad) * 33.4);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: calc(var(--tp-ipad) * 150);
+		height: calc(var(--tp-ipad) * 60);
+		border-radius: 50%;
+		background: #874e5a;
+		color: #f8ebdb;
+		font-family: var(--tp-font-body), Arial, sans-serif;
+		font-size: calc(var(--tp-ipad) * 17);
+		font-weight: 400;
+		line-height: 1;
+		letter-spacing: 0;
+		text-transform: uppercase;
+		white-space: nowrap;
+		pointer-events: none;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row[data-tp-note*="gioved" i])::after {
+		background: #4e785c;
+	}
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* Menu cards on phones (Figma "mobilw"): 357.7 x 244.3 px, the name with its allergens on one line,   */
+/* the day label under it, the Tasca and Piatto labels, the icons, M and L and the three prices.       */
+/* The card is drawn at the Figma's size and zoomed to narrower phones (tp-layout.js, --tp-menu-zoom).  */
+/* The English line of the dish is the computer's (it appears on hover there): phones do not show it.  */
+/* ------------------------------------------------------------------------------------------------ */
+
+@media (max-width: 767px) {
+
+	.tp-child-theme :where(#page-container .tp-menu-section) {
+		--tp-menu-phone-card: min(357.7px, calc(100vw - 32px));
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main) {
+		row-gap: 16px;
+	}
+
+	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-menu-section .tp-menu-table--main .tp-menu-row) {
+		width: 357.7px;
+		max-width: 357.7px;
+		height: 244.3px;
+		min-height: 244.3px;
+	}
+
+	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-menu-section .tp-menu-table--main .tp-menu-row--proposal) {
+		height: 114.3px;
+		min-height: 114.3px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-item) {
+		top: 34.7px;
+		left: 16.7px;
+		width: 325px;
+		max-width: 325px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-name) {
+		width: 100%;
+		max-width: 100%;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-name .et_pb_module_header) {
+		font-size: 15.49px;
+		line-height: 15.49px;
+		white-space: normal;
+		text-wrap: wrap;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-name h4 > .tp-menu-allergeni .et_pb_text_inner) {
+		top: -2px;
+		margin-left: 4.3px;
+		font-size: 10.65px;
+		font-weight: 500;
+		line-height: 10.65px;
+		letter-spacing: 0;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-meta) {
+		display: none;
+	}
+
+	/* Icons and arrows (layers: Tasca, M bowl, L bowl, green arrow, burgundy arrow). */
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices) {
+		background-position: 27.74px 128.68px, 147.74px 140.66px, 268.74px 136.39px, 60.52px 105.66px, 139.49px 121.23px;
+		background-size: 51.46px 53.27px, 40.56px 40.56px, 44.83px 44.83px, 13.8125px 32.6172px, 12.605px 34.5391px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices .tp-menu-label-tasca .et_pb_text_inner) {
+		top: 89px;
+		left: 41.7px;
+		transform: rotate(-8.14deg);
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices .tp-menu-label-piatto .et_pb_text_inner) {
+		top: 100.7px;
+		left: 136.8px;
+		transform: rotate(9.34deg);
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices .tp-menu-label-m .et_pb_text_inner),
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices .tp-menu-label-l .et_pb_text_inner),
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices .tp-menu-label-s .et_pb_text_inner) {
+		top: 153.7px;
+		margin-top: 0;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices .tp-menu-label-m .et_pb_text_inner) {
+		left: 186.7px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices .tp-menu-label-l .et_pb_text_inner) {
+		left: 316.7px;
+	}
+
+	/* Prices: centred under their icons, as the Figma's. */
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices .tp-menu-price .et_pb_text_inner) {
+		top: 195.7px;
+		transform: translateX(-50%);
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices .tp-menu-price-value-tasca .et_pb_text_inner) {
+		left: 54.9px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices .tp-menu-price-value-m .et_pb_text_inner) {
+		left: 174.9px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices .tp-menu-price-value-l .et_pb_text_inner) {
+		left: 293.5px;
+	}
+
+	/* A dish with the S size: four columns, at the shares of the card of before, on the same lines. */
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices) {
+		background-position: 4.7% 128.68px, 33.5% 140.66px, 59.4% 140.66px, 88.2% 136.39px, 17.7% 105.66px, 30.1% 121.23px;
+		background-size: 12.7% auto, 7% auto, 9.6% auto, 11.6% auto, 13.8125px 32.6172px, 12.605px 34.5391px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices .tp-menu-label-tasca .et_pb_text_inner) {
+		left: 4%;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices .tp-menu-label-piatto .et_pb_text_inner) {
+		left: 26.7%;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices .tp-menu-label-s .et_pb_text_inner) {
+		left: 40.1%;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices .tp-menu-label-m .et_pb_text_inner) {
+		left: 63.8%;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices .tp-menu-label-l .et_pb_text_inner) {
+		left: 91.6%;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices .tp-menu-price .et_pb_text_inner) {
+		transform: none;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices .tp-menu-price-value-tasca .et_pb_text_inner) {
+		left: 4.4%;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices .tp-menu-price-value-s .et_pb_text_inner) {
+		left: 28.5%;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices .tp-menu-price-value-m .et_pb_text_inner) {
+		left: 52.6%;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices .tp-menu-price-value-l .et_pb_text_inner) {
+		left: 79.1%;
+	}
+
+	/* Proposta del mese: the name and, under it, its Tasca price in green (Figma: 114.3 px high). */
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row--proposal .tp-menu-prices) {
+		position: absolute;
+		top: 63.4px;
+		right: auto;
+		bottom: auto;
+		left: 15.8px;
+		display: block;
+		width: auto;
+		height: auto;
+		margin: 0;
+		padding: 0;
+		background: none;
+		transform: none;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row--proposal .tp-menu-prices > .et_pb_module) {
+		position: static;
+		width: auto;
+		min-width: 0;
+		height: auto;
+		margin: 0;
+		padding: 0;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row--proposal .tp-menu-prices > .tp-menu-label) {
+		display: none;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row--proposal .tp-menu-price .et_pb_text_inner),
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row--proposal .tp-menu-price p) {
+		position: static;
+		top: auto;
+		left: auto;
+		width: auto;
+		height: auto;
+		margin: 0;
+		padding: 0;
+		transform: none;
+		color: #054726;
+		font-family: var(--tp-font-body), Arial, sans-serif;
+		font-size: 17.42px;
+		font-weight: 900;
+		line-height: 17.42px;
+		text-align: left;
+		white-space: nowrap;
+	}
+
+	/* The day label: an oval of 113.6 x 40.8 px tilted 8.19 degrees, its words 10.25 degrees, under the name. */
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row[data-tp-note])::before {
+		content: "";
+		position: absolute;
+		z-index: 3;
+		top: 89.6px;
+		left: 279.6px;
+		width: 113.6px;
+		height: 40.8px;
+		border-radius: 50%;
+		background: #874e5a;
+		transform: translate(-50%, -50%) rotate(8.19deg);
+		pointer-events: none;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row[data-tp-note])::after {
+		content: attr(data-tp-note);
+		position: absolute;
+		z-index: 3;
+		top: 90.6px;
+		left: 279.5px;
+		color: #f8ebdb;
+		font-family: var(--tp-font-body), Arial, sans-serif;
+		font-size: 14px;
+		font-weight: 400;
+		line-height: 14px;
+		letter-spacing: 0;
+		text-transform: uppercase;
+		white-space: nowrap;
+		transform: translate(-50%, -50%) rotate(10.25deg);
+		pointer-events: none;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row[data-tp-note*="gioved" i])::before {
+		left: 273px;
+		background: #4e785c;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row[data-tp-note*="gioved" i])::after {
+		top: 90.1px;
+		left: 273px;
+	}
+}
