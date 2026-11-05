@@ -1566,7 +1566,7 @@
 	}
 
 	body.tp-child-theme :where(#page-container .tp-intro-section.et_pb_section) {
-		padding-bottom: 43px;
+		padding-bottom: 23.9px;
 	}
 
 	.tp-child-theme :where(#page-container .tp-intro-section .et_pb_row.tp-intro-row) {
@@ -1608,16 +1608,31 @@
 	.tp-child-theme :where(#page-container .tp-intro-section .et_pb_button_module_wrapper) {
 		position: relative;
 		top: auto;
-		margin-top: 32px;
+		margin-top: 19px;
 	}
 
 	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-intro-section .tp-intro-image) {
-		margin: 33px 0 0;
+		margin: 19px 0 0;
 	}
 
 	.tp-child-theme :where(#page-container .tp-intro-section .tp-intro-image) {
 		width: min(357.28px, 100%);
 		aspect-ratio: 357.28 / 268.1;
+		overflow: hidden;
+		border-radius: 18px;
+	}
+
+	/* The photo fills its box, cut as the Figma's: the hands in the bowl (39.6-89.7 % of its height). */
+	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-intro-section .tp-intro-image .et_pb_image_wrap),
+	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-intro-section .tp-intro-image img) {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+
+	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-intro-section .tp-intro-image img) {
+		object-fit: cover;
+		object-position: 50% 79.3%;
 	}
 }
 
@@ -1922,5 +1937,461 @@
 	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row[data-tp-note*="gioved" i])::after {
 		top: 90.1px;
 		left: 273px;
+	}
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* Phones: the first screen of the Figma "mobilw" without its browser bar (97.8 px): the header 53.2   */
+/* px from the top, the hero 810.2 px high with the strip of the dishes (33.6 px) under it, so that    */
+/* the two fill a 844 px screen; the title at 350.2 px (32/38 px), the button at 517.2 px, the line    */
+/* under it at 663.2 px. The video is the Figma's 874 px box, 62.4 px above the page.                  */
+/* ------------------------------------------------------------------------------------------------ */
+
+@media (max-width: 767px) {
+
+	:where(body.tp-child-theme:not(.tp-landing-page):not(.et-fb)) {
+		--tp-header-space: 107.2px;
+	}
+
+	.tp-child-theme :where(html body.tp-child-theme .site-header.tp-theme-header) {
+		--tp-ios-header-top: 53.2px;
+		top: 53.2px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-hero-section) {
+		height: 812.2px;
+		min-height: 812.2px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-hero-section .et_pb_row.tp-hero-content) {
+		left: 0;
+		right: 0;
+		height: 812.2px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-hero-section .tp-hero-native-video) {
+		top: -60.4px;
+		height: 874px;
+		min-height: 874px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-hero-section .tp-hero-title) {
+		top: 352.2px;
+	}
+
+	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-hero-title .et_pb_module_header),
+	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-hero-title .tp-split-text),
+	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-hero-title .tp-split-line) {
+		font-size: clamp(24px, 8.205vw, 32px);
+		line-height: 1.1875;
+	}
+
+	.tp-child-theme :where(#page-container .tp-hero-section a.et_pb_button.tp-hero-button) {
+		top: 519.2px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-hero-section .tp-hero-subline) {
+		top: 665.2px;
+	}
+
+	/* The strip of the dishes: 33.6 px, 11.52 px words a little under the middle, as the Figma's. */
+	.tp-child-theme :where(.tp-marquee-section) {
+		height: 33.6px;
+		min-height: 33.6px;
+	}
+
+	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-marquee-section .tp-marquee) {
+		box-sizing: border-box;
+		height: 33.6px;
+		min-height: 33.6px;
+		padding-top: 2.4px;
+	}
+
+	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-marquee-section .tp-marquee__phrase),
+	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-marquee-section .tp-marquee__separator) {
+		font-size: 11.52px;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-intro-section .tp-intro-title) {
+		margin-top: 63.4px;
+	}
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* Phones: the rest of the menu as the Figma "mobilw": the title 15 px from the left, contorni, dolci  */
+/* and bevande rows with names of 15.49 px and prices of 23.23 px (the names of the desserts on two   */
+/* lines), the allergens in 15 px and the notes in 16 px.                                              */
+/* ------------------------------------------------------------------------------------------------ */
+
+@media (max-width: 767px) {
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-title) {
+		left: 5px;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-sectionhead--sides) {
+		margin-top: 53.9px;
+	}
+
+	/* "Non sono principi astratti": 95 px under the last line of the notes, as the Figma's. */
+	.tp-child-theme :where(.tp-materie-section.et_pb_section) {
+		padding-top: 23px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--sides),
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--desserts) {
+		row-gap: 13.5px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--drinks) {
+		row-gap: 11px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--sides .tp-menu-name .et_pb_module_header),
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--desserts .tp-menu-name .et_pb_module_header),
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--drinks .tp-menu-name .et_pb_module_header) {
+		font-size: 15.49px;
+		line-height: 15.49px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--sides .tp-menu-price .et_pb_text_inner),
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--desserts .tp-menu-price .et_pb_text_inner),
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--drinks .tp-menu-price .et_pb_text_inner),
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--sides .tp-menu-price p),
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--desserts .tp-menu-price p),
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--drinks .tp-menu-price p) {
+		font-size: 23.23px;
+		line-height: 23.23px;
+	}
+
+	/* "TIRAMISU' / IN TASCA": the Figma breaks the names of the desserts after the first word or two. */
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--desserts .tp-menu-name) {
+		max-width: 82px;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-note) {
+		margin-top: 39.5px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-note p:nth-child(-n+2)) {
+		font-size: 15px;
+		line-height: 15px;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-note p + p) {
+		margin-top: 16px;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-note p:nth-child(2)) {
+		margin-top: 15px;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-note p:nth-child(3)) {
+		margin-top: 20px;
+	}
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* Phones: "Una gastronomia, com'era una volta." as the Figma "mobilw": the gaps between title, texts */
+/* and photos, a blank line between the two paragraphs of the second text.                           */
+/* ------------------------------------------------------------------------------------------------ */
+
+@media (max-width: 767px) {
+
+	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-alberto-section .tp-alberto-mobile-flow) {
+		row-gap: 0;
+		margin-bottom: -8.8px;
+	}
+
+	/* As long as its texts and photos: the waves of "Tasca o piatto" start 8.8 px above the end of the last photo. */
+	.tp-child-theme :where(#page-container .tp-alberto-section.et_pb_section),
+	.tp-child-theme :where(#page-container .tp-alberto-section .tp-alberto-row) {
+		height: auto;
+		min-height: 0;
+	}
+
+	.tp-child-theme :where(#page-container .tp-alberto-section.et_pb_section) {
+		position: relative;
+		z-index: 1;
+		overflow: visible;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-alberto-mobile-flow .tp-alberto-title + .tp-alberto-copy) {
+		margin-top: 19px;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-alberto-mobile-flow .tp-alberto-copy + .tp-alberto-photo-main) {
+		margin-top: 25.5px;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-alberto-mobile-flow .tp-alberto-photo-main + .tp-alberto-copy) {
+		margin-top: 33.9px;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-alberto-mobile-flow .tp-alberto-copy p + p) {
+		margin-top: 25.56px;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-alberto-mobile-flow .tp-alberto-copy + .tp-alberto-photo-sub) {
+		margin-top: 37.3px;
+	}
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* Phones: the features of "La tasca ripiena" and "Il piatto" with their icons, as on the computer    */
+/* (the Figma's card is the computer's at half size).                                                 */
+/* ------------------------------------------------------------------------------------------------ */
+
+@media (max-width: 767px) {
+
+	.tp-child-theme :where(.tp-scelta-scheda--tasca .tp-scelta-chip li:nth-child(1)) {
+		--tp-chip-icon: url("../svg/icons/tp-icon-astroid.svg");
+		gap: 2.5px;
+	}
+
+	.tp-child-theme :where(.tp-scelta-scheda--tasca .tp-scelta-chip li:nth-child(2)) {
+		--tp-chip-icon: url("../svg/icons/tp-icon-chef-hat.svg");
+	}
+
+	.tp-child-theme :where(.tp-scelta-scheda--tasca .tp-scelta-chip li:nth-child(3)) {
+		--tp-chip-icon: url("../svg/icons/tp-icon-cooking-pot.svg");
+	}
+
+	.tp-child-theme :where(.tp-scelta-scheda--piatto .tp-scelta-chip li:nth-child(1)) {
+		--tp-chip-icon: url("../svg/icons/tp-icon-proportions.svg");
+	}
+
+	.tp-child-theme :where(.tp-scelta-scheda--piatto .tp-scelta-chip li:nth-child(2)) {
+		--tp-chip-icon: url("../svg/icons/tp-icon-shopping-bag.svg");
+	}
+
+	.tp-child-theme :where(.tp-scelta-scheda--piatto .tp-scelta-chip li:nth-child(3)) {
+		--tp-chip-icon: url("../svg/icons/tp-icon-salad.svg");
+	}
+
+	.tp-child-theme :where(.tp-scelta-chip li:nth-child(-n+3))::before {
+		content: "";
+		flex: 0 0 auto;
+		width: 10.75px;
+		height: 11.6px;
+		background-color: currentColor;
+		-webkit-mask: var(--tp-chip-icon) center / 9.8px 10.7px no-repeat;
+		mask: var(--tp-chip-icon) center / 9.8px 10.7px no-repeat;
+		font-size: 0;
+	}
+
+	.tp-child-theme :where(.tp-scelta-scheda--tasca .tp-scelta-chip li:nth-child(1))::before {
+		width: 12.95px;
+		height: 12.95px;
+		-webkit-mask-size: 12px 12px;
+		mask-size: 12px 12px;
+	}
+
+	.tp-child-theme :where(.tp-scelta-scheda--piatto .tp-scelta-chip li:nth-child(1))::before {
+		width: 9.8px;
+		height: 9.8px;
+		-webkit-mask-size: contain;
+		mask-size: contain;
+	}
+
+	.tp-child-theme :where(.tp-scelta-scheda--piatto .tp-scelta-chip li:nth-child(2))::before {
+		width: 8.55px;
+		height: 8.55px;
+		-webkit-mask-size: contain;
+		mask-size: contain;
+	}
+
+	.tp-child-theme :where(.tp-scelta-scheda--piatto .tp-scelta-chip li:nth-child(3))::before {
+		width: 10.1px;
+		height: 10.1px;
+		-webkit-mask-size: contain;
+		mask-size: contain;
+	}
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* Phones: "Non sono principi astratti" as the Figma "mobilw": the text in 18/25.56 px with a blank  */
+/* line between the paragraphs, the cards at 94.87 % of the computer's (narrower phones: smaller).    */
+/* ------------------------------------------------------------------------------------------------ */
+
+@media (max-width: 767px) {
+
+	.tp-child-theme :where(#page-container .tp-materie-section .tp-materie-desc) {
+		padding-left: 2px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-materie-section .tp-materie-desc .et_pb_text_inner) {
+		line-height: 25.56px;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-materie-section .tp-materie-desc p + p) {
+		margin-top: 25.56px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-materie-card) {
+		transform: scale(calc(.9487 * var(--tp-menu-zoom, 1))) !important;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-materie-card) {
+		margin-bottom: calc(482.75px * var(--tp-menu-zoom, 1) - 517.25px);
+		margin-block-end: calc(482.75px * var(--tp-menu-zoom, 1) - 517.25px);
+	}
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* Phones: from "Dove siamo" to the footer as the Figma "mobilw": the opening hours 222 px under the  */
+/* Mappe button, rows of 355 x 64.4 px one under the other with the words in capitals; the footer    */
+/* with the couple and the pigeons on the logo (the computer's, at the size of the logo), the links  */
+/* in cream and the copyright on three lines.                                                          */
+/* ------------------------------------------------------------------------------------------------ */
+
+@media (max-width: 767px) {
+
+	.tp-child-theme :where(#page-container .tp-materie-section.et_pb_section) {
+		padding-bottom: 124.7px;
+	}
+
+	body.tp-child-theme :where(#page-container .tp-location-section.et_pb_section) {
+		padding-bottom: 178.1px;
+	}
+
+	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-hours-title) {
+		margin-left: -2.2px;
+		padding-left: 0;
+	}
+
+	.tp-child-theme :where(#page-container .tp-hours-title h2) {
+		line-height: 32.06px;
+	}
+
+	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-hours-title) {
+		padding-bottom: 0;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(html body.tp-child-theme #page-container .tp-hours-section .tp-hours-title) {
+		margin-bottom: 28.2px;
+	}
+
+	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-hours-section .tp-hours-item) {
+		box-sizing: border-box;
+		width: 355px;
+		max-width: calc(100% - 1.6px);
+		height: 64.4px;
+		min-height: 64.4px;
+		padding: 23.45px 18.95px 0 15.45px;
+		border-width: 1.55px;
+		border-radius: 10.31px;
+		background-color: var(--tp-cream, #fff5e9);
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(html body.tp-child-theme #page-container .tp-hours-section .tp-hours-item) {
+		margin: 0 0 0.2px 0.8px;
+	}
+
+	/* The words 3 px under the middle of the row, in capitals but for the "Chiusi" of Sunday, as the Figma's. */
+	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-hours-section .tp-hours-item p),
+	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-hours-section .tp-hours-item h5) {
+		font-size: 16.5px;
+	}
+
+	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-hours-section .tp-hours-item:not(:last-child) p) {
+		text-transform: uppercase;
+	}
+
+	.tp-child-theme :where(#page-container .tp-hours-section.et_pb_section) {
+		padding-bottom: 146.1px;
+	}
+}
+
+@media (max-width: 767px) {
+
+	.tp-child-theme :where(.site-footer.tp-theme-footer) {
+		padding-top: 110.3px;
+	}
+
+	.tp-child-theme :where(.tp-theme-footer-container) {
+		position: relative;
+	}
+
+	.tp-child-theme :where(.tp-theme-footer-logo) {
+		width: calc(100% + 8.8px);
+		max-width: none;
+		margin-left: -3.1px;
+	}
+
+	/* The couple on the "ch" of Tasche, the pigeons on the "ne" of Piene: the computer's places, in shares of the logo. */
+	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-characters) {
+		position: absolute;
+		top: 0;
+		left: 12.9px;
+		display: block;
+		width: calc(100% - 23.2px);
+		height: 0;
+		margin: 0;
+		pointer-events: none;
+	}
+
+	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-character-slot) {
+		position: absolute;
+		top: 0;
+		height: auto;
+	}
+
+	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-character-slot img) {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+
+	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-character-slot--four) {
+		left: 35.256%;
+		width: 14.536%;
+		margin-top: -9.334%;
+	}
+
+	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-character-slot--one) {
+		left: 81.387%;
+		width: 9.792%;
+		margin-top: -6.426%;
+	}
+
+	.tp-child-theme :where(.tp-theme-footer-nav a) {
+		opacity: 1;
+	}
+
+	.tp-child-theme :where(.tp-theme-footer-nav-col) {
+		column-gap: 16px;
+	}
+
+	.tp-child-theme :where(.tp-theme-footer-nav) {
+		row-gap: 14px;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(.tp-theme-footer-nav) {
+		margin-top: -23.9px;
+	}
+
+	/* Copyright / P.IVA and Privacy-Cookie / Designed By Mochi, 26 px apart. */
+	.tp-child-theme :where(.tp-theme-footer-copyright) {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 12px 30px;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(.tp-theme-footer-copyright) {
+		margin-top: 8.5px;
+	}
+
+	.tp-child-theme :where(.tp-theme-footer-copyright > span:first-child),
+	.tp-child-theme :where(.tp-theme-footer-copyright > span:last-child) {
+		flex: 0 0 100%;
+	}
+
+	.tp-child-theme :where(.tp-theme-footer-copyright > span:nth-child(3) + span:nth-child(4)) {
+		margin-left: -30px;
+	}
+
+	.tp-child-theme :where(.tp-theme-footer-copyright > span:nth-child(3) + span:nth-child(4))::before {
+		content: "-";
 	}
 }

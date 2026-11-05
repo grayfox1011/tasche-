@@ -210,8 +210,11 @@
 			});
 
 			if (header) {
+				// The stylesheet's top for phones (--tp-ios-header-top, 53.2 px as the Figma); 32.7 px on tablets as before.
+				var headerTop = window.getComputedStyle(header).getPropertyValue("--tp-ios-header-top").trim() || "32.7px";
+
 				setHeaderStyle(header, "position", "absolute");
-				setHeaderStyle(header, "top", "32.7px");
+				setHeaderStyle(header, "top", headerTop);
 				setHeaderStyle(header, "left", "0");
 				setHeaderStyle(header, "width", "100%");
 				setHeaderStyle(header, "z-index", "3000");
