@@ -36,4 +36,6 @@ export type ShapeDefinition = {
 	background: string;
 	width: number;
 	height: number;
+	// preserveAspectRatio of the drawing: "none" (it stretches to the box) when missing.
+	aspect?: string;
 };

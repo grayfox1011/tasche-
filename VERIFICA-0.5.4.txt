@@ -1,4 +1,135 @@
-TASCHE PIENE — VERSIONE 0.5.3, CANDIDATA AL COLLAUDO
+TASCHE PIENE — VERSIONE 0.5.4, CANDIDATA AL COLLAUDO
+
+La 0.5.4 rifa' la sezione Tasca/Piatto con i moduli di Divi: ora si modifica
+da Divi come le altre sezioni (testi, foto, colori, caratteri, misure,
+spaziature, sfondi, bordi), per il computer, il tablet e il telefono, e nel
+Visual Builder si vede com'e' sul sito. L'aspetto non cambia: e' identica alla
+sezione che il tema ricostruiva fino alla 0.5.3, quella del Figma, a tutte le
+larghezze, con il puntatore sulle card e sulle onde e con le stesse
+animazioni. Le note delle versioni precedenti, piu' in basso, restano valide.
+
+COSA CAMBIA RISPETTO ALLA 0.5.3
+- Tasca/Piatto e' fatta di moduli Divi. Nel Visual Builder (e nella vista a
+  livelli) la sezione "Tasca o piatto" ha:
+  - la riga "Titolo e onde": "Onda verde" e "Onda bordeaux" (moduli Onda, con
+    le forme "Choice onda verde" e "Choice onda bordeaux") e "Titolo" (modulo
+    Testo con un titolo H2);
+  - la riga "Card", con una colonna per card, "Tasca" e "Piatto". In ognuna:
+    "Foto" (modulo Immagine) e il gruppo "Testi", con "Nome" (modulo Titolo,
+    H3), "Caratteristiche" (modulo Testo con un elenco puntato: ogni voce e'
+    una pillola, il simbolo lo mette il tema) e "Descrizione" (modulo Testo,
+    compare col puntatore sulla card).
+  Prima il tema ricostruiva la sezione dai testi e dalle foto dei moduli:
+  colori, caratteri, spaziature e sfondi impostati in Divi non avevano
+  effetto, e nel builder la sezione era un elenco di moduli da compilare, non
+  com'e' sul sito.
+- Da Divi: Design > Testo dei titoli > H2 per il titolo; il testo del titolo
+  per i nomi; Design > Testo per caratteristiche e descrizioni; sfondo, bordi
+  e spaziature della colonna per ogni card; forma, colore e specchiatura delle
+  onde dal modulo Onda. Le misure sono quelle della tavola del Figma (1512 px
+  sul computer, 390 px sul telefono), che il tema scala alla larghezza dello
+  schermo come prima: una misura impostata in un modulo e' una misura della
+  tavola.
+- Restano del tema, come prima: lo strato bordeaux sotto le onde, l'onda
+  crema in fondo sul tablet e il disegno delle onde sul telefono (un'immagine
+  unica).
+- Le parti della sezione stanno ai loro posti sulla tavola, come nel Figma:
+  allungando molto un testo (per esempio un titolo di quattro righe) le altre
+  parti non si spostano da sole per fargli posto; si spostano dalle
+  impostazioni dei moduli (spaziature, posizione).
+- Modulo Onda: due forme nuove, "Choice onda verde" e "Choice onda bordeaux",
+  le onde di questa sezione; in un riquadro di altre proporzioni non si
+  deformano.
+- Le card si raggiungono con la tastiera come prima: con il fuoco su una card
+  la foto la riempie e compare la descrizione.
+- Aggiornamento: alla prima richiesta dopo l'aggiornamento la home passa da
+  sola alla sezione nuova, con il titolo, le foto, i nomi, le caratteristiche
+  e le descrizioni che ha oggi; l'aspetto non cambia e WordPress tiene la
+  versione di prima tra le revisioni. Le impostazioni di aspetto messe prima
+  sui moduli della sezione, che non si vedevano, non vengono riportate. Una
+  sezione cambiata a mano, che non ha piu' esattamente i moduli di prima,
+  resta com'e' e il tema continua a ricostruirla; cosi' anche la sezione di
+  prima copiata su un'altra pagina o salvata nella Libreria di Divi (per
+  avere quella nuova basta copiarla dalla home). "Crea/aggiorna home" crea la
+  home gia' con la sezione nuova.
+
+VERIFICHE EFFETTUATE SULLA 0.5.4
+Riferimento: la sezione ricostruita della 0.5.3, sullo stesso sito di prova
+e con la stessa home.
+- Aspetto della sezione, vecchia contro nuova, a 29 larghezze tra 320 e 1920
+  px, in 6 stati: ferma, puntatore sulla card Tasca, sulla card Piatto, sul
+  titolo (l'onda bordeaux sale), card con il fuoco da tastiera, card toccata.
+  Ferma e' identica al pixel a tutte le larghezze. Negli altri stati restano
+  differenze di pochi pixel sugli angoli arrotondati delle card e sul
+  contorno del fuoco, dello stesso tipo e della stessa misura di quelle che
+  ci sono tra due scatti della stessa pagina vecchia: 149 scatti su 168
+  identici, contro 151 della pagina vecchia con se stessa.
+- Posizioni e stili, elemento per elemento (onde, titolo, card, foto, nomi,
+  pillole, descrizioni): stessi punti e stesse misure al centesimo di pixel,
+  stessi colori e caratteri, stesse transizioni (proprieta', durate, curve).
+- Home intera, a 17 larghezze tra 320 e 1920 px: identica al pixel prima e
+  dopo la migrazione (l'unica differenza e' una foto delle card Materie
+  caricata o no al momento dello scatto).
+- Sezione da sola su una pagina nuova, vecchia contro nuova: pagine identiche
+  al pixel a 10 larghezze.
+- Modificabilita' (pagine di prova fatte dalla home con la sezione nuova, con
+  un valore di prova su ogni modulo, per il computer, il tablet e il
+  telefono): colore e grandezza dei testi (7 moduli), spaziature, sfondo e
+  larghezza massima (tutti i 19 moduli della sezione, righe e colonne
+  comprese): nessun caso non superato a 1440, 820 e 390 px. Con la 0.5.3 i 16
+  moduli della sezione non arrivavano nemmeno sulla pagina (la ricostruzione
+  li sostituiva). Fuori dalla sezione i risultati sono quelli della 0.5.3.
+- Visual Builder (computer, tablet, telefono): la sezione e' scalata come sul
+  sito; un clic sul titolo apre le impostazioni del modulo Testo, uno
+  sull'onda quelle del modulo Onda ("Choice onda verde"); i valori dei moduli
+  si vedono subito.
+- "Crea/aggiorna home": la sezione del contenuto di partenza e' identica a
+  quella della home migrata.
+- Migrazione sul sito di prova: alla prima richiesta la home passa alla
+  sezione nuova (2 onde, titolo, 2 card), una revisione in piu', nessun
+  errore PHP; le richieste dopo non cambiano piu' niente. Fuori dalla sezione
+  il contenuto resta identico byte per byte; una seconda conversione non
+  cambia niente. Una sezione con un modulo in piu', senza la descrizione o con
+  una terza colonna resta com'e'; testi cambiati a mano passano nella sezione
+  nuova come sono; due sezioni nella stessa pagina vengono convertite tutte e
+  due.
+- Suite completa sulla home migrata contro la 0.5.3: home a 20 larghezze con
+  gli stessi stili e le stesse posizioni per tutti gli elementi in comune (gli
+  altri sono quelli della sezione, vecchi da una parte e nuovi dall'altra); al
+  pixel le sole differenze sono foto delle card Materie caricate o no al
+  momento dello scatto; privacy e cookie identiche; menu aperto sul telefono e
+  iPhone 13 in emulazione identici, senza errori; modifica dal builder 8 su 8.
+  Pulsanti, link del menu e righe del menu col puntatore come nella 0.5.3 (gli
+  scatti cambiano solo per il fotogramma del video della hero dietro i
+  pulsanti e per la foto della riga del menu ancora in movimento; ad
+  animazione finita la riga e' identica). Nel Visual Builder cambia solo
+  l'altezza di Tasca/Piatto, che ora si vede com'e' sul sito; le altre sezioni
+  sono come prima. Query: sulla home 2 in piu' (le schede delle due foto, per
+  caricare la misura giusta), sulle pagine legali le stesse.
+- Aggiornamento caricando lo zip da wp-admin su copie con la 0.5.3 e la 0.4.9:
+  alla prima richiesta la home e' convertita esattamente come previsto (lo
+  stesso contenuto, byte per byte, della conversione fatta a parte), con una
+  revisione in piu' per ogni passaggio (dalla 0.4.9 anche quello della
+  0.5.3); una seconda richiesta non cambia niente; nessun errore PHP. Su una
+  copia con gli indirizzi del suo sito la home e' identica al pixel prima e
+  dopo l'aggiornamento, a 10 larghezze tra 320 e 1920 px (a 1100 px una foto
+  delle card Materie caricata o no). Sulle copie che tengono gli indirizzi
+  del sito di partenza le foto delle card risultano piu' nitide di prima
+  (WordPress offre le misure della foto anche dove l'indirizzo non e' del
+  sito); su un sito vero gli indirizzi coincidono e le foto sono le stesse.
+
+INSTALLAZIONE DELLO ZIP
+Provata caricando lo zip da wp-admin (Aspetto > Temi > Carica tema) su copie
+del sito di prova con la 0.5.3 e la 0.4.9. WordPress sostituisce il tema senza
+errori. Nessun errore PHP del tema.
+
+NON PROVATI
+- Safari e un iPhone veri (il preloader e' provato in Chromium con l'agente
+  utente di iPhone e iPad) e un database MySQL (le prove usano SQLite).
+
+==============================================================================
+
+NOTE DELLA 0.5.3
 
 La 0.5.3 rende modificabili da Divi, parte per parte, i testi che avevano
 due misure fisse: legenda Tasca/Piatto del menu, orari, apici degli allergeni

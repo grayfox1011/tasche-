@@ -55,7 +55,7 @@ export const ShapeWaveEdit = (props: ShapeWaveEditProps): ReactElement => {
 					} as React.CSSProperties
 				}
 			>
-				<svg className="tp-shape-wave__svg" viewBox={shape.viewBox} preserveAspectRatio="none" aria-hidden="true" focusable="false">
+				<svg className="tp-shape-wave__svg" viewBox={shape.viewBox} preserveAspectRatio={shape.aspect ?? 'none'} aria-hidden="true" focusable="false">
 					{shape.clipPath ? (
 						<defs>
 							<clipPath id={clipId}>

@@ -20932,6 +20932,699 @@ body.et-fb :where(.tp-menu-item > .tp-menu-allergeni) {
 	}
 }
 
+/*
+ * Tasca/Piatto made of Divi modules (inc/choice-divi-migration.php), drawn as the rebuild of before:
+ * - computer: a 1512 x 1263 px board scaled to the width of the window (--tp-scelta-scale and
+ *   --tp-scelta-height on the page, from tp-layout.js; in the Visual Builder from tp_child_vb_choice_scale_script());
+ * - tablet: the same board in vw;
+ * - phone: a 390 x 963 px board scaled to the width of the window (--tp-scelta-scale-phone).
+ * The two rows are two layers of the same board: "Titolo e onde" with the waves, the bordeaux under them
+ * and the title; "Card" above it, with the two cards side by side (one under the other on phones).
+ * These values are only the starting point: what the modules set in Divi wins.
+ */
+body.tp-child-theme:has(.tp-scelta) {
+	overflow-x: hidden !important;
+}
+
+.tp-child-theme :where(.tp-scelta) {
+	position: relative;
+	display: block;
+	box-sizing: border-box;
+	width: 100vw;
+	max-width: none;
+	height: var(--tp-scelta-height, 1263px);
+	min-height: var(--tp-scelta-height, 1263px);
+	margin: 0 calc(50% - 50vw);
+	overflow: hidden;
+	background: var(--tp-cream, #fff5e9);
+	color: var(--tp-white, #fff);
+	isolation: isolate;
+}
+
+body.tp-child-theme :where(.tp-scelta) {
+	padding: 0;
+}
+
+/* The board. */
+.tp-child-theme :where(.tp-scelta-testata, .tp-scelta-schede) {
+	left: 50%;
+	top: 0;
+	display: block;
+	box-sizing: border-box;
+	height: 1263px;
+	padding: 0;
+	overflow: hidden;
+	transform: translateX(-50%) scale(var(--tp-scelta-scale, 1));
+	transform-origin: top center;
+}
+
+/* Divi places its rows in the flow, as wide as the content (.et_pb_row:not(...), two classes): the board
+ * has its own place and width. */
+.tp-child-theme.tp-child-theme :where(.tp-scelta-testata, .tp-scelta-schede) {
+	position: absolute;
+	width: 1512px;
+	max-width: none;
+	margin: 0;
+}
+
+/* Under the waves: the bordeaux of the section, from the wave down. */
+.tp-child-theme :where(.tp-scelta-testata)::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 410px;
+	bottom: 0;
+	z-index: 2;
+	display: block;
+	background: var(--tp-bordeaux, #560b22);
+	pointer-events: none;
+}
+
+/* The waves and the title stand on the board itself: the column is the whole board, without a layer of its own. */
+.tp-child-theme :where(.tp-scelta-testata > .et_pb_column) {
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: auto;
+	display: block;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.tp-child-theme :where(.tp-scelta-onda) {
+	position: absolute;
+	top: 0;
+	display: block;
+	margin: 0;
+	pointer-events: none;
+}
+
+.tp-child-theme :where(.tp-scelta-onda .tp-shape-wave),
+.tp-child-theme :where(.tp-scelta-onda .tp-shape-wave__svg) {
+	width: 100%;
+	height: 100%;
+}
+
+.tp-child-theme :where(.tp-scelta-onda--verde) {
+	left: -149.88px;
+	z-index: 1;
+	width: 1811.7627px;
+	height: 428.3477px;
+}
+
+.tp-child-theme :where(.tp-scelta-onda--bordeaux) {
+	left: -10px;
+	top: 130.24px;
+	z-index: 3;
+	width: 1524.4385px;
+	height: 284.7612px;
+}
+
+/*
+ * With the pointer on the section the bordeaux wave grows from its bottom edge. The drawing itself moves,
+ * as before the modules, so the module keeps Divi's Transform options and its own flips.
+ */
+.tp-child-theme :where(.tp-scelta:hover),
+.tp-child-theme :where(.tp-scelta:focus-within) {
+	--tp-scelta-onda-y: 1.43;
+}
+
+.tp-child-theme :where(.tp-scelta-onda--bordeaux .tp-shape-wave) {
+	overflow: visible;
+}
+
+.tp-child-theme :where(.tp-scelta-onda--bordeaux .tp-shape-wave__svg) {
+	transform: scale(var(--tp-scelta-onda-flip-x, 1), calc(var(--tp-scelta-onda-flip-y, 1) * var(--tp-scelta-onda-y, 1)));
+	transform-origin: center bottom;
+	transition: transform 2396ms cubic-bezier(.34, 1.56, .64, 1);
+}
+
+.tp-child-theme :where(.tp-scelta-onda--bordeaux .tp-shape-wave--flip-x) {
+	--tp-scelta-onda-flip-x: -1;
+}
+
+.tp-child-theme :where(.tp-scelta-onda--bordeaux .tp-shape-wave--flip-y) {
+	--tp-scelta-onda-flip-y: -1;
+}
+
+.tp-child-theme :where(.tp-scelta-onda--bordeaux .tp-shape-wave--flip-y .tp-shape-wave__svg) {
+	transform-origin: center;
+}
+
+.tp-child-theme :where(.tp-scelta-titolo) {
+	position: absolute;
+	left: 30px;
+	top: 320.35px;
+	z-index: 4;
+	display: block;
+	width: 1452px;
+	max-width: none;
+	margin: 0;
+	padding: 0;
+}
+
+.tp-child-theme :where(.tp-scelta-titolo h2) {
+	margin: 0;
+	padding: 0;
+	color: var(--tp-white, #fff);
+	font-family: var(--tp-font-display, "TP Bowlby One", Impact, sans-serif);
+	font-size: 88px;
+	font-weight: 400;
+	line-height: 96px;
+	letter-spacing: 0;
+	text-transform: none;
+	white-space: nowrap;
+}
+
+/* The cards: a row of the board from 682 px down. The layer lets the pointer through to the title and the
+ * waves under it: only its cards take it. */
+.tp-child-theme :where(.tp-scelta-schede) {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	align-items: stretch;
+	gap: 23.55px;
+	padding: 682px 30px 0;
+	pointer-events: none;
+}
+
+.tp-child-theme :where(.tp-scelta-schede > *) {
+	pointer-events: auto;
+}
+
+/* Visual Builder: the waves are picked as the other modules, and the cards layer does not cover them. */
+body.et-fb :where(.tp-scelta-onda) {
+	pointer-events: auto;
+}
+
+body.et-fb .tp-scelta-schede > .et-vb-module-mousetrap {
+	pointer-events: none;
+}
+
+.tp-child-theme :where(.tp-scelta-scheda) {
+	position: relative;
+	z-index: auto;
+	display: block;
+	flex: 0 0 716.07px;
+	box-sizing: border-box;
+	width: 716.07px;
+	max-width: 716.07px;
+	height: 581.06px;
+	min-height: 581.06px;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	border-radius: 20px;
+	background: var(--tp-cream, #fff5e9);
+	isolation: isolate;
+	cursor: pointer;
+}
+
+.tp-child-theme :where(.tp-scelta-scheda:focus) {
+	outline: 3px solid var(--tp-white, #fff);
+	outline-offset: 4px;
+}
+
+.tp-child-theme :where(.tp-scelta-foto) {
+	position: absolute;
+	left: 4.61%;
+	top: 8.09%;
+	z-index: 1;
+	display: block;
+	width: 87.99%;
+	max-width: none;
+	height: 61.62%;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	border-radius: 18px;
+	transition: left 1.02s cubic-bezier(.22, 1, .36, 1), top 1.02s cubic-bezier(.22, 1, .36, 1), width 1.02s cubic-bezier(.22, 1, .36, 1), height 1.02s cubic-bezier(.22, 1, .36, 1), border-radius 1.02s cubic-bezier(.22, 1, .36, 1);
+}
+
+/* The shade over the photo, when it fills the card. */
+.tp-child-theme :where(.tp-scelta-foto)::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 2;
+	display: block;
+	border-radius: inherit;
+	background: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .95) 100%), rgba(0, 0, 0, .2);
+	opacity: 0;
+	transition: opacity .8s cubic-bezier(.22, 1, .36, 1);
+	pointer-events: none;
+}
+
+.tp-child-theme.tp-child-theme :where(.tp-scelta-foto .et_pb_image_wrap) {
+	display: block;
+	width: 100%;
+	max-width: none;
+	height: 100%;
+}
+
+.tp-child-theme :where(.tp-scelta-foto img) {
+	display: block;
+	width: 100%;
+	max-width: none;
+	height: 100%;
+	margin: 0;
+	object-fit: cover;
+}
+
+.tp-child-theme :where(.tp-scelta-testo) {
+	position: absolute;
+	left: 4.61%;
+	right: 4.61%;
+	top: 78.12%;
+	z-index: 3;
+	display: block;
+	width: auto;
+	margin: 0;
+	padding: 0;
+	color: inherit;
+	transition: top 1.02s cubic-bezier(.22, 1, .36, 1), color .5s ease;
+}
+
+.tp-child-theme :where(.tp-scelta-nome),
+.tp-child-theme :where(.tp-scelta-chip),
+.tp-child-theme :where(.tp-scelta-descrizione) {
+	display: block;
+	margin: 0;
+	padding: 0;
+}
+
+.tp-child-theme :where(.tp-scelta-nome .et_pb_module_header) {
+	margin: 0;
+	padding: 0;
+	color: var(--tp-green, #054726);
+	font-family: var(--tp-font-display, "TP Bowlby One", Impact, sans-serif);
+	font-size: 40px;
+	font-weight: 400;
+	line-height: 40px;
+	letter-spacing: 0;
+	text-transform: none;
+	transition: color .5s ease;
+}
+
+.tp-child-theme :where(.tp-scelta-scheda--piatto .tp-scelta-nome .et_pb_module_header) {
+	color: var(--tp-bordeaux, #560b22);
+}
+
+/* Features: the bulleted list of the module, as pills; the text of the module sets their letters. */
+.tp-child-theme :where(.tp-scelta-chip) {
+	margin-top: 18px;
+}
+
+.tp-child-theme :where(.tp-scelta-chip .et_pb_text_inner) {
+	color: #fff5e9;
+	font-family: var(--tp-font-body, "TP DM Sans", system-ui, sans-serif);
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 1;
+	letter-spacing: .5px;
+}
+
+.tp-child-theme.tp-child-theme :where(.tp-scelta-chip ul) {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 10px;
+	margin: 0;
+	padding: 0;
+	line-height: inherit;
+	list-style: none;
+}
+
+.tp-child-theme :where(.tp-scelta-chip li) {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	margin: 0;
+	padding: 6px 14px;
+	border-radius: 999px;
+	background: var(--tp-green, #054726);
+	white-space: nowrap;
+}
+
+.tp-child-theme :where(.tp-scelta-scheda--piatto .tp-scelta-chip li) {
+	background: var(--tp-bordeaux, #560b22);
+}
+
+.tp-child-theme :where(.tp-scelta-chip li)::before {
+	content: "◆";
+	content: "◆" / "";
+	font-size: 9px;
+	line-height: 1;
+	opacity: .9;
+}
+
+.tp-child-theme :where(.tp-scelta-descrizione) {
+	margin-top: 22px;
+}
+
+.tp-child-theme :where(.tp-scelta-descrizione .et_pb_text_inner) {
+	color: var(--tp-cream, #fff5e9);
+	font-family: var(--tp-font-body, "TP DM Sans", system-ui, sans-serif);
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 1.5;
+	letter-spacing: 0;
+	opacity: 0;
+	transition: opacity .8s cubic-bezier(.22, 1, .36, 1);
+}
+
+.tp-child-theme :where(.tp-scelta-descrizione p) {
+	margin: 0;
+	padding: 0;
+}
+
+/* A card under the pointer, or touched (is-active, tp-choice-cards.js): the photo fills it, the texts go up. */
+.tp-child-theme :where(.tp-scelta-scheda:hover .tp-scelta-foto),
+.tp-child-theme :where(.tp-scelta-scheda:focus .tp-scelta-foto),
+.tp-child-theme :where(.tp-scelta-scheda.is-active .tp-scelta-foto) {
+	left: -22.77%;
+	top: 0;
+	width: 142.88%;
+	height: 100%;
+	border-radius: 20px;
+}
+
+.tp-child-theme :where(.tp-scelta-scheda:hover .tp-scelta-foto)::after,
+.tp-child-theme :where(.tp-scelta-scheda:focus .tp-scelta-foto)::after,
+.tp-child-theme :where(.tp-scelta-scheda.is-active .tp-scelta-foto)::after {
+	opacity: 1;
+}
+
+.tp-child-theme :where(.tp-scelta-scheda:hover .tp-scelta-testo),
+.tp-child-theme :where(.tp-scelta-scheda:focus .tp-scelta-testo),
+.tp-child-theme :where(.tp-scelta-scheda.is-active .tp-scelta-testo) {
+	top: 71.43%;
+	color: var(--tp-cream, #fff5e9);
+}
+
+.tp-child-theme :where(.tp-scelta-scheda:hover .tp-scelta-nome .et_pb_module_header),
+.tp-child-theme :where(.tp-scelta-scheda:focus .tp-scelta-nome .et_pb_module_header),
+.tp-child-theme :where(.tp-scelta-scheda.is-active .tp-scelta-nome .et_pb_module_header) {
+	color: var(--tp-cream, #fff5e9);
+}
+
+.tp-child-theme :where(.tp-scelta-scheda:hover .tp-scelta-descrizione .et_pb_text_inner),
+.tp-child-theme :where(.tp-scelta-scheda:focus .tp-scelta-descrizione .et_pb_text_inner),
+.tp-child-theme :where(.tp-scelta-scheda.is-active .tp-scelta-descrizione .et_pb_text_inner) {
+	opacity: 1;
+}
+
+@media (min-width: 981px) and (max-width: 1279px) {
+
+	.tp-child-theme :where(.tp-scelta) {
+		margin-top: 215px;
+	}
+}
+
+@media (min-width: 1280px) {
+
+	.tp-child-theme :where(.tp-scelta) {
+		margin-top: 72px;
+	}
+}
+
+/* Tablet: the board in vw, the bordeaux of the section closed at the bottom by a cream wave. */
+@media (min-width: 768px) and (max-width: 980px) {
+
+	.tp-child-theme :where(.tp-scelta) {
+		height: 90.531746vw;
+		min-height: 90.531746vw;
+	}
+
+	.tp-child-theme :where(.tp-scelta)::after {
+		content: "";
+		position: absolute;
+		left: -17.3vw;
+		bottom: -.25vw;
+		z-index: 3;
+		display: block;
+		width: 134.6vw;
+		height: 25.15vw;
+		background: url("../svg/choice-bottom-cream-wave.svg") left top / 100% 100% no-repeat;
+		pointer-events: none;
+	}
+
+	/* No layer of their own: the waves, the bordeaux and the cream wave of the section stack together. */
+	.tp-child-theme :where(.tp-scelta-testata, .tp-scelta-schede) {
+		left: 0;
+		height: 90.531746vw;
+		transform: none;
+	}
+
+	.tp-child-theme.tp-child-theme :where(.tp-scelta-testata, .tp-scelta-schede) {
+		width: 100vw;
+	}
+
+	.tp-child-theme :where(.tp-scelta-testata)::before {
+		top: 27.116402vw;
+	}
+
+	.tp-child-theme :where(.tp-scelta-onda--verde) {
+		left: -9.912698vw;
+		width: 119.823988vw;
+		height: 28.329875vw;
+	}
+
+	.tp-child-theme :where(.tp-scelta-onda--bordeaux) {
+		left: -.661376vw;
+		top: 8.613757vw;
+		width: 100.822652vw;
+		height: 18.833413vw;
+	}
+
+	.tp-child-theme :where(.tp-scelta-titolo) {
+		left: 1.984127vw;
+		top: 21.187169vw;
+		width: 96.031746vw;
+		max-width: 96.031746vw;
+	}
+
+	.tp-child-theme :where(.tp-scelta-titolo h2) {
+		font-size: 5.820106vw;
+		line-height: 6.349206vw;
+	}
+
+	.tp-child-theme :where(.tp-scelta-schede) {
+		z-index: 4;
+		gap: 1.55754vw;
+		padding: 45.10582vw 1.984127vw 0;
+	}
+
+	.tp-child-theme :where(.tp-scelta-scheda) {
+		flex-basis: 47.3585vw;
+		width: 47.358466vw;
+		max-width: 47.358466vw;
+		height: 40.6vw;
+		min-height: 40.6vw;
+	}
+
+	.tp-child-theme :where(.tp-scelta-testo) {
+		top: 70%;
+	}
+
+	.tp-child-theme :where(.tp-scelta-scheda:hover .tp-scelta-testo),
+	.tp-child-theme :where(.tp-scelta-scheda:focus .tp-scelta-testo),
+	.tp-child-theme :where(.tp-scelta-scheda.is-active .tp-scelta-testo) {
+		top: 58%;
+	}
+
+	.tp-child-theme :where(.tp-scelta-nome .et_pb_module_header) {
+		font-size: clamp(24px, 2.9vw, 31px);
+		line-height: 1;
+	}
+
+	.tp-child-theme :where(.tp-scelta-chip) {
+		margin-top: 10px;
+	}
+
+	.tp-child-theme :where(.tp-scelta-chip .et_pb_text_inner) {
+		line-height: 10px;
+	}
+
+	.tp-child-theme.tp-child-theme :where(.tp-scelta-chip ul) {
+		flex-wrap: nowrap;
+		gap: 5px;
+	}
+
+	.tp-child-theme :where(.tp-scelta-chip li) {
+		padding: 4px 7px;
+	}
+
+	.tp-child-theme :where(.tp-scelta-descrizione) {
+		margin-top: 8px;
+	}
+
+	.tp-child-theme :where(.tp-scelta-descrizione .et_pb_text_inner) {
+		font-size: 12px;
+		line-height: 1.28;
+	}
+}
+
+/* Phones: the 390 px board of the Figma, with its waves and bordeaux drawn in one picture. */
+@media (max-width: 767px) {
+
+	.tp-child-theme :where(.tp-scelta) {
+		width: 100%;
+		height: var(--tp-scelta-height, 963px);
+		min-height: var(--tp-scelta-height, 963px);
+		margin: 0;
+		background: var(--tp-bordeaux, #560b22);
+	}
+
+	.tp-child-theme :where(.tp-scelta-testata, .tp-scelta-schede) {
+		z-index: 2;
+		height: 963px;
+		transform: translateX(-50%) scale(var(--tp-scelta-scale-phone, 1));
+	}
+
+	.tp-child-theme.tp-child-theme :where(.tp-scelta-testata, .tp-scelta-schede) {
+		width: 390px;
+	}
+
+	.tp-child-theme :where(.tp-scelta-testata) {
+		background: var(--tp-cream, #fff5e9);
+	}
+
+	.tp-child-theme :where(.tp-scelta-testata)::before {
+		top: 0;
+		background: url("../images/choice/mobile-wave-layer-390x963.webp?ver=20260522-wave-layer-editable") center top / 390px 963px no-repeat;
+	}
+
+	.tp-child-theme :where(.tp-scelta-onda) {
+		display: none;
+	}
+
+	.tp-child-theme :where(.tp-scelta-titolo) {
+		left: 16.74px;
+		top: 121px;
+		width: 386.31px;
+		height: 90px;
+		min-height: 90px;
+	}
+
+	.tp-child-theme :where(.tp-scelta-titolo h2) {
+		color: var(--tp-cream, #fff5e9);
+		font-size: 30px;
+		line-height: 30.07px;
+		white-space: normal;
+	}
+
+	.tp-child-theme :where(.tp-scelta-schede) {
+		flex-direction: column;
+		gap: 8.94px;
+		padding: 230px 16px 0;
+	}
+
+	.tp-child-theme :where(.tp-scelta-scheda) {
+		flex-basis: 291px;
+		width: 358px;
+		max-width: 358px;
+		height: 291px;
+		min-height: 291px;
+		border-radius: 10px;
+		box-shadow: none;
+	}
+
+	.tp-child-theme :where(.tp-scelta-scheda:focus) {
+		outline-width: 2px;
+		outline-offset: 3px;
+	}
+
+	.tp-child-theme :where(.tp-scelta-foto) {
+		left: 16.56px;
+		top: 23.46px;
+		width: 315.45px;
+		height: 179.13px;
+		border-radius: 9px;
+		transition-duration: 1.022s;
+	}
+
+	.tp-child-theme :where(.tp-scelta-testo) {
+		left: 16.56px;
+		right: 16.56px;
+		top: 226px;
+		transition-duration: 1.022s, .5s;
+	}
+
+	.tp-child-theme :where(.tp-scelta-nome .et_pb_module_header) {
+		font-size: 18.75px;
+		line-height: 18.8px;
+	}
+
+	.tp-child-theme :where(.tp-scelta-chip) {
+		margin-top: 9.5px;
+	}
+
+	.tp-child-theme :where(.tp-scelta-chip .et_pb_text_inner) {
+		color: var(--tp-white, #fff);
+		font-family: var(--tp-font-display, "TP Bowlby One", Impact, sans-serif);
+		font-size: 7.46px;
+		line-height: 12px;
+		letter-spacing: 0;
+	}
+
+	.tp-child-theme.tp-child-theme :where(.tp-scelta-chip ul) {
+		flex-wrap: nowrap;
+		gap: 5px;
+		width: 100%;
+	}
+
+	.tp-child-theme :where(.tp-scelta-chip li) {
+		flex: 0 0 auto;
+		justify-content: center;
+		gap: 5.6px;
+		min-width: 0;
+		height: 11.6px;
+		padding: .47px 6.2px;
+		border-radius: 4.7px;
+	}
+
+	.tp-child-theme :where(.tp-scelta-chip li)::before {
+		flex: 0 0 9.8px;
+		width: 9.8px;
+		height: 9.8px;
+		font-size: 7px;
+		line-height: 9.8px;
+		text-align: center;
+		opacity: 1;
+	}
+
+	.tp-child-theme :where(.tp-scelta-descrizione) {
+		margin-top: 8px;
+	}
+
+	.tp-child-theme :where(.tp-scelta-descrizione .et_pb_text_inner) {
+		font-size: 10.8px;
+		font-weight: 500;
+		line-height: 13.2px;
+	}
+
+	.tp-child-theme :where(.tp-scelta-scheda:hover .tp-scelta-foto),
+	.tp-child-theme :where(.tp-scelta-scheda:focus .tp-scelta-foto),
+	.tp-child-theme :where(.tp-scelta-scheda.is-active .tp-scelta-foto) {
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		border-radius: 10px;
+	}
+
+	.tp-child-theme :where(.tp-scelta-scheda:hover .tp-scelta-testo),
+	.tp-child-theme :where(.tp-scelta-scheda:focus .tp-scelta-testo),
+	.tp-child-theme :where(.tp-scelta-scheda.is-active .tp-scelta-testo) {
+		top: 179px;
+	}
+}
+
 @keyframes tp-marquee-scroll {
 	0% {
 		transform: translate3d(0, 0, 0);

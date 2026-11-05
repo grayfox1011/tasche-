@@ -20,8 +20,24 @@
 
 	/* Scales ---------------------------------------------------------------- */
 
-	// Tasca/Piatto stage: 1512px wide on desktop, 390px reference width on phones.
+	// Tasca/Piatto stage: 1512px wide on desktop, 390px reference width on phones. The section made of
+	// Divi modules (.tp-scelta) reads the same scale and height from CSS variables on the page.
 	function updateChoiceStage() {
+		if (document.querySelector('.tp-scelta')) {
+			var root = document.documentElement;
+			var width = window.innerWidth || root.clientWidth;
+			var phone = window.matchMedia('(max-width: 767px)').matches;
+			var tablet = !phone && window.matchMedia('(max-width: 980px)').matches;
+			var stageScale = width / (phone ? 390 : 1512);
+			root.style.removeProperty(phone ? '--tp-scelta-scale' : '--tp-scelta-scale-phone');
+			if (tablet) {
+				root.style.removeProperty('--tp-scelta-scale');
+				root.style.removeProperty('--tp-scelta-height');
+			} else {
+				root.style.setProperty(phone ? '--tp-scelta-scale-phone' : '--tp-scelta-scale', stageScale.toFixed(6));
+				root.style.setProperty('--tp-scelta-height', ((phone ? 963 : 1263) * stageScale).toFixed(2) + 'px');
+			}
+		}
 		document.querySelectorAll('.tp-choice-standalone').forEach(function (section) {
 			var viewportWidth = window.innerWidth || document.documentElement.clientWidth || section.clientWidth;
 			if (window.matchMedia('(max-width: 767px)').matches) {

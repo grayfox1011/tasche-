@@ -40,8 +40,14 @@
 	}
 
 	function initChoiceCards() {
+		var cards = ".tp-choice-card, .choice-card, .tp-scelta-scheda";
+
 		injectChoiceWaves();
-		window.tpBindActiveState(document.querySelectorAll(".tp-choice-card, .choice-card"), { outside: ".tp-choice-card, .choice-card" });
+		// The cards of the section made of Divi modules take the keyboard focus, as the rebuilt ones.
+		Array.prototype.forEach.call(document.querySelectorAll(".tp-scelta-scheda:not([tabindex])"), function (card) {
+			card.setAttribute("tabindex", "0");
+		});
+		window.tpBindActiveState(document.querySelectorAll(cards), { outside: cards });
 	}
 
 	if (document.readyState === "loading") {

@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( "TP_CHILD_VERSION", "0.5.3" );
+define( "TP_CHILD_VERSION", "0.5.4" );
 define( 'TP_CHILD_PATH', trailingslashit( get_stylesheet_directory() ) );
 define( 'TP_CHILD_URL', trailingslashit( get_stylesheet_directory_uri() ) );
 define( 'TP_CHILD_MODULES_JSON_PATH', TP_CHILD_PATH . 'modules-json/' );
@@ -294,6 +294,7 @@ require_once TP_CHILD_PATH . 'inc/site-seeder.php';
 require_once TP_CHILD_PATH . 'inc/menu-label-text-modules.php';
 require_once TP_CHILD_PATH . 'inc/menu-size-s-migration.php';
 require_once TP_CHILD_PATH . 'inc/two-size-text-migration.php';
+require_once TP_CHILD_PATH . 'inc/choice-divi-migration.php';
 require_once TP_CHILD_PATH . 'inc/legal-pages.php';
 require_once TP_CHILD_PATH . 'inc/footer-layout-helpers.php';
 require_once TP_CHILD_PATH . 'inc/materie-marquee-migration.php';
@@ -797,11 +798,11 @@ function tp_child_choice_data_from_divi_section( string $source_html ): array {
  * ~768px (~1.5MB decodificati) invece di 6.8MB -> niente piu' immagini che non
  * caricano per pressione memoria. Se l'URL non e' un attachment -> stringa vuota
  * (fallback all'img semplice). */
-function tp_child_responsive_img_attrs( string $url, string $sizes ): string {
+function tp_child_responsive_img_attrs( string $url, string $sizes, int $id = 0 ): string {
 	if ( '' === $url || ! function_exists( 'attachment_url_to_postid' ) ) {
 		return '';
 	}
-	$id = attachment_url_to_postid( $url );
+	$id = $id ?: attachment_url_to_postid( $url );
 	if ( ! $id ) {
 		return '';
 	}
@@ -955,6 +956,38 @@ function tp_child_replace_choice_section( string $content ): string {
 add_filter( "the_content", "tp_child_replace_choice_section", 99 );
 
 /**
+ * The photos of the Tasca/Piatto section made of Divi modules (.tp-scelta-foto) load the same file as the
+ * rebuilt section: one of the sizes WordPress made of the photo up to "large", the one for 640 px (90% of
+ * the window on phones), not the original.
+ */
+function tp_child_scelta_photo_sizes( string $block_content, array $block ): string {
+	$class = $block['attrs']['module']['advanced']['htmlAttributes']['desktop']['value']['class'] ?? '';
+
+	if ( 'divi/image' !== ( $block['blockName'] ?? '' ) || ! is_string( $class ) || ! preg_match( '/(?:^| )tp-scelta-foto(?: |$)/', $class ) ) {
+		return $block_content;
+	}
+
+	$image = $block['attrs']['image']['innerContent']['desktop']['value'] ?? [];
+	$id    = is_array( $image ) && is_numeric( $image['id'] ?? null ) ? (int) $image['id'] : 0;
+
+	return (string) preg_replace_callback(
+		'/<img\b[^>]*>/',
+		static function ( array $match ) use ( $id ): string {
+			$img = (string) preg_replace( '/\s(?:srcset|sizes)="[^"]*"/', '', $match[0] );
+			$src = preg_match( '/\ssrc="([^"]*)"/', $img, $found ) ? html_entity_decode( $found[1] ) : '';
+			// The module's attachment when it is the photo shown, without looking the address up.
+			$id    = $id > 0 && '' !== $src && wp_get_attachment_url( $id ) === $src ? $id : 0;
+			$attrs = '' !== $src ? tp_child_responsive_img_attrs( $src, '(max-width: 767px) 90vw, 640px', $id ) : '';
+
+			return '' === $attrs ? $img : (string) preg_replace( '/^<img\b/', '<img' . $attrs, $img );
+		},
+		$block_content,
+		1
+	);
+}
+add_filter( 'render_block', 'tp_child_scelta_photo_sizes', 10, 2 );
+
+/**
  * Load the GSAP preloader runtime on landing pages.
  */
 function tp_child_enqueue_preloader_assets(): void {
@@ -1065,7 +1098,7 @@ add_action( 'wp_enqueue_scripts', 'tp_child_enqueue_split_text_assets', 30 );
  * Load keyboard focus support for the Tasca/Piatto choice cards.
  */
 function tp_child_enqueue_choice_card_assets(): void {
-	if ( tp_child_is_visual_builder() || ! tp_child_content_has_marker( 'tp-choice-section' ) ) {
+	if ( tp_child_is_visual_builder() || ! ( tp_child_content_has_marker( 'tp-choice-section' ) || tp_child_content_has_marker( 'tp-scelta' ) ) ) {
 		return;
 	}
 
@@ -1241,3 +1274,38 @@ function tp_child_vb_footer_scale_script() {
 	<?php
 }
 add_action( 'wp_footer', 'tp_child_vb_footer_scale_script', 5 );
+
+/**
+ * Visual Builder: the scale of the Tasca/Piatto board made of Divi modules, as tp-layout.js gives it on
+ * the site (tp-layout.js does not run in the builder). The builder's frame is as wide as the page shown,
+ * also in the tablet and phone views.
+ */
+function tp_child_vb_choice_scale_script() {
+	if ( ! tp_child_is_visual_builder() ) {
+		return;
+	}
+	?>
+<script id="tp-vb-choice-scale-js">
+(function(){
+	function upd(){
+		var root = document.documentElement;
+		var width = window.innerWidth || root.clientWidth;
+		var phone = window.matchMedia('(max-width: 767px)').matches;
+		var tablet = !phone && window.matchMedia('(max-width: 980px)').matches;
+		var scale = width / (phone ? 390 : 1512);
+		root.style.removeProperty(phone ? '--tp-scelta-scale' : '--tp-scelta-scale-phone');
+		if (tablet) {
+			root.style.removeProperty('--tp-scelta-scale');
+			root.style.removeProperty('--tp-scelta-height');
+			return;
+		}
+		root.style.setProperty(phone ? '--tp-scelta-scale-phone' : '--tp-scelta-scale', scale.toFixed(6));
+		root.style.setProperty('--tp-scelta-height', ((phone ? 963 : 1263) * scale).toFixed(2) + 'px');
+	}
+	upd();
+	window.addEventListener('resize', upd, { passive: true });
+})();
+</script>
+	<?php
+}
+add_action( 'wp_footer', 'tp_child_vb_choice_scale_script', 5 );

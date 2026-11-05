@@ -85,6 +85,12 @@
                   },
                   "choice-cream-bottom": {
                     "label": "Choice crema sotto"
+                  },
+                  "choice-green-wave": {
+                    "label": "Choice onda verde"
+                  },
+                  "choice-burgundy-wave": {
+                    "label": "Choice onda bordeaux"
                   }
                 }
               }

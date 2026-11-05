@@ -104,6 +104,28 @@ trait RenderCallbackTrait {
 				'width'      => 524.8,
 				'height'     => 98.03,
 			],
+			// The two waves of the Tasca/Piatto section on the computer and the tablet: they keep their proportions
+			// in a box of another size (xMinYMin meet), as the drawing of the section did before the modules.
+			'choice-green-wave'    => [
+				'label'      => 'Choice onda verde',
+				'view_box'   => '0 0 1811.7627 428.3477',
+				'path'       => 'M999.447 217.19C1300.56 148.011 1608.33 129.375 1724.58 128.705L1811.76 178.981L1711.82 428.348L0 428.348L0 281.543L0 0C207.686 101.221 698.337 286.369 999.447 217.19Z',
+				'fill'       => 'green',
+				'background' => 'transparent',
+				'width'      => 1811.7627,
+				'height'     => 428.3477,
+				'aspect'     => 'xMinYMin meet',
+			],
+			'choice-burgundy-wave' => [
+				'label'      => 'Choice onda bordeaux',
+				'view_box'   => '0 0 1524.4385 284.7612',
+				'path'       => 'M706.125 113.179C339.204 10.2306 82.4911 -4.50822 0 0.990986L9.89911 284.761L1524.44 284.761L1524.44 202.27C1404.55 215.469 1073.05 216.128 706.125 113.179Z',
+				'fill'       => 'burgundy',
+				'background' => 'transparent',
+				'width'      => 1524.4385,
+				'height'     => 284.7612,
+				'aspect'     => 'xMinYMin meet',
+			],
 		];
 	}
 
@@ -165,9 +187,10 @@ trait RenderCallbackTrait {
 		}
 
 		return sprintf(
-			'<svg class="tp-shape-wave__svg" viewBox="%1$s" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path class="tp-shape-wave__path" d="%2$s" fill="currentColor"></path></svg>',
+			'<svg class="tp-shape-wave__svg" viewBox="%1$s" preserveAspectRatio="%3$s" aria-hidden="true" focusable="false"><path class="tp-shape-wave__path" d="%2$s" fill="currentColor"></path></svg>',
 			esc_attr( $shape['view_box'] ),
-			esc_attr( $shape['path'] )
+			esc_attr( $shape['path'] ),
+			esc_attr( $shape['aspect'] ?? 'none' )
 		);
 	}
 
