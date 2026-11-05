@@ -1,4 +1,101 @@
-TASCHE PIENE — VERSIONE 0.5.8, CANDIDATA AL COLLAUDO
+TASCHE PIENE — VERSIONE 0.5.9, CANDIDATA AL COLLAUDO
+
+La 0.5.9 porta il sito al nuovo Figma ("tasche prototipo wip"): la tavola
+"desktop" di 1512 px per il computer e la tavola "mobilw" di 390 px per il
+telefono. Cambiano testi, foto e piatti dove il designer li ha cambiati, e le
+misure di ogni sezione. Le note delle versioni precedenti, piu' in basso,
+restano valide.
+
+COSA CAMBIA RISPETTO ALLA 0.5.8
+- Contenuti, una volta sola alla prima richiesta e solo dove testo, prezzo o
+  foto sono ancora quelli del tema (un testo cambiato a mano in Divi resta;
+  WordPress tiene la home di prima tra le revisioni):
+  - apertura: "Scopri il menù" e "Ne abbiamo le tasche piene degli
+    "assaggini""; striscia con cinque frasi;
+  - introduzione: la foto di Alberto al lavoro e i tre paragrafi del Figma;
+    Una gastronomia: le foto della pentola e di Alberto con i pomodori;
+  - menu: titolo "Il nostro menu'", legenda Regular e Large, piatti,
+    allergeni e prezzi del Figma (senza la misura S), una riga in inglese
+    sotto ogni piatto (sul computer compare al passaggio del mouse), Vitello
+    tonnato al posto della salsiccia, la riga "Proposta del mese" (6-8€),
+    "Contorni", "Verdure del giorno", le bevande nell'ordine del Figma;
+  - trippa e stoccafisso si chiamano "TRIPPA IN UMIDO ALLA GENOVESE (di
+    Venerdì)" e "STOCCAFISSO ACCOMODATO (di Giovedì)": la nota tra
+    parentesi e' grigia e corsiva sul computer, e su telefono e tablet
+    diventa l'ovale del giorno (verde se dice giovedì). Una nota scritta in
+    minuscolo tra parentesi alla fine di un altro piatto fa lo stesso;
+  - materie prime: ogni card con la foto del suo ingrediente; dove siamo: la
+    foto vicino ai leoni di San Lorenzo, "Via Di Scurreria 42R";
+  - header: Chi siamo, Menù, Ingredienti, Come mangi, Dove trovarci.
+- Computer (1512 px): menu sulla lavagna con la legenda che sale e il
+  personaggio, righe e foto al passaggio del mouse del Figma; due moduli
+  Onda nuovi sotto il menu (bordeaux e verde, la bordeaux cresce col mouse);
+  materie prime con le card e le foto che si girano al passaggio; dove
+  siamo, orari e footer con i personaggi nuovi (la coppia sulla "ch" e i
+  piccioni sulla "ne").
+- Telefono (tavola mobilw): header a 53 px dall'alto, apertura alta quanto
+  lo schermo con la striscia in fondo; card del menu di 357,7 x 244,3 px con
+  nome e allergeni su una riga, ovale del giorno, scritte Tasca e Piatto,
+  icone e i tre prezzi (la riga in inglese resta del computer); proposta
+  del mese bassa con il prezzo in verde; contorni, dolci e bevande con le
+  misure del Figma (i nomi dei dolci su due righe); materie prime al 94,87 %
+  delle card del computer; orari in righe di 355 x 64,4 px in maiuscolo;
+  footer con i personaggi sul logo e il copyright su tre righe. Le foto
+  dell'introduzione e di Una gastronomia sono tagliate come nel Figma.
+- Tablet (768-980 px, nessuna tavola nel nuovo Figma): resta la tavola iPad
+  di prima, sistemata dove i contenuti nuovi la rompevano: caratteristiche
+  di Tasca e Piatto che ora stanno nella card, link del footer che non si
+  spezzano, personaggi sul logo, ovale del giorno.
+- Computer tra 981 e 1511 px: anche dove siamo e orari sono la tavola di
+  1512 px scalata alla finestra (prima il titolo usciva a destra).
+
+VERIFICHE EFFETTUATE SULLA 0.5.9
+- Confronto con il Figma, sezione per sezione: sul computer a 1512 px con la
+  tavola desktop, sul telefono a 390 px con le schermate del prototipo
+  (catturate una per una): posizioni entro 1-2 px, stessi caratteri, colori
+  e misure; card del menu, ovali del giorno, prezzi e footer sovrapposti al
+  Figma.
+- Larghezze: telefono 320, 360, 375, 390, 414 e 430 px (card e titoli
+  scalano, niente scorrimento in orizzontale); tablet 768, 820 e 980 px;
+  computer 1000, 1100, 1300, 1512 e 1920 px.
+- Computer a 1512 px identico al pixel prima e dopo i lavori su telefono e
+  tablet (cambiano solo le animazioni in corso).
+- Visual Builder (Divi 5.15.1): la home si apre sul computer e in vista
+  telefono senza errori nuovi.
+- Aggiornamento caricando lo zip da wp-admin su copie del sito di prova con
+  la 0.5.8 e la 0.4.9: la prima richiesta dopo l'aggiornamento fa il lavoro
+  (qualche secondo; le richieste che arrivano intanto mostrano la pagina di
+  prima), poi home e header hanno i contenuti nuovi; l'HTML della home e'
+  identico a quello del sito di prova, header e footer anche; una seconda
+  richiesta non cambia niente; nessun errore PHP. Dalla 0.4.9 arrivano anche
+  le voci di header e footer delle 0.5.7 e 0.5.8.
+
+DIFFERENZE CON IL FIGMA, VOLUTE
+- La tavola del telefono ha ancora alcuni testi vecchi: il sito usa quelli
+  del computer: "Scopri il menù" (telefono: "Guarda il menù"), "Ne abbiamo
+  le tasche piene..." (telefono: "Siamo in Via di Scurreria 34 / Nei vicoli
+  zenesi"), i paragrafi dell'introduzione, "Contorni / Cosa vuoi vicino?"
+  ("I nostri contorni / Cosa ci vuoi vicino?"), 6-8€ nella proposta
+  ("VARIA IN BASE ALLA RICETTA"), Bibite, Spumetta (a bicchiere), Acqua
+  (telefono: Acqua, Bevande, Spumetta (al bicchiere)), "Tasca o piatto"
+  senza i punti.
+- Telefono: restano il bottone "Le materie prime" dell'introduzione e
+  "TORNA SÙ" nel footer, che la tavola del telefono non ha; la foto dei
+  dolci resta il tiramisù (la tavola ha una foto di prova, un panino con le
+  verdure); "5 pesce" va a capo come sul computer. Lo spazio di 222 px tra
+  Mappe e gli orari e' quello del Figma.
+- Computer: la riga della Spumetta nel Figma e' spostata di 2 px a destra
+  (non copiato); "Tasche Piene è una gastronomia..." e' sia
+  nell'introduzione sia in Una gastronomia, come nel Figma; nelle righe in
+  inglese corretti due errori di battitura del Figma ("thursday", "basil").
+
+NON PROVATI
+- Safari e un iPhone veri, un database MySQL e il video di sfondo nel
+  builder, come per le versioni precedenti.
+
+==============================================================================
+
+NOTE DELLA 0.5.8
 
 La 0.5.8 fa per i due menu del footer quello che la 0.5.7 ha fatto per il
 menu in alto: le voci (MENÙ, DOVE SIAMO, SU DI NOI a sinistra; TORNA SÙ,

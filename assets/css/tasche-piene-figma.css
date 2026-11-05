@@ -2305,15 +2305,15 @@
 
 @media (max-width: 767px) {
 
-	.tp-child-theme :where(.site-footer.tp-theme-footer) {
+	.tp-child-theme :where(body:not(.et-fb) .site-footer.tp-theme-footer) {
 		padding-top: 110.3px;
 	}
 
-	.tp-child-theme :where(.tp-theme-footer-container) {
+	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-container) {
 		position: relative;
 	}
 
-	.tp-child-theme :where(.tp-theme-footer-logo) {
+	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-logo) {
 		width: calc(100% + 8.8px);
 		max-width: none;
 		margin-left: -3.1px;
@@ -2355,43 +2355,43 @@
 		margin-top: -6.426%;
 	}
 
-	.tp-child-theme :where(.tp-theme-footer-nav a) {
+	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-nav a) {
 		opacity: 1;
 	}
 
-	.tp-child-theme :where(.tp-theme-footer-nav-col) {
+	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-nav-col) {
 		column-gap: 16px;
 	}
 
-	.tp-child-theme :where(.tp-theme-footer-nav) {
+	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-nav) {
 		row-gap: 14px;
 	}
 
-	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(.tp-theme-footer-nav) {
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-nav) {
 		margin-top: -23.9px;
 	}
 
 	/* Copyright / P.IVA and Privacy-Cookie / Designed By Mochi, 26 px apart. */
-	.tp-child-theme :where(.tp-theme-footer-copyright) {
+	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-copyright) {
 		display: flex;
 		flex-wrap: wrap;
 		gap: 12px 30px;
 	}
 
-	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(.tp-theme-footer-copyright) {
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-copyright) {
 		margin-top: 8.5px;
 	}
 
-	.tp-child-theme :where(.tp-theme-footer-copyright > span:first-child),
-	.tp-child-theme :where(.tp-theme-footer-copyright > span:last-child) {
+	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-copyright > span:first-child),
+	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-copyright > span:last-child) {
 		flex: 0 0 100%;
 	}
 
-	.tp-child-theme :where(.tp-theme-footer-copyright > span:nth-child(3) + span:nth-child(4)) {
+	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-copyright > span:nth-child(3) + span:nth-child(4)) {
 		margin-left: -30px;
 	}
 
-	.tp-child-theme :where(.tp-theme-footer-copyright > span:nth-child(3) + span:nth-child(4))::before {
+	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-copyright > span:nth-child(3) + span:nth-child(4))::before {
 		content: "-";
 	}
 }
@@ -2404,17 +2404,17 @@
 
 @media (min-width: 768px) and (max-width: 980px) {
 
-	.tp-child-theme :where(.tp-theme-footer-nav) {
+	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-nav) {
 		flex-wrap: wrap;
 		row-gap: 14px;
 	}
 
-	.tp-child-theme :where(.tp-theme-footer-nav-col) {
+	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-nav-col) {
 		flex-wrap: wrap;
 		row-gap: 14px;
 	}
 
-	.tp-child-theme :where(.tp-theme-footer-nav a) {
+	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-nav a) {
 		white-space: nowrap;
 	}
 
@@ -2454,26 +2454,26 @@
 		margin-top: -6.426%;
 	}
 
-	.tp-child-theme :where(.tp-theme-footer-copyright) {
+	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-copyright) {
 		display: flex;
 		flex-wrap: wrap;
 		gap: 18px 38px;
 	}
 
-	.tp-child-theme :where(.tp-theme-footer-copyright > span) {
+	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-copyright > span) {
 		white-space: nowrap;
 	}
 
-	.tp-child-theme :where(.tp-theme-footer-copyright > span:first-child),
-	.tp-child-theme :where(.tp-theme-footer-copyright > span:last-child) {
+	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-copyright > span:first-child),
+	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-copyright > span:last-child) {
 		flex: 0 0 100%;
 	}
 
-	.tp-child-theme :where(.tp-theme-footer-copyright > span:nth-child(3) + span:nth-child(4)) {
+	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-copyright > span:nth-child(3) + span:nth-child(4)) {
 		margin-left: -38px;
 	}
 
-	.tp-child-theme :where(.tp-theme-footer-copyright > span:nth-child(3) + span:nth-child(4))::before {
+	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-copyright > span:nth-child(3) + span:nth-child(4))::before {
 		content: "-";
 	}
 }
