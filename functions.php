@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( "TP_CHILD_VERSION", "0.5.4" );
+define( "TP_CHILD_VERSION", "0.5.5" );
 define( 'TP_CHILD_PATH', trailingslashit( get_stylesheet_directory() ) );
 define( 'TP_CHILD_URL', trailingslashit( get_stylesheet_directory_uri() ) );
 define( 'TP_CHILD_MODULES_JSON_PATH', TP_CHILD_PATH . 'modules-json/' );
@@ -295,6 +295,7 @@ require_once TP_CHILD_PATH . 'inc/menu-label-text-modules.php';
 require_once TP_CHILD_PATH . 'inc/menu-size-s-migration.php';
 require_once TP_CHILD_PATH . 'inc/two-size-text-migration.php';
 require_once TP_CHILD_PATH . 'inc/choice-divi-migration.php';
+require_once TP_CHILD_PATH . 'inc/intro-link-migration.php';
 require_once TP_CHILD_PATH . 'inc/legal-pages.php';
 require_once TP_CHILD_PATH . 'inc/footer-layout-helpers.php';
 require_once TP_CHILD_PATH . 'inc/materie-marquee-migration.php';
@@ -956,14 +957,45 @@ function tp_child_replace_choice_section( string $content ): string {
 add_filter( "the_content", "tp_child_replace_choice_section", 99 );
 
 /**
+ * The CSS classes a Divi 5 module puts on its element, wherever the builder saved them: the "CSS ID &
+ * Classes" field (module.advanced.htmlAttributes, as in the theme's content) or Advanced > Attributes
+ * > class (module.decoration.attributes, where Divi 5.15 saves a class added from the panel).
+ */
+function tp_child_block_class_names( array $attrs ): string {
+	$classes = [];
+	$field   = $attrs['module']['advanced']['htmlAttributes']['desktop']['value']['class'] ?? '';
+
+	if ( is_string( $field ) ) {
+		$classes[] = $field;
+	}
+
+	$list = $attrs['module']['decoration']['attributes'] ?? [];
+
+	foreach ( [ $list['desktop']['value']['attributes'] ?? null, $list['attributes'] ?? null ] as $entries ) {
+		foreach ( is_array( $entries ) ? $entries : [] as $entry ) {
+			if ( ! is_array( $entry ) || 'class' !== ( $entry['name'] ?? '' ) || ! is_string( $entry['value'] ?? null ) ) {
+				continue;
+			}
+
+			// The class of the module itself ("Module" in the panel), not of an inner element such as the image.
+			if ( in_array( (string) ( $entry['targetElement'] ?? '' ), [ '', 'main', 'module' ], true ) ) {
+				$classes[] = $entry['value'];
+			}
+		}
+	}
+
+	return trim( (string) preg_replace( '/\s+/', ' ', implode( ' ', $classes ) ) );
+}
+
+/**
  * The photos of the Tasca/Piatto section made of Divi modules (.tp-scelta-foto) load the same file as the
  * rebuilt section: one of the sizes WordPress made of the photo up to "large", the one for 640 px (90% of
  * the window on phones), not the original.
  */
 function tp_child_scelta_photo_sizes( string $block_content, array $block ): string {
-	$class = $block['attrs']['module']['advanced']['htmlAttributes']['desktop']['value']['class'] ?? '';
+	$class = tp_child_block_class_names( $block['attrs'] ?? [] );
 
-	if ( 'divi/image' !== ( $block['blockName'] ?? '' ) || ! is_string( $class ) || ! preg_match( '/(?:^| )tp-scelta-foto(?: |$)/', $class ) ) {
+	if ( 'divi/image' !== ( $block['blockName'] ?? '' ) || ! preg_match( '/(?:^| )tp-scelta-foto(?: |$)/', $class ) ) {
 		return $block_content;
 	}
 

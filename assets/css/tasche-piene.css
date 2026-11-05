@@ -6463,6 +6463,16 @@ body.tp-child-theme :where(.tp-theme-nav-links) {
 	padding: 0;
 }
 
+/* A header or footer made anew in the Theme Builder: Divi's .et_pb_row:not([class*=et_flex_column]) (0,2,0, after
+   this sheet) would keep its row at the content width (1080 px at most up to 980 px). The theme's layouts get the
+   full width from their own row settings; this gives it to every row of the two shells, and the size set on a row
+   in Divi (saved with !important) still comes first. */
+body.tp-child-theme.tp-child-theme :where(.tp-theme-builder-header-shell .et_pb_row),
+body.tp-child-theme.tp-child-theme :where(.tp-theme-builder-footer-shell .et_pb_row) {
+	width: 100%;
+	max-width: none;
+}
+
 .tp-child-theme :where(.tp-theme-builder-header-shell .et_pb_column),
 .tp-child-theme :where(.tp-theme-builder-footer-shell .et_pb_column),
 .tp-child-theme :where(.tp-theme-builder-footer-shell .et_pb_module),

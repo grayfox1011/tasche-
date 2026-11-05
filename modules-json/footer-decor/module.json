@@ -222,7 +222,11 @@
               "props": {
                 "min": 20,
                 "max": 600,
-                "step": 1
+                "step": 1,
+                "allowedUnits": [
+                  "px"
+                ],
+                "defaultUnit": "px"
               }
             }
           }
@@ -245,6 +249,7 @@
             "priority": 40,
             "render": true,
             "label": "Ordine sovrapposizione (z-index)",
+            "description": "Più alto = più davanti alle altre figure del footer. Vuoto: 20.",
             "features": {
               "sticky": false,
               "responsive": false
@@ -255,7 +260,9 @@
               "props": {
                 "min": 0,
                 "max": 99,
-                "step": 1
+                "step": 1,
+                "allowedUnits": [],
+                "defaultUnit": ""
               }
             }
           }

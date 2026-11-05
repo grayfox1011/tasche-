@@ -1,4 +1,91 @@
-TASCHE PIENE — VERSIONE 0.5.4, CANDIDATA AL COLLAUDO
+TASCHE PIENE — VERSIONE 0.5.5, CANDIDATA AL COLLAUDO
+
+La 0.5.5 nasce dalla prova di rifare tutto da zero come farebbe il cliente:
+la home partendo da una pagina bianca nel Visual Builder, header e footer da
+capo nel Theme Builder. La prova e' riuscita: la home rifatta clic per clic e'
+identica al pixel a quella del tema a 10 larghezze tra 1920 e 320 px; header
+e footer rifatti sono identici a quelli del tema a 6 larghezze tra 1920 e 390
+px. Le correzioni qui sotto vengono da quello che la prova ha trovato.
+L'aspetto della home non cambia. La guida per il cliente (cosa caricare, cosa
+premere, quali moduli e classi usare) e' nel documento condiviso. Le note delle
+versioni precedenti, piu' in basso, restano valide.
+
+COSA CAMBIA RISPETTO ALLA 0.5.4
+- Classi messe dal pannello: Divi 5.15 salva una classe aggiunta da
+  Avanzate > Attributi > class in un posto diverso da quello del contenuto
+  creato dal tema. Il tema ora la legge anche li': le foto delle card di una
+  Tasca/Piatto fatta a mano caricano la stessa misura della foto della home
+  (prima il file originale, piu' grande).
+- Header e footer rifatti nel Theme Builder: la riga prende tutta la larghezza
+  anche senza impostazioni. Prima, su tablet e telefono, una riga nuova
+  restava alla larghezza normale di Divi e il footer veniva piu' stretto e
+  piu' alto (29 px a 820 px, 62 px a 390 px). Header e footer creati dal tema
+  non cambiano; la misura impostata sulla riga in Divi resta piu' forte.
+- Campi numerici dei moduli del tema (Testo animato: durata, intervallo,
+  ritardo e partenza; Striscia scorrevole: velocita' e lunghezza del nastro;
+  decorazioni del footer: ordine): niente piu' "px" accanto al numero, e una
+  descrizione dice il valore usato quando il campo e' vuoto. I valori gia'
+  salvati valgono come prima.
+- Il modulo dell'onda si chiama "Onda" anche nella lista dei moduli (prima
+  "TP Shape Wave").
+- Titolo dell'introduzione: tolto il link a "#ma", un'ancora che non esiste
+  (il titolo mostrava la manina senza portare da nessuna parte). Il contenuto
+  di "Crea/aggiorna home" non lo ha piu'; nella home viene tolto una volta,
+  alla prima richiesta dopo l'aggiornamento, con una revisione in piu'.
+
+VERIFICHE EFFETTUATE SULLA 0.5.5
+- Home da una pagina bianca, nel Visual Builder in italiano, con i gesti del
+  cliente: Pagine > Aggiungi pagina > Use Divi Builder; + per sezioni, righe e
+  moduli; i campi del pannello; foto e video dalla Libreria media; classi e ID
+  da Avanzate > Attributi; Salva e pubblica. 9 sezioni, 248 moduli. Pagina
+  intera identica al pixel alla home a 10 larghezze (1920, 1512, 1280, 1100,
+  981, 820, 768, 430, 390, 320 px). Le sezioni confrontate una per una a 9
+  larghezze sono identiche, a parte le animazioni d'entrata colte a meta'.
+- Oltre a classi, ID e testi, per avere la home identica servono solo queste
+  impostazioni, tutte nel pannello e tutte nella guida: video di sfondo
+  dell'hero, animazione del titolo dell'hero, livello dei titoli (H2, H3, H4),
+  H4 a 20 px nel primo giorno degli orari, la striscia delle Materie (colore,
+  simbolo, velocita', pausa, lunghezza).
+- Header e footer da zero nel Theme Builder, su una copia del sito: Header
+  Globale e Footer Globale cancellati e rifatti (Crea Header/Footer Globale,
+  modulo Header sito o Footer sito, due classi, Salva cambiamenti). Home
+  identica al pixel a prima a 6 larghezze tra 1920 e 390 px, header e footer
+  compresi (con la correzione della riga e il logo del footer scelto dalla
+  Libreria media; lasciato vuoto il logo e' lo stesso, ma sui telefoni arriva
+  il file grande e l'immagine differisce di pochi pixel). Una riga del
+  copyright cambiata dal Theme Builder compare sul sito.
+- Home dopo l'aggiornamento sul sito di prova: identica alla 0.5.4 a 10
+  larghezze (l'unica differenza e' una foto delle card Materie caricata o no
+  al momento dello scatto, a 1920 e 1100 px). La correzione del link cambia
+  solo quel link (43 caratteri), una revisione in piu', nessun errore PHP;
+  "Crea/aggiorna home" crea il titolo senza link.
+- Builder con il pacchetto nuovo: nella lista dei moduli c'e' "Onda"; i campi
+  numerici del Testo animato prendono "0.6" senza "px".
+- Aggiornamento caricando lo zip da wp-admin su copie con la 0.5.4 e la 0.4.9:
+  alla prima richiesta la home e' convertita esattamente come previsto (lo
+  stesso contenuto, byte per byte, della conversione fatta a parte: dalla 0.5.4
+  solo il link tolto, con una revisione in piu'; dalla 0.4.9 anche i passaggi
+  delle versioni precedenti, tre revisioni in piu'); una seconda richiesta non
+  cambia niente; nessun errore PHP. Home identica al pixel prima e dopo
+  l'aggiornamento a 10 larghezze tra 1920 e 320 px sulla copia con la 0.5.4;
+  sulla copia con la 0.4.9, che tiene gli indirizzi del sito di partenza,
+  cambiano solo le due foto di Tasca/Piatto (la stessa foto in un'altra misura
+  del file, come gia' con la 0.5.4); su un sito vero gli indirizzi coincidono.
+
+INSTALLAZIONE DELLO ZIP
+Provata caricando lo zip da wp-admin (Aspetto > Temi > Carica tema) su copie
+del sito di prova con la 0.5.4 e la 0.4.9. WordPress sostituisce il tema senza
+errori.
+
+NON PROVATI
+- Safari e un iPhone veri (il preloader e' provato in Chromium con l'agente
+  utente di iPhone e iPad) e un database MySQL (le prove usano SQLite).
+- Il video di sfondo nel builder: il Chromium delle prove non riproduce MP4 e
+  WebM nell'anteprima del builder (sul sito il video e' quello di sempre).
+
+==============================================================================
+
+NOTE DELLA 0.5.4
 
 La 0.5.4 rifa' la sezione Tasca/Piatto con i moduli di Divi: ora si modifica
 da Divi come le altre sezioni (testi, foto, colori, caratteri, misure,

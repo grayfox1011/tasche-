@@ -1,8 +1,8 @@
 {
   "name": "tp/shape-wave",
   "d4Shortcode": "",
-  "title": "TP Shape Wave",
-  "titles": "TP Shape Waves",
+  "title": "Onda",
+  "titles": "Onde",
   "moduleIcon": "divi/module-divider",
   "moduleClassName": "tp_shape_wave",
   "moduleOrderClassName": "tp_shape_wave",
@@ -121,7 +121,11 @@
               "props": {
                 "min": 120,
                 "max": 2400,
-                "step": 1
+                "step": 1,
+                "allowedUnits": [
+                  "px"
+                ],
+                "defaultUnit": "px"
               }
             }
           }
@@ -150,7 +154,11 @@
               "props": {
                 "min": 20,
                 "max": 700,
-                "step": 1
+                "step": 1,
+                "allowedUnits": [
+                  "px"
+                ],
+                "defaultUnit": "px"
               }
             }
           }
@@ -184,7 +192,11 @@
               "props": {
                 "min": -400,
                 "max": 400,
-                "step": 1
+                "step": 1,
+                "allowedUnits": [
+                  "px"
+                ],
+                "defaultUnit": "px"
               }
             }
           }
