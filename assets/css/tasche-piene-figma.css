@@ -1203,3 +1203,272 @@
 		width: 100.8227vw;
 	}
 }
+
+/* ------------------------------------------------------------------------------------------------ */
+/* Dove siamo: the title in capitals on three lines, the text on lines of 699 px, the pin before the */
+/* address, everything where the frame has it.                                                     */
+/* ------------------------------------------------------------------------------------------------ */
+
+@media (min-width: 981px) {
+
+	.tp-child-theme :where(#page-container .tp-location-section .et_pb_row.tp-location-row) {
+		align-items: flex-start;
+		gap: 70.9px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-location-section .tp-location-map-column) {
+		position: relative;
+		top: 1.2px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-location-section .tp-location-content-column) {
+		row-gap: 0;
+		padding-top: 50.25px;
+	}
+
+	/* "TROPPO NASCOSTI." is 700.3 px: the title is a little wider than the column, the lines of the Figma. */
+	.tp-child-theme :where(#page-container .tp-location-title) {
+		width: 730px;
+		max-width: none;
+	}
+
+	.tp-child-theme :where(#page-container .tp-location-title h2) {
+		line-height: 65.7px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-location-title .et_pb_text_inner) {
+		margin-bottom: 0;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-location-section .tp-location-title) {
+		margin-bottom: 12.75px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-location-text) {
+		max-width: 699px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-location-text .et_pb_text_inner),
+	.tp-child-theme :where(#page-container .tp-location-text p) {
+		line-height: 28px;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-location-section .tp-location-text) {
+		margin-bottom: 17.3px;
+	}
+
+	/* The address 23 px in, with the pin of the Figma in front of it. */
+	.tp-child-theme :where(#page-container .tp-location-address .et_pb_text_inner) {
+		position: relative;
+		padding-left: 23px;
+		line-height: 28px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-location-address .et_pb_text_inner)::before {
+		content: "";
+		position: absolute;
+		top: 2px;
+		left: -7px;
+		width: 24px;
+		height: 24px;
+		background: currentColor;
+		-webkit-mask: url("../svg/icons/tp-icon-map-pin.svg") center / 24px 24px no-repeat;
+		mask: url("../svg/icons/tp-icon-map-pin.svg") center / 24px 24px no-repeat;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-location-section .tp-location-address) {
+		margin-top: 0;
+		margin-bottom: 40px;
+	}
+
+	/* "Mappe" in the middle of its part of the button, 29 px from its left edge. */
+	.tp-child-theme :where(#page-container .tp-location-button .tp-intro-button__label) {
+		padding-left: 29px;
+	}
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* Orari: one card for the title and Lunedì-Mercoledì, one for each of the other days, 47 px left of */
+/* the middle; with the mouse on it a card grows, lighter, and its words grow (the Figma's spring).  */
+/* ------------------------------------------------------------------------------------------------ */
+
+@media (min-width: 981px) {
+
+	.tp-child-theme :where(#page-container .tp-hours-section .et_pb_row.tp-hours-row) {
+		--tp-hours-ease: cubic-bezier(.22, 1, .36, 1);
+		translate: -47px 0;
+		padding-top: 14.5px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-hours-card > .tp-hours-title),
+	.tp-child-theme :where(#page-container .tp-hours-card > .tp-hours-item) {
+		box-sizing: border-box;
+		width: 690px;
+		max-width: none;
+		transform: none;
+		box-shadow: none;
+		transition: width 1022ms var(--tp-hours-ease), height 1022ms var(--tp-hours-ease), margin 1022ms var(--tp-hours-ease),
+			padding 1022ms var(--tp-hours-ease), background-color 1022ms var(--tp-hours-ease);
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-hours-card > .tp-hours-title),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-hours-card > .tp-hours-item) {
+		margin-left: calc((690px - var(--tp-hours-width, 690px)) / 2);
+	}
+
+	/* The first card: the title (centered) on top of Lunedì-Martedì-Mercoledì, one card of 216 px. */
+	.tp-child-theme :where(#page-container .tp-hours-card > .tp-hours-title) {
+		width: var(--tp-hours-width, 690px);
+		height: var(--tp-hours-title-height, 90.4px);
+		min-height: 0;
+		padding: var(--tp-hours-title-top, 29px) var(--tp-hours-right, 38.2px) 0 var(--tp-hours-side, 30px);
+		border-bottom-width: 0;
+		border-radius: 20px 20px 0 0;
+		text-align: center;
+	}
+
+	.tp-child-theme :where(#page-container .tp-hours-title h2) {
+		font-size: var(--tp-hours-title-size, 32px);
+		line-height: 1.002;
+		text-align: center;
+		transition: font-size 1022ms var(--tp-hours-ease);
+	}
+
+	.tp-child-theme :where(#page-container .tp-hours-card > .tp-hours-item) {
+		justify-content: flex-start;
+		align-items: flex-start;
+		width: var(--tp-hours-width, 690px);
+		height: var(--tp-hours-height, 125.6px);
+		min-height: 0;
+		padding: var(--tp-hours-top, 51.3px) var(--tp-hours-right, 38.2px) 0 var(--tp-hours-side, 30px);
+	}
+
+	.tp-child-theme :where(#page-container .tp-hours-card > .tp-hours-title + .tp-hours-item) {
+		--tp-hours-top: 50.6px;
+		border-top-width: 0;
+		border-radius: 0 0 20px 20px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-hours-card > .tp-hours-item:nth-child(3)) {
+		--tp-hours-top: 49.3px;
+		--tp-hours-day: 24px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-hours-item .et_pb_text_inner) {
+		align-items: center;
+		transform: none;
+	}
+
+	.tp-child-theme :where(#page-container .tp-hours-item h4),
+	.tp-child-theme :where(#page-container .tp-hours-item p) {
+		color: inherit;
+		font-size: var(--tp-hours-day, 20px);
+		line-height: 1.002;
+		transition: font-size 1022ms var(--tp-hours-ease);
+	}
+
+	.tp-child-theme :where(#page-container .tp-hours-item p) {
+		font-size: var(--tp-hours-time, 20px);
+	}
+
+	/* The fill of before (a dark band with cream words) is not in the Figma any more. */
+	.tp-child-theme :where(#page-container .tp-hours-item)::before {
+		content: none;
+	}
+
+	/* With the mouse on a card: the sizes of the Figma, each card its own. */
+	.tp-child-theme :where(body:not(.et-fb) #page-container .tp-hours-card > .tp-hours-title:hover),
+	.tp-child-theme :where(body:not(.et-fb) #page-container .tp-hours-card > .tp-hours-title:has(+ .tp-hours-item:hover)),
+	.tp-child-theme :where(body:not(.et-fb) #page-container .tp-hours-card > .tp-hours-title:has(+ .tp-hours-item.is-active)) {
+		--tp-hours-width: 720.6px;
+		--tp-hours-title-height: 94.41px;
+		--tp-hours-title-top: 30.5px;
+		--tp-hours-title-size: 33.42px;
+		--tp-hours-side: 31.5px;
+		--tp-hours-right: 40px;
+		background-color: var(--tp-cream);
+	}
+
+	.tp-child-theme :where(body:not(.et-fb) #page-container .tp-hours-card > .tp-hours-title:hover + .tp-hours-item),
+	.tp-child-theme :where(body:not(.et-fb) #page-container .tp-hours-card > .tp-hours-title + .tp-hours-item:hover),
+	.tp-child-theme :where(body:not(.et-fb) #page-container .tp-hours-card > .tp-hours-title + .tp-hours-item.is-active) {
+		--tp-hours-width: 720.6px;
+		--tp-hours-height: 131.19px;
+		--tp-hours-top: 52.85px;
+		--tp-hours-side: 31.5px;
+		--tp-hours-right: 40px;
+		--tp-hours-day: 20.9px;
+		--tp-hours-time: 20.9px;
+		background-color: var(--tp-cream);
+	}
+
+	.tp-child-theme :where(body:not(.et-fb) #page-container .tp-hours-card > .tp-hours-item:nth-child(3):hover),
+	.tp-child-theme :where(body:not(.et-fb) #page-container .tp-hours-card > .tp-hours-item:nth-child(3).is-active) {
+		--tp-hours-width: 734.6px;
+		--tp-hours-height: 133.7px;
+		--tp-hours-top: 49.5px;
+		--tp-hours-side: 32.1px;
+		--tp-hours-right: 40.8px;
+		--tp-hours-day: 32.31px;
+		--tp-hours-time: 24.97px;
+		background-color: var(--tp-cream);
+	}
+
+	.tp-child-theme :where(body:not(.et-fb) #page-container .tp-hours-card > .tp-hours-item:nth-child(4):hover),
+	.tp-child-theme :where(body:not(.et-fb) #page-container .tp-hours-card > .tp-hours-item:nth-child(4).is-active) {
+		--tp-hours-width: 730.9px;
+		--tp-hours-height: 133.1px;
+		--tp-hours-top: 50.6px;
+		--tp-hours-side: 32px;
+		--tp-hours-right: 40.5px;
+		--tp-hours-day: 28.56px;
+		--tp-hours-time: 24.33px;
+		background-color: var(--tp-cream);
+	}
+
+	.tp-child-theme :where(body:not(.et-fb) #page-container .tp-hours-card > .tp-hours-item:nth-child(5):hover),
+	.tp-child-theme :where(body:not(.et-fb) #page-container .tp-hours-card > .tp-hours-item:nth-child(5).is-active) {
+		--tp-hours-width: 715.5px;
+		--tp-hours-height: 130.3px;
+		--tp-hours-top: 50.2px;
+		--tp-hours-side: 31.3px;
+		--tp-hours-right: 39.6px;
+		--tp-hours-day: 26.02px;
+		--tp-hours-time: 26.65px;
+		background-color: var(--tp-cream);
+	}
+
+	.tp-child-theme :where(body:not(.et-fb) #page-container .tp-hours-card > .tp-hours-item:nth-child(n + 6):hover),
+	.tp-child-theme :where(body:not(.et-fb) #page-container .tp-hours-card > .tp-hours-item:nth-child(n + 6).is-active) {
+		--tp-hours-width: 732.9px;
+		--tp-hours-height: 133.4px;
+		--tp-hours-top: 50.8px;
+		--tp-hours-side: 32px;
+		--tp-hours-right: 40.8px;
+		--tp-hours-day: 28.06px;
+		--tp-hours-time: 28.62px;
+		background-color: var(--tp-cream);
+	}
+
+	/* The words keep their colour, the line around the card stays. */
+	.tp-child-theme :where(body:not(.et-fb) #page-container .tp-hours-item:hover),
+	.tp-child-theme :where(body:not(.et-fb) #page-container .tp-hours-item.is-active) {
+		border-color: var(--tp-divider);
+	}
+
+	.tp-child-theme :where(body:not(.et-fb) #page-container .tp-hours-item--green:hover .et_pb_text_inner),
+	.tp-child-theme :where(body:not(.et-fb) #page-container .tp-hours-item--green:hover p),
+	.tp-child-theme :where(body:not(.et-fb) #page-container .tp-hours-item--green:hover span),
+	.tp-child-theme :where(body:not(.et-fb) #page-container .tp-hours-item--green.is-active .et_pb_text_inner),
+	.tp-child-theme :where(body:not(.et-fb) #page-container .tp-hours-item--green.is-active p) {
+		color: var(--tp-green);
+	}
+
+	.tp-child-theme :where(body:not(.et-fb) #page-container .tp-hours-item--burgundy:hover .et_pb_text_inner),
+	.tp-child-theme :where(body:not(.et-fb) #page-container .tp-hours-item--burgundy:hover p),
+	.tp-child-theme :where(body:not(.et-fb) #page-container .tp-hours-item--burgundy:hover span),
+	.tp-child-theme :where(body:not(.et-fb) #page-container .tp-hours-item--burgundy.is-active .et_pb_text_inner),
+	.tp-child-theme :where(body:not(.et-fb) #page-container .tp-hours-item--burgundy.is-active p) {
+		color: var(--tp-bordeaux);
+	}
+}
