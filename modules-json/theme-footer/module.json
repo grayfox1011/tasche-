@@ -7,7 +7,9 @@
   "moduleClassName": "tp_theme_footer",
   "moduleOrderClassName": "tp_theme_footer",
   "category": "module",
-  "childrenName": [],
+  "childrenName": ["tp/footer-nav-item"],
+  "childModuleName": "tp/footer-nav-item",
+  "childModuleTitle": "Voce del footer",
   "attributes": {
     "module": {
       "type": "object",

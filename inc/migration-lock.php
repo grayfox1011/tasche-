@@ -40,6 +40,7 @@ function tp_child_migration_callbacks(): array {
 			'tp_child_migrate_intro_title_link',
 			'tp_child_migrate_wireframe_labels',
 			'tp_child_migrate_header_nav_items',
+			'tp_child_migrate_footer_nav_items',
 		],
 	];
 }

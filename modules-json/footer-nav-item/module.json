@@ -1,8 +1,8 @@
 {
   "name": "tp/footer-nav-item",
   "d4Shortcode": "",
-  "title": "Footer — Voce menu",
-  "titles": "Footer — Voci menu",
+  "title": "Voce del footer",
+  "titles": "Voci del footer",
   "moduleIcon": "divi/module-menu",
   "moduleClassName": "tp_footer_nav_item",
   "moduleOrderClassName": "tp_footer_nav_item",
@@ -16,34 +16,8 @@
         "meta": {
           "meta": {}
         },
-        "advanced": {
-          "elements": {},
-          "html": {},
-          "link": {},
-          "loop": {}
-        },
-        "decoration": {
-          "layout": {},
-          "animation": {},
-          "attributes": {},
-          "background": {},
-          "conditions": {},
-          "sizing": {},
-          "spacing": {},
-          "border": {},
-          "boxShadow": {},
-          "filters": {},
-          "interactions": {},
-          "order": {},
-          "transform": {},
-          "overflow": {},
-          "disabledOn": {},
-          "transition": {},
-          "position": {},
-          "scroll": {},
-          "zIndex": {},
-          "sticky": {}
-        }
+        "advanced": {},
+        "decoration": {}
       }
     },
     "column": {
@@ -59,10 +33,10 @@
           "item": {
             "groupSlug": "contentMain",
             "attrName": "column.innerContent",
-            "priority": 10,
+            "priority": 5,
             "render": true,
             "label": "Colonna",
-            "description": "Scegli se la voce appare nella colonna sinistra o destra del footer.",
+            "description": "La colonna del footer dove sta la voce.",
             "features": {
               "sticky": false,
               "responsive": false
@@ -98,14 +72,13 @@
           "item": {
             "groupSlug": "contentMain",
             "attrName": "text.innerContent",
-            "priority": 20,
+            "priority": 10,
             "render": true,
-            "label": "Testo voce",
+            "label": "Testo",
+            "description": "La scritta della voce nel footer.",
             "features": {
-              "dynamicContent": {
-                "type": "text"
-              },
               "sticky": false,
+              "responsive": false,
               "preset": "content"
             },
             "component": {
@@ -120,7 +93,7 @@
       "type": "object",
       "default": {
         "desktop": {
-          "value": "#"
+          "value": "#home"
         }
       },
       "settings": {
@@ -129,14 +102,13 @@
           "item": {
             "groupSlug": "contentMain",
             "attrName": "link.innerContent",
-            "priority": 30,
+            "priority": 20,
             "render": true,
             "label": "Link o ancora",
+            "description": "Una sezione della home (#home, #chi-siamo, #menu, #materie, #location, #orari) oppure un indirizzo https://...",
             "features": {
-              "dynamicContent": {
-                "type": "text"
-              },
               "sticky": false,
+              "responsive": false,
               "preset": "content"
             },
             "component": {
@@ -160,9 +132,9 @@
           "item": {
             "groupSlug": "contentMain",
             "attrName": "target.innerContent",
-            "priority": 40,
+            "priority": 30,
             "render": true,
-            "label": "Apri in nuova scheda",
+            "label": "Apri in una nuova scheda",
             "features": {
               "sticky": false,
               "responsive": false
@@ -184,43 +156,9 @@
           }
         }
       }
-    },
-    "tpDesignText": {
-      "type": "object",
-      "selector": "{{selector}} > a, {{selector}} > a *",
-      "settings": {
-        "decoration": {
-          "font": {
-            "groupType": "group-item",
-            "item": {
-              "groupSlug": "designTpDesignText",
-              "priority": 10,
-              "render": true,
-              "component": {
-                "name": "divi/font",
-                "type": "group",
-                "props": {
-                  "grouped": false,
-                  "fieldLabel": "Voce del menu"
-                }
-              }
-            }
-          }
-        }
-      },
-      "styleProps": {
-        "font": {
-          "important": true
-        }
-      }
     }
   },
-  "customCssFields": {
-    "link": {
-      "subName": "link",
-      "selectorSuffix": " a"
-    }
-  },
+  "customCssFields": {},
   "settings": {
     "content": "auto",
     "design": "auto",
@@ -234,18 +172,7 @@
         "component": {
           "name": "divi/composite",
           "props": {
-            "groupLabel": "Voce menu"
-          }
-        }
-      },
-      "designTpDesignText": {
-        "panel": "design",
-        "priority": 5,
-        "groupName": "designTpDesignText",
-        "component": {
-          "name": "divi/composite",
-          "props": {
-            "groupLabel": "Voce del menu"
+            "groupLabel": "Voce del footer"
           }
         }
       }

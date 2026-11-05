@@ -1,6 +1,10 @@
 <?php
 /**
  * FooterNavItem::render_callback().
+ *
+ * The links of the two menus are printed by Footer sito, from the attributes of its Voci (see
+ * tp_child_footer_nav_items_from_block()): a Voce prints only its module wrapper, which Footer sito
+ * does not output.
  */
 
 namespace TaschePieneDiviChild\Modules\FooterNavItem\FooterNavItemTrait;
@@ -9,7 +13,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( 'Direct access forbidden.' );
 }
 
-use ET\Builder\Framework\Utility\HTMLUtility;
 use ET\Builder\FrontEnd\BlockParser\BlockParserStore;
 use ET\Builder\Packages\Module\Layout\Components\ModuleElements\ModuleElements;
 use ET\Builder\Packages\Module\Module;
@@ -25,19 +28,6 @@ trait RenderCallbackTrait {
 		ModuleElements $elements,
 		array $default_printed_style_attrs
 	): string {
-		$text   = tp_child_chrome_get_string( $attrs, 'text', 'Nuova voce' );
-		$url    = tp_child_chrome_get_string( $attrs, 'link', '#' );
-		$target = 'on' === tp_child_chrome_get_string( $attrs, 'target', 'off' ) ? '_blank' : '';
-		$rel    = '_blank' === $target ? 'noopener' : '';
-
-		$inner_html = sprintf(
-			'<a href="%1$s"%2$s%3$s>%4$s</a>',
-			esc_url( $url ),
-			$target ? ' target="' . esc_attr( $target ) . '"' : '',
-			$rel ? ' rel="' . esc_attr( $rel ) . '"' : '',
-			esc_html( $text )
-		);
-
 		$parsed_block = is_array( $block->parsed_block ?? null ) ? $block->parsed_block : [];
 		$block_id     = $parsed_block['id'] ?? '';
 		$store        = $parsed_block['storeInstance'] ?? '';
@@ -62,7 +52,6 @@ trait RenderCallbackTrait {
 				'parentName'               => $parent->blockName ?? '',
 				'children'                 => [
 					$elements->style_components( [ 'attrName' => 'module' ] ),
-					$inner_html,
 				],
 			]
 		);

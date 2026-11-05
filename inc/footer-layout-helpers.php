@@ -102,15 +102,6 @@ function tp_child_footer_render_logo_html( array $attrs, $elements ): string {
 }
 
 /**
- * Footer nav column block.
- */
-function tp_child_footer_render_nav_column_html( array $attrs, string $prefix, int $count, string $menu_location, array $defaults ): string {
-	$items = tp_child_chrome_resolve_nav_items( $attrs, $prefix, $count, $menu_location, $defaults );
-
-	return tp_child_chrome_render_footer_column( $items );
-}
-
-/**
  * Footer copyright block.
  */
 function tp_child_footer_render_copyright_html( array $attrs ): string {
@@ -144,36 +135,14 @@ function tp_child_footer_render_copyright_html( array $attrs ): string {
 }
 
 /**
- * Footer nav block for monolithic layout.
+ * Footer nav block for monolithic layout: the Voci of Footer sito by column (0.5.8), or without Voci the
+ * WordPress menu of each column, as before (tp_child_footer_nav_columns_without_voci()).
  */
-function tp_child_footer_render_nav_monolith_html( array $attrs ): string {
+function tp_child_footer_render_nav_monolith_html( array $attrs, ?array $columns = null ): string {
 	$nav_aria_label = esc_attr( tp_child_chrome_get_string( $attrs, 'navAriaLabel', 'Footer' ) );
-	$left_location  = sanitize_key( tp_child_chrome_get_string( $attrs, 'menuLeftLocation', 'tp_footer_left' ) );
-	$right_location = sanitize_key( tp_child_chrome_get_string( $attrs, 'menuRightLocation', 'tp_footer_right' ) );
-
-	$left_col = tp_child_footer_render_nav_column_html(
-		$attrs,
-		'footerLeft',
-		3,
-		$left_location,
-		[
-			[ 'title' => 'MENÙ', 'url' => '#menu', 'target' => '', 'xfn' => '' ],
-			[ 'title' => 'DOVE SIAMO', 'url' => '#location', 'target' => '', 'xfn' => '' ],
-			[ 'title' => 'SU DI NOI', 'url' => '#chi-siamo', 'target' => '', 'xfn' => '' ],
-		]
-	);
-
-	$right_col = tp_child_footer_render_nav_column_html(
-		$attrs,
-		'footerRight',
-		3,
-		$right_location,
-		[
-			[ 'title' => 'TORNA SÙ', 'url' => '#home', 'target' => '', 'xfn' => '' ],
-			[ 'title' => 'FACEBOOK', 'url' => 'https://facebook.com', 'target' => '_blank', 'xfn' => 'noopener' ],
-			[ 'title' => 'INSTAGRAM', 'url' => 'https://instagram.com', 'target' => '_blank', 'xfn' => 'noopener' ],
-		]
-	);
+	$columns        = $columns ?? tp_child_footer_nav_columns_without_voci( $attrs );
+	$left_col       = tp_child_chrome_render_footer_column( $columns['left'] ?? [] );
+	$right_col      = tp_child_chrome_render_footer_column( $columns['right'] ?? [] );
 
 	return ET\Builder\Framework\Utility\HTMLUtility::render(
 		[

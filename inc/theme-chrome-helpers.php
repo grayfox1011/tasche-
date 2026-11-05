@@ -176,10 +176,10 @@ function tp_child_header_default_nav_items(): array {
 }
 
 /**
- * A field of a Voce as saved, or the default of its module.json when Divi did not save it (a field never
- * changed); a field emptied by hand stays empty.
+ * A field of a Voce (of Header sito or Footer sito) as saved, or the default of its module.json when Divi did
+ * not save it (a field never changed); a field emptied by hand stays empty.
  */
-function tp_child_header_nav_item_value( array $attrs, string $key, string $default ): string {
+function tp_child_nav_item_value( array $attrs, string $key, string $default ): string {
 	$value = $attrs[ $key ]['innerContent']['desktop']['value'] ?? ( $attrs[ $key ]['desktop']['value'] ?? null );
 
 	return is_string( $value ) ? trim( $value ) : $default;
@@ -200,9 +200,9 @@ function tp_child_header_nav_items_from_block( array $parsed_block ): ?array {
 
 		$items  = $items ?? [];
 		$attrs  = is_array( $inner_block['attrs'] ?? null ) ? $inner_block['attrs'] : [];
-		$title  = tp_child_header_nav_item_value( $attrs, 'text', 'Nuova voce' );
-		$url    = tp_child_header_nav_item_value( $attrs, 'link', '#home' );
-		$target = 'on' === tp_child_header_nav_item_value( $attrs, 'target', 'off' ) ? '_blank' : '';
+		$title  = tp_child_nav_item_value( $attrs, 'text', 'Nuova voce' );
+		$url    = tp_child_nav_item_value( $attrs, 'link', '#home' );
+		$target = 'on' === tp_child_nav_item_value( $attrs, 'target', 'off' ) ? '_blank' : '';
 
 		if ( '' === $title ) {
 			continue;
@@ -227,6 +227,72 @@ function tp_child_header_nav_items_without_voci( array $attrs ): array {
 	$location = sanitize_key( tp_child_chrome_get_string( $attrs, 'menuLocation', 'tp_main_nav' ) );
 
 	return tp_child_chrome_resolve_nav_items( $attrs, 'navItem', 6, $location, tp_child_header_default_nav_items() );
+}
+
+/**
+ * The links of a column of the footer when nothing else gives them (no Voci in Footer sito, no WordPress menu).
+ */
+function tp_child_footer_default_nav_items( string $column ): array {
+	return 'right' === $column
+		? [
+			[ 'title' => 'TORNA SÙ', 'url' => '#home', 'target' => '', 'xfn' => '' ],
+			[ 'title' => 'FACEBOOK', 'url' => 'https://facebook.com', 'target' => '_blank', 'xfn' => 'noopener' ],
+			[ 'title' => 'INSTAGRAM', 'url' => 'https://instagram.com', 'target' => '_blank', 'xfn' => 'noopener' ],
+		]
+		: [
+			[ 'title' => 'MENÙ', 'url' => '#menu', 'target' => '', 'xfn' => '' ],
+			[ 'title' => 'DOVE SIAMO', 'url' => '#location', 'target' => '', 'xfn' => '' ],
+			[ 'title' => 'SU DI NOI', 'url' => '#chi-siamo', 'target' => '', 'xfn' => '' ],
+		];
+}
+
+/**
+ * The links of the two columns of the footer from the Voci of a Footer sito block (0.5.8: Footer sito >
+ * Elementi, each Voce with its Colonna), in their order; a Voce without text is left out. Null when the block
+ * has no Voci: then each column comes from its WordPress menu, as before.
+ */
+function tp_child_footer_nav_items_from_block( array $parsed_block ): ?array {
+	$columns = null;
+
+	foreach ( $parsed_block['innerBlocks'] ?? [] as $inner_block ) {
+		if ( 'tp/footer-nav-item' !== ( $inner_block['blockName'] ?? '' ) ) {
+			continue;
+		}
+
+		$columns = $columns ?? [ 'left' => [], 'right' => [] ];
+		$attrs   = is_array( $inner_block['attrs'] ?? null ) ? $inner_block['attrs'] : [];
+		$column  = 'right' === tp_child_nav_item_value( $attrs, 'column', 'left' ) ? 'right' : 'left';
+		$title   = tp_child_nav_item_value( $attrs, 'text', 'Nuova voce' );
+		$url     = tp_child_nav_item_value( $attrs, 'link', '#home' );
+		$target  = 'on' === tp_child_nav_item_value( $attrs, 'target', 'off' ) ? '_blank' : '';
+
+		if ( '' === $title ) {
+			continue;
+		}
+
+		$columns[ $column ][] = (object) [
+			'title'  => $title,
+			'url'    => '' !== $url ? $url : '#',
+			'target' => $target,
+			'xfn'    => '',
+		];
+	}
+
+	return $columns;
+}
+
+/**
+ * The links Footer sito shows today without Voci, by column: the WordPress menu of each column, the old fields
+ * of the module, the default links (the order of tp_child_chrome_resolve_nav_items()).
+ */
+function tp_child_footer_nav_columns_without_voci( array $attrs ): array {
+	$left  = sanitize_key( tp_child_chrome_get_string( $attrs, 'menuLeftLocation', 'tp_footer_left' ) );
+	$right = sanitize_key( tp_child_chrome_get_string( $attrs, 'menuRightLocation', 'tp_footer_right' ) );
+
+	return [
+		'left'  => tp_child_chrome_resolve_nav_items( $attrs, 'footerLeft', 3, $left, tp_child_footer_default_nav_items( 'left' ) ),
+		'right' => tp_child_chrome_resolve_nav_items( $attrs, 'footerRight', 3, $right, tp_child_footer_default_nav_items( 'right' ) ),
+	];
 }
 
 /**

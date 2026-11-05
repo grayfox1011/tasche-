@@ -32,9 +32,12 @@ trait RenderCallbackTrait {
 			]
 		);
 
+		$parsed_block = is_array( $block->parsed_block ?? null ) ? $block->parsed_block : [];
+
 		$characters_html = tp_child_footer_render_characters_html( $attrs, $elements );
 		$logo_html       = tp_child_footer_render_logo_html( $attrs, $elements );
-		$nav_html        = tp_child_footer_render_nav_monolith_html( $attrs );
+		// The Voci of the module (Footer sito > Elementi); without Voci, the WordPress menus as before.
+		$nav_html        = tp_child_footer_render_nav_monolith_html( $attrs, tp_child_footer_nav_items_from_block( $parsed_block ) );
 		$copyright_html  = tp_child_footer_render_copyright_html( $attrs );
 
 		$container_children = $characters_html . $logo_html . $nav_html . $copyright_html;
@@ -60,7 +63,6 @@ trait RenderCallbackTrait {
 			]
 		);
 
-		$parsed_block = is_array( $block->parsed_block ?? null ) ? $block->parsed_block : [];
 		$block_id     = $parsed_block['id'] ?? '';
 		$store        = $parsed_block['storeInstance'] ?? '';
 		$parent       = $block_id && $store ? BlockParserStore::get_parent( $block_id, $store ) : null;
@@ -78,7 +80,16 @@ trait RenderCallbackTrait {
 				'id'                       => $block_id,
 				'name'                     => $block->block_type->name,
 				'moduleCategory'           => $block->block_type->category,
-				'childrenIds'              => [],
+				'childrenIds'              => array_values(
+					array_filter(
+						array_map(
+							static function ( $inner_block ) {
+								return $inner_block['id'] ?? '';
+							},
+							$parsed_block['innerBlocks'] ?? []
+						)
+					)
+				),
 				'parentAttrs'              => $parent->attrs ?? [],
 				'parentId'                 => $parent->id ?? '',
 				'parentName'               => $parent->blockName ?? '',

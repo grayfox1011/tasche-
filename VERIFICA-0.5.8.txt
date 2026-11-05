@@ -1,4 +1,75 @@
-TASCHE PIENE — VERSIONE 0.5.7, CANDIDATA AL COLLAUDO
+TASCHE PIENE — VERSIONE 0.5.8, CANDIDATA AL COLLAUDO
+
+La 0.5.8 fa per i due menu del footer quello che la 0.5.7 ha fatto per il
+menu in alto: le voci (MENÙ, DOVE SIAMO, SU DI NOI a sinistra; TORNA SÙ,
+FACEBOOK, INSTAGRAM a destra) si cambiano dal Theme Builder. Fino alla 0.5.7
+venivano dai menu WordPress "Tasche Piene — Footer sinistra" e "Footer destra"
+(Aspetto > Menu). L'aspetto del sito non cambia. Le note delle versioni
+precedenti, piu' in basso, restano valide.
+
+COSA CAMBIA RISPETTO ALLA 0.5.7
+- Voci del footer: nel Theme Builder, Footer Globale > Footer sito >
+  Contenuto > Elementi c'e' una "Voce del footer" per link, con Colonna
+  (Sinistra o Destra), Testo, Link o ancora e Apri in una nuova scheda. Si
+  aggiungono con "Add Voce del footer", si duplicano, si tolgono, si
+  riordinano trascinandole e passano da una colonna all'altra cambiando
+  Colonna; il footer nel builder si aggiorna mentre si scrive. Lo stesso
+  elenco si apre anche dal Visual Builder di una pagina (Footer sito in
+  fondo).
+- Nell'elenco ogni voce si chiama "Sinistra: <testo>" o "Destra: <testo>";
+  il nome segue testo e colonna alla prossima apertura del builder.
+- Aggiornamento: alla prima richiesta il footer del Theme Builder riceve una
+  voce per ogni link che mostra oggi, colonna per colonna (stesse scritte,
+  stessi link, Facebook e Instagram in una nuova scheda); l'HTML del footer
+  resta identico. Da li' i menu WordPress del footer non cambiano piu' il
+  sito: restano di riserva, se a Footer sito si tolgono tutte le voci.
+  "Crea/aggiorna home" ricrea il footer con le voci dei menu WordPress.
+- Il modulo "Footer — Voce menu", registrato dalla 0.3.1 ma mai usato, e'
+  diventato "Voce del footer" con i soli campi della voce.
+
+VERIFICHE EFFETTUATE SULLA 0.5.8
+- Builder (Divi 5.15.1, in italiano), dal Visual Builder di una pagina e dal
+  Theme Builder (Footer Globale, matita): in Footer sito > Elementi ci sono
+  le sei voci ("Sinistra: Menù"... "Destra: Instagram"), ognuna con Colonna,
+  Testo, Link o ancora e Apri in una nuova scheda. Cambiato "FACEBOOK" in
+  "FB" e spostato "SU DI NOI" nella colonna destra: il footer nel builder si
+  aggiorna subito e, salvato, il sito mostra le due colonne nuove. Aggiunta
+  una voce "TIKTOK" (destra, https://tiktok.com, nuova scheda) e trascinata
+  "INSTAGRAM" in cima alla colonna destra: il sito segue (TIKTOK con
+  target="_blank" e rel="noopener" come Facebook e Instagram). Una voce
+  spostata di colonna prende il nome nuovo ("Destra: Su di noi") alla
+  riapertura del builder.
+- Aggiornamento del footer: le voci nate dalla migrazione hanno le stesse
+  scritte, gli stessi link e la stessa nuova scheda dei menu WordPress, e
+  l'HTML di header e footer e' identico a prima, carattere per carattere,
+  sulla home, sulle pagine Privacy e Cookie e su un articolo.
+- "Crea/aggiorna home": il footer che crea ha le sei voci dei menu
+  WordPress.
+- Aggiornamento caricando lo zip da wp-admin su copie con la 0.5.7 e la
+  0.4.9: alla prima richiesta il footer del Theme Builder riceve le sei voci
+  (a sinistra MENÙ > #menu, DOVE SIAMO > #location, SU DI NOI > #chi-siamo;
+  a destra TORNA SÙ > #home, FACEBOOK e INSTAGRAM ai loro indirizzi); dalla
+  0.4.9 anche l'header riceve le sue cinque voci. HTML di header e footer
+  identico prima e dopo; la home e' quella prevista; una seconda richiesta
+  non cambia niente; nessun errore PHP. Sulla copia con la 0.5.7 la home e'
+  identica al pixel prima e dopo l'aggiornamento a 8 larghezze tra 1920 e
+  320 px.
+
+INSTALLAZIONE DELLO ZIP
+Provata caricando lo zip da wp-admin (Aspetto > Temi > Carica tema) su copie
+del sito di prova con la 0.5.7 e la 0.4.9. WordPress sostituisce il tema senza
+errori.
+
+NON PROVATI
+- Safari e un iPhone veri, un database MySQL e il video di sfondo nel
+  builder, come per le versioni precedenti.
+- Menu WordPress del footer con voci annidate o con attributi "rel" diversi
+  da noopener: le voci create dalla migrazione prendono scritta, link e
+  nuova scheda (come mostrava il footer); i menu di oggi non ne hanno.
+
+==============================================================================
+
+NOTE DELLA 0.5.7
 
 La 0.5.7 rende modificabili da Divi le voci del menu in alto (le ancore
 dell'header: Home, I tramezzini, La nostra idea, Zena, Dove siamo). Fino alla

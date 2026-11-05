@@ -1,5 +1,6 @@
-import React, { ReactElement } from 'react';
-import { ModuleContainer } from '@divi/module';
+import React, { ReactElement, useMemo } from 'react';
+import { useSelect } from '@divi/data';
+import { ChildModulesContainer, ModuleContainer } from '@divi/module';
 
 import { ThemeFooterAttrs, ThemeFooterEditProps } from './types';
 import metadata from '../../../modules-json/theme-footer/module.json';
@@ -7,7 +8,9 @@ import { createModuleClassnames, createModuleScriptData, createModuleStyles } fr
 import { buildStyleVars, getColor, getString, getUploadUrl } from '../../utils/attrs';
 import { ASSET_BASE } from '../../utils/asset-base';
 import { DynamicText, useDynamicText } from '../../utils/dynamic';
-import { getWpMenuItems } from '../../utils/wp-menus';
+import { getWpMenuItems, WpNavItem } from '../../utils/wp-menus';
+import { NAV_ITEM_DEFAULTS, navItemValue } from '../header-nav-item/values';
+import { FooterNavItemAttrs } from '../footer-nav-item/types';
 
 const MODULE_CLASSNAME = 'tp_theme_footer';
 
@@ -64,7 +67,7 @@ const CopyrightLine = ({ text, link }: { text: string; link: string }): ReactEle
 };
 
 export const ThemeFooterEdit = (props: ThemeFooterEditProps): ReactElement => {
-	const { attrs, elements, id, name } = props;
+	const { attrs, childrenIds = [], elements, id, name } = props;
 
 	const footerStyle = buildStyleVars({
 		'--tp-footer-bg': getColor(attrs.footerBackgroundColor, '#054726'),
@@ -74,12 +77,54 @@ export const ThemeFooterEdit = (props: ThemeFooterEditProps): ReactElement => {
 	const logoLink = useDynamicText(getString(attrs.logoLink, '#home'));
 	const menuLeftLocation = getString(attrs.menuLeftLocation, 'tp_footer_left');
 	const menuRightLocation = getString(attrs.menuRightLocation, 'tp_footer_right');
-	const navLeft = getWpMenuItems(menuLeftLocation, DEFAULT_NAV_LEFT);
-	const navRight = getWpMenuItems(menuRightLocation, DEFAULT_NAV_RIGHT);
+	const childrenKey = childrenIds.join('|');
+
+	// The Voci (Footer sito > Elementi), one line each (column, text, link, new tab), so that the store answer
+	// compares equal while nothing changes; read as on the site (tp_child_footer_nav_items_from_block()).
+	const voci = useSelect(
+		(select) => {
+			if (!childrenIds.length) {
+				return [] as string[];
+			}
+
+			const getAttrs = select('divi/edit-post').getModuleAttrs;
+
+			return childrenIds.map((childId) => {
+				const voce = (getAttrs(childId) ?? {}) as FooterNavItemAttrs;
+
+				return [
+					navItemValue(voce.column, 'left') === 'right' ? 'right' : 'left',
+					navItemValue(voce.text, NAV_ITEM_DEFAULTS.text),
+					navItemValue(voce.link, NAV_ITEM_DEFAULTS.link),
+					navItemValue(voce.target, NAV_ITEM_DEFAULTS.target),
+				].join('\u0000');
+			});
+		},
+		[childrenKey]
+	);
+
+	const [navLeft, navRight]: [WpNavItem[], WpNavItem[]] = useMemo(() => {
+		if (!childrenIds.length) {
+			return [getWpMenuItems(menuLeftLocation, DEFAULT_NAV_LEFT), getWpMenuItems(menuRightLocation, DEFAULT_NAV_RIGHT)];
+		}
+
+		const columns: { left: WpNavItem[]; right: WpNavItem[] } = { left: [], right: [] };
+
+		voci.forEach((line) => {
+			const [column, title, url, target] = line.split('\u0000');
+
+			if (title) {
+				columns[column === 'right' ? 'right' : 'left'].push({ title, url: url || '#', target: target === 'on' ? '_blank' : '' });
+			}
+		});
+
+		return [columns.left, columns.right];
+	}, [childrenKey, voci.join('\u0001'), menuLeftLocation, menuRightLocation]);
 
 	return (
 		<ModuleContainer
 			attrs={attrs}
+			childrenIds={childrenIds}
 			elements={elements}
 			id={id}
 			name={name}
@@ -139,6 +184,11 @@ export const ThemeFooterEdit = (props: ThemeFooterEditProps): ReactElement => {
 							))}
 						</div>
 					</nav>
+					{childrenIds.length ? (
+						<div className="tp-theme-footer-voci-vb" hidden>
+							<ChildModulesContainer ids={childrenIds} />
+						</div>
+					) : null}
 					<div className="tp-theme-footer-copyright">
 						{COPYRIGHT_LINES.map((line) => (
 							<CopyrightLine

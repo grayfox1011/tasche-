@@ -1,6 +1,6 @@
 <?php
 /**
- * Module: FooterNavItem (child-module).
+ * Module: FooterNavItem (child-module of Footer sito): one link of the two menus of the footer.
  */
 
 namespace TaschePieneDiviChild\Modules\FooterNavItem;
@@ -18,6 +18,4 @@ class FooterNavItem extends ModuleBase {
 	protected const JSON_FOLDER = 'footer-nav-item';
 
 	protected const CLASS_NAME = 'tp_footer_nav_item';
-
-	protected const DESIGN_GROUPS = [ 'tpDesignText' ];
 }
