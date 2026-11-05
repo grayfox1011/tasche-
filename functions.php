@@ -1032,6 +1032,30 @@ function tp_child_scelta_photo_sizes( string $block_content, array $block ): str
 add_filter( 'render_block', 'tp_child_scelta_photo_sizes', 10, 2 );
 
 /**
+ * A note in brackets at the end of the name of a dish typed in small letters, as "(di Venerdì)" of the
+ * trippa, is drawn as in the Figma: in italic, grey and as it is typed, not in capitals (.tp-menu-name-note).
+ * A note typed in capitals, as "(A BICCHIERE)", stays part of the name. The Visual Builder shows the name
+ * as typed.
+ */
+function tp_child_menu_name_note( string $block_content, array $block ): string {
+	if ( 'divi/heading' !== ( $block['blockName'] ?? '' ) || false === strpos( $block_content, '(' ) ) {
+		return $block_content;
+	}
+
+	if ( ! preg_match( '/^\s*<[a-z]+\b[^>]*\bclass="[^"]*(?<![\w-])tp-menu-name(?![\w-])/', $block_content ) ) {
+		return $block_content;
+	}
+
+	return (string) preg_replace(
+		'#(<(h[1-6])\b[^>]*>)((?:(?!</?h[1-6]\b).)*?\S)\s*(\((?=[^()<>]*\p{Ll})[^()<>]+\))\s*(</\2>)#su',
+		'$1$3 <span class="tp-menu-name-note">$4</span>$5',
+		$block_content,
+		1
+	);
+}
+add_filter( 'render_block', 'tp_child_menu_name_note', 10, 2 );
+
+/**
  * Load the GSAP preloader runtime on landing pages.
  */
 function tp_child_enqueue_preloader_assets(): void {

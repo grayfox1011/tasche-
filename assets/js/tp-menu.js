@@ -10,13 +10,6 @@
 
 	var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-	rows.forEach(function (row) {
-		var rotation = 2;
-
-		row.dataset.tpMenuRotation = rotation;
-		row.style.setProperty('--tp-menu-row-rotation', rotation + 'deg');
-	});
-
 	if (reduceMotion) {
 		toArray(document.querySelectorAll('.tp-menu-section .tp-menu-legend')).forEach(function (legend) {
 			legend.classList.add('is-revealed');
@@ -57,7 +50,12 @@
 		}
 
 		element.dataset.tpMenuBlockRevealed = '1';
-		markLegendRevealed(element);
+
+		// The legend makes its own entrance in the CSS: its boxes and the man rise from under its edge.
+		if (element.classList && element.classList.contains('tp-menu-legend')) {
+			markLegendRevealed(element);
+			return;
+		}
 
 		gsap.fromTo(
 			element,
@@ -125,52 +123,17 @@
 
 	initScrollReveals();
 
+	// The dish the mouse (or the keyboard) is on: the CSS shows its photo, its English words and its colour.
 	gsap.matchMedia().add('(min-width: 981px)', function () {
 		var cleanups = [];
 
 		rows.forEach(function (row) {
-			var image = row.querySelector('.tp-menu-row-image');
-
-			if (!image) {
-				return;
-			}
-
-			gsap.set(image, {
-				autoAlpha: 0,
-				scale: 0.04,
-				rotation: 0,
-				xPercent: -50,
-				yPercent: -50
-			});
-
 			var show = function () {
 				row.classList.add('is-active');
-
-				gsap.to(image, {
-					autoAlpha: 1,
-					scale: 1,
-					rotation: parseFloat(row.dataset.tpMenuRotation || '-3'),
-					xPercent: -50,
-					yPercent: -50,
-					duration: 1.05,
-					ease: 'power4.out',
-					overwrite: 'auto'
-				});
 			};
 
 			var hide = function () {
 				row.classList.remove('is-active');
-
-				gsap.to(image, {
-					autoAlpha: 0,
-					scale: 0.04,
-					rotation: 0,
-					xPercent: -50,
-					yPercent: -50,
-					duration: 0.75,
-					ease: 'power3.out',
-					overwrite: 'auto'
-				});
 			};
 
 			row.addEventListener('mouseenter', show);
@@ -184,7 +147,6 @@
 				row.removeEventListener('mouseleave', hide);
 				row.removeEventListener('focusout', hide);
 				row.classList.remove('is-active');
-				gsap.set(image, { clearProps: 'all' });
 			});
 		});
 
