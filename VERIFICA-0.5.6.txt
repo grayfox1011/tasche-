@@ -1,4 +1,106 @@
-TASCHE PIENE — VERSIONE 0.5.5, CANDIDATA AL COLLAUDO
+TASCHE PIENE — VERSIONE 0.5.6, CANDIDATA AL COLLAUDO
+
+La 0.5.6 rende piu' facile trovare dove modificare: nel Visual Builder ogni
+parte della home ha un nome che dice cos'e' ("Menù", "Piatto: Polpette al
+sugo", "Foto al passaggio del mouse", "Prezzo M"...), nella vista wireframe,
+nei Livelli e nelle impostazioni. E' provato che la foto che compare passando
+col mouse su un piatto si mette anche sui piatti che non l'hanno, copiandola
+da un altro piatto, senza toccare il tema. L'aspetto del sito non cambia. La
+guida per il cliente ha due sezioni nuove su questo. Le note delle versioni
+precedenti, piu' in basso, restano valide.
+
+COSA CAMBIA RISPETTO ALLA 0.5.5
+- Nomi nel builder: ogni sezione, riga, colonna e modulo della home ha
+  un'etichetta (Metadata > Etichetta elemento), che Divi mostra al posto del
+  tipo ("Sezione", "Gruppo", "Testo"): le nove sezioni (Hero, Striscia,
+  Introduzione, Alberto, Tasca o piatto, Menù, Materie prime, Dove siamo,
+  Orari), le loro righe e colonne, ogni piatto con il suo nome ("Piatto:
+  ...", "Contorno: ...", "Dolce: ...", "Bevanda: ...") e dentro "Nome e
+  descrizione" (Nome, Allergeni, Descrizione), "Foto al passaggio del mouse",
+  "Prezzi" (etichette e prezzi di Tasca, S, M e L); le card delle Materie
+  ("Card: ..."), i giorni degli orari ("Giorno: ..."). Nelle impostazioni
+  della Striscia scorrevole l'elenco degli Elementi mostra "Scritta: <frase>"
+  (prima "Scritta" per tutte).
+- I nomi di piatti, card, giorni e scritte seguono il testo: ogni volta che il
+  builder apre una pagina, un piatto rinominato o copiato da un altro mostra
+  il suo nome, e una parte aggiunta con una classe del tema (per esempio una
+  foto con la classe tp-menu-row-image) prende il suo; la pagina li tiene al
+  salvataggio successivo. Finche' il builder resta aperto, una copia mostra il
+  nome dell'originale. Un nome scritto a mano resta com'e'.
+- Aggiornamento: alla prima richiesta la home riceve i nomi, una volta, con
+  una revisione in piu'; cambiano solo le etichette. I nomi delle sezioni
+  delle versioni prima ("Hero Tasche Piene", "Marquee Verde", "Location"...)
+  diventano quelli nuovi. "Crea/aggiorna home" crea la home gia' con i nomi.
+- Le etichette che le versioni prima scrivevano dove Divi non le legge (i
+  moduli della lettera e del prezzo S) passano dove Divi le legge, e li' le
+  scrivono ora anche i passaggi della misura S.
+
+FOTO AL PASSAGGIO DEL MOUSE SU UN PIATTO CHE NON L'HA
+- Si puo' gia' fare con Divi, senza cambiare il tema: la foto e' un modulo
+  Immagine con la classe tp-menu-row-image dentro la riga del piatto; il tema
+  anima ogni riga che ne ha una, in tutte le tabelle del menu.
+- Provato nel builder sullo Strudel di mele, che non l'aveva: tasto destro su
+  "Foto al passaggio del mouse" di un altro piatto > Copia > Copia Modulo,
+  tasto destro su "Nome e descrizione" dello Strudel > Incolla Modulo >
+  Incolla Modulo Sotto, Salva. Sul sito, col mouse sullo Strudel, la foto
+  compare come le altre (327 x 411 px a 1440 px, inclinata). Provato anche con
+  un modulo Immagine nuovo e la classe aggiunta da Avanzate > Attributi, sullo
+  Strudel e sull'acqua: compare a 1440 e 1100 px, non compare a 820 e 390 px,
+  come le foto di oggi.
+- Nel builder la foto compare col puntatore sul piatto ma non si clicca sopra
+  la pagina (lascia passare il puntatore ai piatti sotto, come prima): si
+  apre dalla vista wireframe o dai Livelli.
+
+VERIFICHE EFFETTUATE SULLA 0.5.6
+- Home con i nomi: i 315 blocchi hanno gli stessi attributi e lo stesso HTML
+  di prima a parte l'etichetta; la pagina generata da WordPress e' identica
+  byte per byte; ripetere il passaggio non cambia niente. Home identica al
+  pixel a 8 larghezze su 10 tra 1920 e 320 px; a 1920 e 1100 px cambia solo
+  una foto delle card Materie caricata o no al momento dello scatto, come
+  nelle prove della 0.5.5.
+- Builder (Divi 5.15.1, in italiano): nella vista wireframe compaiono i nomi;
+  un piatto rinominato fuori dal builder compare col nome nuovo all'apertura;
+  un nome scritto a mano ("La mia melanzana") resta; una foto senza nome
+  prende "Foto al passaggio del mouse"; dopo il salvataggio i nomi restano
+  nella pagina. Aprire il builder su una pagina senza nomi (la home rifatta
+  da zero: 309 nomi aggiunti all'apertura) e uscire senza salvare non chiede
+  di salvare.
+- "Crea/aggiorna home": il contenuto ha i nomi ed e' quello che da' il
+  passaggio sulla home (230 etichette).
+- Contenuto con blocchi diversi da quelli di Divi o con spazi insoliti nei
+  commenti dei blocchi: i nomi arrivano lo stesso e il resto non cambia (la
+  lettura dei blocchi e' quella del parser di WordPress).
+- Aggiornamento caricando lo zip da wp-admin su copie con la 0.5.5 e la 0.4.9:
+  alla prima richiesta la home e' convertita esattamente come previsto (lo
+  stesso contenuto, byte per byte, dei passaggi fatti a parte; dalle due
+  versioni la home arriva identica); dalla 0.5.5 una revisione in piu', dalla
+  0.4.9 quattro (i passaggi delle versioni precedenti e i nomi); una seconda
+  richiesta non cambia niente; nessun errore PHP. Home identica al pixel prima
+  e dopo l'aggiornamento a 10 larghezze tra 1920 e 320 px sulla copia con la
+  0.5.5, a parte la foto delle card Materie a 1920 e 1100 px: due scatti della
+  stessa 0.5.6 differiscono proprio li' (la foto arriva o no in tempo per lo
+  scatto). Sulla copia con la 0.4.9, che tiene gli indirizzi del sito di
+  partenza, cambiano solo le due foto di Tasca/Piatto (la stessa foto in
+  un'altra misura del file, come gia' dalla 0.5.4).
+
+INSTALLAZIONE DELLO ZIP
+Provata caricando lo zip da wp-admin (Aspetto > Temi > Carica tema) su copie
+del sito di prova con la 0.5.5 e la 0.4.9. WordPress sostituisce il tema senza
+errori.
+
+NON PROVATI
+- Safari e un iPhone veri (il preloader e' provato in Chromium con l'agente
+  utente di iPhone e iPad) e un database MySQL (le prove usano SQLite).
+- Il video di sfondo nel builder: il Chromium delle prove non riproduce MP4 e
+  WebM nell'anteprima del builder (sul sito il video e' quello di sempre).
+- Versioni di Divi diverse dalla 5.15.1: i nomi si aggiornano all'apertura
+  del builder con un filtro di Divi 5
+  (divi_visual_builder_settings_data_post_content); se una versione lo
+  togliesse, restano i nomi salvati nella pagina.
+
+==============================================================================
+
+NOTE DELLA 0.5.5
 
 La 0.5.5 nasce dalla prova di rifare tutto da zero come farebbe il cliente:
 la home partendo da una pagina bianca nel Visual Builder, header e footer da

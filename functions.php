@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( "TP_CHILD_VERSION", "0.5.5" );
+define( "TP_CHILD_VERSION", "0.5.6" );
 define( 'TP_CHILD_PATH', trailingslashit( get_stylesheet_directory() ) );
 define( 'TP_CHILD_URL', trailingslashit( get_stylesheet_directory_uri() ) );
 define( 'TP_CHILD_MODULES_JSON_PATH', TP_CHILD_PATH . 'modules-json/' );
@@ -296,6 +296,7 @@ require_once TP_CHILD_PATH . 'inc/menu-size-s-migration.php';
 require_once TP_CHILD_PATH . 'inc/two-size-text-migration.php';
 require_once TP_CHILD_PATH . 'inc/choice-divi-migration.php';
 require_once TP_CHILD_PATH . 'inc/intro-link-migration.php';
+require_once TP_CHILD_PATH . 'inc/wireframe-labels.php';
 require_once TP_CHILD_PATH . 'inc/legal-pages.php';
 require_once TP_CHILD_PATH . 'inc/footer-layout-helpers.php';
 require_once TP_CHILD_PATH . 'inc/materie-marquee-migration.php';

@@ -47,7 +47,7 @@ function tp_child_menu_size_s_text_block( string $class, string $html, string $a
 	];
 
 	if ( '' !== $admin_label ) {
-		$module['advanced']['meta'] = [ 'adminLabel' => [ 'desktop' => [ 'value' => $admin_label ] ] ];
+		$module['meta'] = [ 'adminLabel' => [ 'desktop' => [ 'value' => $admin_label ] ] ];
 	}
 
 	$attrs = [

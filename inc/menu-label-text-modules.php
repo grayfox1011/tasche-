@@ -28,11 +28,12 @@ function tp_child_menu_label_text_block( string $text, string $class, string $ad
 							],
 						],
 					],
-					'meta'         => [
-						'adminLabel' => [
-							'desktop' => [
-								'value' => $admin_label,
-							],
+				],
+				// The name in the builder: Divi reads it from module.meta (0.5.6; before, it went under advanced).
+				'meta'     => [
+					'adminLabel' => [
+						'desktop' => [
+							'value' => $admin_label,
 						],
 					],
 				],

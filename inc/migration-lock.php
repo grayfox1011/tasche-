@@ -38,6 +38,7 @@ function tp_child_migration_callbacks(): array {
 			'tp_child_migrate_two_size_texts',
 			'tp_child_migrate_choice_divi',
 			'tp_child_migrate_intro_title_link',
+			'tp_child_migrate_wireframe_labels',
 		],
 	];
 }
