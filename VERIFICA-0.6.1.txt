@@ -1,3 +1,87 @@
+TASCHE PIENE — VERSIONE 0.6.1, CANDIDATA AL COLLAUDO
+
+La 0.6.1 viene dalla prova chiesta dopo la 0.6.0: rifare la home da una
+pagina bianca nel Visual Builder, cliccando come farebbe una persona, e
+rifare da zero header e footer nel Theme Builder, confrontando tutto con la
+home e con il Figma nuovo su computer, tablet e telefono. Il sito pubblico
+resta com'era, tranne l'header degli iPad nelle pagine che non sono la home,
+che prima non si vedeva. Le note delle versioni precedenti, piu' in basso,
+restano valide.
+
+COSA CAMBIA RISPETTO ALLA 0.6.0
+- iPad e iPhone fino a 980 px: nelle pagine che non sono la home (Privacy,
+  Cookie, pagine nuove) logo e pulsante del menu sono bordeaux. Prima erano
+  crema su sfondo crema e non si vedevano.
+- Il logo scelto in Header sito > Logo compare anche su telefoni e iPad.
+  Prima su quegli schermi restava sempre il logo del tema. Con il logo del
+  tema non cambia niente.
+- Footer rifatto da zero nel Theme Builder: "Privacy" e "Cookie" portano da
+  soli alle pagine Privacy Policy e Cookie Policy, come nel footer creato dal
+  tema. Prima, senza scrivere i link a mano, erano testo semplice.
+- Editor del Theme Builder: le righe di header e footer sono a tutta
+  larghezza come sul sito (prima strette al centro); nella vista Telefono
+  l'header si vede (prima crema su bianco e tagliato in basso); nelle viste
+  Tablet e Telefono il footer e' quello del sito per quello schermo (prima
+  il footer del computer rimpicciolito, con le scritte di 5 px). Lo stesso
+  footer si vede nel Visual Builder delle pagine.
+- Libreria media: le 14 foto del tema usate nella home hanno il loro testo
+  alternativo e un titolo leggibile (prima vuoto e "Fig Intro Alberto
+  Impasto"). Divi li copia quando una foto si sceglie dalla libreria, quindi
+  una sezione rifatta da zero ha gli stessi testi alternativi della home
+  invece di nessuno, e il browser non mostra piu' il nome del file sulla
+  foto. Si cambiano solo testi vuoti e titoli ancora fatti dal nome del file;
+  una volta sola dopo l'aggiornamento (inc/media-alt-061.php).
+
+VERIFICHE EFFETTUATE SULLA 0.6.1
+- Home rifatta da una pagina bianca su una copia del sito, solo con clic nel
+  Visual Builder (Divi 5.15.1): 9 sezioni, 10 righe, 14 colonne, 276
+  moduli, con i campi indicati nella guida.
+- Confronto con la home a 15 larghezze da 360 a 1512 px: stessa altezza
+  della pagina, stessi elementi (687 sotto i 981 px, 722-724 sopra),
+  posizioni e misure uguali entro 1 px, stessi stili e testi. Restano due
+  impostazioni che non si vedono: il colore di sfondo dell'apertura sotto il
+  video (nella home "trasparente") e l'allineamento interno del pulsante
+  "Mappe" sui telefoni.
+- Foto di ogni sezione a 1440, 1100, 820, 767 e 390 px: identiche al pixel,
+  tranne il fotogramma del video dell'apertura. Stati al passaggio del mouse
+  (orari, righe del menu, contorni, bevande, materie prime, Tasca e Piatto)
+  a 1440 e 1100 px: identici.
+- Figma nuovo: tavola "desktop" (1512 px) in 15 riquadri e tavola "mobilw"
+  (390 px) in 15 riquadri. La pagina rifatta si discosta dal Figma
+  esattamente quanto la home, riquadro per riquadro; tra loro home e pagina
+  rifatta sono uguali, a parte le parti che si muovono (video, strisce).
+- Visual Builder della pagina rifatta: le stesse 11 sezioni e 289 moduli
+  del Visual Builder della home, in vista Desktop, Tablet e Telefono,
+  nessun errore oltre ai messaggi sul video del browser di prova (identici
+  nella home).
+- Collegamenti e ancore: uguali alla home. Nella prova mancavano due cose
+  che non si vedono, sistemate: il pulsante "Mappe" non si apriva in una
+  nuova scheda (lo script di prova saltava l'opzione, la guida la indica) e
+  le foto non avevano testo alternativo; la foto dell'introduzione, scelta di
+  nuovo dalla libreria dopo la correzione, ha preso testo alternativo e
+  titolo giusti.
+- Header e footer rifatti da zero nel Theme Builder: sul sito identici a
+  quelli originali a 1440, 820 e 390 px; nell'editor righe a tutta
+  larghezza, header visibile in vista Telefono, footer delle viste Tablet e
+  Telefono uguale a quello del sito entro 2 px.
+- Sito pubblico invariato rispetto alla 0.6.0: posizioni e stili di ogni
+  elemento della home uguali a 10 larghezze da 360 a 1512 px, foto delle
+  sezioni uguali (a parte il video), immagini con gli stessi attributi
+  nella home e nelle pagine legali.
+- iPad (810 e 768 px) e iPhone orizzontale (750 px) sulla pagina Privacy:
+  logo e menu bordeaux; sulla home crema sul video come prima.
+- Logo diverso in Header sito > Logo: si vede su iPhone, iPad, Android, a
+  820 e a 1440 px.
+
+DIFFERENZE RIMASTE CON IL FIGMA
+- La tavola del telefono del Figma ha ancora alcuni testi vecchi ("Guarda
+  il menu'", "Siamo in Via di Scurreria 34", "Un'idea di Davide e
+  Alberto...", "Bevande", "I NOSTRI DOLCI" maiuscolo e la foto di prova dei
+  dolci): il sito usa per tutti gli schermi i testi della tavola del
+  computer, come dalla 0.5.9.
+- Il Figma nuovo non ha una tavola per il tablet: tra 768 e 980 px il sito
+  segue la tavola iPad di prima.
+
 TASCHE PIENE — VERSIONE 0.6.0, CANDIDATA AL COLLAUDO
 
 La 0.6.0 non cambia l'aspetto del sito: rende modificabili da Divi, su

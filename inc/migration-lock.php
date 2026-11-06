@@ -43,6 +43,7 @@ function tp_child_migration_callbacks(): array {
 			'tp_child_migrate_footer_nav_items',
 			'tp_child_migrate_figma_059',
 			'tp_child_refresh_divi_css_060',
+			'tp_child_fill_media_alt_061',
 		],
 	];
 }

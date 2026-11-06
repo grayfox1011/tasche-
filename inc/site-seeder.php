@@ -176,6 +176,10 @@ function tp_child_seed_import_media_asset( string $relative_path, bool $create =
 	update_post_meta( (int) $attachment_id, '_tp_child_seed_asset_path', $relative_path );
 	update_post_meta( (int) $attachment_id, '_tp_child_seed_asset_hash', $source_hash ?: '' );
 
+	if ( function_exists( 'tp_child_media_fill_alt' ) ) {
+		tp_child_media_fill_alt( (int) $attachment_id, $relative_path );
+	}
+
 	$url = wp_get_attachment_url( (int) $attachment_id );
 
 	return $url
