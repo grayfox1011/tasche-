@@ -1,3 +1,74 @@
+TASCHE PIENE — VERSIONE 0.6.5, CANDIDATA AL COLLAUDO
+
+La 0.6.5 fa valere ogni modifica fatta in Divi solo sul dispositivo per cui
+la si fa: computer, tablet o telefono. Le note delle versioni precedenti,
+piu' in basso, restano valide.
+
+COSA CAMBIA RISPETTO ALLA 0.6.4
+- Prima, come fa Divi di suo: un valore messo nella vista Desktop valeva
+  anche su tablet e telefono, se loro non ne avevano uno; uno messo nella
+  vista Tablet valeva anche sul telefono. Solo quello del telefono restava
+  sul telefono.
+- Ora, nelle sezioni del tema (home, pagine Privacy e Cookie, header e footer
+  del Theme Builder), ogni valore vale solo nella sua fascia: computer da 981
+  px in su, tablet da 768 a 980 px, telefono fino a 767 px. Dove un
+  dispositivo non ha un valore suo resta il disegno del tema. Lo stesso sul
+  sito e nelle tre viste del Visual Builder.
+- Vale anche per i moduli del tema (titolo della hero, striscia, onde, voci
+  di header e footer) e per il riquadro che contiene un bottone.
+- All'aggiornamento il tema scrive una volta su tablet e telefono i valori
+  che oggi prendono dal computer (l'allineamento e lo stile dei tre bottoni,
+  lo sfondo della hero e delle sezioni delle pagine legali, la larghezza
+  delle righe di header e footer, la misura del giorno nel primo orario),
+  cosi' quello che si vede non cambia. Lo stesso sulla home che il tema crea
+  su un sito nuovo.
+- Restano come in Divi: l'allineamento "start" che Divi da' a tutti i testi
+  (quando si sceglie un allineamento sul computer, tablet e telefono tengono
+  "start" finche' non ne hanno uno loro) e lo sfondo di un modulo che ne ha
+  uno per tutti e tre i dispositivi (Divi non ripete su un dispositivo uno
+  sfondo uguale a quello del dispositivo piu' grande).
+- Nel Visual Builder lo stile che Divi scrive in ogni modulo resta com'e',
+  spento; quello con le fasce di larghezza gli sta subito dopo e si rifa' a
+  ogni modifica.
+- Con punti di interruzione diversi da quelli di Divi (altri dispositivi
+  attivi) il tema non cambia niente.
+
+VERIFICHE EFFETTUATE SULLA 0.6.5
+- 16 modifiche, ognuna per un solo dispositivo, su moduli diversi della home:
+  misura, colore, margine, allineamento di testi e bottoni, spaziatura delle
+  lettere, sfondo della hero e il margine del titolo della hero (un modulo
+  del tema); 4 per il telefono, 5 per il tablet, 7 per il computer. Misurate
+  nelle tre viste del builder prima e dopo, e sul sito a 1440, 820 e 390 px
+  prima e dopo il salvataggio: 16 su 16 compaiono solo sul loro dispositivo,
+  nel builder e sul sito. Con la 0.6.4 i valori del computer arrivavano anche
+  su tablet e telefono e quelli del tablet anche sul telefono.
+- La stessa cosa dal pannello, come una persona: vista Telefono, Testo >
+  Allineamento testo > Centro sul testo "Dove siamo": centrato solo nella
+  vista Telefono del builder; computer e tablet restano com'erano.
+- Aspetto invariato: stile calcolato di ogni elemento della home (circa 900,
+  a 1440, 1200, 820, 768 e 390 px) e delle pagine Privacy e Cookie (1440, 820
+  e 390 px), pseudo-elementi compresi, con la 0.6.4 e dopo l'aggiornamento
+  alla 0.6.5: identico, nessuna differenza.
+- Le prove del builder della 0.6.4, rifatte con la 0.6.5: Materie prime nel
+  builder contro il sito uguale alla 0.6.4 (cambia solo il punto in cui si
+  trova la scritta che scorre sul sito al momento della misura); 102 clic su
+  102 aprono il pezzo giusto; modifiche di Materie 9 su 9 su computer e
+  tablet, 6 su 6 sul telefono; i controlli Design della 0.6.0 18 su 18 in
+  ognuna delle tre viste.
+- WordPress nuovo + zip caricato da wp-admin, con la 0.6.4 e con la 0.6.5:
+  la home nasce da sola con la barra in 32 s, nessun errore PHP, home e
+  pagina Privacy identiche tra le due versioni (stile calcolato a 1440, 820
+  e 390 px); nella home della 0.6.5 i valori sono gia' scritti per i tre
+  dispositivi.
+- Aggiornamento da wp-admin di un sito con la 0.6.4: nessun errore PHP, la
+  copia sui dispositivi piu' piccoli fatta una volta, home e pagina Privacy
+  identiche prima e dopo (stile calcolato a 1440, 820 e 390 px).
+- "Crea/aggiorna home Tasche Piene" su un sito gia' alla 0.6.5: la copia
+  tocca solo home, header e footer che il tema riscrive (e le pagine legali
+  che crea); un valore messo solo per il computer su una pagina legale
+  esistente resta solo per il computer.
+
+
 TASCHE PIENE — VERSIONE 0.6.4, CANDIDATA AL COLLAUDO
 
 La 0.6.4 rende la sezione "Non sono principi astratti, sono scelte." nel

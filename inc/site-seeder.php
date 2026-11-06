@@ -728,10 +728,36 @@ function tp_child_seed_site_finish(): array {
 	// Legal pages that already exist keep what the owner wrote; the footer rebuilt
 	// above gets their links.
 	$set_up        = (bool) get_option( 'tp_child_legal_pages_v2' );
+	$legal_before  = [];
+
+	if ( $set_up && function_exists( 'tp_child_legal_page_slugs' ) ) {
+		foreach ( tp_child_legal_page_slugs() as $type => $slug ) {
+			$legal_before[ $type ] = tp_child_seed_find_post_id( 'page', $slug );
+		}
+	}
+
 	$legal_pages   = function_exists( 'tp_child_seed_legal_pages' ) ? tp_child_seed_legal_pages( $set_up ) : [];
 
 	if ( $set_up && function_exists( 'tp_child_update_footer_legal_links' ) ) {
 		tp_child_update_footer_legal_links( $legal_pages );
+	}
+
+	// 0.6.5: on what the seed has just written (not on pages the owner already edited with the per-device values),
+	// each device gets the values it took from a larger one (inc/breakpoint-isolation.php).
+	if ( function_exists( 'tp_child_bp_freeze_posts' ) && tp_child_bp_ranges() ) {
+		$written = [ $home_id, (int) ( $theme_builder['header_id'] ?? 0 ), (int) ( $theme_builder['footer_id'] ?? 0 ) ];
+
+		foreach ( $legal_pages as $type => $page_id ) {
+			if ( empty( $legal_before[ $type ] ) ) {
+				$written[] = (int) $page_id;
+			}
+		}
+
+		$written = array_values( array_filter( $written ) );
+
+		if ( $written ) {
+			tp_child_bp_freeze_posts( $written );
+		}
 	}
 
 	update_option( 'tp_child_seed_site_version', TP_CHILD_SEED_VERSION );

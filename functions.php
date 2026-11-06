@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( "TP_CHILD_VERSION", "0.6.4" );
+define( "TP_CHILD_VERSION", "0.6.5" );
 define( 'TP_CHILD_PATH', trailingslashit( get_stylesheet_directory() ) );
 define( 'TP_CHILD_URL', trailingslashit( get_stylesheet_directory_uri() ) );
 define( 'TP_CHILD_MODULES_JSON_PATH', TP_CHILD_PATH . 'modules-json/' );
@@ -303,6 +303,7 @@ require_once TP_CHILD_PATH . 'inc/footer-nav-items-migration.php';
 require_once TP_CHILD_PATH . 'inc/figma-059-migration.php';
 require_once TP_CHILD_PATH . 'inc/divi-css-refresh-060.php';
 require_once TP_CHILD_PATH . 'inc/media-alt-061.php';
+require_once TP_CHILD_PATH . 'inc/breakpoint-isolation.php';
 require_once TP_CHILD_PATH . 'inc/legal-pages.php';
 require_once TP_CHILD_PATH . 'inc/footer-layout-helpers.php';
 require_once TP_CHILD_PATH . 'inc/materie-marquee-migration.php';
