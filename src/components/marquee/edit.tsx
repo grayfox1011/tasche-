@@ -9,6 +9,7 @@ import metadata from '../../../modules-json/marquee/module.json';
 import { createModuleClassnames, createModuleScriptData, createModuleStyles } from '../../utils/module-boilerplate';
 import { clampNumber, getString } from '../../utils/attrs';
 import { DynamicText, withoutDynamicContent } from '../../utils/dynamic';
+import { getMarqueeVariant, getSeparator, isMaterieMarquee } from '../../utils/marquee';
 
 const MODULE_CLASSNAME = 'tp_marquee';
 
@@ -28,9 +29,6 @@ const ModuleScriptData = createModuleScriptData();
 
 const getPhrase = (attrs?: { phrase?: { innerContent?: { desktop?: { value?: unknown } }; desktop?: { value?: unknown } } }): string =>
 	getString(attrs?.phrase, '').trim();
-
-const getModuleClass = (attrs?: MarqueeEditProps['attrs']): string =>
-	getString(attrs?.module?.advanced?.htmlAttributes?.desktop?.value?.class, '');
 
 export const MarqueeEdit = (props: MarqueeEditProps): ReactElement => {
 	const { attrs, childModules, childrenIds = [], elements, id, name } = props;
@@ -62,21 +60,18 @@ export const MarqueeEdit = (props: MarqueeEditProps): ReactElement => {
 		: fallbackPhrases.map((text) => ({ text, className: '' }));
 
 	const isEmpty = childPhrases.length === 0;
-	const variantValue = getString(attrs.variant, 'green');
-	const variant = ['green', 'burgundy', 'cream', 'materie'].includes(variantValue) ? variantValue : 'green';
+	const variant = getMarqueeVariant(attrs);
 	const phrases: PreviewPhrase[] = isEmpty
 		? (variant === 'materie' ? MATERIE_DEFAULT_PHRASES : DEFAULT_PHRASES).map((text) => ({ text, className: '' }))
 		: childPhrases;
-	const isMaterieLayout = variant === 'materie' || getModuleClass(attrs).includes('tp-materie-marquee');
+	const isMaterieLayout = isMaterieMarquee(attrs);
 	const duration = clampNumber(getString(attrs.speed, isMaterieLayout ? '5' : '10'), isMaterieLayout ? 5 : 10, 4, 120);
 	const repeatCount = Math.max(
 		2,
 		Math.min(8, Math.round(clampNumber(getString(attrs.repeatCount, isMaterieLayout ? '4' : '2'), isMaterieLayout ? 4 : 2, 2, 8)))
 	);
 	const direction = getString(attrs.direction, 'left') === 'right' ? 'right' : 'left';
-	// Emptied on purpose: no symbol, the space between the phrases stays (as on the site).
-	const rawSeparator = attrs?.separator?.innerContent?.desktop?.value;
-	const separator = typeof rawSeparator === 'string' && rawSeparator.trim() === '' ? '' : getString(attrs.separator, '·');
+	const separator = getSeparator(attrs);
 	const pauseOnHover = getString(attrs.pauseOnHover, isMaterieLayout ? 'off' : 'on') === 'on';
 	const loopItems = Array.from({ length: repeatCount }).flatMap(() => phrases);
 	const ariaLabel = phrases
@@ -99,65 +94,76 @@ export const MarqueeEdit = (props: MarqueeEditProps): ReactElement => {
 			scriptDataComponent={ModuleScriptData}
 		>
 			{elements.styleComponents({ attrName: 'module' })}
-			<div className={`tp-marquee-vb${isMaterieLayout ? ' tp-marquee-vb--materie' : ''}`}>
-				{isMaterieLayout ? (
-					<>
-						<p className="tp-marquee-vb__materie-note">Modifica la scritta obliqua a scorrimento</p>
-						<div className="tp-marquee-vb__live tp-marquee-vb__live--materie" aria-live="polite">
-							<div className={`tp-marquee tp-marquee--${variant} tp-marquee--${direction}`}>
-								<div className="tp-marquee__track tp-marquee__track--materie-edit">
-									{childrenIds.length ? (
-										<ChildModulesContainer ids={childrenIds} />
-									) : (
-										<span className="tp-marquee__phrase">{MATERIE_DEFAULT_PHRASES[0]}</span>
-									)}
-								</div>
+			{isMaterieLayout ? (
+				// As on the site: the strip, its track, the phrases and the separators, repeated. The first round is
+				// made of the Scritte themselves (MarqueeItemEdit draws each as a phrase with its separator), so a
+				// click on the text selects it; the other rounds are copies. The strip stands still in the builder.
+				<div
+					className={`tp-marquee tp-marquee--${variant} tp-marquee--${direction}${pauseOnHover ? ' tp-marquee--pause-hover' : ''}`}
+					style={
+						{
+							'--tp-marquee-duration': `${duration}s`,
+							'--tp-marquee-shift': `${shift}%`,
+						} as React.CSSProperties
+					}
+					aria-label={ariaLabel}
+				>
+					<div className="tp-marquee__track">
+						{childrenIds.length ? <ChildModulesContainer ids={childrenIds} /> : null}
+						{(childrenIds.length ? loopItems.slice(phrases.length) : loopItems).map((phrase, index) => (
+							<React.Fragment key={`${phrase.text}-${index}`}>
+								<span className={`tp-marquee__phrase${phrase.className ? ` ${phrase.className}` : ''}`} aria-hidden="true">
+									<DynamicText value={phrase.text} />
+								</span>
+								<span className="tp-marquee__separator" aria-hidden="true">
+									{separator}
+								</span>
+							</React.Fragment>
+						))}
+					</div>
+				</div>
+			) : (
+				<div className="tp-marquee-vb">
+					<div className="tp-marquee-vb__live" aria-live="polite">
+						<div
+							className={`tp-marquee tp-marquee--${variant} tp-marquee--${direction}${pauseOnHover ? ' tp-marquee--pause-hover' : ''}`}
+							style={
+								{
+									'--tp-marquee-duration': `${duration}s`,
+									'--tp-marquee-shift': `${shift}%`,
+								} as React.CSSProperties
+							}
+							aria-label={ariaLabel}
+						>
+							<div className="tp-marquee__track">
+								{loopItems.map((phrase, index) => (
+									<React.Fragment key={`${phrase.text}-${index}`}>
+										<span className={`tp-marquee__phrase${phrase.className ? ` ${phrase.className}` : ''}`} aria-hidden="true">
+											<DynamicText value={phrase.text} />
+										</span>
+										<span className="tp-marquee__separator" aria-hidden="true">
+											{separator}
+										</span>
+									</React.Fragment>
+								))}
 							</div>
 						</div>
-					</>
-				) : (
-					<>
-						<div className="tp-marquee-vb__live" aria-live="polite">
-							<div
-								className={`tp-marquee tp-marquee--${variant} tp-marquee--${direction}${pauseOnHover ? ' tp-marquee--pause-hover' : ''}`}
-								style={
-									{
-										'--tp-marquee-duration': `${duration}s`,
-										'--tp-marquee-shift': `${shift}%`,
-									} as React.CSSProperties
-								}
-								aria-label={ariaLabel}
-							>
-								<div className="tp-marquee__track">
-									{loopItems.map((phrase, index) => (
-										<React.Fragment key={`${phrase.text}-${index}`}>
-											<span className={`tp-marquee__phrase${phrase.className ? ` ${phrase.className}` : ''}`} aria-hidden="true">
-												<DynamicText value={phrase.text} />
-											</span>
-											<span className="tp-marquee__separator" aria-hidden="true">
-												{separator}
-											</span>
-										</React.Fragment>
-									))}
-								</div>
-							</div>
+					</div>
+					<div className="tp-marquee-vb__panel">
+						<p className="tp-marquee-vb__panel-title">Scritte della striscia a scorrimento</p>
+						<p className="tp-marquee-vb__panel-hint">Modifica qui sotto: la anteprima sopra si aggiorna subito.</p>
+						<div className="tp-marquee-vb__list">
+							{childrenIds.length ? (
+								<ChildModulesContainer ids={childrenIds} />
+							) : (
+								<p className="tp-marquee-vb__list-empty">
+									Nessuna scritta ancora: sul sito scorrono le frasi qui sopra. Usa il pulsante + per aggiungerne una.
+								</p>
+							)}
 						</div>
-						<div className="tp-marquee-vb__panel">
-							<p className="tp-marquee-vb__panel-title">Scritte della striscia a scorrimento</p>
-							<p className="tp-marquee-vb__panel-hint">Modifica qui sotto: la anteprima sopra si aggiorna subito.</p>
-							<div className="tp-marquee-vb__list">
-								{childrenIds.length ? (
-									<ChildModulesContainer ids={childrenIds} />
-								) : (
-									<p className="tp-marquee-vb__list-empty">
-										Nessuna scritta ancora: sul sito scorrono le frasi qui sopra. Usa il pulsante + per aggiungerne una.
-									</p>
-								)}
-							</div>
-						</div>
-					</>
-				)}
-			</div>
+					</div>
+				</div>
+			)}
 		</ModuleContainer>
 	);
 };

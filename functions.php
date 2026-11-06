@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( "TP_CHILD_VERSION", "0.6.3" );
+define( "TP_CHILD_VERSION", "0.6.4" );
 define( 'TP_CHILD_PATH', trailingslashit( get_stylesheet_directory() ) );
 define( 'TP_CHILD_URL', trailingslashit( get_stylesheet_directory_uri() ) );
 define( 'TP_CHILD_MODULES_JSON_PATH', TP_CHILD_PATH . 'modules-json/' );
@@ -1407,3 +1407,32 @@ function tp_child_vb_choice_scale_script() {
 	<?php
 }
 add_action( 'wp_footer', 'tp_child_vb_choice_scale_script', 5 );
+
+/**
+ * Visual Builder: --tp-fit-scale as tp-layout.js gives it on the site (window width / 1512 between 981 and
+ * 1511 px). In the builder only Materie prime takes it (0.6.4): its 1512px board is scaled to the frame as on
+ * the site. The frame is as wide as the page shown, also in the tablet and phone views.
+ */
+function tp_child_vb_fit_scale_script() {
+	if ( ! tp_child_is_visual_builder() ) {
+		return;
+	}
+	?>
+<script id="tp-vb-fit-scale-js">
+(function(){
+	function upd(){
+		var root = document.documentElement;
+		var width = window.innerWidth || root.clientWidth || 0;
+		if (width >= 981 && width <= 1511) {
+			root.style.setProperty('--tp-fit-scale', (width / 1512).toFixed(6));
+		} else {
+			root.style.removeProperty('--tp-fit-scale');
+		}
+	}
+	upd();
+	window.addEventListener('resize', upd, { passive: true });
+})();
+</script>
+	<?php
+}
+add_action( 'wp_footer', 'tp_child_vb_fit_scale_script', 5 );

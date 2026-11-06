@@ -1,3 +1,61 @@
+TASCHE PIENE — VERSIONE 0.6.4, CANDIDATA AL COLLAUDO
+
+La 0.6.4 rende la sezione "Non sono principi astratti, sono scelte." nel
+Visual Builder uguale al sito e modificabile pezzo per pezzo. Le note delle
+versioni precedenti, piu' in basso, restano valide.
+
+COSA CAMBIA RISPETTO ALLA 0.6.3
+- Nel Visual Builder la sezione Materie prime non e' piu' la "versione di
+  modifica" che il tema aveva dall'inizio (riquadri tratteggiati, card su due
+  colonne, onde in blocchi a parte, il segnaposto "Modifica la scritta
+  obliqua a scorrimento" sopra le card): prende le regole del sito, quindi su
+  computer, tablet e telefono e' come la pagina pubblicata (onde, titolo,
+  testo, scritta grande inclinata, card sparse con le foto ovali).
+- La scritta "Le cose che finiscono in tasca" nel builder e' quella del
+  sito, ferma: il primo giro e' fatto delle Scritte (un clic sul testo apre
+  la Scritta), gli altri giri sono copie (un clic apre la Striscia).
+- I clic: la scatola trasparente delle card non copre piu' la scritta; il
+  blocco Intestazione lascia passare il clic dove e' vuoto, cosi' si prendono
+  le onde; la parola in genovese, piccola, si apre dall'ingranaggio della
+  barra che Divi le disegna sopra.
+- Nel builder le card non cambiano colore al passaggio del mouse (sul sito
+  si'), come Divi fa con i suoi effetti al passaggio.
+- Tra 981 e 1511 px il builder rimpicciolisce la tavola come il sito
+  (--tp-fit-scale, tp_child_vb_fit_scale_script()).
+- Il sito non cambia.
+
+VERIFICHE EFFETTUATE SULLA 0.6.4
+- Builder contro sito alla stessa larghezza, pezzo per pezzo (posizione,
+  misura, carattere, colori, bordi e trasformazioni di 64 pezzi): uguali a
+  1272 px (computer), 874 (tablet), 484 (telefono), 1112 (portatile
+  1440x900) e 1592 (schermo 1920x1080). Restano solo la scritta ferma, i clic
+  e 2 px della cornice del builder. Stessa altezza della sezione (2959, 4134
+  e 3509 px).
+- Clic come una persona su ogni pezzo, nelle tre viste: 102 clic, ognuno
+  apre il pezzo giusto (onda bordeaux, titolo, testo, Scritta, gruppo e
+  singole card, foto, titoli, testi, parole; la parola di card 1
+  dall'ingranaggio). Restano fuori l'onda verde sul computer (sotto quella
+  bordeaux: si apre da Livelli) e le copie della scritta, che a quelle
+  larghezze sono fuori dallo schermo; i pezzi che a una larghezza il sito
+  nasconde (onde e scritta sul telefono) non si contano.
+- Modifiche dal builder (testo della Scritta, che cambia anche nelle copie,
+  separatore, titolo di una card, colore e misura del testo, margini,
+  carattere della striscia): 9 su 9 su computer e tablet, 6 su 6 sul
+  telefono (le altre 3 sono della striscia, che sul telefono non c'e', come
+  sul sito). La prova della 0.6.0
+  sui controlli Design: 18 su 18 nelle tre viste.
+- Striscia verde sotto la hero nel builder: identica a prima (pixel e HTML).
+- Sito: 70 sezioni della home a 7 larghezze (da 1920 a 390 px) prima e dopo
+  le modifiche: identiche, a parte il video della hero sul telefono, che
+  cambia da solo tra due prove.
+- WordPress nuovo + zip caricato da wp-admin: home creata con la barra in
+  31 s; nel builder di quel sito il confronto, i clic e le modifiche danno
+  gli stessi risultati.
+- Aggiornamento da wp-admin di un sito con la 0.6.3: nessun errore PHP,
+  home, menu e pagine uguali; le sezioni della home con i file della 0.6.3 e
+  della 0.6.4 sullo stesso sito sono identiche.
+
+
 TASCHE PIENE — VERSIONE 0.6.3, CANDIDATA AL COLLAUDO
 
 La 0.6.3 mostra una barra di avanzamento mentre il tema crea la home, invece

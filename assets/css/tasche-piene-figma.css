@@ -983,7 +983,7 @@
 		border-width: 1px;
 	}
 
-	.tp-child-theme :where(#page-container .tp-materie-card:hover)::before,
+	.tp-child-theme :where(body:not(.et-fb) #page-container .tp-materie-card:hover)::before,
 	.tp-child-theme :where(#page-container .tp-materie-card.is-active)::before {
 		box-shadow: none;
 	}
@@ -993,7 +993,7 @@
 	}
 
 	/* The card cuts what grows out of it while the mouse is on it: the green fills the card, as in the Figma. */
-	.tp-child-theme :where(body.tp-child-theme:not(.et-fb) #page-container .tp-materie-card) {
+	.tp-child-theme :where(body.tp-child-theme #page-container .tp-materie-card) {
 		overflow: hidden;
 	}
 
@@ -1008,7 +1008,7 @@
 		transition-timing-function: var(--tp-materie-card-ease);
 	}
 
-	.tp-child-theme :where(#page-container .tp-materie-card:hover),
+	.tp-child-theme :where(body:not(.et-fb) #page-container .tp-materie-card:hover),
 	.tp-child-theme :where(#page-container .tp-materie-card.is-active) {
 		--tp-mp-img-rotate: var(--tp-mp-hover-img-rotate, 0deg);
 	}
@@ -1075,7 +1075,7 @@
 		background-color: var(--tp-green);
 	}
 
-	.tp-child-theme :where(#page-container .tp-materie-card:hover .tp-materie-chip),
+	.tp-child-theme :where(body:not(.et-fb) #page-container .tp-materie-card:hover .tp-materie-chip),
 	.tp-child-theme :where(#page-container .tp-materie-card.is-active .tp-materie-chip) {
 		background-color: var(--tp-lime);
 	}
@@ -1642,7 +1642,7 @@
 /* The waves under the menu are the computer's: on tablets and phones the menu ends straight, as in the Figma. */
 @media (max-width: 980px) {
 
-	.tp-child-theme :where(body:not(.et-fb) .tp-materie-onda) {
+	.tp-child-theme :where(body .tp-materie-onda) {
 		display: none;
 	}
 }
@@ -2738,4 +2738,77 @@
 			opacity: 1 !important;
 		}
 	}
+}
+
+/* 0.6.4: Materie prime in the Visual Builder as on the site. The section takes the site's rules (the old
+   editing layout of the builder is gone); what follows is only what editing needs, the look does not change.
+   - The strip stands still, so its text can be clicked; on the site it runs.
+   - In the builder the first round of the strip is made of the Scritte (MarqueeItemEdit): their inner boxes
+     take the strip's text as it is.
+   - The clicks: Divi selects the module under the mouse. The strip (only its band, not the tall transparent box
+     around it), the Scritte and the waves take the mouse here, which they do not on the site; the box of the
+     cards no longer covers the strip (z-index auto: the cards stay above the strip, the strip above the box). */
+.tp-child-theme.tp-child-theme :where(body.et-fb .tp-materie-marquee .tp-marquee__track) {
+	animation: none;
+	transform: none;
+}
+
+/* As on the site (the builder opens every strip, for the list of the green one). */
+.tp-child-theme.tp-child-theme :where(body.et-fb #page-container .tp-materie-marquee) {
+	overflow: hidden;
+}
+
+/* The Scritte are hidden everywhere else (.tp_marquee_item, tasche-piene.css): here they are the phrases. As
+   modules they would also take Divi's 30px under the modules up to 980px (.et_pb_column .et_pb_module). */
+.tp-child-theme.tp-child-theme.tp-child-theme :where(body.et-fb .tp-marquee__track > .tp_marquee_item.tp-marquee__phrase) {
+	display: block;
+	margin: 0;
+}
+
+.tp-child-theme.tp-child-theme :where(body.et-fb .tp-marquee__track > .tp-marquee__phrase .tp-marquee-item__row) {
+	display: block;
+	width: auto;
+	min-height: 0;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	border-radius: 0;
+	background: transparent;
+}
+
+.tp-child-theme.tp-child-theme :where(body.et-fb .tp-marquee__track > .tp-marquee__phrase .tp-marquee-item__field) {
+	flex: none;
+	min-width: 0;
+	color: inherit;
+	font: inherit;
+	letter-spacing: inherit;
+	text-transform: inherit;
+	white-space: inherit;
+}
+
+/* Divi's builder takes the mouse away from what is inside a module (#page-container .et-fb-root-area
+   .et_pb_module *): the band of the strip and its copies take it back (a click there selects the strip). */
+.tp-child-theme #page-container .et-fb-root-area .tp-materie-marquee .tp-marquee,
+.tp-child-theme #page-container .et-fb-root-area .tp-materie-marquee .tp-marquee__track,
+.tp-child-theme #page-container .et-fb-root-area .tp-materie-marquee .tp-marquee__track > span {
+	pointer-events: auto;
+}
+
+/* The waves take the mouse (not on the site). The header block lets it through where it is empty, as it
+   lies over the waves (its title and text still take it): the header block itself is in the path at the
+   top of the settings window ("Gruppo") and in the layers. */
+.tp-child-theme.tp-child-theme :where(body.et-fb .tp-materie-onda) {
+	pointer-events: auto;
+}
+
+.tp-child-theme.tp-child-theme :where(body.et-fb .tp-materie-header) {
+	pointer-events: none;
+}
+
+.tp-child-theme.tp-child-theme :where(body.et-fb .tp-materie-header > [data-id]) {
+	pointer-events: auto;
+}
+
+.tp-child-theme.tp-child-theme :where(body.et-fb .tp-materie-cards) {
+	z-index: auto;
 }

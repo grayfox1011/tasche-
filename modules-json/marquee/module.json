@@ -278,7 +278,7 @@
     },
     "tpDesignText": {
       "type": "object",
-      "selector": "{{selector}} .tp-marquee__phrase, {{selector}} .tp-marquee__phrase *, {{selector}} .tp-marquee__separator, {{selector}} .tp-marquee__track--materie-edit .tp-marquee-item__field, {{selector}} .tp-marquee__track--materie-edit .tp-marquee-item__field *, {{selector}} .tp-marquee__track--materie-edit .tp-marquee-item__fallback",
+      "selector": "{{selector}} .tp-marquee__phrase, {{selector}} .tp-marquee__phrase *, {{selector}} .tp-marquee__separator",
       "settings": {
         "decoration": {
           "font": {
