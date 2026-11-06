@@ -15089,6 +15089,8 @@ body.tp-child-theme.tp-child-theme.tp-child-theme :where(html body.tp-child-them
 
 	.tp-child-theme :where(#page-container .tp-location-section .et_pb_button_module_wrapper:has(.tp-location-button)) {
 		order: 5;
+		/* As wide as the row (the button keeps its place): the alignment set in Divi for the phone moves it. */
+		align-self: stretch;
 		margin: 0;
 		padding: 0;
 	}

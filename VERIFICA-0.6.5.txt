@@ -27,6 +27,10 @@ COSA CAMBIA RISPETTO ALLA 0.6.4
   "start" finche' non ne hanno uno loro) e lo sfondo di un modulo che ne ha
   uno per tutti e tre i dispositivi (Divi non ripete su un dispositivo uno
   sfondo uguale a quello del dispositivo piu' grande).
+- Sul telefono il bottone "Mappe" di "Dove siamo" segue l'allineamento
+  scelto in Divi: il suo riquadro ora e' largo quanto la riga (prima era
+  largo quanto il bottone, e l'allineamento non lo spostava). Il bottone
+  resta dov'era.
 - Nel Visual Builder lo stile che Divi scrive in ogni modulo resta com'e',
   spento; quello con le fasce di larghezza gli sta subito dopo e si rifa' a
   ogni modifica.
@@ -48,7 +52,13 @@ VERIFICHE EFFETTUATE SULLA 0.6.5
 - Aspetto invariato: stile calcolato di ogni elemento della home (circa 900,
   a 1440, 1200, 820, 768 e 390 px) e delle pagine Privacy e Cookie (1440, 820
   e 390 px), pseudo-elementi compresi, con la 0.6.4 e dopo l'aggiornamento
-  alla 0.6.5: identico, nessuna differenza.
+  alla 0.6.5: identico; cambia solo la larghezza del riquadro, invisibile,
+  del bottone "Mappe" sul telefono (la sezione e' uguale al pixel a 390 e
+  600 px).
+- Prova con le foto: titolo piu' grande nella vista Desktop, testo blu nella
+  vista Tablet, bottone "Mappe" al centro nella vista Telefono, salvato: sul
+  sito a 1440, 820 e 390 px ognuna delle tre si vede solo sul suo
+  dispositivo; nel builder il bottone e' al centro solo nella vista Telefono.
 - Le prove del builder della 0.6.4, rifatte con la 0.6.5: Materie prime nel
   builder contro il sito uguale alla 0.6.4 (cambia solo il punto in cui si
   trova la scritta che scorre sul sito al momento della misura); 102 clic su
@@ -58,11 +68,12 @@ VERIFICHE EFFETTUATE SULLA 0.6.5
 - WordPress nuovo + zip caricato da wp-admin, con la 0.6.4 e con la 0.6.5:
   la home nasce da sola con la barra in 32 s, nessun errore PHP, home e
   pagina Privacy identiche tra le due versioni (stile calcolato a 1440, 820
-  e 390 px); nella home della 0.6.5 i valori sono gia' scritti per i tre
-  dispositivi.
+  e 390 px; a parte il riquadro del bottone "Mappe" sul telefono); nella
+  home della 0.6.5 i valori sono gia' scritti per i tre dispositivi.
 - Aggiornamento da wp-admin di un sito con la 0.6.4: nessun errore PHP, la
   copia sui dispositivi piu' piccoli fatta una volta, home e pagina Privacy
-  identiche prima e dopo (stile calcolato a 1440, 820 e 390 px).
+  identiche prima e dopo (stile calcolato a 1440, 820 e 390 px; a parte il
+  riquadro del bottone "Mappe" sul telefono).
 - "Crea/aggiorna home Tasche Piene" su un sito gia' alla 0.6.5: la copia
   tocca solo home, header e footer che il tema riscrive (e le pagine legali
   che crea); un valore messo solo per il computer su una pagina legale
