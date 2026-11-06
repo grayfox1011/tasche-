@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( "TP_CHILD_VERSION", "0.6.2" );
+define( "TP_CHILD_VERSION", "0.6.3" );
 define( 'TP_CHILD_PATH', trailingslashit( get_stylesheet_directory() ) );
 define( 'TP_CHILD_URL', trailingslashit( get_stylesheet_directory_uri() ) );
 define( 'TP_CHILD_MODULES_JSON_PATH', TP_CHILD_PATH . 'modules-json/' );
@@ -291,6 +291,7 @@ function tp_child_nav_menus_admin_notice(): void {
 add_action( 'admin_notices', 'tp_child_nav_menus_admin_notice' );
 
 require_once TP_CHILD_PATH . 'inc/site-seeder.php';
+require_once TP_CHILD_PATH . 'inc/seed-progress.php';
 require_once TP_CHILD_PATH . 'inc/menu-label-text-modules.php';
 require_once TP_CHILD_PATH . 'inc/menu-size-s-migration.php';
 require_once TP_CHILD_PATH . 'inc/two-size-text-migration.php';

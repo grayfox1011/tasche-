@@ -1,3 +1,43 @@
+TASCHE PIENE — VERSIONE 0.6.3, CANDIDATA AL COLLAUDO
+
+La 0.6.3 mostra una barra di avanzamento mentre il tema crea la home, invece
+di lasciare la pagina ferma senza dire niente. Le note delle versioni
+precedenti, piu' in basso, restano valide.
+
+COSA CAMBIA RISPETTO ALLA 0.6.2
+- Dopo "Attiva" la pagina dei temi si apre subito (circa un secondo) con un
+  riquadro blu "Sto creando la home Tasche Piene": una barra che avanza, cosa
+  sta facendo ("Carico le foto nella Libreria media: 12 di 30", poi "Creo la
+  pagina Home, l'header, il footer e le pagine Privacy e Cookie") e quanto
+  manca ("mancano circa 20 secondi"). Alla fine il riquadro diventa verde:
+  "La home Tasche Piene è pronta", con i pulsanti "Vedi il sito" e "Modifica
+  con Divi".
+- Lo stesso con il pulsante "Crea/aggiorna home Tasche Piene" sui siti che
+  hanno gia' una loro home.
+- La home si crea a piccoli passi (i menu, le foto tre alla volta, poi le
+  pagine): nessuna richiesta lunga che un hosting lento potrebbe
+  interrompere. Se un passo non risponde la barra riprova da sola tre volte;
+  poi compare "Riprova", che riparte da dove era arrivata, senza doppioni.
+  Se si chiude la pagina, alla prossima pagina della bacheca riparte da dove
+  era (inc/seed-progress.php, assets/js/tp-seed-progress.js).
+- Senza JavaScript il pulsante crea la home come prima, in una volta.
+
+VERIFICHE EFFETTUATE SULLA 0.6.3
+- WordPress nuovo + Divi 5.15.1, zip caricato da Aspetto > Temi e "Attiva":
+  pagina dei temi aperta in 1,3 s, barra da 0 a 30 foto con il tempo che
+  manca, home pronta in 32 s (due prove); home, header, footer, Privacy,
+  Cookie, menu e 30 foto, nessun errore PHP.
+- Rete interrotta alla foto 9 di 30 (quattro volte): tre tentativi
+  automatici, poi "Riprova"; ripartita dalla foto 9, finita con 30 foto e
+  nessun doppione (due prove).
+- Sito con una sua home: avviso con il pulsante, barra dopo il clic, la
+  pagina che c'era resta tra le pagine.
+- Browser senza JavaScript: il pulsante crea la home e torna alla pagina dei
+  temi con "La home Tasche Piene è pronta".
+- Aggiornamento da wp-admin di un sito con la 0.6.0: nessun avviso, nessuno
+  script nuovo in bacheca, home, header e footer identici, nessun errore
+  PHP.
+
 TASCHE PIENE — VERSIONE 0.6.2, CANDIDATA AL COLLAUDO
 
 La 0.6.2 corregge l'installazione: su un WordPress nuovo la home ora nasce

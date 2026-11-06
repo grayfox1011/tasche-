@@ -703,12 +703,26 @@ function tp_child_seed_site_locked( bool $force ): array {
 
 	ignore_user_abort( true );
 
+	tp_child_seed_site_start();
+	tp_child_seed_media_assets();
+
+	return tp_child_seed_site_finish();
+}
+
+/**
+ * First part of the seed: the menus. The photos come next (tp_child_seed_media_assets(), or a few at a time
+ * from the progress bar of inc/seed-progress.php), then tp_child_seed_site_finish().
+ */
+function tp_child_seed_site_start(): void {
 	if ( function_exists( 'tp_child_seed_nav_menus' ) ) {
 		tp_child_seed_nav_menus();
 	}
+}
 
-	tp_child_seed_media_assets();
-
+/**
+ * Last part of the seed, with the photos in the Media Library: the home, the Theme Builder, the legal pages.
+ */
+function tp_child_seed_site_finish(): array {
 	$home_id       = tp_child_seed_home_page();
 	$theme_builder = tp_child_seed_theme_builder();
 	// Legal pages that already exist keep what the owner wrote; the footer rebuilt
@@ -721,6 +735,7 @@ function tp_child_seed_site_locked( bool $force ): array {
 	}
 
 	update_option( 'tp_child_seed_site_version', TP_CHILD_SEED_VERSION );
+	delete_option( 'tp_child_seed_site_pending' );
 	flush_rewrite_rules( false );
 
 	return array_merge(
@@ -795,8 +810,9 @@ function tp_child_seed_site_has_home(): bool {
 
 /**
  * A site where the theme never made anything and that has no home of its own (a new WordPress): the first admin
- * page an administrator opens with the theme active (the Themes page right after "Attiva") makes the home,
- * without the button. It does not wait for after_switch_theme: WordPress fires it in the first request after
+ * page an administrator opens with the theme active (the Themes page right after "Attiva") starts making the
+ * home, with its progress bar (inc/seed-progress.php), without the button. It does not wait for
+ * after_switch_theme: WordPress fires it in the first request after
  * the switch, often a background request of the admin that still runs with the previous theme, so the theme
  * would never hear of it. A site with its own home, or where the theme made the home before (its header and
  * footer may have been changed since), is asked first: the notice with the button.
@@ -820,10 +836,11 @@ function tp_child_seed_site_should_skip_admin_fallback(): bool {
 }
 
 function tp_child_seed_site_admin_fallback(): void {
-	$manual_request   = tp_child_seed_site_manual_requested();
-	$after_activation = tp_child_seed_site_after_activation();
+	// Without JavaScript the button opens this page, which makes the home in one request; with JavaScript the
+	// button and the first admin page after the activation make it a step at a time (inc/seed-progress.php).
+	$manual_request = tp_child_seed_site_manual_requested();
 
-	if ( ! $manual_request && ! $after_activation && ! tp_child_seed_site_auto_enabled() ) {
+	if ( ! $manual_request && ! tp_child_seed_site_auto_enabled() ) {
 		return;
 	}
 
@@ -833,7 +850,7 @@ function tp_child_seed_site_admin_fallback(): void {
 
 	// The button makes the home again even when the seed ran before (a site whose home was deleted);
 	// the automatic seed of TP_CHILD_ENABLE_AUTO_SEED runs once.
-	if ( ! $manual_request && ! $after_activation && TP_CHILD_SEED_VERSION === get_option( 'tp_child_seed_site_version' ) ) {
+	if ( ! $manual_request && TP_CHILD_SEED_VERSION === get_option( 'tp_child_seed_site_version' ) ) {
 		return;
 	}
 
@@ -841,15 +858,11 @@ function tp_child_seed_site_admin_fallback(): void {
 		return;
 	}
 
-	$result = tp_child_seed_site( $manual_request || $after_activation );
+	$result = tp_child_seed_site( $manual_request );
 	$busy   = ! empty( $result['busy'] );
 
 	if ( ! $busy ) {
 		delete_option( "tp_child_seed_site_pending" );
-	}
-
-	if ( $after_activation && ! $busy && empty( $result['skipped'] ) ) {
-		set_transient( "tp_child_seed_site_done", "1", 10 * MINUTE_IN_SECONDS );
 	}
 
 	if ( $manual_request && ! headers_sent() ) {
@@ -864,30 +877,27 @@ function tp_child_seed_site_admin_notice(): void {
 		return;
 	}
 
-	$seeded = TP_CHILD_SEED_VERSION === get_option( "tp_child_seed_site_version" ) && tp_child_seed_site_has_home();
+	$seeded = tp_child_seed_site_is_ready();
 
-	// A request that found another one at work lands here with tp_child_seeding: that one may be done now.
+	// After the button without JavaScript; a request that found another one at work lands here with
+	// tp_child_seeding: that one may be done now.
 	if ( ! empty( $_GET["tp_child_seeded"] ) || ( $seeded && ! empty( $_GET["tp_child_seeding"] ) ) ) {
-		echo "<div class=\"notice notice-success is-dismissible\"><p>" . esc_html__( "Seed Tasche Piene completato.", "tasche-piene-divi-child" ) . "</p></div>";
-	} elseif ( $seeded && get_transient( "tp_child_seed_site_done" ) ) {
-		delete_transient( "tp_child_seed_site_done" );
-		echo "<div class=\"notice notice-success is-dismissible\"><p>" . esc_html__( "La home Tasche Piene è stata creata: la trovi in Pagine > Home ed è la pagina iniziale del sito.", "tasche-piene-divi-child" ) . "</p></div>";
+		echo "<div class=\"notice notice-success is-dismissible\"><p>" . esc_html__( "La home Tasche Piene è pronta: la trovi in Pagine > Home ed è la pagina iniziale del sito.", "tasche-piene-divi-child" ) . "</p></div>";
 	}
 
 	if ( $seeded ) {
 		return;
 	}
 
-	if ( tp_child_lock_held( TP_CHILD_SEED_LOCK ) ) {
-		echo "<div class=\"notice notice-info\"><p>" . esc_html__( "La home Tasche Piene è in preparazione: ci vuole circa un minuto. Ricarica questa pagina tra poco.", "tasche-piene-divi-child" ) . "</p></div>";
+	// A new site (or one where another page is making the home) starts at once; otherwise the button asks.
+	tp_child_seed_progress_notice( tp_child_seed_site_after_activation() || tp_child_lock_held( TP_CHILD_SEED_LOCK ) );
+}
 
-		return;
-	}
-
-	$url = tp_child_seed_site_admin_url();
-
-	// After the first click the button turns grey and takes no more clicks until the page changes.
-	echo "<div class=\"notice notice-warning\"><p>" . esc_html__( "Il tema Tasche Piene è attivo, ma la home non è ancora stata creata o aggiornata.", "tasche-piene-divi-child" ) . "</p><p><a class=\"button button-primary\" href=\"" . esc_url( $url ) . "\" onclick=\"if(this.getAttribute('aria-disabled')){return false;}this.setAttribute('aria-disabled','true');this.classList.add('disabled');this.textContent=this.getAttribute('data-busy-label');\" data-busy-label=\"" . esc_attr__( "Creazione della home in corso...", "tasche-piene-divi-child" ) . "\">" . esc_html__( "Crea/aggiorna home Tasche Piene", "tasche-piene-divi-child" ) . "</a></p></div>";
+/**
+ * Whether the theme made the home and the site still has it.
+ */
+function tp_child_seed_site_is_ready(): bool {
+	return TP_CHILD_SEED_VERSION === get_option( "tp_child_seed_site_version" ) && tp_child_seed_site_has_home();
 }
 add_action( "admin_notices", "tp_child_seed_site_admin_notice" );
 
