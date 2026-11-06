@@ -6476,6 +6476,21 @@ body.tp-child-theme.tp-child-theme :where(.tp-theme-builder-footer-shell .et_pb_
 	max-width: none;
 }
 
+/* The same while the layout is edited in the Theme Builder, where Divi sizes rows with
+   .et-db #et-boc .et-l .et_pb_row:not([class*=et_flex_column]) (1,4,0): without this the rows of a header or footer
+   made anew stay at the content width in the editor, while the site shows them full width. */
+.et-db #et-boc .et-l .tp-theme-builder-header-shell.et_pb_section .et_pb_row,
+.et-db #et-boc .et-l .tp-theme-builder-footer-shell.et_pb_section .et_pb_row {
+	width: 100%;
+	max-width: none;
+}
+
+/* In the Theme Builder the header stays in its own section: the distance from the top it keeps on the site
+   (53 px on phones) would push it out of the section, where the area below covers it. */
+body.et-tb.tp-child-theme :where(.site-header.tp-theme-header) {
+	top: auto;
+}
+
 .tp-child-theme :where(.tp-theme-builder-header-shell .et_pb_column),
 .tp-child-theme :where(.tp-theme-builder-footer-shell .et_pb_column),
 .tp-child-theme :where(.tp-theme-builder-footer-shell .et_pb_module),
@@ -20281,17 +20296,32 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 /*
  * Phones, every page but the home: the logo and the menu button are cream to stand on the hero video of
  * the home; on a light page they would not show. There they take the bordeaux of the header from 768 px up,
- * with the same shape, size and place.
+ * with the same shape, size and place. The same in the builder: the Visual Builder of a page that is not the home
+ * and the Theme Builder, where the header stands on a white canvas.
  */
 @media (max-width: 767px) {
 
-	.tp-child-theme :where(body:not(.tp-landing-page):not(.et-fb) .tp-theme-nav-logo)::before {
+	.tp-child-theme :where(body:not(.tp-landing-page) .tp-theme-nav-logo)::before {
 		background: var(--tp-bordeaux);
 		-webkit-mask: url("../svg/mobile-header-logo.svg") center / contain no-repeat;
 		mask: url("../svg/mobile-header-logo.svg") center / contain no-repeat;
 	}
 
-	.tp-child-theme :where(body:not(.tp-landing-page):not(.et-fb) .tp-theme-nav-toggle span) {
+	.tp-child-theme :where(body:not(.tp-landing-page) .tp-theme-nav-toggle span) {
+		background: var(--tp-bordeaux);
+	}
+}
+
+/* The same on iPhones and iPads up to 980 px, where Safari gets the header of the phones (above). */
+@media (max-width: 980px) {
+
+	.tp-child-theme :where(html.tp-ios-webkit body:not(.tp-landing-page) .tp-theme-nav-logo)::before {
+		background: var(--tp-bordeaux);
+		-webkit-mask: url("../svg/mobile-header-logo.svg") center / contain no-repeat;
+		mask: url("../svg/mobile-header-logo.svg") center / contain no-repeat;
+	}
+
+	.tp-child-theme :where(html.tp-ios-webkit body:not(.tp-landing-page) .tp-theme-nav-toggle span) {
 		background: var(--tp-bordeaux);
 	}
 }

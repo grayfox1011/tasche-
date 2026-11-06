@@ -38,7 +38,7 @@ trait RenderCallbackTrait {
 		$logo_html       = tp_child_footer_render_logo_html( $attrs, $elements );
 		// The Voci of the module (Footer sito > Elementi); without Voci, the WordPress menus as before.
 		$nav_html        = tp_child_footer_render_nav_monolith_html( $attrs, tp_child_footer_nav_items_from_block( $parsed_block ) );
-		$copyright_html  = tp_child_footer_render_copyright_html( $attrs );
+		$copyright_html  = tp_child_footer_render_copyright_html( $attrs, is_array( $parsed_block['attrs'] ?? null ) ? $parsed_block['attrs'] : [] );
 
 		$container_children = $characters_html . $logo_html . $nav_html . $copyright_html;
 

@@ -2329,22 +2329,22 @@
 
 @media (max-width: 767px) {
 
-	.tp-child-theme :where(body:not(.et-fb) .site-footer.tp-theme-footer) {
+	.tp-child-theme :where(.site-footer.tp-theme-footer) {
 		padding-top: 110.3px;
 	}
 
-	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-container) {
+	.tp-child-theme :where(.tp-theme-footer-container) {
 		position: relative;
 	}
 
-	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-logo) {
+	.tp-child-theme :where(.tp-theme-footer-logo) {
 		width: calc(100% + 8.8px);
 		max-width: none;
 		margin-left: -3.1px;
 	}
 
 	/* The couple on the "ch" of Tasche, the pigeons on the "ne" of Piene: the computer's places, in shares of the logo. */
-	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-characters) {
+	.tp-child-theme :where(.tp-theme-footer-characters) {
 		position: absolute;
 		top: 0;
 		left: 12.9px;
@@ -2355,67 +2355,67 @@
 		pointer-events: none;
 	}
 
-	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-character-slot) {
+	.tp-child-theme :where(.tp-theme-footer-character-slot) {
 		position: absolute;
 		top: 0;
 		height: auto;
 	}
 
-	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-character-slot img) {
+	.tp-child-theme :where(.tp-theme-footer-character-slot img) {
 		display: block;
 		width: 100%;
 		height: auto;
 	}
 
-	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-character-slot--four) {
+	.tp-child-theme :where(.tp-theme-footer-character-slot--four) {
 		left: 35.256%;
 		width: 14.536%;
 		margin-top: -9.334%;
 	}
 
-	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-character-slot--one) {
+	.tp-child-theme :where(.tp-theme-footer-character-slot--one) {
 		left: 81.387%;
 		width: 9.792%;
 		margin-top: -6.426%;
 	}
 
-	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-nav a) {
+	.tp-child-theme :where(.tp-theme-footer-nav a) {
 		opacity: 1;
 	}
 
-	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-nav-col) {
+	.tp-child-theme :where(.tp-theme-footer-nav-col) {
 		column-gap: 16px;
 	}
 
-	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-nav) {
+	.tp-child-theme :where(.tp-theme-footer-nav) {
 		row-gap: 14px;
 	}
 
-	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-nav) {
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(.tp-theme-footer-nav) {
 		margin-top: -23.9px;
 	}
 
 	/* Copyright / P.IVA and Privacy-Cookie / Designed By Mochi, 26 px apart. */
-	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-copyright) {
+	.tp-child-theme :where(.tp-theme-footer-copyright) {
 		display: flex;
 		flex-wrap: wrap;
 		gap: 12px 30px;
 	}
 
-	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-copyright) {
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(.tp-theme-footer-copyright) {
 		margin-top: 8.5px;
 	}
 
-	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-copyright > span:first-child),
-	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-copyright > span:last-child) {
+	.tp-child-theme :where(.tp-theme-footer-copyright > span:first-child),
+	.tp-child-theme :where(.tp-theme-footer-copyright > span:last-child) {
 		flex: 0 0 100%;
 	}
 
-	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-copyright > span:nth-child(3) + span:nth-child(4)) {
+	.tp-child-theme :where(.tp-theme-footer-copyright > span:nth-child(3) + span:nth-child(4)) {
 		margin-left: -30px;
 	}
 
-	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-copyright > span:nth-child(3) + span:nth-child(4))::before {
+	.tp-child-theme :where(.tp-theme-footer-copyright > span:nth-child(3) + span:nth-child(4))::before {
 		content: "-";
 	}
 }
@@ -2428,21 +2428,21 @@
 
 @media (min-width: 768px) and (max-width: 980px) {
 
-	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-nav) {
+	.tp-child-theme :where(.tp-theme-footer-nav) {
 		flex-wrap: wrap;
 		row-gap: 14px;
 	}
 
-	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-nav-col) {
+	.tp-child-theme :where(.tp-theme-footer-nav-col) {
 		flex-wrap: wrap;
 		row-gap: 14px;
 	}
 
-	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-nav a) {
+	.tp-child-theme :where(.tp-theme-footer-nav a) {
 		white-space: nowrap;
 	}
 
-	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-characters) {
+	.tp-child-theme :where(.tp-theme-footer-characters) {
 		position: absolute;
 		top: 0;
 		right: clamp(16px, 4.8vw, 40px);
@@ -2454,50 +2454,50 @@
 		pointer-events: none;
 	}
 
-	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-character-slot) {
+	.tp-child-theme :where(.tp-theme-footer-character-slot) {
 		position: absolute;
 		top: 0;
 		height: auto;
 	}
 
-	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-character-slot img) {
+	.tp-child-theme :where(.tp-theme-footer-character-slot img) {
 		display: block;
 		width: 100%;
 		height: auto;
 	}
 
-	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-character-slot--four) {
+	.tp-child-theme :where(.tp-theme-footer-character-slot--four) {
 		left: 35.256%;
 		width: 14.536%;
 		margin-top: -9.334%;
 	}
 
-	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-character-slot--one) {
+	.tp-child-theme :where(.tp-theme-footer-character-slot--one) {
 		left: 81.387%;
 		width: 9.792%;
 		margin-top: -6.426%;
 	}
 
-	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-copyright) {
+	.tp-child-theme :where(.tp-theme-footer-copyright) {
 		display: flex;
 		flex-wrap: wrap;
 		gap: 18px 38px;
 	}
 
-	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-copyright > span) {
+	.tp-child-theme :where(.tp-theme-footer-copyright > span) {
 		white-space: nowrap;
 	}
 
-	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-copyright > span:first-child),
-	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-copyright > span:last-child) {
+	.tp-child-theme :where(.tp-theme-footer-copyright > span:first-child),
+	.tp-child-theme :where(.tp-theme-footer-copyright > span:last-child) {
 		flex: 0 0 100%;
 	}
 
-	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-copyright > span:nth-child(3) + span:nth-child(4)) {
+	.tp-child-theme :where(.tp-theme-footer-copyright > span:nth-child(3) + span:nth-child(4)) {
 		margin-left: -38px;
 	}
 
-	.tp-child-theme :where(body:not(.et-fb) .tp-theme-footer-copyright > span:nth-child(3) + span:nth-child(4))::before {
+	.tp-child-theme :where(.tp-theme-footer-copyright > span:nth-child(3) + span:nth-child(4))::before {
 		content: "-";
 	}
 }
@@ -2666,5 +2666,76 @@
 
 	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-price-value-tasca .et_pb_text_inner) {
 		text-align: right;
+	}
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* Footer in the builder (Visual Builder and Theme Builder) on tablets and phones: as on the site,   */
+/* not the computer's footer made smaller, so what is set in the tablet and phone views shows where */
+/* it goes. The third character, which the site shows only with an image, keeps its share of the     */
+/* computer's place.                                                                                 */
+/* ------------------------------------------------------------------------------------------------ */
+@media (max-width: 980px) {
+
+	.tp-child-theme :where(body.et-fb .site-footer.tp-theme-footer) {
+		height: auto;
+	}
+
+	.tp-child-theme :where(body.et-fb .tp-theme-footer > .tp-theme-footer-container) {
+		left: auto;
+		width: 100%;
+		height: auto;
+		margin-bottom: 0;
+		transform: none;
+	}
+
+	.tp-child-theme :where(body.et-fb .tp-theme-footer-characters--static .tp-theme-footer-character-slot--three) {
+		left: 66.522%;
+		width: 6.956%;
+	}
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* Phones: a logo chosen in Divi (Header sito > Logo) shows on phones too, as it is, in the place     */
+/* and at the size of the theme's logo (168 x 26 px, or the size set in Divi). The theme's own logo  */
+/* keeps its drawing for phones: cream on the video of the home, bordeaux on the other pages. The    */
+/* same on iPhones and iPads up to 980 px, where Safari gets the header of the phones. Browsers      */
+/* without :has() keep the theme's logo.                                                             */
+/* ------------------------------------------------------------------------------------------------ */
+@media (max-width: 767px) {
+
+	@supports selector(:has(*)) {
+
+		.tp-child-theme .tp-theme-nav-logo:has(img[src]:not([src=""]):not([src$="/logo-tasche-piene-line.svg"]):not([src$="/logo-tasche-piene-nav.svg"]))::before {
+			content: none;
+		}
+
+		.tp-child-theme .tp-theme-nav-logo img[src]:not([src=""]):not([src$="/logo-tasche-piene-line.svg"]):not([src$="/logo-tasche-piene-nav.svg"]) {
+			display: block;
+			object-fit: contain;
+			object-position: left center;
+			visibility: visible !important;
+			opacity: 1 !important;
+		}
+	}
+}
+
+@media (min-width: 768px) and (max-width: 980px) {
+
+	@supports selector(:has(*)) {
+
+		html.tp-ios-webkit .tp-child-theme .tp-theme-nav-logo:has(img[src]:not([src=""]):not([src$="/logo-tasche-piene-line.svg"]):not([src$="/logo-tasche-piene-nav.svg"]))::before {
+			content: none;
+		}
+
+		html.tp-ios-webkit .tp-child-theme .tp-theme-nav-logo img[src]:not([src=""]):not([src$="/logo-tasche-piene-line.svg"]):not([src$="/logo-tasche-piene-nav.svg"]) {
+			display: block;
+			width: 100%;
+			height: 100%;
+			object-fit: contain;
+			object-position: left center;
+			visibility: visible !important;
+			opacity: 1 !important;
+		}
 	}
 }

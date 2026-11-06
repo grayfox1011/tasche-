@@ -104,14 +104,32 @@ function tp_child_footer_render_logo_html( array $attrs, $elements ): string {
 }
 
 /**
+ * Link of the Privacy or Cookie line of a Footer sito made anew in the Theme Builder: the module has no link
+ * saved yet (only Divi's empty default), so it points to the theme's legal page, as the footer the theme
+ * creates does. A link the owner set (or emptied) in Divi is kept as it is; without the page there is no link.
+ * $saved are the attributes saved in the layout, without Divi's defaults.
+ */
+function tp_child_footer_legal_link( array $attrs, string $key, string $type ): string {
+	if ( isset( $attrs[ $key ] ) || ! function_exists( 'tp_child_legal_page_slugs' ) ) {
+		return '';
+	}
+
+	$slug = tp_child_legal_page_slugs()[ $type ] ?? '';
+	$page = '' !== $slug ? get_page_by_path( $slug, OBJECT, 'page' ) : null;
+
+	return $page instanceof WP_Post && 'publish' === $page->post_status ? (string) get_permalink( $page ) : '';
+}
+
+/**
  * Footer copyright block.
  */
-function tp_child_footer_render_copyright_html( array $attrs ): string {
+function tp_child_footer_render_copyright_html( array $attrs, ?array $saved = null ): string {
+	$saved = $saved ?? $attrs;
 	$lines = [
 		[ 1, tp_child_chrome_get_string( $attrs, 'copyrightLine1', 'Copyright 2026, Tasche piene tutti i diritti riservati' ), tp_child_chrome_get_string( $attrs, 'copyrightLink1', '' ) ],
 		[ 2, tp_child_chrome_get_string( $attrs, 'copyrightLine2', 'P.IVA 03942309300' ), tp_child_chrome_get_string( $attrs, 'copyrightLink2', '' ) ],
-		[ 3, tp_child_chrome_get_string( $attrs, 'copyrightLine3', 'Privacy' ), tp_child_chrome_get_string( $attrs, 'copyrightLink3', '' ) ],
-		[ 4, tp_child_chrome_get_string( $attrs, 'copyrightLine4', 'Cookie' ), tp_child_chrome_get_string( $attrs, 'copyrightLink4', '' ) ],
+		[ 3, tp_child_chrome_get_string( $attrs, 'copyrightLine3', 'Privacy' ), tp_child_chrome_get_string( $attrs, 'copyrightLink3', tp_child_footer_legal_link( $saved, 'copyrightLink3', 'privacy' ) ) ],
+		[ 4, tp_child_chrome_get_string( $attrs, 'copyrightLine4', 'Cookie' ), tp_child_chrome_get_string( $attrs, 'copyrightLink4', tp_child_footer_legal_link( $saved, 'copyrightLink4', 'cookie' ) ) ],
 		[ 5, tp_child_chrome_get_string( $attrs, 'copyrightLine5', 'Designed By Mochi' ), tp_child_chrome_get_string( $attrs, 'copyrightLink5', '' ) ],
 	];
 
