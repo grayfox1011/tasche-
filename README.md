@@ -6,7 +6,7 @@ Installazione su un nuovo WordPress:
 
 - Installare prima il tema parent Divi.
 - Installare e attivare questo child theme.
-- Alla prima attivazione il tema crea la pagina `Home`, la imposta come home primaria, crea header/footer nel Divi Theme Builder e assegna i menu footer modificabili.
+- Alla prima attivazione, su un sito dove il tema non ha mai creato niente e che non ha una sua home (un WordPress nuovo), il tema crea la pagina `Home` (circa mezzo minuto, dalla 0.6.2 senza bisogno di clic), la imposta come pagina iniziale, crea header/footer nel Divi Theme Builder, le pagine Privacy e Cookie e i menu. Su un sito che ha gia' una sua home, o dove il tema l'aveva creata prima, un avviso in bacheca chiede di premere "Crea/aggiorna home Tasche Piene"; l'avviso compare anche quando la home non c'e' piu' (per esempio cancellata).
 - Gli asset della landing sono inclusi nel child theme, ottimizzati in WebP/WebM e non dipendono dal vecchio sito locale.
 - "Crea/aggiorna home" lavora in una richiesta alla volta (blocco `tp_child_seed_site.lock` nella tabella delle opzioni, lo stesso meccanismo delle operazioni una tantum): dopo il primo clic il pulsante si disattiva, e una seconda richiesta (da un'altra scheda o ricaricando la pagina) non crea pagine, menu o immagini doppie ma porta all'avviso "La home Tasche Piene e in preparazione". Un blocco lasciato da una richiesta interrotta scade dopo 10 minuti.
 

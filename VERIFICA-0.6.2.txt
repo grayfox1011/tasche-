@@ -1,3 +1,41 @@
+TASCHE PIENE — VERSIONE 0.6.2, CANDIDATA AL COLLAUDO
+
+La 0.6.2 corregge l'installazione: su un WordPress nuovo la home ora nasce
+da sola quando si attiva il tema, come diceva il README. Il resto della 0.6.1
+non cambia; le note delle versioni precedenti, piu' in basso, restano valide.
+
+COSA CAMBIA RISPETTO ALLA 0.6.1
+- Sito dove il tema non ha mai creato niente e senza una sua home (un
+  WordPress nuovo): premendo "Attiva" il tema crea la home, l'header e il
+  footer del Theme Builder, le pagine Privacy e Cookie, i menu e le foto
+  (circa mezzo minuto), e in alto scrive "La home Tasche Piene è stata
+  creata". Prima serviva premere "Crea/aggiorna home Tasche Piene", e chi
+  non lo vedeva restava senza home.
+  La causa: il tema aspettava l'evento di WordPress "tema appena attivato",
+  che WordPress lancia nella prima richiesta dopo il cambio di tema; spesso
+  e' una richiesta in background della bacheca partita quando era ancora
+  attivo il tema precedente, cosi' il tema non lo riceveva mai. Ora guarda
+  da solo se ha gia' creato la home (inc/site-seeder.php).
+- La pagina si chiama "Home" (prima "Tasche Piene Hero"); l'indirizzo resta
+  lo stesso.
+- Sito con una sua home: il tema non la tocca e mostra l'avviso con il
+  pulsante, come prima. L'avviso ora compare anche quando la home creata dal
+  tema non c'e' piu' (per esempio cancellata), e il pulsante la ricrea.
+- Avvisi in italiano corretto ("è" al posto di "e").
+
+VERIFICHE EFFETTUATE SULLA 0.6.2
+- WordPress nuovo + Divi 5.15.1, zip caricato da Aspetto > Temi, solo
+  "Attiva": home creata, pagina iniziale "Home", header e footer, Privacy e
+  Cookie, 3 menu, 30 foto, nessun errore PHP; la home si vede come quella di
+  prova a 1440, 834 e 390 px.
+- WordPress nuovo con una pagina "La mia home" gia' impostata come pagina
+  iniziale: all'attivazione nessuna modifica e avviso con il pulsante;
+  premendolo nasce "Home" e "La mia home" resta tra le pagine.
+- Home cancellata su un sito gia' pronto: torna l'avviso con il pulsante e
+  la home viene ricreata in un secondo.
+- Aggiornamento da wp-admin di un sito con la 0.6.0: nessun avviso, home,
+  header e footer identici prima e dopo, nessun errore PHP.
+
 TASCHE PIENE — VERSIONE 0.6.1, CANDIDATA AL COLLAUDO
 
 La 0.6.1 viene dalla prova chiesta dopo la 0.6.0: rifare la home da una

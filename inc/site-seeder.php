@@ -488,13 +488,13 @@ function tp_child_seed_apply_divi_meta( int $post_id, string $settings_title, st
 
 function tp_child_seed_home_page(): int {
 	$content = tp_child_seed_home_content();
-	$post_id = tp_child_seed_upsert_post( 'page', 'tasche-piene-hero', 'Tasche Piene Hero', $content );
+	$post_id = tp_child_seed_upsert_post( 'page', 'tasche-piene-hero', 'Home', $content );
 
 	if ( ! $post_id ) {
 		return 0;
 	}
 
-	tp_child_seed_apply_divi_meta( $post_id, 'Tasche Piene Hero', 'page', 'off', true );
+	tp_child_seed_apply_divi_meta( $post_id, 'Home', 'page', 'off', true );
 
 	update_option( 'show_on_front', 'page' );
 	update_option( 'page_on_front', $post_id );
@@ -780,6 +780,31 @@ function tp_child_seed_site_after_switch(): void {
 }
 add_action( 'after_switch_theme', 'tp_child_seed_site_after_switch', 30 );
 
+/**
+ * Whether the site has a home: a static front page that exists and is published.
+ */
+function tp_child_seed_site_has_home(): bool {
+	if ( 'page' !== get_option( 'show_on_front' ) ) {
+		return false;
+	}
+
+	$front = get_post( (int) get_option( 'page_on_front' ) );
+
+	return $front instanceof WP_Post && 'page' === $front->post_type && 'publish' === $front->post_status;
+}
+
+/**
+ * A site where the theme never made anything and that has no home of its own (a new WordPress): the first admin
+ * page an administrator opens with the theme active (the Themes page right after "Attiva") makes the home,
+ * without the button. It does not wait for after_switch_theme: WordPress fires it in the first request after
+ * the switch, often a background request of the admin that still runs with the previous theme, so the theme
+ * would never hear of it. A site with its own home, or where the theme made the home before (its header and
+ * footer may have been changed since), is asked first: the notice with the button.
+ */
+function tp_child_seed_site_after_activation(): bool {
+	return '' === (string) get_option( 'tp_child_seed_site_version', '' ) && ! tp_child_seed_site_has_home();
+}
+
 function tp_child_seed_site_should_skip_admin_fallback(): bool {
 	if ( function_exists( 'wp_doing_ajax' ) && wp_doing_ajax() ) {
 		return true;
@@ -795,9 +820,10 @@ function tp_child_seed_site_should_skip_admin_fallback(): bool {
 }
 
 function tp_child_seed_site_admin_fallback(): void {
-	$manual_request = tp_child_seed_site_manual_requested();
+	$manual_request   = tp_child_seed_site_manual_requested();
+	$after_activation = tp_child_seed_site_after_activation();
 
-	if ( ! $manual_request && ! tp_child_seed_site_auto_enabled() ) {
+	if ( ! $manual_request && ! $after_activation && ! tp_child_seed_site_auto_enabled() ) {
 		return;
 	}
 
@@ -805,7 +831,9 @@ function tp_child_seed_site_admin_fallback(): void {
 		return;
 	}
 
-	if ( TP_CHILD_SEED_VERSION === get_option( 'tp_child_seed_site_version' ) ) {
+	// The button makes the home again even when the seed ran before (a site whose home was deleted);
+	// the automatic seed of TP_CHILD_ENABLE_AUTO_SEED runs once.
+	if ( ! $manual_request && ! $after_activation && TP_CHILD_SEED_VERSION === get_option( 'tp_child_seed_site_version' ) ) {
 		return;
 	}
 
@@ -813,11 +841,15 @@ function tp_child_seed_site_admin_fallback(): void {
 		return;
 	}
 
-	$result = tp_child_seed_site( $manual_request );
+	$result = tp_child_seed_site( $manual_request || $after_activation );
 	$busy   = ! empty( $result['busy'] );
 
 	if ( ! $busy ) {
 		delete_option( "tp_child_seed_site_pending" );
+	}
+
+	if ( $after_activation && ! $busy && empty( $result['skipped'] ) ) {
+		set_transient( "tp_child_seed_site_done", "1", 10 * MINUTE_IN_SECONDS );
 	}
 
 	if ( $manual_request && ! headers_sent() ) {
@@ -832,11 +864,14 @@ function tp_child_seed_site_admin_notice(): void {
 		return;
 	}
 
-	$seeded = TP_CHILD_SEED_VERSION === get_option( "tp_child_seed_site_version" );
+	$seeded = TP_CHILD_SEED_VERSION === get_option( "tp_child_seed_site_version" ) && tp_child_seed_site_has_home();
 
 	// A request that found another one at work lands here with tp_child_seeding: that one may be done now.
 	if ( ! empty( $_GET["tp_child_seeded"] ) || ( $seeded && ! empty( $_GET["tp_child_seeding"] ) ) ) {
 		echo "<div class=\"notice notice-success is-dismissible\"><p>" . esc_html__( "Seed Tasche Piene completato.", "tasche-piene-divi-child" ) . "</p></div>";
+	} elseif ( $seeded && get_transient( "tp_child_seed_site_done" ) ) {
+		delete_transient( "tp_child_seed_site_done" );
+		echo "<div class=\"notice notice-success is-dismissible\"><p>" . esc_html__( "La home Tasche Piene è stata creata: la trovi in Pagine > Home ed è la pagina iniziale del sito.", "tasche-piene-divi-child" ) . "</p></div>";
 	}
 
 	if ( $seeded ) {
@@ -844,7 +879,7 @@ function tp_child_seed_site_admin_notice(): void {
 	}
 
 	if ( tp_child_lock_held( TP_CHILD_SEED_LOCK ) ) {
-		echo "<div class=\"notice notice-info\"><p>" . esc_html__( "La home Tasche Piene e in preparazione: ci vuole circa un minuto. Ricarica questa pagina tra poco.", "tasche-piene-divi-child" ) . "</p></div>";
+		echo "<div class=\"notice notice-info\"><p>" . esc_html__( "La home Tasche Piene è in preparazione: ci vuole circa un minuto. Ricarica questa pagina tra poco.", "tasche-piene-divi-child" ) . "</p></div>";
 
 		return;
 	}
@@ -852,7 +887,7 @@ function tp_child_seed_site_admin_notice(): void {
 	$url = tp_child_seed_site_admin_url();
 
 	// After the first click the button turns grey and takes no more clicks until the page changes.
-	echo "<div class=\"notice notice-warning\"><p>" . esc_html__( "Il tema Tasche Piene e attivo, ma la home non e ancora stata creata o aggiornata.", "tasche-piene-divi-child" ) . "</p><p><a class=\"button button-primary\" href=\"" . esc_url( $url ) . "\" onclick=\"if(this.getAttribute('aria-disabled')){return false;}this.setAttribute('aria-disabled','true');this.classList.add('disabled');this.textContent=this.getAttribute('data-busy-label');\" data-busy-label=\"" . esc_attr__( "Creazione della home in corso...", "tasche-piene-divi-child" ) . "\">" . esc_html__( "Crea/aggiorna home Tasche Piene", "tasche-piene-divi-child" ) . "</a></p></div>";
+	echo "<div class=\"notice notice-warning\"><p>" . esc_html__( "Il tema Tasche Piene è attivo, ma la home non è ancora stata creata o aggiornata.", "tasche-piene-divi-child" ) . "</p><p><a class=\"button button-primary\" href=\"" . esc_url( $url ) . "\" onclick=\"if(this.getAttribute('aria-disabled')){return false;}this.setAttribute('aria-disabled','true');this.classList.add('disabled');this.textContent=this.getAttribute('data-busy-label');\" data-busy-label=\"" . esc_attr__( "Creazione della home in corso...", "tasche-piene-divi-child" ) . "\">" . esc_html__( "Crea/aggiorna home Tasche Piene", "tasche-piene-divi-child" ) . "</a></p></div>";
 }
 add_action( "admin_notices", "tp_child_seed_site_admin_notice" );
 
