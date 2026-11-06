@@ -1,4 +1,67 @@
-TASCHE PIENE — VERSIONE 0.5.9, CANDIDATA AL COLLAUDO
+TASCHE PIENE — VERSIONE 0.6.0, CANDIDATA AL COLLAUDO
+
+La 0.6.0 non cambia l'aspetto del sito: rende modificabili da Divi, su
+telefono e tablet come sul computer, le parti che il tema teneva ferme. Le
+note delle versioni precedenti, piu' in basso, restano valide.
+
+COSA CAMBIA RISPETTO ALLA 0.5.9
+- Testi: Dimensione Testo, Colore del testo, Altezza Linea, Spaziatura
+  Lettere e Allineamento Testo impostati in Design > Testo valgono per
+  Desktop, Tablet e Telefono anche nei testi che il tema impostava paragrafo
+  per paragrafo: righe in inglese dei piatti, sottotitoli e note del menu,
+  prezzi di contorni, dolci, bevande e proposta del mese, prezzi e lettere
+  M/L delle card del telefono e del tablet, orari, testo di "Una
+  gastronomia", "Siamo in Piazza San Lorenzo...", testi e pillole delle
+  materie prime, caratteristiche di Tasca e Piatto. Con la 0.5.9 diversi di
+  questi testi restavano fermi sul computer o sul telefono.
+- Margini: il margine sopra della foto dell'introduzione e della mappa sul
+  telefono e delle foto del menu sul tablet si cambia da Design >
+  Spaziatura. I moduli del tema (Striscia scorrevole e le sue Scritte, Onda,
+  il titolo animato dell'apertura, i moduli di header e footer) hanno ora
+  margini e padding "forti" come i moduli Testo e Titolo di Divi: valgono
+  tutti e quattro i lati, su ogni schermo.
+- Titolo "Una gastronomia, com'era una volta.": Larghezza e Larghezza massima
+  si cambiano da Divi anche sul computer.
+- La nota di un piatto ("(di Venerdì)") resta grigia accanto al nome nero; se
+  si cambia il colore del nome diventa una tinta piu' chiara dello stesso
+  colore.
+- Sul telefono le prime due righe delle note sotto il menu (gli allergeni)
+  restano 1/16 piu' piccole del resto, come nel Figma, anche quando si cambia
+  la misura del testo.
+- Dopo l'aggiornamento Divi ricrea una volta i suoi file di stile, cosi' le
+  pagine prendono subito le regole nuove.
+
+VERIFICHE EFFETTUATE SULLA 0.6.0
+- Prova automatica su pagine copiate dalla home, con un valore riconoscibile
+  impostato in Divi su tutti i 309 moduli, una volta per Desktop (letto a
+  1440 e 1920 px), una per Tablet (820 px) e una per Telefono (390 e 600 px):
+  Dimensione e Colore del testo, Altezza Linea, Spaziatura Lettere,
+  Allineamento Testo, Padding (quattro lati), Margine sopra, Sfondo, Bordo
+  (spessore e angoli), Larghezza massima, Altezza minima, Disattiva su.
+  Passano tutti a tutte le larghezze, tranne le due eccezioni volute qui
+  sopra (nota del piatto, prime due righe delle note sul telefono).
+- Visual Builder (Divi 5.15.1) in vista Desktop, Tablet e Telefono: 18
+  modifiche (misura e colore di nomi, prezzi, orari, note e testi,
+  allineamento, interlinea e spaziatura lettere, margini di foto, mappa,
+  striscia e titolo, padding, larghezza massima) si vedono subito
+  nell'anteprima, 18 su 18 in ognuna delle tre viste.
+- Aspetto invariato: stili calcolati e posizioni di ogni elemento della home
+  uguali prima e dopo a 20 larghezze da 320 a 1920 px (cambia solo dove sta
+  il valore, sul testo del modulo invece che sul paragrafo, con lo stesso
+  risultato); foto di ogni sezione identiche al pixel a 1440, 1100, 820 e 390
+  px, anche con il mouse su orari, righe del menu, materie prime e Tasca e
+  Piatto.
+
+LIMITI DI DIVI (NON DEL TEMA)
+- Nei moduli Immagine dentro una colonna Divi stesso annulla il margine sotto
+  e quelli a destra e a sinistra (succede su ogni sito Divi 5): per
+  allontanare una foto si usa il margine sopra del modulo che segue o la
+  Spaziatura della colonna.
+- Dove il tema da' una Larghezza massima a un modulo, una Larghezza piu'
+  grande si vede solo cambiando anche la Larghezza massima.
+
+
+TASCHE PIENE — VERSIONE 0.5.9
 
 La 0.5.9 porta il sito al nuovo Figma ("tasche prototipo wip"): la tavola
 "desktop" di 1512 px per il computer e la tavola "mobilw" di 390 px per il

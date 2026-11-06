@@ -219,15 +219,17 @@
 	}
 
 	/* "com'era una volta." is 743 px long, wider than the text under it: the title has its own width. */
-	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-alberto-title) {
+	.tp-child-theme :where(#page-container .tp-alberto-title) {
 		width: 760px;
 		max-width: none;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-alberto-title) {
 		margin: 0 0 24.35px;
 	}
 
 	.tp-child-theme :where(#page-container .tp-alberto-copy),
-	.tp-child-theme :where(#page-container .tp-alberto-copy .et_pb_text_inner),
-	.tp-child-theme :where(.tp-alberto-copy p) {
+	.tp-child-theme :where(#page-container .tp-alberto-copy .et_pb_text_inner) {
 		max-width: 702.2px;
 		font-size: 20px;
 		line-height: 27.8px;
@@ -325,7 +327,6 @@
 		height: 23px;
 		padding: 0 13.06px;
 		border-radius: 9.33px;
-		line-height: 23px;
 	}
 
 	.tp-child-theme :where(.tp-scelta-chip li)::before {
@@ -384,7 +385,6 @@
 		height: 22px;
 		padding: 0 12.48px;
 		border-radius: 8.91px;
-		line-height: 22px;
 	}
 
 	.tp-child-theme :where(.tp-scelta-scheda--piatto .tp-scelta-chip li:nth-child(1)) {
@@ -537,10 +537,6 @@
 		column-gap: 24px;
 	}
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-legend-box p) {
-		line-height: 20px;
-	}
-
 	/* The man sits on the Piatto box, his legs over it. */
 	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-legend-piatto)::after,
 	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-legend.is-revealed .tp-menu-legend-piatto)::after {
@@ -633,6 +629,7 @@
 	.tp-child-theme :where(.tp-menu-name-note) {
 		margin-left: 4.5px;
 		color: #5d5d5d;
+		color: color-mix(in srgb, currentColor 63.53%, #fff);
 		font-style: italic;
 		font-weight: 400;
 		font-variation-settings: "opsz" 9;
@@ -669,9 +666,12 @@
 		top: 26.2px;
 	}
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-meta .et_pb_text_inner),
 	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-meta p),
 	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-meta span) {
+		margin: 0;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-meta .et_pb_text_inner) {
 		margin: 0;
 		color: var(--tp-brown);
 		font-family: var(--tp-font-body), Arial, sans-serif;
@@ -683,9 +683,7 @@
 		white-space: nowrap;
 	}
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-meta .et_pb_text_inner),
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-meta p),
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-meta span) {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-meta .et_pb_text_inner) {
 		color: #000;
 	}
 
@@ -882,8 +880,7 @@
 	}
 
 	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-sectionhead-title .et_pb_module_header),
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-sectionhead-subtitle .et_pb_text_inner),
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-sectionhead-subtitle p) {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-sectionhead-subtitle .et_pb_text_inner) {
 		font-family: var(--tp-font-display), Impact, sans-serif;
 		font-size: 32px;
 		font-weight: 400;
@@ -903,8 +900,7 @@
 		margin-top: 106.2px;
 	}
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-note .et_pb_text_inner),
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-note p) {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-note .et_pb_text_inner) {
 		color: var(--tp-brown);
 		font-family: var(--tp-font-body), Arial, sans-serif;
 		font-size: 16px;
@@ -1248,8 +1244,7 @@
 		max-width: 699px;
 	}
 
-	.tp-child-theme :where(#page-container .tp-location-text .et_pb_text_inner),
-	.tp-child-theme :where(#page-container .tp-location-text p) {
+	.tp-child-theme :where(#page-container .tp-location-text .et_pb_text_inner) {
 		line-height: 28px;
 	}
 
@@ -1359,16 +1354,24 @@
 		transform: none;
 	}
 
-	.tp-child-theme :where(#page-container .tp-hours-item h4),
-	.tp-child-theme :where(#page-container .tp-hours-item p) {
+	.tp-child-theme :where(#page-container .tp-hours-item .et_pb_text_inner) {
+		font-size: var(--tp-hours-time, 20px);
+		line-height: 1.002;
+		transition: font-size 1022ms var(--tp-hours-ease);
+	}
+
+	.tp-child-theme :where(#page-container .tp-hours-item h4) {
 		color: inherit;
 		font-size: var(--tp-hours-day, 20px);
 		line-height: 1.002;
 		transition: font-size 1022ms var(--tp-hours-ease);
 	}
 
-	.tp-child-theme :where(#page-container .tp-hours-item p) {
-		font-size: var(--tp-hours-time, 20px);
+	.tp-child-theme :where(#page-container .tp-hours-item p),
+	.tp-child-theme :where(#page-container .tp-hours-item span) {
+		color: inherit;
+		font-size: inherit;
+		line-height: inherit;
 	}
 
 	/* The fill of before (a dark band with cream words) is not in the Figma any more. */
@@ -1457,18 +1460,12 @@
 	}
 
 	.tp-child-theme :where(body:not(.et-fb) #page-container .tp-hours-item--green:hover .et_pb_text_inner),
-	.tp-child-theme :where(body:not(.et-fb) #page-container .tp-hours-item--green:hover p),
-	.tp-child-theme :where(body:not(.et-fb) #page-container .tp-hours-item--green:hover span),
-	.tp-child-theme :where(body:not(.et-fb) #page-container .tp-hours-item--green.is-active .et_pb_text_inner),
-	.tp-child-theme :where(body:not(.et-fb) #page-container .tp-hours-item--green.is-active p) {
+	.tp-child-theme :where(body:not(.et-fb) #page-container .tp-hours-item--green.is-active .et_pb_text_inner) {
 		color: var(--tp-green);
 	}
 
 	.tp-child-theme :where(body:not(.et-fb) #page-container .tp-hours-item--burgundy:hover .et_pb_text_inner),
-	.tp-child-theme :where(body:not(.et-fb) #page-container .tp-hours-item--burgundy:hover p),
-	.tp-child-theme :where(body:not(.et-fb) #page-container .tp-hours-item--burgundy:hover span),
-	.tp-child-theme :where(body:not(.et-fb) #page-container .tp-hours-item--burgundy.is-active .et_pb_text_inner),
-	.tp-child-theme :where(body:not(.et-fb) #page-container .tp-hours-item--burgundy.is-active p) {
+	.tp-child-theme :where(body:not(.et-fb) #page-container .tp-hours-item--burgundy.is-active .et_pb_text_inner) {
 		color: var(--tp-bordeaux);
 	}
 }
@@ -1612,7 +1609,13 @@
 	}
 
 	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-intro-section .tp-intro-image) {
-		margin: 19px 0 0;
+		margin-right: 0;
+		margin-bottom: 0;
+		margin-left: 0;
+	}
+
+	.tp-child-theme :where(#page-container .tp-intro-section .tp-intro-image) {
+		margin-top: 19px;
 	}
 
 	.tp-child-theme :where(#page-container .tp-intro-section .tp-intro-image) {
@@ -1877,8 +1880,24 @@
 		display: none;
 	}
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row--proposal .tp-menu-price .et_pb_text_inner),
 	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row--proposal .tp-menu-price p) {
+		position: static;
+		top: auto;
+		left: auto;
+		width: auto;
+		height: auto;
+		margin: 0;
+		padding: 0;
+		transform: none;
+		color: inherit;
+		font-family: inherit;
+		font-size: inherit;
+		font-weight: inherit;
+		line-height: inherit;
+		text-align: inherit;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row--proposal .tp-menu-price .et_pb_text_inner) {
 		position: static;
 		top: auto;
 		left: auto;
@@ -2056,10 +2075,7 @@
 
 	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--sides .tp-menu-price .et_pb_text_inner),
 	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--desserts .tp-menu-price .et_pb_text_inner),
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--drinks .tp-menu-price .et_pb_text_inner),
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--sides .tp-menu-price p),
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--desserts .tp-menu-price p),
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--drinks .tp-menu-price p) {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--drinks .tp-menu-price .et_pb_text_inner) {
 		font-size: 23.23px;
 		line-height: 23.23px;
 	}
@@ -2073,9 +2089,12 @@
 		margin-top: 39.5px;
 	}
 
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-note .et_pb_text_inner) {
+		line-height: 1;
+	}
+
 	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-note p:nth-child(-n+2)) {
-		font-size: 15px;
-		line-height: 15px;
+		font-size: .9375em;
 	}
 
 	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-note p + p) {
@@ -2289,13 +2308,18 @@
 	}
 
 	/* The words 3 px under the middle of the row, in capitals but for the "Chiusi" of Sunday, as the Figma's. */
-	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-hours-section .tp-hours-item p),
+	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-hours-section .tp-hours-item .et_pb_text_inner),
 	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-hours-section .tp-hours-item h5) {
 		font-size: 16.5px;
 	}
 
-	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-hours-section .tp-hours-item:not(:last-child) p) {
+	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-hours-section .tp-hours-item:not(:last-child) .et_pb_text_inner) {
 		text-transform: uppercase;
+	}
+
+	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-hours-section .tp-hours-item p) {
+		font-size: inherit;
+		text-transform: inherit;
 	}
 
 	.tp-child-theme :where(#page-container .tp-hours-section.et_pb_section) {
@@ -2503,7 +2527,6 @@
 		height: calc(23 * .06612vw);
 		padding: 0 calc(13.06 * .06612vw);
 		border-radius: calc(9.33 * .06612vw);
-		line-height: calc(23 * .06612vw);
 	}
 
 	.tp-child-theme :where(.tp-scelta-scheda--piatto .tp-scelta-chip .et_pb_text_inner) {
@@ -2516,7 +2539,6 @@
 		height: calc(22 * .06612vw);
 		padding: 0 calc(12.48 * .06612vw);
 		border-radius: calc(8.91 * .06612vw);
-		line-height: calc(22 * .06612vw);
 	}
 
 	.tp-child-theme :where(.tp-scelta-scheda--tasca .tp-scelta-chip li:nth-child(1)) {
@@ -2625,5 +2647,24 @@
 		translate: calc(-47px * var(--tp-fit-scale, 1)) 0;
 		transform: scale(var(--tp-fit-scale, 1));
 		transform-origin: center;
+	}
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* Prices of the main menu on tablets and phones: right-aligned in their box by the text of the module, */
+/* so the alignment set in Divi (Design > Text) wins.                                               */
+/* ------------------------------------------------------------------------------------------------ */
+@media (max-width: 980px) {
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-price-value-m .et_pb_text_inner),
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-price-value-l .et_pb_text_inner) {
+		text-align: right;
+	}
+}
+
+@media (max-width: 767px) {
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-price-value-tasca .et_pb_text_inner) {
+		text-align: right;
 	}
 }

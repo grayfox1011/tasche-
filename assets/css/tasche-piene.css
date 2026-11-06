@@ -6109,6 +6109,9 @@ body.tp-child-theme :where(.tp-theme-nav-links) {
 .tp-child-theme :where(.tp-menu-meta span) {
 	margin: 0;
 	padding: 0;
+}
+
+.tp-child-theme :where(.tp-menu-meta .et_pb_text_inner) {
 	text-align: left;
 }
 
@@ -6161,7 +6164,7 @@ body.tp-child-theme :where(.tp-theme-nav-links) {
 }
 
 .tp-child-theme :where(.tp-materie-card h3),
-.tp-child-theme :where(.tp-materie-card p) {
+.tp-child-theme :where(.tp-materie-card .et_pb_text_inner) {
 	text-align: center;
 }
 
@@ -10259,7 +10262,9 @@ body.tp-child-theme.tp-child-theme.tp-child-theme :where(body.et-fb #page-contai
 	}
 
 	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-location-map-frame) {
-		margin: 0 0 29px;
+		margin-right: 0;
+		margin-bottom: 29px;
+		margin-left: 0;
 	}
 
 	.tp-child-theme :where(#page-container .tp-location-button) {
@@ -10562,7 +10567,9 @@ body.tp-child-theme.tp-child-theme.tp-child-theme :where(body.et-fb #page-contai
 	}
 
 	.tp-child-theme.tp-child-theme :where(#page-container .tp-intro-image) {
-		margin: 0;
+		margin-right: 0;
+		margin-bottom: 0;
+		margin-left: 0;
 	}
 }
 
@@ -10581,7 +10588,9 @@ body.tp-child-theme.tp-child-theme.tp-child-theme :where(body.et-fb #page-contai
 	}
 
 	.tp-child-theme.tp-child-theme :where(#page-container .tp-intro-image) {
-		margin: 0;
+		margin-right: 0;
+		margin-bottom: 0;
+		margin-left: 0;
 	}
 
 	.tp-child-theme :where(#page-container .tp-alberto-section) {
@@ -10691,7 +10700,9 @@ body.tp-child-theme.tp-child-theme.tp-child-theme :where(body.et-fb #page-contai
 	}
 
 	.tp-child-theme.tp-child-theme :where(#page-container .tp-intro-image) {
-		margin: 0;
+		margin-right: 0;
+		margin-bottom: 0;
+		margin-left: 0;
 	}
 }
 
@@ -13445,10 +13456,6 @@ body.tp-child-theme :where(body.et-fb #page-container .tp-materie-section.et_pb_
 		aspect-ratio: auto;
 		overflow: visible;
 		border-radius: 17.44px;
-	}
-
-	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-feature-image) {
-		margin-top: 0;
 	}
 
 	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table) {
@@ -17039,6 +17046,9 @@ body #page-container .et_pb_section a.et_pb_button.tp-location-button:hover {
 
 	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-price-value-m p) {
 		width: 56px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-price-value-m .et_pb_text_inner) {
 		text-align: right;
 	}
 
@@ -17050,6 +17060,9 @@ body #page-container .et_pb_section a.et_pb_button.tp-location-button:hover {
 
 	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-price-value-l p) {
 		width: 66px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-price-value-l .et_pb_text_inner) {
 		text-align: right;
 	}
 
@@ -17283,7 +17296,7 @@ body #page-container .et_pb_section a.et_pb_button.tp-location-button:hover {
 		text-transform: uppercase;
 	}
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-price-value-m p) {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-price-value-m .et_pb_text_inner) {
 		text-align: right;
 	}
 
@@ -17293,7 +17306,7 @@ body #page-container .et_pb_section a.et_pb_button.tp-location-button:hover {
 		line-height: 17.42px;
 	}
 
-	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-price-value-l p) {
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-price-value-l .et_pb_text_inner) {
 		text-align: right;
 	}
 
@@ -17510,6 +17523,10 @@ body #page-container .et_pb_section a.et_pb_button.tp-location-button:hover {
 		top: 67.3%;
 		z-index: 10;
 		width: 24px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-label-m .et_pb_text_inner),
+.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-label-l .et_pb_text_inner) {
 		text-align: center;
 	}
 
@@ -17788,6 +17805,9 @@ body #page-container .et_pb_section a.et_pb_button.tp-location-button:hover {
 		left: 26.87px;
 		top: 195.63px;
 		width: 56px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-price-value-tasca .et_pb_text_inner) {
 		text-align: right;
 	}
 
@@ -18132,6 +18152,11 @@ body #page-container .et_pb_section a.et_pb_button.tp-location-button:hover {
 
 @media (max-width:767px) {
 
+	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-menu-section .tp-menu-table--main .tp-menu-label-m .et_pb_text_inner),
+.tp-child-theme :where(html body.tp-child-theme #page-container .tp-menu-section .tp-menu-table--main .tp-menu-label-l .et_pb_text_inner) {
+		text-align: left;
+	}
+
 	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-menu-section .tp-menu-table--main .tp-menu-label-m p),
 .tp-child-theme :where(html body.tp-child-theme #page-container .tp-menu-section .tp-menu-table--main .tp-menu-label-l p) {
 		display: block;
@@ -18139,7 +18164,6 @@ body #page-container .et_pb_section a.et_pb_button.tp-location-button:hover {
 		opacity: 1;
 		top: 73%;
 		width: auto;
-		text-align: left;
 		z-index: 10;
 		-webkit-transform: none;
 		transform: none;
@@ -19274,6 +19298,9 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 		max-width: none;
 		overflow: visible;
 		white-space: nowrap;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row--proposal .tp-menu-price .et_pb_text_inner) {
 		text-align: right;
 	}
 }
@@ -20353,11 +20380,19 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
 	display: none;
 }
 
-/* The time: next to the day in the row of the module, where the second span was. */
+/* The time: next to the day in the row of the module, where the second span was (aligned by the module). */
 .tp-child-theme :where(.tp-hours-item h4 ~ p) {
 	display: block;
 	width: auto;
+}
+
+.tp-child-theme :where(.tp-hours-item .et_pb_text_inner:has(> h4 ~ p)) {
 	text-align: right;
+}
+
+.tp-child-theme :where(.tp-hours-item .et_pb_text_inner:has(> h4 ~ p) > h4),
+.tp-child-theme :where(.tp-hours-item .et_pb_text_inner:has(> h4 ~ p) > h5) {
+	text-align: start;
 }
 
 .tp-child-theme :where(body.tp-child-theme:not(.et-fb) #page-container .tp-hours-item h4),

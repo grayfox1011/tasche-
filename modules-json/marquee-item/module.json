@@ -12,6 +12,11 @@
     "module": {
       "type": "object",
       "selector": "{{selector}}",
+      "styleProps": {
+        "spacing": {
+          "important": true
+        }
+      },
       "settings": {
         "meta": { "meta": {} },
         "advanced": {},
