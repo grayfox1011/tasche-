@@ -23,8 +23,10 @@ function tp_child_legal_page_slugs(): array {
 function tp_child_legal_business_details(): array {
 	return [
 		'brand'    => 'Tasche Piene',
-		'address'  => 'Via di Scurreria 42/R, 16124 Genova (GE)',
-		'vat'      => '03942309300',
+		// The company, VAT number and address of taschepiene.it (its footer), from 0.7.0.
+		'company'  => 'Barrakuda S.r.l.',
+		'address'  => 'Via Carducci 5/10, 16121 Genova',
+		'vat'      => '02789540990',
 		'site_url' => home_url( '/' ),
 	];
 }
@@ -115,9 +117,9 @@ function tp_child_legal_privacy_body_html(): string {
 
 	<h2>1. Titolare del trattamento</h2>
 	<p>
-		<strong><?php echo esc_html( $details['brand'] ); ?></strong><br>
+		<strong><?php echo esc_html( $details['company'] ); ?></strong> (<?php echo esc_html( $details['brand'] ); ?>)<br>
 		<?php echo esc_html( $details['address'] ); ?><br>
-		P. IVA <?php echo esc_html( $details['vat'] ); ?>
+		P. IVA e C.F. <?php echo esc_html( $details['vat'] ); ?>
 	</p>
 
 	<h2>2. Tipologia di sito</h2>
@@ -419,7 +421,7 @@ function tp_child_legal_patch_footer_blocks( array $blocks, string $privacy_url,
 			$attrs['copyrightLine3'] = [
 				'innerContent' => [
 					'desktop' => [
-						'value' => 'Privacy',
+						'value' => 'Privacy Policy',
 					],
 				],
 			];
@@ -436,7 +438,7 @@ function tp_child_legal_patch_footer_blocks( array $blocks, string $privacy_url,
 			$attrs['copyrightLine4'] = [
 				'innerContent' => [
 					'desktop' => [
-						'value' => 'Cookie',
+						'value' => 'Cookie Policy',
 					],
 				],
 			];
@@ -452,14 +454,14 @@ function tp_child_legal_patch_footer_blocks( array $blocks, string $privacy_url,
 		$attrs['copyrightLine5'] = [
 			'innerContent' => [
 				'desktop' => [
-					'value' => 'Designed By Mochi',
+					'value' => 'creato con ♥ da Mochi',
 				],
 			],
 		];
 		$attrs['copyrightLink5'] = [
 			'innerContent' => [
 				'desktop' => [
-					'value' => '',
+					'value' => 'https://www.mochidesign.it',
 				],
 			],
 		];

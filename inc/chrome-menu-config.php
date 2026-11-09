@@ -16,7 +16,7 @@ function tp_child_nav_menu_config(): array {
 			'name'        => 'Tasche Piene — Header',
 			'location'    => __( 'Header — barra menu in alto', 'tasche-piene-divi-child' ),
 			'admin_label' => __( 'Menu header', 'tasche-piene-divi-child' ),
-			'help'        => __( 'Chi siamo, Menù, Ingredienti, Come mangi, Dove trovarci.', 'tasche-piene-divi-child' ),
+			'help'        => __( 'La nostra idea, Il menù, Senza glutine, Domande, Dove siamo.', 'tasche-piene-divi-child' ),
 		],
 		'tp_footer_left'  => [
 			'name'        => 'Tasche Piene — Footer sinistra',

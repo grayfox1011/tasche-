@@ -163,11 +163,11 @@ function tp_child_footer_legal_link( array $attrs, string $key, string $type ): 
 function tp_child_footer_render_copyright_html( array $attrs, ?array $saved = null ): string {
 	$saved = $saved ?? $attrs;
 	$lines = [
-		[ 1, tp_child_chrome_get_string( $attrs, 'copyrightLine1', 'Copyright 2026, Tasche piene tutti i diritti riservati' ), tp_child_chrome_get_string( $attrs, 'copyrightLink1', '' ) ],
-		[ 2, tp_child_chrome_get_string( $attrs, 'copyrightLine2', 'P.IVA 03942309300' ), tp_child_chrome_get_string( $attrs, 'copyrightLink2', '' ) ],
-		[ 3, tp_child_chrome_get_string( $attrs, 'copyrightLine3', 'Privacy' ), tp_child_chrome_get_string( $attrs, 'copyrightLink3', tp_child_footer_legal_link( $saved, 'copyrightLink3', 'privacy' ) ) ],
-		[ 4, tp_child_chrome_get_string( $attrs, 'copyrightLine4', 'Cookie' ), tp_child_chrome_get_string( $attrs, 'copyrightLink4', tp_child_footer_legal_link( $saved, 'copyrightLink4', 'cookie' ) ) ],
-		[ 5, tp_child_chrome_get_string( $attrs, 'copyrightLine5', 'Designed By Mochi' ), tp_child_chrome_get_string( $attrs, 'copyrightLink5', '' ) ],
+		[ 1, tp_child_chrome_get_string( $attrs, 'copyrightLine1', 'Tasche Piene è un progetto di Barrakuda S.r.l.' ), tp_child_chrome_get_string( $attrs, 'copyrightLink1', '' ) ],
+		[ 2, tp_child_chrome_get_string( $attrs, 'copyrightLine2', 'P.IVA e C.F.: 02789540990 | Via Carducci 5/10, 16121 - Genova' ), tp_child_chrome_get_string( $attrs, 'copyrightLink2', '' ) ],
+		[ 3, tp_child_chrome_get_string( $attrs, 'copyrightLine3', 'Privacy Policy' ), tp_child_chrome_get_string( $attrs, 'copyrightLink3', tp_child_footer_legal_link( $saved, 'copyrightLink3', 'privacy' ) ) ],
+		[ 4, tp_child_chrome_get_string( $attrs, 'copyrightLine4', 'Cookie Policy' ), tp_child_chrome_get_string( $attrs, 'copyrightLink4', tp_child_footer_legal_link( $saved, 'copyrightLink4', 'cookie' ) ) ],
+		[ 5, tp_child_chrome_get_string( $attrs, 'copyrightLine5', 'creato con ♥ da Mochi' ), tp_child_chrome_get_string( $attrs, 'copyrightLink5', 'https://www.mochidesign.it' ) ],
 	];
 
 	$children = '';

@@ -105,11 +105,13 @@
 		line-height: 0;
 	}
 
+	/* 0.7.0: 11 px wider than the Figma's 217 px for "Guarda il menù" of taschepiene.it (its words are 9 px wider than
+	   "Scopri il menù"), the arrow as far from the end of the words as there. */
 	.tp-child-theme :where(.tp-hero-button.et_pb_button),
 	.tp-child-theme :where(.tp-hero-button .et_pb_button) {
-		--tp-intro-button-label-width: 217px;
-		--tp-intro-button-arrow-left: 163px;
-		width: 217px;
+		--tp-intro-button-label-width: 228px;
+		--tp-intro-button-arrow-left: 174px;
+		width: 228px;
 		vertical-align: top;
 	}
 
@@ -537,12 +539,13 @@
 		column-gap: 24px;
 	}
 
-	/* The man sits on the Piatto box, his legs over it. */
+	/* The man sits on the Piatto box, his legs over it: 21 px from its right edge (0.7.0), past the end of a longer
+	   word than the Figma's PIATTO, as VASCHETTA (206 px from the left edge of the word, which starts 20 px in). */
 	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-legend-piatto)::after,
 	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-legend.is-revealed .tp-menu-legend-piatto)::after {
 		top: -126.2px;
-		right: auto;
-		left: 160px;
+		right: 21px;
+		left: auto;
 		width: 101px;
 		height: 182px;
 		opacity: 1;
@@ -1510,7 +1513,7 @@
 		opacity: 1;
 	}
 
-	/* Copyright, P.IVA, Privacy-Cookie, Designed By Mochi: 38 px apart, the two links joined by a dash. */
+	/* Company, VAT number and address, Privacy Policy | Cookie Policy, the credit: 38 px apart, the two links joined by a bar. */
 	.tp-child-theme :where(body.tp-landing-page:not(.et-fb) .tp-theme-footer-copyright, body.et-fb .tp-theme-footer-copyright) {
 		left: 37px;
 		top: 942.4px;
@@ -1527,7 +1530,7 @@
 
 	.tp-child-theme :where(body.tp-landing-page:not(.et-fb) .tp-theme-footer-copyright > span:nth-child(3) + span:nth-child(4))::before,
 	.tp-child-theme :where(body.et-fb .tp-theme-footer-copyright > span:nth-child(3) + span:nth-child(4))::before {
-		content: "-";
+		content: "\00a0|\00a0";
 	}
 }
 
@@ -2395,7 +2398,7 @@
 		margin-top: -23.9px;
 	}
 
-	/* Copyright / P.IVA and Privacy-Cookie / Designed By Mochi, 26 px apart. */
+	/* Company / VAT number and Privacy Policy | Cookie Policy / credit, 26 px apart. */
 	.tp-child-theme :where(.tp-theme-footer-copyright) {
 		display: flex;
 		flex-wrap: wrap;
@@ -2416,14 +2419,14 @@
 	}
 
 	.tp-child-theme :where(.tp-theme-footer-copyright > span:nth-child(3) + span:nth-child(4))::before {
-		content: "-";
+		content: "\00a0|\00a0";
 	}
 }
 
 /* ------------------------------------------------------------------------------------------------ */
 /* Tablets (768-980 px, no frame in the new Figma): the footer of the computer in one column, the    */
 /* six links on as many lines as they need without breaking a word, the couple and the pigeons on   */
-/* the logo as on computer and phone, the copyright with Privacy-Cookie joined.                     */
+/* the logo as on computer and phone, the copyright with Privacy Policy | Cookie Policy joined.     */
 /* ------------------------------------------------------------------------------------------------ */
 
 @media (min-width: 768px) and (max-width: 980px) {
@@ -2488,7 +2491,10 @@
 		white-space: nowrap;
 	}
 
+	/* The company, the VAT number with the address (0.7.0: too long to share a line with Privacy Policy | Cookie
+	   Policy, which would break between its two links) and the credit each on a line of its own. */
 	.tp-child-theme :where(.tp-theme-footer-copyright > span:first-child),
+	.tp-child-theme :where(.tp-theme-footer-copyright > span:nth-child(2)),
 	.tp-child-theme :where(.tp-theme-footer-copyright > span:last-child) {
 		flex: 0 0 100%;
 	}
@@ -2498,14 +2504,14 @@
 	}
 
 	.tp-child-theme :where(.tp-theme-footer-copyright > span:nth-child(3) + span:nth-child(4))::before {
-		content: "-";
+		content: "\00a0|\00a0";
 	}
 }
 
 /* ------------------------------------------------------------------------------------------------ */
 /* Tablets: the features of "La tasca ripiena" and "Il piatto" as on the computer, at the size of    */
 /* the card (its photo is 41.67 vw wide against 630.2 px on the computer: one px = 0.06612 vw); the  */
-/* three of a card fit on its line instead of the third being cut.                                    */
+/* three of a card fit on its line instead of the third being cut, longer ones go on two lines.       */
 /* ------------------------------------------------------------------------------------------------ */
 
 @media (min-width: 768px) and (max-width: 980px) {
@@ -2517,8 +2523,10 @@
 		letter-spacing: 0;
 	}
 
+	/* On one line as in the Figma; longer features (0.7.0, those of taschepiene.it) go on a second line instead of
+	   running out of the card. */
 	.tp-child-theme.tp-child-theme :where(.tp-scelta-chip ul) {
-		flex-wrap: nowrap;
+		flex-wrap: wrap;
 		gap: calc(10 * .06612vw);
 	}
 
@@ -3681,5 +3689,24 @@ body.tp-child-theme :where(.tp-faq .et_pb_toggle_content a) {
 
 	.tp-child-theme :where(.tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-meta) :where(.et_pb_text_inner, p, span) {
 		white-space: normal;
+	}
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* 0.7.0: the texts of taschepiene.it on phones. The line under the hero title goes on as many lines  */
+/* as it needs inside its 241 px (the Figma's two lines were typed with a break, "Street food ·       */
+/* Gastronomia · Genova Centro Storico" has none); the features of Tasca o piatto, longer than the    */
+/* Figma's, go on a second line instead of running out of the card.                                   */
+/* ------------------------------------------------------------------------------------------------ */
+@media (max-width: 767px) {
+
+	.tp-child-theme :where(#page-container .tp-hero-section .tp-hero-subline),
+	.tp-child-theme :where(#page-container .tp-hero-section .tp-hero-subline .et_pb_text_inner),
+	.tp-child-theme :where(#page-container .tp-hero-section .tp-hero-subline p) {
+		white-space: normal;
+	}
+
+	.tp-child-theme.tp-child-theme :where(.tp-scelta-chip ul) {
+		flex-wrap: wrap;
 	}
 }

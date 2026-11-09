@@ -264,12 +264,45 @@ function tp_child_menu_salsiccia_name_transform( string $content ): string {
 /**
  * Once per $flag: $transform applied to the home page. WordPress keeps the previous content as a revision.
  */
+/**
+ * Whether the home was written by the theme from 0.7.0 on (the first seed or "Crea/aggiorna home"): its texts are the
+ * ones of taschepiene.it, which the content migrations written before 0.7.0 take for the old texts of the theme and
+ * would turn into the Figma's (the size S, the salsiccia rows, the dishes and words of 0.5.9).
+ */
+function tp_child_home_seeded_since_070( int $home_id ): bool {
+	$seeded = get_option( 'tp_child_home_seeded' );
+
+	return $home_id > 0
+		&& is_array( $seeded )
+		&& (int) ( $seeded['id'] ?? 0 ) === $home_id
+		&& version_compare( (string) ( $seeded['version'] ?? '0' ), '0.7.0', '>=' );
+}
+
 function tp_child_menu_size_s_migrate_home( string $flag, callable $transform ): void {
 	if ( get_option( $flag ) ) {
 		return;
 	}
 
 	$home_id = (int) get_option( 'page_on_front' );
+
+	// A home written from 0.7.0 on is already as these migrations would leave it, and some would change its texts
+	// (the allergens of the old map next to the dishes, the size S, the salsiccia rows, the Figma's words of 0.5.9).
+	$before_070 = [
+		'tp_child_menu_size_s_v1',
+		'tp_child_menu_proposal_row_v1',
+		'tp_child_menu_salsiccia_name_v1',
+		'tp_child_two_size_texts_v1',
+		'tp_child_choice_divi_v1',
+		'tp_child_intro_title_link_v1',
+		'tp_child_wireframe_labels_v1',
+		'tp_child_figma_059_home_v1',
+	];
+
+	if ( in_array( $flag, $before_070, true ) && tp_child_home_seeded_since_070( $home_id ) ) {
+		update_option( $flag, TP_CHILD_VERSION, true );
+
+		return;
+	}
 	$content = $home_id > 0 ? (string) get_post_field( 'post_content', $home_id ) : '';
 	$updated = '' !== $content ? $transform( $content ) : $content;
 

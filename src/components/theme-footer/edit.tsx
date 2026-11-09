@@ -54,12 +54,12 @@ const DEFAULT_NAV_RIGHT = [
 	{ title: 'INSTAGRAM', url: 'https://instagram.com', target: '_blank' },
 ];
 
-const COPYRIGHT_LINES: Array<{ textKey: keyof ThemeFooterAttrs; linkKey: keyof ThemeFooterAttrs; fallback: string }> = [
-	{ textKey: 'copyrightLine1', linkKey: 'copyrightLink1', fallback: 'Copyright 2026, Tasche piene tutti i diritti riservati' },
-	{ textKey: 'copyrightLine2', linkKey: 'copyrightLink2', fallback: 'P.IVA 03942309300' },
-	{ textKey: 'copyrightLine3', linkKey: 'copyrightLink3', fallback: 'Privacy' },
-	{ textKey: 'copyrightLine4', linkKey: 'copyrightLink4', fallback: 'Cookie' },
-	{ textKey: 'copyrightLine5', linkKey: 'copyrightLink5', fallback: 'Designed By Mochi' },
+const COPYRIGHT_LINES: Array<{ textKey: keyof ThemeFooterAttrs; linkKey: keyof ThemeFooterAttrs; fallback: string; linkFallback?: string }> = [
+	{ textKey: 'copyrightLine1', linkKey: 'copyrightLink1', fallback: 'Tasche Piene è un progetto di Barrakuda S.r.l.' },
+	{ textKey: 'copyrightLine2', linkKey: 'copyrightLink2', fallback: 'P.IVA e C.F.: 02789540990 | Via Carducci 5/10, 16121 - Genova' },
+	{ textKey: 'copyrightLine3', linkKey: 'copyrightLink3', fallback: 'Privacy Policy' },
+	{ textKey: 'copyrightLine4', linkKey: 'copyrightLink4', fallback: 'Cookie Policy' },
+	{ textKey: 'copyrightLine5', linkKey: 'copyrightLink5', fallback: 'creato con ♥ da Mochi', linkFallback: 'https://www.mochidesign.it' },
 ];
 
 const CopyrightLine = ({ text, link }: { text: string; link: string }): ReactElement => {
@@ -235,7 +235,7 @@ export const ThemeFooterEdit = (props: ThemeFooterEditProps): ReactElement => {
 							<CopyrightLine
 								key={line.textKey}
 								text={getString(attrs[line.textKey], line.fallback)}
-								link={getString(attrs[line.linkKey], '')}
+								link={getString(attrs[line.linkKey], line.linkFallback ?? '')}
 							/>
 						))}
 					</div>

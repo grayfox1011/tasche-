@@ -50,6 +50,7 @@ function tp_child_migration_callbacks(): array {
 			'tp_child_migrate_shape_wave_colors_067',
 			'tp_child_migrate_footer_characters_068',
 			'tp_child_migrate_home_additions_069',
+			'tp_child_migrate_live_texts_070',
 		],
 	];
 }

@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( "TP_CHILD_VERSION", "0.6.9" );
+define( "TP_CHILD_VERSION", "0.7.0" );
 define( 'TP_CHILD_PATH', trailingslashit( get_stylesheet_directory() ) );
 define( 'TP_CHILD_URL', trailingslashit( get_stylesheet_directory_uri() ) );
 define( 'TP_CHILD_MODULES_JSON_PATH', TP_CHILD_PATH . 'modules-json/' );
@@ -125,11 +125,11 @@ add_action( 'after_setup_theme', 'tp_child_register_nav_menus' );
 function tp_child_nav_menu_defaults( string $location ): array {
 	$menus = [
 		'tp_main_nav'     => [
-			[ 'title' => 'Chi siamo', 'url' => '#chi-siamo' ],
-			[ 'title' => 'Menù', 'url' => '#menu' ],
-			[ 'title' => 'Ingredienti', 'url' => '#materie' ],
-			[ 'title' => 'Come mangi', 'url' => '#come-mangi' ],
-			[ 'title' => 'Dove trovarci', 'url' => '#location' ],
+			[ 'title' => 'La nostra idea', 'url' => '#chi-siamo' ],
+			[ 'title' => 'Il menù', 'url' => '#menu' ],
+			[ 'title' => 'Senza glutine', 'url' => '#materie' ],
+			[ 'title' => 'Domande', 'url' => '#faq' ],
+			[ 'title' => 'Dove siamo', 'url' => '#location' ],
 		],
 		'tp_footer_left'  => [
 			[ 'title' => 'MENÙ', 'url' => '#menu' ],
@@ -310,6 +310,7 @@ require_once TP_CHILD_PATH . 'inc/materie-marquee-migration.php';
 require_once TP_CHILD_PATH . 'inc/shape-wave-colors-067.php';
 require_once TP_CHILD_PATH . 'inc/footer-characters-068.php';
 require_once TP_CHILD_PATH . 'inc/home-additions-069.php';
+require_once TP_CHILD_PATH . 'inc/live-texts-070.php';
 
 /**
  * Render a single footer menu column from a WordPress menu location.
@@ -399,10 +400,11 @@ function tp_child_theme_footer_shortcode(): string {
 				?>
 			</nav>
 			<div class="tp-theme-footer-copyright">
-				<span>Copyright 2026, Tasche piene tutti i diritti riservati</span>
-				<span>P.IVA 03942309300</span>
-				<span>Privacy-Cookie</span>
-				<span>Designed By Mochi</span>
+				<span>Tasche Piene è un progetto di Barrakuda S.r.l.</span>
+				<span>P.IVA e C.F.: 02789540990 | Via Carducci 5/10, 16121 - Genova</span>
+				<span>Privacy Policy</span>
+				<span>Cookie Policy</span>
+				<span><a href="https://www.mochidesign.it">creato con ♥ da Mochi</a></span>
 			</div>
 		</div>
 	</footer>

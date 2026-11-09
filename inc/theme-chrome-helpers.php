@@ -167,11 +167,11 @@ function tp_child_chrome_resolve_nav_items( array $attrs, string $prefix, int $c
  */
 function tp_child_header_default_nav_items(): array {
 	return [
-		[ 'title' => 'Chi siamo', 'url' => '#chi-siamo', 'target' => '', 'xfn' => '' ],
-		[ 'title' => 'Menù', 'url' => '#menu', 'target' => '', 'xfn' => '' ],
-		[ 'title' => 'Ingredienti', 'url' => '#materie', 'target' => '', 'xfn' => '' ],
-		[ 'title' => 'Come mangi', 'url' => '#come-mangi', 'target' => '', 'xfn' => '' ],
-		[ 'title' => 'Dove trovarci', 'url' => '#location', 'target' => '', 'xfn' => '' ],
+		[ 'title' => 'La nostra idea', 'url' => '#chi-siamo', 'target' => '', 'xfn' => '' ],
+		[ 'title' => 'Il menù', 'url' => '#menu', 'target' => '', 'xfn' => '' ],
+		[ 'title' => 'Senza glutine', 'url' => '#materie', 'target' => '', 'xfn' => '' ],
+		[ 'title' => 'Domande', 'url' => '#faq', 'target' => '', 'xfn' => '' ],
+		[ 'title' => 'Dove siamo', 'url' => '#location', 'target' => '', 'xfn' => '' ],
 	];
 }
 

@@ -496,6 +496,17 @@ function tp_child_seed_home_page(): int {
 
 	tp_child_seed_apply_divi_meta( $post_id, 'Home', 'page', 'off', true );
 
+	// The version of the theme that wrote this home (0.7.0): the content migrations older than its texts leave it alone
+	// (tp_child_menu_size_s_migrate_home()).
+	update_option(
+		'tp_child_home_seeded',
+		[
+			'id'      => (int) $post_id,
+			'version' => TP_CHILD_VERSION,
+		],
+		false
+	);
+
 	update_option( 'show_on_front', 'page' );
 	update_option( 'page_on_front', $post_id );
 	update_option( 'page_for_posts', 0 );
@@ -573,11 +584,12 @@ function tp_child_seed_footer_block(): string {
 		'logoLink'              => $text_attr( '#home' ),
 		'menuLeftLocation'      => $text_attr( 'tp_footer_left' ),
 		'menuRightLocation'     => $text_attr( 'tp_footer_right' ),
-		'copyrightLine1'        => $text_attr( 'Copyright 2026, Tasche piene tutti i diritti riservati' ),
-		'copyrightLine2'        => $text_attr( 'P.IVA 03942309300' ),
-		'copyrightLine3'        => $text_attr( 'Privacy' ),
-		'copyrightLine4'        => $text_attr( 'Cookie' ),
-		'copyrightLine5'        => $text_attr( 'Designed By Mochi' ),
+		'copyrightLine1'        => $text_attr( 'Tasche Piene è un progetto di Barrakuda S.r.l.' ),
+		'copyrightLine2'        => $text_attr( 'P.IVA e C.F.: 02789540990 | Via Carducci 5/10, 16121 - Genova' ),
+		'copyrightLine3'        => $text_attr( 'Privacy Policy' ),
+		'copyrightLine4'        => $text_attr( 'Cookie Policy' ),
+		'copyrightLine5'        => $text_attr( 'creato con ♥ da Mochi' ),
+		'copyrightLink5'        => $text_attr( 'https://www.mochidesign.it' ),
 		'builderVersion'        => TP_CHILD_SEED_BUILDER_VERSION,
 	];
 

@@ -468,21 +468,10 @@
 	// tp-menu-allergeni next to its name, set in Divi as any text: it goes at the end of the
 	// name, where the superscript was. Without it, the numbers typed in the dish title between
 	// square brackets, e.g. "MELANZANA ALLA PARMIGIANA [7,8]", are removed from the title and
-	// shown as a superscript; titles without brackets use the map below (Figma 10:314; the
-	// salsiccia's numbers come from the owner).
+	// shown as a superscript; a dish without either shows no numbers (0.7.0: the dishes of
+	// taschepiene.it have none, and the map of the Figma's numbers this script used is gone).
 	// The Visual Builder shows the titles as typed.
 	(function () {
-		var MAP = [
-			[/MELANZAN/i, '7,8'],
-			[/RIPIENI LIGURI/i, '1,3,7,12'],
-			[/POLPETTE/i, '1,3,7'],
-			[/POLLO ALLA LIGURE/i, '8,12'],
-			[/TRIPPA/i, '8,9,12'],
-			[/STOCCAFISSO/i, '4,8,9,12'],
-			[/CAPRESE/i, '7,8'],
-			[/ACCIUGHE/i, '4,7'],
-			[/SALSICCIA/i, '1,7']
-		];
 		// The dish's Allergeni module: already at the end of the name, or among the modules next to it.
 		function allergensModule(h) {
 			var own = h.querySelector('.tp-menu-allergeni');
@@ -505,13 +494,7 @@
 						node.textContent = node.textContent.replace(/\s*\[[0-9,\s]+\]\s*/, ' ').replace(/\s+$/, '');
 					}
 				}
-				var t = h.textContent || '';
 				var own = allergensModule(h);
-				if (nums === null && !own) {
-					for (var m = 0; m < MAP.length; m++) {
-						if (MAP[m][0].test(t)) { nums = MAP[m][1]; break; }
-					}
-				}
 				var sup = h.querySelector('.tp-allergeni');
 				if (own) {
 					if (own.parentNode !== h) { h.appendChild(own); }
