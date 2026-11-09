@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( "TP_CHILD_VERSION", "0.6.8" );
+define( "TP_CHILD_VERSION", "0.6.9" );
 define( 'TP_CHILD_PATH', trailingslashit( get_stylesheet_directory() ) );
 define( 'TP_CHILD_URL', trailingslashit( get_stylesheet_directory_uri() ) );
 define( 'TP_CHILD_MODULES_JSON_PATH', TP_CHILD_PATH . 'modules-json/' );
@@ -309,6 +309,7 @@ require_once TP_CHILD_PATH . 'inc/footer-layout-helpers.php';
 require_once TP_CHILD_PATH . 'inc/materie-marquee-migration.php';
 require_once TP_CHILD_PATH . 'inc/shape-wave-colors-067.php';
 require_once TP_CHILD_PATH . 'inc/footer-characters-068.php';
+require_once TP_CHILD_PATH . 'inc/home-additions-069.php';
 
 /**
  * Render a single footer menu column from a WordPress menu location.
@@ -1438,14 +1439,53 @@ function tp_child_vb_choice_scale_script() {
 	?>
 <script id="tp-vb-choice-scale-js">
 (function(){
-	// As fitChoiceCards() of tp-layout.js (0.6.8): the height of each card's texts, and with more than two cards
-	// the height of the board and of the section to the last card.
+	// As fitChoiceCards() of tp-layout.js (0.6.8, 0.6.9): the height of each card's texts; the cards at least the
+	// title's bottom margin under its last line; with more than two cards, or the cards moved down, the height of
+	// the board and of the section to the last card.
+	function titlePush(section, cards, boardScale){
+		var title = section ? section.querySelector('.tp-scelta-titolo') : null;
+		var band = title ? title.closest('.tp-scelta-testata') : null;
+		if (!title || !band || !cards.length || !boardScale) {
+			return 0;
+		}
+		var heading = title.querySelector('h1, h2, h3, h4, h5, h6, p') || title;
+		var range = document.createRange();
+		range.selectNodeContents(heading);
+		var rects = range.getClientRects();
+		var bottom = -Infinity;
+		for (var i = 0; i < rects.length; i++) {
+			if (rects[i].width > 0 && rects[i].height > 0) {
+				bottom = Math.max(bottom, rects[i].bottom);
+			}
+		}
+		if (!isFinite(bottom)) {
+			return 0;
+		}
+		var y = 0;
+		var el = heading;
+		while (el && el !== band) {
+			y += el.offsetTop;
+			el = el.offsetParent;
+		}
+		if (el !== band) {
+			return 0;
+		}
+		var textBottom = y + (bottom - heading.getBoundingClientRect().top) / boardScale;
+		var first = Infinity;
+		cards.forEach(function (card) {
+			first = Math.min(first, card.offsetTop);
+		});
+		var current = parseFloat(document.documentElement.style.getPropertyValue('--tp-scelta-push')) || 0;
+		var gap = parseFloat(window.getComputedStyle(title).marginBottom) || 0;
+		return textBottom + gap - (first - current);
+	}
 	function fit(phone, tablet, scale, width){
 		var rows = document.querySelector('.tp-scelta-schede');
 		var root = document.documentElement;
 		if (!rows) {
 			return;
 		}
+		var section = rows.closest('.tp-scelta');
 		var cards = Array.prototype.filter.call(rows.children, function (child) {
 			return child.classList.contains('tp-scelta-scheda');
 		});
@@ -1455,6 +1495,13 @@ function tp_child_vb_choice_scale_script() {
 				card.style.setProperty('--tp-scelta-text-h', text.offsetHeight + 'px');
 			}
 		});
+		var push = titlePush(section, cards, tablet ? 1 : scale);
+		if (push > 0.5) {
+			root.style.setProperty('--tp-scelta-push', push.toFixed(2) + 'px');
+		} else {
+			push = 0;
+			root.style.removeProperty('--tp-scelta-push');
+		}
 		var extra = 0;
 		if (cards.length > 2) {
 			var last = 0;
@@ -1464,12 +1511,20 @@ function tp_child_vb_choice_scale_script() {
 			var ref = cards[phone ? 1 : 0];
 			extra = last - (ref.offsetTop + ref.offsetHeight);
 		}
-		if (extra > 0.5) {
-			var board = (phone ? 963 : (tablet ? width * 0.90531746 : 1263)) + extra;
+		var grow = push + Math.max(0, extra);
+		if (grow > 0.5) {
+			var board = (phone ? 963 : (tablet ? width * 0.90531746 : 1263)) + grow;
 			root.style.setProperty('--tp-scelta-board', board.toFixed(2) + 'px');
 			root.style.setProperty('--tp-scelta-height', (tablet ? board : board * scale).toFixed(2) + 'px');
 		} else {
 			root.style.removeProperty('--tp-scelta-board');
+		}
+		if (section) {
+			if (grow > 0.5) {
+				section.setAttribute('data-tp-grown', '');
+			} else {
+				section.removeAttribute('data-tp-grown');
+			}
 		}
 	}
 	function upd(){
@@ -1507,7 +1562,8 @@ function tp_child_vb_choice_scale_script() {
 			for (var i = 0; i < mutations.length; i++) {
 				var target = mutations[i].target;
 				var el = target.nodeType === 1 ? target : target.parentElement;
-				if (el && el.closest && el.closest('.tp-scelta')) {
+				// Its pieces, or the styles of the page (a margin or a size changed in Divi's settings).
+				if (el && el.closest && (el.closest('.tp-scelta') || el.closest('head') || 'STYLE' === el.tagName)) {
 					schedule();
 					return;
 				}

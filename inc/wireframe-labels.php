@@ -38,6 +38,7 @@ function tp_child_wireframe_label_map(): array {
 		'tp-materie-section'              => 'Materie prime',
 		'tp-location-section'             => 'Dove siamo',
 		'tp-hours-section'                => 'Orari',
+		'tp-faq-section'                  => 'Informazioni utili',
 		// Rows.
 		'tp-hero-content'                 => 'Riga hero',
 		'tp-marquee-row'                  => 'Riga striscia',
@@ -49,6 +50,7 @@ function tp_child_wireframe_label_map(): array {
 		'tp-materie-row'                  => 'Riga materie prime',
 		'tp-location-row'                 => 'Riga dove siamo',
 		'tp-hours-row'                    => 'Riga orari',
+		'tp-faq-row'                      => 'Riga informazioni utili',
 		// Columns.
 		'tp-intro-media-column'           => 'Colonna foto',
 		'tp-intro-copy-column'            => 'Colonna testi',
@@ -115,6 +117,10 @@ function tp_child_wireframe_label_map(): array {
 		'tp-menu-price-value-l'           => 'Prezzo L',
 		'tp-menu-price'                   => 'Prezzo',
 		'tp-menu-note'                    => 'Note e allergeni',
+		'tp-menu-delivery'                => 'Consegna a domicilio',
+		'tp-menu-delivery-text'           => 'Testo della consegna',
+		'tp-menu-delivery-links'          => 'Tasti di consegna',
+		'tp-menu-delivery-link'           => 'Tasto di consegna',
 		// Materie prime.
 		'tp-materie-onda--verde'          => 'Onda verde',
 		'tp-materie-onda--bordeaux'       => 'Onda bordeaux',
@@ -135,6 +141,9 @@ function tp_child_wireframe_label_map(): array {
 		'tp-location-button'              => 'Pulsante Mappe',
 		'tp-hours-card'                   => 'Card degli orari',
 		'tp-hours-title'                  => 'Titolo',
+		// Informazioni utili (0.6.9).
+		'tp-faq-title'                    => 'Titolo',
+		'tp-faq'                          => 'Domande e risposte',
 	];
 }
 

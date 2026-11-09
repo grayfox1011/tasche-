@@ -482,6 +482,16 @@ return '<!-- wp:divi/placeholder --><!-- wp:divi/section {"module":{"advanced":{
 
 <!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-note"}}}},"meta":{"adminLabel":{"desktop":{"value":"Note e allergeni"}}}},"content":{"innerContent":{"desktop":{"value":"\\u003cp\\u003eAllergeni\\u003c/p\\u003e\\n\\u003cp\\u003e1 glutine • 2 latte • 3 uova • 4 arachidi • 5 frutta a guscio • 5 pesce\\u003cbr\\u003e6 crostacei • 7 molluschi • 8 soia • 9 sesamo • 10 sedano • 11 senape\\u003c/p\\u003e\\n\\u003cp\\u003eSenza glutine disponibile su richiesta \\u003cbr\\u003e(pane confezionato singolo)\\u003c/p\\u003e\\n\\u003cp\\u003eNota scarsità max 10–12 porzioni per stocco e trippa. Quando finisce puoi venire prima la settimana dopo.\\u003c/p\\u003e"}}},"builderVersion":"5.2.0"} /-->
 
+<!-- wp:divi/group {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-delivery"}}}},"meta":{"adminLabel":{"desktop":{"value":"Consegna a domicilio"}}}},"builderVersion":"5.2.0"} -->
+<!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-delivery-text"}}}},"meta":{"adminLabel":{"desktop":{"value":"Testo della consegna"}}}},"content":{"innerContent":{"desktop":{"value":"\\u003cp\\u003eTi portiamo la vaschetta a casa o in ufficio:\\u003c/p\\u003e"}}},"builderVersion":"5.2.0"} /-->
+
+<!-- wp:divi/group {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-delivery-links"}}}},"meta":{"adminLabel":{"desktop":{"value":"Tasti di consegna"}}}},"builderVersion":"5.2.0"} -->
+<!-- wp:divi/image {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-delivery-link"}}}},"meta":{"adminLabel":{"desktop":{"value":"Tasto: Just Eat"}}}},"image":{"innerContent":{"desktop":{"value":{"src":"{{TP_CHILD_URL}}assets/images/delivery/just-eat.png","alt":"Ordina Tasche Piene su Just Eat, consegna a domicilio a Genova centro","titleText":"Tasche Piene su Just Eat","linkUrl":"https://www.justeat.it/restaurants-tasche-piene-genova/menu","linkTarget":"on"}}}},"builderVersion":"5.2.0"} /-->
+
+<!-- wp:divi/image {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-menu-delivery-link"}}}},"meta":{"adminLabel":{"desktop":{"value":"Tasto: Deliveroo"}}}},"image":{"innerContent":{"desktop":{"value":{"src":"{{TP_CHILD_URL}}assets/images/delivery/deliveroo.png","alt":"Ordina Tasche Piene su Deliveroo, consegna a domicilio a Genova centro","titleText":"Tasche Piene su Deliveroo","linkUrl":"https://deliveroo.it/it/menu/genova/genova-centro/tasche-piene-genova-centro","linkTarget":"on"}}}},"builderVersion":"5.2.0"} /-->
+<!-- /wp:divi/group -->
+<!-- /wp:divi/group -->
+
 <!-- /wp:divi/column -->
 <!-- /wp:divi/row -->
 <!-- /wp:divi/section -->
@@ -602,6 +612,38 @@ return '<!-- wp:divi/placeholder --><!-- wp:divi/section {"module":{"advanced":{
 
 <!-- wp:divi/text {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-hours-item tp-hours-item\\u002d\\u002dgreen"}}}},"meta":{"adminLabel":{"desktop":{"value":"Giorno: Domenica"}}}},"content":{"innerContent":{"desktop":{"value":"\\u003ch4\\u003eDomenica\\u003c/h4\\u003e\\u003ch5\\u003eDom\\u003c/h5\\u003e\\u003cp\\u003eChiusi\\u003c/p\\u003e"}}},"builderVersion":"5.2.0"} /-->
 <!-- /wp:divi/group -->
+<!-- /wp:divi/column -->
+<!-- /wp:divi/row -->
+<!-- /wp:divi/section -->
+
+<!-- wp:divi/section {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-faq-section","id":"faq"}}}},"meta":{"adminLabel":{"desktop":{"value":"Informazioni utili"}}}},"builderVersion":"5.2.0"} -->
+<!-- wp:divi/row {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-faq-row"}}},"columnStructure":{"desktop":{"value":"4_4"}},"flexColumnStructure":{"desktop":{"value":"equal-columns_1"}}},"meta":{"adminLabel":{"desktop":{"value":"Riga informazioni utili"}}}},"builderVersion":"5.2.0"} -->
+<!-- wp:divi/column {"module":{"advanced":{"type":{"desktop":{"value":"4_4"}}}},"builderVersion":"5.2.0"} -->
+<!-- wp:divi/heading {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-faq-title"}}}},"meta":{"adminLabel":{"desktop":{"value":"Titolo"}}}},"title":{"innerContent":{"desktop":{"value":"Informazioni utili"}},"decoration":{"font":{"font":{"desktop":{"value":{"headingLevel":"h2"}}}}}},"builderVersion":"5.2.0"} /-->
+
+<!-- wp:divi/accordion {"module":{"advanced":{"htmlAttributes":{"desktop":{"value":{"class":"tp-faq"}}}},"meta":{"adminLabel":{"desktop":{"value":"Domande e risposte"}}}},"builderVersion":"5.2.0"} -->
+<!-- wp:divi/accordion-item {"title":{"innerContent":{"desktop":{"value":"Che cos\'è una tasca ripiena?"}}},"content":{"innerContent":{"desktop":{"value":"\\u003cp\\u003eÈ un pane croccante, a metà tra una pinsa e un panino, riempito con una delle ricette del banco e scaldato al momento. Si mangia con le mani, anche camminando per i caruggi. Il ripieno è lo stesso che trovi nella vaschetta: polpette al sugo, melanzane alla parmigiana, ripieni liguri, pollo alla ligure. Da 5,50 €.\\u003c/p\\u003e"}}},"builderVersion":"5.2.0"} /-->
+
+<!-- wp:divi/accordion-item {"title":{"innerContent":{"desktop":{"value":"Tasca o vaschetta: che differenza c\'è?"}}},"content":{"innerContent":{"desktop":{"value":"\\u003cp\\u003eLa ricetta è la stessa, cambia come la mangi. La tasca è il pane ripieno. La vaschetta è il piatto: media da 200 g o grande da 400 g, con un contorno incluso e, se vuoi, il pane croccante a parte. La vaschetta è anche quella che arriva a casa con Deliveroo e Just Eat.\\u003c/p\\u003e"}}},"builderVersion":"5.2.0"} /-->
+
+<!-- wp:divi/accordion-item {"title":{"innerContent":{"desktop":{"value":"Siete senza glutine?"}}},"content":{"innerContent":{"desktop":{"value":"\\u003cp\\u003eTutte le ricette del banco sono preparate senza glutine. Non usiamo farina né pangrattato, nemmeno nel polpettone: le polpette, per esempio, le leghiamo con l\'amido. Il pane della tasca senza glutine è confezionato singolarmente e lo scaldiamo in forno sigillato nella stagnola. La cucina però è una sola e non abbiamo una certificazione: se hai la celiachia dillo al banco, così ne parliamo.\\u003c/p\\u003e"}}},"builderVersion":"5.2.0"} /-->
+
+<!-- wp:divi/accordion-item {"title":{"innerContent":{"desktop":{"value":"Cosa trovo nel banco e cosa cambia?"}}},"content":{"innerContent":{"desktop":{"value":"\\u003cp\\u003eOgni mattina cuciniamo nel nostro laboratorio quello che vedi nel banco: polpette al sugo, melanzane alla parmigiana, pollo alla ligure con olive taggiasche e pinoli, le acciughe di Luciano con la stracciatella, la caprese con il pesto. I ripieni di verdura cambiano con la stagione. Quando una cosa finisce, è finita: non riscaldiamo per rivendere.\\u003c/p\\u003e"}}},"builderVersion":"5.2.0"} /-->
+
+<!-- wp:divi/accordion-item {"title":{"innerContent":{"desktop":{"value":"Quando c\'è la trippa e quando lo stoccafisso?"}}},"content":{"innerContent":{"desktop":{"value":"\\u003cp\\u003eLo stoccafisso alla ligure c’è tutti i giorni. La trippa alla genovese il martedì e il venerdì: le trippe arrivano dalla Tripperia La Casana, bottega storica del centro. Ne prepariamo 10-12 porzioni, quindi conviene passare presto. Tutti e due si possono avere in tasca o in vaschetta.\\u003c/p\\u003e"}}},"builderVersion":"5.2.0"} /-->
+
+<!-- wp:divi/accordion-item {"title":{"innerContent":{"desktop":{"value":"Posso mangiare da voi o solo da asporto?"}}},"content":{"innerContent":{"desktop":{"value":"\\u003cp\\u003eTutte e due le cose. Puoi mangiare da noi, portare via la tasca e mangiarla dove vuoi tu, oppure farti consegnare la vaschetta a casa o in ufficio.\\u003c/p\\u003e"}}},"builderVersion":"5.2.0"} /-->
+
+<!-- wp:divi/accordion-item {"title":{"innerContent":{"desktop":{"value":"Fate consegne a domicilio?"}}},"content":{"innerContent":{"desktop":{"value":"\\u003cp\\u003eSì, con \\u003ca href=\\u0022https://deliveroo.it/it/menu/genova/genova-centro/tasche-piene-genova-centro\\u0022 target=\\u0022_blank\\u0022 rel=\\u0022noopener\\u0022\\u003eDeliveroo\\u003c/a\\u003e e \\u003ca href=\\u0022https://www.justeat.it/restaurants-tasche-piene-genova/menu\\u0022 target=\\u0022_blank\\u0022 rel=\\u0022noopener\\u0022\\u003eJust Eat\\u003c/a\\u003e, negli orari di apertura. Dal banco invece si ordina e si porta via senza prenotare.\\u003c/p\\u003e"}}},"builderVersion":"5.2.0"} /-->
+
+<!-- wp:divi/accordion-item {"title":{"innerContent":{"desktop":{"value":"Dove siete?"}}},"content":{"innerContent":{"desktop":{"value":"\\u003cp\\u003eIn via di Scurreria 42/R, su piazza San Lorenzo, a due passi dalla Cattedrale. Siamo nei caruggi, ma non troppo nascosti. \\u003ca href=\\u0022https://www.google.com/maps/search/?api=1\\u0026query=Tasche+Piene+Via+di+Scurreria+42+Genova\\u0022 target=\\u0022_blank\\u0022 rel=\\u0022noopener\\u0022\\u003eApri la mappa\\u003c/a\\u003e oppure chiamaci al \\u003ca href=\\u0022tel:+390104075541\\u0022\\u003e010 407 5541\\u003c/a\\u003e.\\u003c/p\\u003e"}}},"builderVersion":"5.2.0"} /-->
+
+<!-- wp:divi/accordion-item {"title":{"innerContent":{"desktop":{"value":"Quali sono gli orari?"}}},"content":{"innerContent":{"desktop":{"value":"\\u003cp\\u003elunedì 12–21\\u003cbr\\u003emartedì 12–21\\u003cbr\\u003emercoledì 12–21\\u003cbr\\u003egiovedì 12–21\\u003cbr\\u003evenerdì 12–21\\u003cbr\\u003esabato 12–22\\u003c/p\\u003e"}}},"builderVersion":"5.2.0"} /-->
+
+<!-- wp:divi/accordion-item {"title":{"innerContent":{"desktop":{"value":"Quanto costa un pranzo?"}}},"content":{"innerContent":{"desktop":{"value":"\\u003cp\\u003eUna tasca costa da 5,50 a 7,50 €. Una vaschetta media da 6,00 €, grande da 9,00 €, con il contorno incluso. Patate o verdure al forno a parte 1,50 €, un dolce 4,50 €, la spumetta al bicchiere 0,90 €.\\u003c/p\\u003e"}}},"builderVersion":"5.2.0"} /-->
+
+<!-- wp:divi/accordion-item {"title":{"innerContent":{"desktop":{"value":"Ho un\'allergia: come faccio?"}}},"content":{"innerContent":{"desktop":{"value":"\\u003cp\\u003eChiedi al banco: sappiamo cosa c\'è in ogni ricetta perché la facciamo noi. La lista degli allergeni è esposta in negozio e sul menù qui sopra.\\u003c/p\\u003e"}}},"builderVersion":"5.2.0"} /-->
+<!-- /wp:divi/accordion -->
 <!-- /wp:divi/column -->
 <!-- /wp:divi/row -->
 <!-- /wp:divi/section --><!-- /wp:divi/placeholder -->';

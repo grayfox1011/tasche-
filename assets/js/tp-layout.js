@@ -30,6 +30,7 @@
 		if (!rows) {
 			return;
 		}
+		var section = rows.closest('.tp-scelta');
 		var cards = Array.prototype.filter.call(rows.children, function (child) {
 			return child.classList.contains('tp-scelta-scheda');
 		});
@@ -39,6 +40,14 @@
 				card.style.setProperty('--tp-scelta-text-h', text.offsetHeight + 'px');
 			}
 		});
+		// 0.6.9: the cards start at least the title's bottom margin under its last line (--tp-scelta-push).
+		var push = choiceTitlePush(section, cards, tablet ? 1 : scale);
+		if (push > 0.5) {
+			root.style.setProperty('--tp-scelta-push', push.toFixed(2) + 'px');
+		} else {
+			push = 0;
+			root.style.removeProperty('--tp-scelta-push');
+		}
 		var extra = 0;
 		if (cards.length > 2) {
 			var last = 0;
@@ -49,13 +58,63 @@
 			var ref = cards[phone ? 1 : 0];
 			extra = last - (ref.offsetTop + ref.offsetHeight);
 		}
-		if (extra > 0.5) {
-			var board = (phone ? 963 : (tablet ? width * 0.90531746 : 1263)) + extra;
+		var grow = push + Math.max(0, extra);
+		if (grow > 0.5) {
+			var board = (phone ? 963 : (tablet ? width * 0.90531746 : 1263)) + grow;
 			root.style.setProperty('--tp-scelta-board', board.toFixed(2) + 'px');
 			root.style.setProperty('--tp-scelta-height', (tablet ? board : board * scale).toFixed(2) + 'px');
 		} else {
 			root.style.removeProperty('--tp-scelta-board');
 		}
+		if (section) {
+			if (grow > 0.5) {
+				section.setAttribute('data-tp-grown', '');
+			} else {
+				section.removeAttribute('data-tp-grown');
+			}
+		}
+	}
+
+	// How far the cards of Tasca o piatto go down so that they start the title's bottom margin under its last line,
+	// in the pixels of the board (the computers and the phones draw it scaled by boardScale). The title's band and
+	// the cards' band are two boards at the top of the section: the last line is measured in the first, the cards
+	// in the second (their place in the layout, whatever moves them on the screen).
+	function choiceTitlePush(section, cards, boardScale) {
+		var title = section ? section.querySelector('.tp-scelta-titolo') : null;
+		var band = title ? title.closest('.tp-scelta-testata') : null;
+		if (!title || !band || !cards.length || !boardScale) {
+			return 0;
+		}
+		var heading = title.querySelector('h1, h2, h3, h4, h5, h6, p') || title;
+		var range = document.createRange();
+		range.selectNodeContents(heading);
+		var rects = range.getClientRects();
+		var bottom = -Infinity;
+		for (var i = 0; i < rects.length; i++) {
+			if (rects[i].width > 0 && rects[i].height > 0) {
+				bottom = Math.max(bottom, rects[i].bottom);
+			}
+		}
+		if (!isFinite(bottom)) {
+			return 0;
+		}
+		var y = 0;
+		var el = heading;
+		while (el && el !== band) {
+			y += el.offsetTop;
+			el = el.offsetParent;
+		}
+		if (el !== band) {
+			return 0;
+		}
+		var textBottom = y + (bottom - heading.getBoundingClientRect().top) / boardScale;
+		var first = Infinity;
+		cards.forEach(function (card) {
+			first = Math.min(first, card.offsetTop);
+		});
+		var current = parseFloat(document.documentElement.style.getPropertyValue('--tp-scelta-push')) || 0;
+		var gap = parseFloat(window.getComputedStyle(title).marginBottom) || 0;
+		return textBottom + gap - (first - current);
 	}
 
 	// Tasca/Piatto stage: 1512px wide on desktop, 390px reference width on phones. The section made of

@@ -3320,3 +3320,339 @@ body:not(.et-fb) :where(.tp-materie-card:hover .tp-materie-card-image, .tp-mater
 .tp-child-theme :where(.tp-menu-legend-piatto ~ .tp-menu-legend-piatto)::after {
 	display: none;
 }
+
+/* ------------------------------------------------------------------------------------------------ */
+/* 0.6.9: Tasca o piatto, the space between the title and the cards. The cards start at least the     */
+/* title's bottom margin under its last line (Titolo > Design > Spaziatura > Margine inferiore; the    */
+/* theme's: 64 px on the computers, 6.5vw on tablets, 32 px on phones, in the pixels of the Figma's   */
+/* board), so a longer title moves them down (tp-layout.js: --tp-scelta-push) instead of going under  */
+/* them, and the section grows as much (data-tp-grown on the section).                                */
+/* ------------------------------------------------------------------------------------------------ */
+/* A line of the title longer than the board goes on more lines (and the cards move down) instead of being cut at
+   the edge: the Figma's lines fit as they are. */
+.tp-child-theme :where(.tp-scelta-titolo h1, .tp-scelta-titolo h2, .tp-scelta-titolo h3, .tp-scelta-titolo p) {
+	white-space: normal;
+}
+
+/* Divi gives the modules of a column no bottom margin (.et_pb_section .et_pb_row .et_flex_column > .et_pb_module,
+   and on the computers seven classes for the last one of a column, as this title): this rule has eight. Divi's own
+   margin of the title is written !important and wins. */
+@media (min-width: 981px) {
+
+	body.tp-child-theme.tp-child-theme.tp-child-theme .tp-scelta-testata .et_flex_column > .tp-scelta-titolo.tp-scelta-titolo.et_pb_module {
+		margin-bottom: 64px;
+	}
+
+	.tp-child-theme :where(.tp-scelta-schede) {
+		padding-top: calc(682px + var(--tp-scelta-push, 0px));
+	}
+}
+
+@media (min-width: 768px) and (max-width: 980px) {
+
+	body.tp-child-theme.tp-child-theme.tp-child-theme .tp-scelta-testata .et_flex_column > .tp-scelta-titolo.tp-scelta-titolo.et_pb_module {
+		margin-bottom: 6.5vw;
+	}
+
+	.tp-child-theme :where(.tp-scelta-schede) {
+		padding-top: calc(45.10582vw + var(--tp-scelta-push, 0px));
+	}
+}
+
+@media (max-width: 767px) {
+
+	body.tp-child-theme.tp-child-theme.tp-child-theme .tp-scelta-testata .et_flex_column > .tp-scelta-titolo.tp-scelta-titolo.et_pb_module {
+		margin-bottom: 32px;
+	}
+
+	.tp-child-theme :where(.tp-scelta-schede) {
+		padding-top: calc(230px + var(--tp-scelta-push, 0px));
+	}
+
+	/* A taller board on phones (cards moved down, a third card): the phone's picture draws the two cards' cream too,
+	   at the Figma's place, so only its top (the waves, to the first card's top) and its bottom wave are shown,
+	   burgundy between them; each card has its own cream (the same, drawn by the card). */
+	.tp-child-theme :where(.tp-scelta[data-tp-grown] .tp-scelta-testata) {
+		background: var(--tp-bordeaux, #560b22);
+	}
+
+	.tp-child-theme :where(.tp-scelta[data-tp-grown] .tp-scelta-testata)::before {
+		bottom: auto;
+		height: 230px;
+	}
+
+	.tp-child-theme :where(.tp-scelta[data-tp-grown] .tp-scelta-testata)::after {
+		content: "";
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 2;
+		display: block;
+		height: 141px;
+		background: url("../images/choice/mobile-wave-layer-390x963.webp?ver=20260522-wave-layer-editable") center bottom / 390px 963px no-repeat;
+		pointer-events: none;
+	}
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* 0.6.9: the delivery buttons of the menu (Consegna a domicilio), as on taschepiene.it: under the     */
+/* notes a line and the pictures with their link (Just Eat, Deliveroo), side by side in the middle;    */
+/* a picture copied is one more button in the row. Divi's settings of each piece change it.           */
+/* ------------------------------------------------------------------------------------------------ */
+.tp-child-theme :where(.tp-menu-delivery) {
+	display: flex;
+	flex-direction: column;
+	gap: 30px;
+	width: 100%;
+	margin-top: 30px;
+}
+
+/* On the text's inner box, as the notes': the builder gives the module Divi's grey. */
+.tp-child-theme :where(.tp-menu-delivery-text .et_pb_text_inner) {
+	color: var(--tp-brown, #3e372e);
+	font-family: var(--tp-font-body), Arial, sans-serif;
+	font-size: 16px;
+	font-weight: 700;
+	line-height: 1.25;
+}
+
+.tp-child-theme :where(.tp-menu-delivery-text p) {
+	padding-bottom: 0;
+}
+
+.tp-child-theme :where(.tp-menu-delivery-links) {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	gap: 16px 70px;
+	width: 100%;
+}
+
+.tp-child-theme :where(.tp-menu-delivery-link) {
+	flex: 0 0 auto;
+	width: 268px;
+	max-width: calc(50% - 35px);
+	margin: 0;
+}
+
+.tp-child-theme :where(.tp-menu-delivery-link .et_pb_image_wrap, .tp-menu-delivery-link img) {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+@media (min-width: 768px) and (max-width: 980px) {
+
+	/* As wide as the notes above it (the menu's cards). */
+	.tp-child-theme :where(.tp-menu-delivery) {
+		width: var(--tp-menu-tablet-card, calc(100vw - 72px));
+		max-width: calc(100vw - 72px);
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.tp-child-theme :where(.tp-menu-delivery-links) {
+		column-gap: 43px;
+	}
+
+	.tp-child-theme :where(.tp-menu-delivery-link) {
+		width: 300px;
+		max-width: calc(50% - 22px);
+	}
+}
+
+@media (max-width: 767px) {
+
+	.tp-child-theme :where(.tp-menu-delivery) {
+		gap: 20px;
+		width: 358px;
+		max-width: calc(100vw - 32px);
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.tp-child-theme :where(.tp-menu-delivery-links) {
+		column-gap: 16px;
+	}
+
+	.tp-child-theme :where(.tp-menu-delivery-link) {
+		width: calc(50% - 8px);
+		max-width: 200px;
+	}
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* 0.6.9: Informazioni utili (FAQ), as on taschepiene.it: a title in a box and Divi's Accordion module */
+/* (Domande e risposte) in a column 690 px wide. The first question is open when the page opens; the    */
+/* questions alternate green and bordeaux; the open one and the one under the mouse get the line of     */
+/* their colour and a shadow. Divi's settings of the section, the title, the accordion and of a single  */
+/* question change all of it (their selectors weigh more than these, Divi's own defaults less).          */
+/* ------------------------------------------------------------------------------------------------ */
+/* One class and one element: more than Divi's .et_pb_section, less than its settings of the section. */
+body.tp-child-theme :where(.tp-faq-section) {
+	position: relative;
+	background-color: var(--tp-cream, #fff5e9);
+	padding: 0 0 54px;
+}
+
+.tp-child-theme.tp-child-theme :where(.tp-faq-section .et_pb_row.tp-faq-row) {
+	width: min(690px, calc(100% - 32px));
+	max-width: 690px;
+	margin: 0 auto;
+	padding: 0;
+}
+
+.tp-child-theme :where(.tp-faq-row > .et_pb_column) {
+	gap: 0;
+	row-gap: 0;
+}
+
+.tp-child-theme :where(.tp-faq-title) {
+	box-sizing: border-box;
+	width: 100%;
+	margin: 0;
+	padding: 34px 33px 22px;
+	border: 3px solid #c5b197;
+	border-radius: 20px;
+	background-color: #f8ebdb;
+	text-align: center;
+}
+
+/* The space under the title (as the Tasca o piatto title's, against Divi's no margin in a column). */
+body.tp-child-theme .tp-faq-row .et_flex_column > .tp-faq-title.et_pb_module {
+	margin-bottom: 60px;
+}
+
+.tp-child-theme .tp-faq-title :where(h1, h2, h3, h4, h5, h6) {
+	margin: 0;
+	padding: 0;
+	color: var(--tp-brown, #3e372e);
+	font-family: var(--tp-font-display), Impact, sans-serif;
+	font-size: 32px;
+	font-weight: 400;
+	line-height: 1.02;
+	text-align: center;
+}
+
+.tp-child-theme :where(.tp-faq) {
+	width: 100%;
+	margin: 0;
+	--vertical-gap: 10px;
+}
+
+body.tp-child-theme :where(.tp-faq .et_pb_toggle) {
+	margin: 0;
+	padding: 28px 33px;
+	border: 3px solid #c5b197;
+	border-radius: 20px;
+	background-color: #f8ebdb;
+	transition: border-color 0.6s, box-shadow 0.6s;
+}
+
+body.tp-child-theme :where(.tp-faq .et_pb_toggle:hover, .tp-faq .et_pb_toggle_open) {
+	border-color: var(--tp-green, #054726);
+	box-shadow: 0 18px 42px rgba(46, 22, 10, 0.16);
+}
+
+body.tp-child-theme :where(.tp-faq .et_pb_toggle:nth-child(even):hover, .tp-faq .et_pb_toggle_open:nth-child(even)) {
+	border-color: var(--tp-bordeaux, #560b22);
+}
+
+.tp-child-theme .tp-faq :where(.et_pb_toggle) .et_pb_toggle_title {
+	padding: 0 44px 0 0;
+	color: var(--tp-green, #054726);
+	font-family: var(--tp-font-body), Arial, sans-serif;
+	font-size: 20px;
+	font-weight: 900;
+	line-height: 1.15;
+}
+
+.tp-child-theme .tp-faq :where(.et_pb_toggle:nth-child(even)) .et_pb_toggle_title {
+	color: var(--tp-bordeaux, #560b22);
+}
+
+.tp-child-theme .tp-faq .et_pb_toggle_title::before {
+	right: 0;
+	color: var(--tp-green, #054726);
+	font-size: 16px;
+}
+
+.tp-child-theme .tp-faq :where(.et_pb_toggle:nth-child(even)) .et_pb_toggle_title::before {
+	color: var(--tp-bordeaux, #560b22);
+}
+
+body.tp-child-theme :where(.tp-faq .et_pb_toggle_content) {
+	padding-top: 16px;
+	color: var(--tp-brown, #3e372e);
+	font-family: var(--tp-font-body), Arial, sans-serif;
+	font-size: 17px;
+	line-height: 1.5;
+}
+
+body.tp-child-theme :where(.tp-faq .et_pb_toggle_content a) {
+	color: var(--tp-green, #054726);
+	text-decoration: underline;
+}
+
+@media (max-width: 767px) {
+
+	body.tp-child-theme :where(.tp-faq-section) {
+		padding-bottom: 50px;
+	}
+
+	.tp-child-theme :where(.tp-faq-title) {
+		padding: 24px 20px 16px;
+	}
+
+	.tp-child-theme .tp-faq-title :where(h1, h2, h3, h4, h5, h6) {
+		font-size: 26px;
+	}
+
+	body.tp-child-theme :where(.tp-faq .et_pb_toggle) {
+		padding: 20px;
+	}
+
+	.tp-child-theme .tp-faq :where(.et_pb_toggle) .et_pb_toggle_title {
+		font-size: 17px;
+	}
+
+	body.tp-child-theme :where(.tp-faq .et_pb_toggle_content) {
+		font-size: 16px;
+	}
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* 0.6.9: the menu in the builder, on the computers. The Prezzi group of a dish covers its whole row   */
+/* (its prices sit at the Figma's columns), so a click on the name, on the allergens or on the English */
+/* line selected Prezzi: they now sit above it (and above the photo that appears with the mouse), and  */
+/* the row under the mouse above the next ones, so its photo can be clicked too.                       */
+/* ------------------------------------------------------------------------------------------------ */
+@media (min-width: 981px) {
+
+	body.et-fb .tp-menu-row :where(.tp-menu-row-image) {
+		z-index: 6;
+	}
+
+	body.et-fb .tp-menu-row :where(.tp-menu-name, .tp-menu-allergeni, .tp-menu-meta) {
+		z-index: 7;
+	}
+
+	body.et-fb .tp-menu-row:hover {
+		z-index: 8;
+	}
+}
+
+/* On tablets and phones the builder shows the allergens of a dish at the right of its name (on the site a script
+   puts them right after the name's last word): the name leaves them room inside the card instead of pushing them
+   out of it. */
+@media (max-width: 980px) {
+
+	body.et-fb .tp-menu-table--main .tp-menu-item > .tp-menu-name {
+		flex: 0 1 auto;
+		width: auto;
+		max-width: calc(100% - 48px);
+	}
+}
