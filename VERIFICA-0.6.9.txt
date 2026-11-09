@@ -12,8 +12,9 @@ COSA CAMBIA RISPETTO ALLA 0.6.8
   "Ti portiamo la vaschetta a casa o in ufficio:" e i tasti di Just Eat e
   Deliveroo, con le immagini e i link di taschepiene.it (si aprono in una
   nuova scheda). Ogni tasto e' un modulo Immagine di Divi: Contenuto >
-  Immagine cambia il disegno, Link > URL link immagine l'indirizzo;
-  Duplica Elemento aggiunge un tasto, e i tasti vanno a capo da soli. La
+  Immagine cambia il disegno, Contenuto > Collegamento > URL link
+  immagine l'indirizzo; Duplica Elemento aggiunge un tasto, e i tasti
+  vanno a capo da soli. La
   riga e' un Testo: colore, carattere e misura si cambiano da Divi.
 - Informazioni utili, dopo gli Orari (id "faq", come il link "Domande" di
   taschepiene.it): il titolo in un riquadro e il modulo Accordion di Divi
