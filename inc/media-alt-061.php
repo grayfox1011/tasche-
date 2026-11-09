@@ -25,7 +25,7 @@ function tp_child_media_alt_texts(): array {
 		'fig-alberto-pentola.webp'                => 'Il ripieno preparato nella pentola',
 		'flow-menu-pomodoro-mozzarella-pesto.webp' => 'Alberto con una teglia di pomodori',
 		'flow-choice-tasca.webp'                  => 'La tasca ripiena',
-		'flow-choice-piatto.webp'                 => 'Il piatto',
+		'flow-choice-piatto.webp'                 => 'La vaschetta',
 		'fig-menu-feature.webp'                   => 'Piatto di ripieni alla genovese',
 		'flow-menu-tiramisu.webp'                 => 'Tiramisù in tasca',
 		'e0d905c6.webp'                           => 'Acciughe liguri appena pescate',
@@ -35,6 +35,13 @@ function tp_child_media_alt_texts(): array {
 		'9d821c0e.webp'                           => 'Pomodori dei fornitori scelti',
 		'fig-intro-caruggi.webp'                  => 'Tasche Piene davanti ai leoni di San Lorenzo, a Genova',
 		'logo-footer.webp'                        => 'Tasche Piene',
+		// 0.8.0: the photos of the 0.6.9 and of the 0.7.0, with the texts of the home.
+		'just-eat.png'                            => 'Ordina Tasche Piene su Just Eat, consegna a domicilio a Genova centro',
+		'deliveroo.png'                           => 'Ordina Tasche Piene su Deliveroo, consegna a domicilio a Genova centro',
+		'polpette.webp'                           => 'Polpette pronte per il sugo',
+		'ripieni.webp'                            => 'Una zucchina svuotata per i ripieni',
+		'melanzane.webp'                          => 'Melanzane alla parmigiana',
+		'spuma.webp'                              => 'Una bottiglia di spuma',
 	];
 }
 
@@ -46,6 +53,8 @@ function tp_child_media_title_texts(): array {
 	return [
 		'fig-intro-alberto-impasto.webp' => 'Alberto al lavoro',
 		'fig-intro-caruggi.webp'         => 'Tasche Piene nei caruggi di Genova',
+		'just-eat.png'                   => 'Tasche Piene su Just Eat',
+		'deliveroo.png'                  => 'Tasche Piene su Deliveroo',
 	];
 }
 
@@ -165,3 +174,58 @@ function tp_child_fill_media_title_066(): void {
 }
 
 add_action( 'init', 'tp_child_fill_media_title_066', 46 );
+
+/**
+ * 0.8.0, once after the update: the photos the 0.6.9 and the 0.7.0 added (the two buttons of the delivery, the four
+ * of Materie prime) had no alternative text in the library and their file name as title, so a section made anew
+ * with them had a photo without text and "Polpette" under the mouse. They get the texts of the home, as the others
+ * (only an empty alternative text and a title still made from the file name). The photo of the vaschetta keeps
+ * "Il piatto" of the Figma in the library only if nobody wrote another text: it becomes "La vaschetta", as in the
+ * home since the 0.7.0.
+ */
+function tp_child_fill_media_alt_080(): void {
+	$flag = 'tp_child_media_alt_080_v1';
+
+	if ( get_option( $flag ) ) {
+		return;
+	}
+
+	$new = [ 'just-eat.png', 'deliveroo.png', 'polpette.webp', 'ripieni.webp', 'melanzane.webp', 'spuma.webp' ];
+	$ids = get_posts(
+		[
+			'post_type'      => 'attachment',
+			'post_status'    => 'inherit',
+			'posts_per_page' => -1,
+			'fields'         => 'ids',
+			'meta_key'       => '_tp_child_seed_asset_path',
+			'no_found_rows'  => true,
+		]
+	);
+
+	foreach ( $ids as $id ) {
+		$id   = (int) $id;
+		$path = (string) get_post_meta( $id, '_tp_child_seed_asset_path', true );
+		$file = basename( $path );
+
+		if ( in_array( $file, $new, true ) ) {
+			tp_child_media_fill_alt( $id, $path );
+		} elseif ( 'flow-choice-piatto.webp' === $file ) {
+			if ( 'Il piatto' === trim( (string) get_post_meta( $id, '_wp_attachment_image_alt', true ) ) ) {
+				update_post_meta( $id, '_wp_attachment_image_alt', 'La vaschetta' );
+			}
+
+			if ( 'Il piatto' === (string) get_post_field( 'post_title', $id ) ) {
+				wp_update_post(
+					[
+						'ID'         => $id,
+						'post_title' => 'La vaschetta',
+					]
+				);
+			}
+		}
+	}
+
+	update_option( $flag, TP_CHILD_VERSION, true );
+}
+
+add_action( 'init', 'tp_child_fill_media_alt_080', 47 );

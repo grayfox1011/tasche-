@@ -311,6 +311,7 @@ require_once TP_CHILD_PATH . 'inc/shape-wave-colors-067.php';
 require_once TP_CHILD_PATH . 'inc/footer-characters-068.php';
 require_once TP_CHILD_PATH . 'inc/home-additions-069.php';
 require_once TP_CHILD_PATH . 'inc/live-texts-070.php';
+require_once TP_CHILD_PATH . 'inc/own-design-080.php';
 
 /**
  * Render a single footer menu column from a WordPress menu location.
@@ -597,7 +598,13 @@ function tp_child_enqueue_assets(): void {
 		tp_child_asset_version( 'assets/css/tasche-piene-figma.css' )
 	);
 
+	// The buttons with the arrow as wide as their words (0.8.0): on the site after tasche-piene.js has made
+	// their label and arrow, in the Visual Builder on the link itself.
+	$button_fit = [ TP_CHILD_URL . 'assets/js/tp-button-fit.js', tp_child_asset_version( 'assets/js/tp-button-fit.js' ) ];
+
 	if ( tp_child_is_visual_builder() ) {
+		wp_enqueue_script( 'tp-button-fit', $button_fit[0], [], $button_fit[1], true );
+
 		return;
 	}
 
@@ -608,6 +615,7 @@ function tp_child_enqueue_assets(): void {
 		tp_child_asset_version( 'assets/js/tasche-piene.js' ),
 		true
 	);
+	wp_enqueue_script( 'tp-button-fit', $button_fit[0], [ 'tp-site' ], $button_fit[1], true );
 }
 add_action( 'wp_enqueue_scripts', 'tp_child_enqueue_assets', 20 );
 

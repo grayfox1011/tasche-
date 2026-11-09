@@ -2142,7 +2142,9 @@
 		margin-top: 19px;
 	}
 
-	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-alberto-mobile-flow .tp-alberto-copy + .tp-alberto-photo-main) {
+	/* One class, so that the margin set in Divi for the phones (Foto grande > Design > Spaziatura) wins: Divi
+	   prints the spacing of an Image module without !important (0.8.0; it had four classes and stayed 25.5 px). */
+	.tp-child-theme :where(#page-container .tp-alberto-mobile-flow .tp-alberto-copy + .tp-alberto-photo-main) {
 		margin-top: 25.5px;
 	}
 
@@ -3708,5 +3710,563 @@ body.tp-child-theme :where(.tp-faq .et_pb_toggle_content a) {
 
 	.tp-child-theme.tp-child-theme :where(.tp-scelta-chip ul) {
 		flex-wrap: wrap;
+	}
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* 0.8.0: the buttons with the arrow as wide as their words. The measures of label, arrow and link   */
+/* are those of the Figma, right for the words the theme writes; assets/js/tp-button-fit.js measures  */
+/* the words and moves the three by the difference from the width the theme's words have here:      */
+/* "Le materie prime" 166 px, "Mappe" 67.69 px, "Guarda il menu" 147.88 px (132.25 px on phones, in  */
+/* 17.9 px). Words as wide as these leave everything as it is.                                       */
+/* ------------------------------------------------------------------------------------------------ */
+.tp-child-theme :where(a.tp-intro-button, a.tp-location-button) {
+	--tp-intro-button-text: 166px;
+}
+
+.tp-child-theme :where(a.tp-location-button) {
+	--tp-intro-button-text: 67.69px;
+}
+
+.tp-child-theme :where(a.tp-hero-button) {
+	--tp-intro-button-text: 147.88px;
+}
+
+@media (max-width: 767px) {
+
+	.tp-child-theme :where(a.tp-hero-button) {
+		--tp-intro-button-text: 132.25px;
+	}
+
+	/* On phones the hero's label and arrow have their measures written as numbers: once fitted they take the
+	   button's, as on the wider screens. */
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button[data-tp-button-fit] .tp-intro-button__label) {
+		width: var(--tp-intro-button-label-width);
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button[data-tp-button-fit] .tp-intro-button__arrow) {
+		transform: translate(var(--tp-intro-button-arrow-left), 0);
+	}
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* 0.8.0: in the Visual Builder the link is drawn as the button (0.6.6). It was as wide as the link of */
+/* the site, which is wider than the button for the arrow that comes away with the mouse, and was    */
+/* cut to the button's shape (clip-path): a border chosen in Divi lost its right side and the corners */
+/* stayed 15 px. The link is now as wide as the button one sees (the arrow's place plus the arrow),  */
+/* not cut: Divi's background, border and corners are the button's, as on the site.                  */
+/* tp-button-fit.js reads here whether the link is drawn as label and arrow (1) or as one box (0).    */
+/* ------------------------------------------------------------------------------------------------ */
+.tp-child-theme :where(body.et-fb a.tp-intro-button, body.et-fb a.tp-location-button, body.et-fb a.tp-hero-button) {
+	--tp-intro-button-arrow: 1;
+}
+
+@media (max-width: 767px) {
+
+	.tp-child-theme :where(body.et-fb a.tp-intro-button:not(.tp-hero-button), body.et-fb a.tp-location-button) {
+		--tp-intro-button-arrow: 0;
+	}
+}
+
+@media (min-width: 768px) {
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(body.et-fb #page-container a.et_pb_button.tp-intro-button, body.et-fb #page-container a.et_pb_button.tp-location-button) {
+		width: calc(var(--tp-intro-button-arrow-left) + 54px);
+		padding-right: 54px;
+		clip-path: none;
+	}
+}
+
+@media (max-width: 767px) {
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(body.et-fb #page-container a.et_pb_button.tp-hero-button) {
+		width: calc(var(--tp-intro-button-arrow-left) + 48.33px);
+		clip-path: none;
+	}
+}
+
+/* With a border chosen in Divi the link's inside starts after it: the arrow goes back by its top and its left
+   (tp-button-fit.js writes them and takes them off the link's paddings, so that the words do not move either). */
+body.et-fb #page-container .et_pb_section a.et_pb_button.tp-intro-button::after,
+body.et-fb #page-container .et_pb_section a.et_pb_button.tp-location-button::after,
+body.et-fb #page-container .et_pb_section a.et_pb_button.tp-hero-button::after {
+	margin: calc(-1 * var(--tp-own-border-y, 0px)) 0 0 calc(-1 * var(--tp-own-border-x, 0px));
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* 0.8.0: the values of Pulsante > Design on the buttons with the arrow. On the site the button one   */
+/* sees is the label and the arrow tasche-piene.js puts inside the link, each with its colours: the  */
+/* values Divi writes on the link did not reach them. A link with values of its own says which, per  */
+/* device (inc/own-design-080.php: tp-own-color-d, tp-own-bg-t, tp-own-border-p ...), and here label  */
+/* and arrow take them from the link: the colour and the font of the text; the background (the link  */
+/* keeps its own clipped to its text, so that its box, wider than the button, paints nothing); the   */
+/* corners; the border, which the link does not paint (its box is not the button) and the two pieces */
+/* draw inside themselves, each side with the width, the style and the colour tp-button-fit.js reads */
+/* on the link (--tp-own-border-top ...), so that nothing moves: at rest one line around label and  */
+/* arrow together, with the mouse on the button also around the arrow that comes away.              */
+/* Without a class nothing here applies. On phones "Le materie prime" is the link itself, and with   */
+/* "Mappe" a box without the arrow: there Divi's border is the link's own.                           */
+/* ------------------------------------------------------------------------------------------------ */
+@media (min-width: 981px) {
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-color-d .tp-intro-button__label),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-color-d .tp-intro-button__arrow),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-color-d .tp-intro-button__glyph),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-hcolor-d:hover .tp-intro-button__label),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-hcolor-d:hover .tp-intro-button__arrow),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-hcolor-d:hover .tp-intro-button__glyph),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-hcolor-d:focus-visible .tp-intro-button__label),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-hcolor-d:focus-visible .tp-intro-button__arrow),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-hcolor-d:focus-visible .tp-intro-button__glyph) {
+		color: inherit;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-size-d .tp-intro-button__label) {
+		font-size: inherit;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-family-d .tp-intro-button__label) {
+		font-family: inherit;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-weight-d .tp-intro-button__label) {
+		font-weight: inherit;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-style-d .tp-intro-button__label) {
+		font-style: inherit;
+		text-transform: inherit;
+		text-decoration: inherit;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-ls-d .tp-intro-button__label) {
+		letter-spacing: inherit;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-lh-d .tp-intro-button__label) {
+		line-height: inherit;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-bg-d),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-bgimg-d),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-hbg-d:hover),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-hbg-d:focus-visible) {
+		-webkit-background-clip: text;
+		background-clip: text;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-bg-d:not(.tp-hero-button) .tp-intro-button__label),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-bg-d:not(.tp-hero-button) .tp-intro-button__arrow) {
+		background-color: inherit;
+		background-image: none;
+	}
+
+	/* The hero's button keeps the theme's fill for the mouse: only its base layer goes. */
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-bg-d .tp-intro-button__label),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-bg-d .tp-intro-button__arrow) {
+		background-color: inherit;
+		background-size: 100% 0%, 0 0;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-bg-d:hover .tp-intro-button__label),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-bg-d:hover .tp-intro-button__arrow),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-bg-d:focus-visible .tp-intro-button__label),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-bg-d:focus-visible .tp-intro-button__arrow) {
+		background-size: 100% 100%, 0 0;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-bgimg-d .tp-intro-button__label),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-bgimg-d .tp-intro-button__arrow) {
+		background-color: inherit;
+		background-image: inherit;
+		background-size: inherit;
+		background-position: inherit;
+		background-repeat: inherit;
+		background-origin: inherit;
+		background-blend-mode: inherit;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-hbg-d:hover .tp-intro-button__label),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-hbg-d:hover .tp-intro-button__arrow),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-hbg-d:focus-visible .tp-intro-button__label),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-hbg-d:focus-visible .tp-intro-button__arrow) {
+		background-color: inherit;
+		background-image: none;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-radius-d .tp-intro-button__label) {
+		border-radius: inherit;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-radius-d .tp-intro-button__arrow),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-border-d .tp-intro-button__arrow) {
+		border-radius: inherit;
+		border-top-left-radius: 0;
+		border-bottom-left-radius: 0;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-radius-d:hover .tp-intro-button__arrow),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-radius-d:focus-visible .tp-intro-button__arrow),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-border-d:hover .tp-intro-button__arrow),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-border-d:focus-visible .tp-intro-button__arrow) {
+		border-top-left-radius: inherit;
+		border-bottom-left-radius: inherit;
+	}
+
+	/* The border: the link keeps Divi's values and paints none; label and arrow go back by the room it takes
+	   and draw it inside themselves, the arrow without its left side while it is against the label. */
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-border-d) {
+		border-image: linear-gradient(transparent, transparent) 1;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-border-d .tp-intro-button__label),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-border-d .tp-intro-button__arrow) {
+		margin: calc(-1 * var(--tp-own-border-y, 0px)) 0 0 calc(-1 * var(--tp-own-border-x, 0px));
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-border-d .tp-intro-button__label)::after,
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-border-d .tp-intro-button__arrow)::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		box-sizing: border-box;
+		border-top: var(--tp-own-border-top, 0 none);
+		border-right: var(--tp-own-border-right, 0 none);
+		border-bottom: var(--tp-own-border-bottom, 0 none);
+		border-left: var(--tp-own-border-left, 0 none);
+		border-radius: inherit;
+		pointer-events: none;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-border-d .tp-intro-button__arrow)::after {
+		border-left: 0 none;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-border-d:hover .tp-intro-button__arrow)::after,
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-border-d:focus-visible .tp-intro-button__arrow)::after {
+		border-left: var(--tp-own-border-left, 0 none);
+	}
+
+	/* Striscia scorrevole: a background chosen in Design > Sfondo shows through the strip. */
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(.tp_marquee.tp-own-bg-d .tp-marquee) {
+		background-color: transparent;
+		background-image: none;
+	}
+}
+
+@media (min-width: 768px) and (max-width: 980px) {
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-color-t .tp-intro-button__label),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-color-t .tp-intro-button__arrow),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-color-t .tp-intro-button__glyph),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-hcolor-t:hover .tp-intro-button__label),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-hcolor-t:hover .tp-intro-button__arrow),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-hcolor-t:hover .tp-intro-button__glyph),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-hcolor-t:focus-visible .tp-intro-button__label),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-hcolor-t:focus-visible .tp-intro-button__arrow),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-hcolor-t:focus-visible .tp-intro-button__glyph) {
+		color: inherit;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-size-t .tp-intro-button__label) {
+		font-size: inherit;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-family-t .tp-intro-button__label) {
+		font-family: inherit;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-weight-t .tp-intro-button__label) {
+		font-weight: inherit;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-style-t .tp-intro-button__label) {
+		font-style: inherit;
+		text-transform: inherit;
+		text-decoration: inherit;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-ls-t .tp-intro-button__label) {
+		letter-spacing: inherit;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-lh-t .tp-intro-button__label) {
+		line-height: inherit;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-bg-t),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-bgimg-t),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-hbg-t:hover),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-hbg-t:focus-visible) {
+		-webkit-background-clip: text;
+		background-clip: text;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-bg-t:not(.tp-hero-button) .tp-intro-button__label),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-bg-t:not(.tp-hero-button) .tp-intro-button__arrow) {
+		background-color: inherit;
+		background-image: none;
+	}
+
+	/* The hero's button keeps the theme's fill for the mouse: only its base layer goes. */
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-bg-t .tp-intro-button__label),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-bg-t .tp-intro-button__arrow) {
+		background-color: inherit;
+		background-size: 100% 0%, 0 0;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-bg-t:hover .tp-intro-button__label),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-bg-t:hover .tp-intro-button__arrow),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-bg-t:focus-visible .tp-intro-button__label),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-bg-t:focus-visible .tp-intro-button__arrow) {
+		background-size: 100% 100%, 0 0;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-bgimg-t .tp-intro-button__label),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-bgimg-t .tp-intro-button__arrow) {
+		background-color: inherit;
+		background-image: inherit;
+		background-size: inherit;
+		background-position: inherit;
+		background-repeat: inherit;
+		background-origin: inherit;
+		background-blend-mode: inherit;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-hbg-t:hover .tp-intro-button__label),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-hbg-t:hover .tp-intro-button__arrow),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-hbg-t:focus-visible .tp-intro-button__label),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-hbg-t:focus-visible .tp-intro-button__arrow) {
+		background-color: inherit;
+		background-image: none;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-radius-t .tp-intro-button__label) {
+		border-radius: inherit;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-radius-t .tp-intro-button__arrow),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-border-t .tp-intro-button__arrow) {
+		border-radius: inherit;
+		border-top-left-radius: 0;
+		border-bottom-left-radius: 0;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-radius-t:hover .tp-intro-button__arrow),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-radius-t:focus-visible .tp-intro-button__arrow),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-border-t:hover .tp-intro-button__arrow),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-border-t:focus-visible .tp-intro-button__arrow) {
+		border-top-left-radius: inherit;
+		border-bottom-left-radius: inherit;
+	}
+
+	/* The border: the link keeps Divi's values and paints none; label and arrow go back by the room it takes
+	   and draw it inside themselves, the arrow without its left side while it is against the label. */
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-border-t) {
+		border-image: linear-gradient(transparent, transparent) 1;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-border-t .tp-intro-button__label),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-border-t .tp-intro-button__arrow) {
+		margin: calc(-1 * var(--tp-own-border-y, 0px)) 0 0 calc(-1 * var(--tp-own-border-x, 0px));
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-border-t .tp-intro-button__label)::after,
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-border-t .tp-intro-button__arrow)::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		box-sizing: border-box;
+		border-top: var(--tp-own-border-top, 0 none);
+		border-right: var(--tp-own-border-right, 0 none);
+		border-bottom: var(--tp-own-border-bottom, 0 none);
+		border-left: var(--tp-own-border-left, 0 none);
+		border-radius: inherit;
+		pointer-events: none;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-border-t .tp-intro-button__arrow)::after {
+		border-left: 0 none;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-border-t:hover .tp-intro-button__arrow)::after,
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-border-t:focus-visible .tp-intro-button__arrow)::after {
+		border-left: var(--tp-own-border-left, 0 none);
+	}
+
+	/* Striscia scorrevole: a background chosen in Design > Sfondo shows through the strip. */
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(.tp_marquee.tp-own-bg-t .tp-marquee) {
+		background-color: transparent;
+		background-image: none;
+	}
+}
+
+@media (max-width: 767px) {
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-color-p .tp-intro-button__label),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-color-p .tp-intro-button__arrow),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-color-p .tp-intro-button__glyph),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-hcolor-p:hover .tp-intro-button__label),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-hcolor-p:hover .tp-intro-button__arrow),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-hcolor-p:hover .tp-intro-button__glyph),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-hcolor-p:focus-visible .tp-intro-button__label),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-hcolor-p:focus-visible .tp-intro-button__arrow),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-hcolor-p:focus-visible .tp-intro-button__glyph) {
+		color: inherit;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-size-p .tp-intro-button__label) {
+		font-size: inherit;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-family-p .tp-intro-button__label) {
+		font-family: inherit;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-weight-p .tp-intro-button__label) {
+		font-weight: inherit;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-style-p .tp-intro-button__label) {
+		font-style: inherit;
+		text-transform: inherit;
+		text-decoration: inherit;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-ls-p .tp-intro-button__label) {
+		letter-spacing: inherit;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-lh-p .tp-intro-button__label) {
+		line-height: inherit;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-bg-p:not(.tp-intro-button:not(.tp-hero-button))),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-bgimg-p:not(.tp-intro-button:not(.tp-hero-button))),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-hbg-p:not(.tp-intro-button:not(.tp-hero-button)):hover),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-hbg-p:not(.tp-intro-button:not(.tp-hero-button)):focus-visible) {
+		-webkit-background-clip: text;
+		background-clip: text;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-bg-p:not(.tp-intro-button:not(.tp-hero-button)):not(.tp-hero-button) .tp-intro-button__label),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-bg-p:not(.tp-intro-button:not(.tp-hero-button)):not(.tp-hero-button) .tp-intro-button__arrow) {
+		background-color: inherit;
+		background-image: none;
+	}
+
+	/* The hero's button keeps the theme's fill for the mouse: only its base layer goes. */
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-bg-p .tp-intro-button__label),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-bg-p .tp-intro-button__arrow) {
+		background-color: inherit;
+		background-size: 100% 0%, 0 0;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-bg-p:hover .tp-intro-button__label),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-bg-p:hover .tp-intro-button__arrow),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-bg-p:focus-visible .tp-intro-button__label),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-bg-p:focus-visible .tp-intro-button__arrow) {
+		background-size: 100% 100%, 0 0;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-bgimg-p:not(.tp-intro-button:not(.tp-hero-button)) .tp-intro-button__label),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-bgimg-p:not(.tp-intro-button:not(.tp-hero-button)) .tp-intro-button__arrow) {
+		background-color: inherit;
+		background-image: inherit;
+		background-size: inherit;
+		background-position: inherit;
+		background-repeat: inherit;
+		background-origin: inherit;
+		background-blend-mode: inherit;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-hbg-p:not(.tp-intro-button:not(.tp-hero-button)):hover .tp-intro-button__label),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-hbg-p:not(.tp-intro-button:not(.tp-hero-button)):hover .tp-intro-button__arrow),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-hbg-p:not(.tp-intro-button:not(.tp-hero-button)):focus-visible .tp-intro-button__label),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-hbg-p:not(.tp-intro-button:not(.tp-hero-button)):focus-visible .tp-intro-button__arrow) {
+		background-color: inherit;
+		background-image: none;
+	}
+
+	/* "Mappe" on phones: its label is the box, 0.8 px inside the link; with a border of Divi's the label fills
+	   the link, whose border and corners frame it. "Le materie prime": the link is the box, and its label, as
+	   tall as the link without a border, takes the room inside it (the words stay in the middle). */
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-intro-button.tp-own-border-p:not(.tp-hero-button) .tp-intro-button__label) {
+		height: 100%;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-location-button.tp-own-border-p) {
+		padding: 0;
+		overflow: hidden;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-location-button.tp-own-border-p .tp-intro-button__label) {
+		border-radius: 0;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-location-button.tp-own-radius-p .tp-intro-button__label),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-location-button.tp-own-bg-p .tp-intro-button__label),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-location-button.tp-own-bgimg-p .tp-intro-button__label),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-location-button.tp-own-hbg-p .tp-intro-button__label) {
+		border-radius: inherit;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-radius-p .tp-intro-button__label) {
+		border-radius: inherit;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-radius-p .tp-intro-button__arrow),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-border-p .tp-intro-button__arrow) {
+		border-radius: inherit;
+		border-top-left-radius: 0;
+		border-bottom-left-radius: 0;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-radius-p:hover .tp-intro-button__arrow),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-radius-p:focus-visible .tp-intro-button__arrow),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-border-p:hover .tp-intro-button__arrow),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-border-p:focus-visible .tp-intro-button__arrow) {
+		border-top-left-radius: inherit;
+		border-bottom-left-radius: inherit;
+	}
+
+	/* The border: the link keeps Divi's values and paints none; label and arrow go back by the room it takes
+	   and draw it inside themselves, the arrow without its left side while it is against the label. */
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-border-p) {
+		border-image: linear-gradient(transparent, transparent) 1;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-border-p .tp-intro-button__label),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-border-p .tp-intro-button__arrow) {
+		margin: calc(-1 * var(--tp-own-border-y, 0px)) 0 0 calc(-1 * var(--tp-own-border-x, 0px));
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-border-p .tp-intro-button__label)::after,
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-border-p .tp-intro-button__arrow)::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		box-sizing: border-box;
+		border-top: var(--tp-own-border-top, 0 none);
+		border-right: var(--tp-own-border-right, 0 none);
+		border-bottom: var(--tp-own-border-bottom, 0 none);
+		border-left: var(--tp-own-border-left, 0 none);
+		border-radius: inherit;
+		pointer-events: none;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-border-p .tp-intro-button__arrow)::after {
+		border-left: 0 none;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-border-p:hover .tp-intro-button__arrow)::after,
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-border-p:focus-visible .tp-intro-button__arrow)::after {
+		border-left: var(--tp-own-border-left, 0 none);
+	}
+
+	/* Striscia scorrevole: a background chosen in Design > Sfondo shows through the strip. */
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(.tp_marquee.tp-own-bg-p .tp-marquee) {
+		background-color: transparent;
+		background-image: none;
 	}
 }

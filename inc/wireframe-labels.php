@@ -160,6 +160,8 @@ function tp_child_wireframe_old_labels(): array {
 		'tp-materie-section'  => 'Le materie prime',
 		'tp-location-section' => 'Location',
 		'tp-hours-section'    => 'Quando siamo aperti',
+		// 0.8.0: a button of the delivery made by hand had the name of its kind; it takes the one of its picture.
+		'tp-menu-delivery-link'           => 'Tasto di consegna',
 	];
 }
 
@@ -283,6 +285,17 @@ function tp_child_wireframe_label( array $block, array $ancestors ): string {
 		return '' !== $day ? 'Giorno: ' . $day : 'Giorno';
 	}
 
+	// A button of the delivery, by the name of its picture ("just-eat.png": "Tasto: Just Eat"), so that two
+	// buttons made by hand can be told apart (0.8.0; the home's had their names written in).
+	if ( in_array( 'tp-menu-delivery-link', $classes, true ) ) {
+		$src  = $attrs['image']['innerContent']['desktop']['value']['src'] ?? '';
+		$name = is_string( $src ) ? pathinfo( (string) wp_parse_url( $src, PHP_URL_PATH ), PATHINFO_FILENAME ) : '';
+		$name = (string) preg_replace( '/(?:-scaled|-\d+x\d+|-e\d{10,})$/', '', (string) $name );
+		$name = trim( (string) preg_replace( '/[-_\s]+/', ' ', $name ) );
+
+		return '' !== $name ? 'Tasto: ' . ucwords( $name ) : 'Tasto di consegna';
+	}
+
 	foreach ( tp_child_wireframe_label_map() as $class => $label ) {
 		if ( in_array( $class, $classes, true ) ) {
 			return $label;
@@ -297,11 +310,11 @@ function tp_child_wireframe_label( array $block, array $ancestors ): string {
  * label is one of those names made by the theme: those follow the text; any other label the owner wrote stays.
  */
 function tp_child_wireframe_named_by_content( array $block, array $classes ): bool {
-	return in_array( $block['blockName'] ?? '', [ 'tp/marquee-item', 'tp/header-nav-item', 'tp/footer-nav-item' ], true ) || [] !== array_intersect( [ 'tp-menu-row', 'tp-materie-card', 'tp-hours-item' ], $classes );
+	return in_array( $block['blockName'] ?? '', [ 'tp/marquee-item', 'tp/header-nav-item', 'tp/footer-nav-item' ], true ) || [] !== array_intersect( [ 'tp-menu-row', 'tp-materie-card', 'tp-hours-item', 'tp-menu-delivery-link' ], $classes );
 }
 
 function tp_child_wireframe_is_content_name( string $label ): bool {
-	return 1 === preg_match( '/^(?:Piatto|Contorno|Dolce|Bevanda|Card|Giorno|Scritta|Voce|Sinistra|Destra)(?:: |$)/u', $label );
+	return 1 === preg_match( '/^(?:Piatto|Contorno|Dolce|Bevanda|Card|Giorno|Scritta|Voce|Sinistra|Destra|Tasto)(?:: |$)/u', $label );
 }
 
 /**
