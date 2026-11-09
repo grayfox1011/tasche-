@@ -259,7 +259,7 @@
       "type": "object",
       "default": {
         "desktop": {
-          "value": "auto"
+          "value": ""
         }
       },
       "settings": {
@@ -276,28 +276,10 @@
               "responsive": false
             },
             "component": {
-              "name": "divi/select",
-              "type": "field",
-              "props": {
-                "options": {
-                  "auto": {
-                    "label": "Automatico"
-                  },
-                  "green": {
-                    "label": "Verde"
-                  },
-                  "burgundy": {
-                    "label": "Bordeaux"
-                  },
-                  "cream": {
-                    "label": "Crema"
-                  },
-                  "sand": {
-                    "label": "Sabbia"
-                  }
-                }
-              }
-            }
+              "name": "divi/color-picker",
+              "type": "field"
+            },
+            "description": "Vuoto: il colore della forma scelta."
           }
         }
       }
@@ -306,7 +288,7 @@
       "type": "object",
       "default": {
         "desktop": {
-          "value": "auto"
+          "value": ""
         }
       },
       "settings": {
@@ -323,31 +305,10 @@
               "responsive": false
             },
             "component": {
-              "name": "divi/select",
-              "type": "field",
-              "props": {
-                "options": {
-                  "auto": {
-                    "label": "Automatico"
-                  },
-                  "transparent": {
-                    "label": "Trasparente"
-                  },
-                  "green": {
-                    "label": "Verde"
-                  },
-                  "burgundy": {
-                    "label": "Bordeaux"
-                  },
-                  "cream": {
-                    "label": "Crema"
-                  },
-                  "sand": {
-                    "label": "Sabbia"
-                  }
-                }
-              }
-            }
+              "name": "divi/color-picker",
+              "type": "field"
+            },
+            "description": "Vuoto: lo sfondo della forma scelta (di solito trasparente)."
           }
         }
       }

@@ -101,9 +101,19 @@ export const SHAPE_DEFINITIONS: Record<string, ShapeDefinition> = {
 	},
 };
 
+/**
+ * Empty or "auto": the shape's own colour; a name of the old list (green, burgundy...): the theme's colour;
+ * any other colour (Divi's colour picker, since 0.6.7) as it is. As get_color_value() on the site.
+ */
 export const resolveShapeColor = (color: string, fallbackToken: string): string => {
-	if (color !== 'auto' && SHAPE_COLORS[color]) {
-		return SHAPE_COLORS[color];
+	const value = color.trim();
+
+	if (value !== '' && value !== 'auto' && !SHAPE_COLORS[value] && /^(#[0-9a-f]{3,8}|(rgb|rgba|hsl|hsla)\([0-9.,%\s/+-]+\)|var\(--[a-z0-9_-]+(,\s*#[0-9a-f]{3,8})?\)|[a-z]{3,20})$/i.test(value)) {
+		return value;
+	}
+
+	if (value !== 'auto' && SHAPE_COLORS[value]) {
+		return SHAPE_COLORS[value];
 	}
 
 	return SHAPE_COLORS[fallbackToken] ?? SHAPE_COLORS.green;

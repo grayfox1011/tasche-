@@ -1,4 +1,67 @@
-TASCHE PIENE — VERSIONE 0.6.6, CANDIDATA AL COLLAUDO
+TASCHE PIENE — VERSIONE 0.6.7, CANDIDATA AL COLLAUDO
+
+La 0.6.7 rende modificabile da Divi la sezione Materie prime ("Non sono
+principi astratti, sono scelte.", quella con le parole in genovese) e fa
+funzionare i suoi pezzi duplicati. Le note delle versioni precedenti, piu'
+in basso, restano valide.
+
+COSA CAMBIA RISPETTO ALLA 0.6.6
+- Card: sfondo (colore, sfumatura, immagine), colore della linea e angoli
+  si cambiano dalla card (Card > Design > Sfondo, Bordi). Prima il pannello
+  crema era disegnato a parte e non cambiava: il colore di Divi finiva
+  dietro, invisibile. Lo spessore della linea resta quello del tema.
+- Col mouse sopra la card: il verde di sempre, anche sopra un colore
+  scelto; un altro colore si mette nella scheda "col mouse sopra" dello
+  sfondo della card. Lo stesso per la parola in genovese (verde chiaro) e
+  la macchia dietro la foto (sparisce).
+- Parola in genovese: l'icona prende il colore del testo (Parola in
+  genovese > Design > Testo). Prima era sempre crema.
+- Onda: "Colore wave" e "Colore sfondo" sono il selettore di colore di
+  Divi, con i colori globali (prima cinque nomi: verde, bordeaux, crema,
+  sabbia, automatico). Vuoto e' il colore della forma. Un nome scelto
+  prima diventa il suo colore, una volta, all'aggiornamento.
+- Card duplicata: sul computer va al posto dopo, invece di stare sopra
+  quella da cui e' copiata; le card che seguono scalano di un posto; dalla
+  settima i sei posti del Figma si ripetono piu' in basso e la sezione si
+  allunga (con meno di sei card si accorcia). Su tablet e telefono le card
+  sono una sotto l'altra, come prima.
+- Titolo, testo o parola in genovese duplicati dentro una card: si mettono
+  uno sotto l'altro e la card si allunga; prima stavano uno sopra l'altro.
+- Una sezione Materie prime duplicata ha la sua animazione delle card come
+  la prima.
+
+VERIFICHE EFFETTUATE SULLA 0.6.7
+- Prova automatica nel Visual Builder (valori scritti come li scrivono i
+  campi, salvati, misurati sul sito a 1440 px): sfondo della sezione,
+  sfondo di una card, sfondo sfumato, colore della linea, angoli di 60 px,
+  colore della scheda col mouse sopra, verde del tema col mouse sopra sopra
+  un colore scelto, sfondo della parola in genovese, icona del colore del
+  testo, macchia dietro la foto, colore dell'Onda: tutti come impostati,
+  sul sito e nel builder (confronto delle due immagini). Gia' prima
+  andavano: colori e misure di titoli e testi, colore della scritta
+  obliqua.
+- Duplicati con il pulsante Duplica di Divi (una card, una parola in
+  genovese, un testo), salvati: sito a 1440, 820 e 390 px e le tre viste
+  del builder uguali; nessun pezzo sopra un altro, la settima card intera
+  sotto le altre, la sezione piu' lunga.
+- Aspetto invariato senza modifiche: 44 foto di sezione (4 larghezze)
+  della home uguali alla 0.6.6, tranne le icone delle parole in genovese
+  su tablet e telefono, ora disegnate come maschera: al massimo 4 su 255
+  nel colore di qualche pixel, a occhio identiche. Stati col mouse sopra:
+  22 su 22 uguali tranne il verde di una card col mouse sopra, che arriva
+  mezzo pixel piu' in basso (sfumatura del bordo). Builder: computer
+  identico, tablet e telefono con le stesse sfumature delle icone.
+- Il pacchetto dei moduli del builder (scripts/bundle.js) rifatto dai
+  sorgenti: con i sorgenti della 0.6.6 esce identico a quello della 0.6.6,
+  con quelli della 0.6.7 cambia solo l'Onda.
+
+NON PROVATI
+- Safari e un iPhone veri, un database MySQL e il video di sfondo nel
+  builder, come per le versioni precedenti.
+
+==============================================================================
+
+NOTE DELLA 0.6.6
 
 La 0.6.6 corregge i problemi trovati rifacendo la home da una pagina bianca,
 su un sito nuovo, seguendo la guida. Le note delle versioni precedenti, piu'

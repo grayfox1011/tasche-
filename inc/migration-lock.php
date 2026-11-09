@@ -47,6 +47,7 @@ function tp_child_migration_callbacks(): array {
 			'tp_child_bp_freeze_065',
 			'tp_child_fill_media_title_066',
 			'tp_child_bp_freeze_066',
+			'tp_child_migrate_shape_wave_colors_067',
 		],
 	];
 }

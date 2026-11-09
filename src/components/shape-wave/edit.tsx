@@ -4,7 +4,7 @@ import { ModuleContainer } from '@divi/module';
 import { ShapeWaveEditProps } from './types';
 import metadata from '../../../modules-json/shape-wave/module.json';
 import { createModuleClassnames, createModuleScriptData, createModuleStyles } from '../../utils/module-boilerplate';
-import { clampNumber, getString } from '../../utils/attrs';
+import { clampNumber, getColor, getString } from '../../utils/attrs';
 import { resolveShapeColor, SHAPE_DEFINITIONS } from './shapes';
 
 const MODULE_CLASSNAME = 'tp_shape_wave';
@@ -19,8 +19,8 @@ export const ShapeWaveEdit = (props: ShapeWaveEditProps): ReactElement => {
 	const variantValue = getString(attrs.variant, 'choice-green-overlap');
 	const variant = SHAPE_DEFINITIONS[variantValue] ? variantValue : 'choice-green-overlap';
 	const shape = SHAPE_DEFINITIONS[variant];
-	const fill = resolveShapeColor(getString(attrs.fillColor, 'auto'), shape.fill);
-	const background = resolveShapeColor(getString(attrs.backgroundColor, 'auto'), shape.background);
+	const fill = resolveShapeColor(getColor(attrs.fillColor, 'auto'), shape.fill);
+	const background = resolveShapeColor(getColor(attrs.backgroundColor, 'auto'), shape.background);
 	const width = clampNumber(getString(attrs.shapeWidth, String(shape.width)), shape.width, 120, 2400);
 	const height = clampNumber(getString(attrs.shapeHeight, String(shape.height)), shape.height, 20, 700);
 	const offsetY = clampNumber(getString(attrs.offsetY, '0'), 0, -400, 400);

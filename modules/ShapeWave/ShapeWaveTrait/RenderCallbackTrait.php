@@ -151,6 +151,12 @@ trait RenderCallbackTrait {
 		];
 	}
 
+	/**
+	 * The colour of "Colore wave" and "Colore sfondo": empty (or "auto") is the shape's own colour; since 0.6.7
+	 * the fields are Divi's colour picker, so any colour and Divi's global colours (`$variable({...})$`,
+	 * resolved as Divi does for its modules); the names of the old list (green, burgundy, cream, sand,
+	 * transparent) still give the theme's colours. A value that is not a colour gives the shape's colour.
+	 */
 	private static function get_color_value( string $color, string $fallback_token ): string {
 		$colors = [
 			'auto'        => 'auto',
@@ -160,6 +166,15 @@ trait RenderCallbackTrait {
 			'cream'       => '#fff5e9',
 			'sand'        => '#f8ebdb',
 		];
+		$color  = trim( $color );
+
+		if ( str_contains( $color, '$variable(' ) && class_exists( '\\ET\\Builder\\Packages\\StyleLibrary\\Utils\\Utils' ) ) {
+			$color = trim( (string) \ET\Builder\Packages\StyleLibrary\Utils\Utils::resolve_dynamic_variable( $color ) );
+		}
+
+		if ( '' !== $color && ! array_key_exists( $color, $colors ) && self::is_css_color( $color ) ) {
+			return $color;
+		}
 
 		$key = array_key_exists( $color, $colors ) ? $color : $fallback_token;
 
@@ -168,6 +183,14 @@ trait RenderCallbackTrait {
 		}
 
 		return $colors[ $key ] ?? $colors[ $fallback_token ] ?? '#054726';
+	}
+
+	/**
+	 * A colour that can go in a style attribute: #hex, rgb()/rgba()/hsl()/hsla(), var(--name) of a global
+	 * colour, or a CSS colour name.
+	 */
+	private static function is_css_color( string $color ): bool {
+		return (bool) preg_match( '/^(#[0-9a-f]{3,8}|(rgb|rgba|hsl|hsla)\([0-9.,%\s\/+-]+\)|var\(--[a-z0-9_-]+(,\s*#[0-9a-f]{3,8})?\)|[a-z]{3,20})$/i', $color );
 	}
 
 	private static function render_svg( array $shape ): string {
@@ -244,8 +267,8 @@ trait RenderCallbackTrait {
 			'--tp-shape-wave-width:%1$.2fpx;--tp-shape-wave-height:%2$.2fpx;--tp-shape-wave-fill:%3$s;--tp-shape-wave-bg:%4$s;--tp-shape-wave-offset-y:%5$.2fpx;',
 			$width,
 			$height,
-			$fill,
-			$background,
+			esc_attr( $fill ),
+			esc_attr( $background ),
 			$offset_y
 		);
 

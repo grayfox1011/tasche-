@@ -2922,3 +2922,207 @@ body.et-fb #page-container .et_pb_section a.et_pb_button.tp-location-button::aft
 		background: var(--tp-bordeaux);
 	}
 }
+
+/* ------------------------------------------------------------------------------------------------ */
+/* 0.6.7: Materie prime, the colours from Divi. The panel of a card (cream with its line, green while */
+/* the mouse is on the card) is drawn by ::before, smaller than the card, and grows with the mouse:   */
+/* it takes the background (colour, gradient or image), the colour of the line and the corners of the */
+/* card (Card > Design > Sfondo, Bordi), also the colour of Divi's hover tab. Without one, the mouse   */
+/* turns the panel green, also over a colour chosen in Divi. The card itself paints nothing: its      */
+/* background is clipped to its text (it has none, its pieces are positioned) and its line has no     */
+/* style; the thickness of the line stays the theme's (3 px, 1 px for the olives; 4 px on tablets and */
+/* phones).                                                                                           */
+/* ------------------------------------------------------------------------------------------------ */
+.tp-child-theme :where(.tp-materie-card) {
+	background-color: #f8ebdb;
+	border-color: var(--tp-divider);
+	-webkit-background-clip: text;
+	background-clip: text;
+}
+
+.tp-child-theme.tp-child-theme :where(.tp-materie-card) {
+	border-style: none;
+}
+
+.tp-child-theme :where(.tp-materie-card)::before {
+	background-color: inherit;
+	background-image: inherit;
+	background-position: inherit;
+	background-size: inherit;
+	background-repeat: inherit;
+	-webkit-background-clip: border-box;
+	background-clip: border-box;
+	border-color: inherit;
+	border-radius: inherit;
+}
+
+/* The corners of the panel are 20 px on phones too (the card had 19.5 px there, which only cut the panel). */
+@media (max-width: 767px) {
+
+	.tp-child-theme :where(.tp-materie-card) {
+		border-radius: 20px;
+	}
+}
+
+/* One class and an element: over the colour set in Divi (one class), under Divi's hover tab (two). */
+body:not(.et-fb) :where(.tp-materie-card:hover, .tp-materie-card.is-active) {
+	background-color: var(--tp-green);
+	border-color: var(--tp-green);
+}
+
+/* The same for the tag (light green) and the spot behind the photo (it goes) while the mouse is on the card. */
+body:not(.et-fb) :where(#page-container .tp-materie-card:hover .tp-materie-chip, #page-container .tp-materie-card.is-active .tp-materie-chip) {
+	background-color: var(--tp-lime);
+}
+
+body:not(.et-fb) :where(.tp-materie-card:hover .tp-materie-card-image, .tp-materie-card.is-active .tp-materie-card-image) {
+	background-color: transparent;
+}
+
+/* The icon of the tag in the colour of its text (Parola in genovese > Design > Testo). */
+.tp-child-theme :where(.tp-materie-chip .et_pb_text_inner)::before {
+	background: currentColor;
+	-webkit-mask: var(--tp-chip-icon, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23FFF5E9' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M17 21a1 1 0 0 0 1-1v-5.35c0-.46.32-.85.73-1.04A4 4 0 0 0 16.6 6.02a5 5 0 0 0-9.2 0 4 4 0 0 0-2.13 7.59c.41.19.73.58.73 1.04V20a1 1 0 0 0 1 1Z'/%3E%3Cpath d='M6 17h12'/%3E%3C/svg%3E")) center / var(--tp-chip-icon-size, contain) no-repeat;
+	mask: var(--tp-chip-icon, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23FFF5E9' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M17 21a1 1 0 0 0 1-1v-5.35c0-.46.32-.85.73-1.04A4 4 0 0 0 16.6 6.02a5 5 0 0 0-9.2 0 4 4 0 0 0-2.13 7.59c.41.19.73.58.73 1.04V20a1 1 0 0 0 1 1Z'/%3E%3Cpath d='M6 17h12'/%3E%3C/svg%3E")) center / var(--tp-chip-icon-size, contain) no-repeat;
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* 0.6.7: Materie prime, cards that can be copied. On computers a card takes its place by its order   */
+/* among the cards (the six places of the Figma; from the seventh they repeat 2517 px lower), so a    */
+/* copy takes the next place instead of lying on the card it was copied from; the frame of the cards */
+/* grows or shrinks with them. Its look (spot, photo, texts, icon) stays the one of its tp-materie-   */
+/* card--N class. Browsers without "of" in :nth-child() keep the places of the classes.               */
+/* ------------------------------------------------------------------------------------------------ */.tp-child-theme :where(.tp-materie-card:nth-child(6n + 1 of .tp-materie-card)) {
+	--tp-materie-card-x: 260.78;
+	--tp-materie-card-y: calc(0 + var(--tp-materie-card-lap, 0) * 2517);
+}
+.tp-child-theme :where(.tp-materie-card:nth-child(6n + 2 of .tp-materie-card)) {
+	--tp-materie-card-x: 966.31;
+	--tp-materie-card-y: calc(256.99 + var(--tp-materie-card-lap, 0) * 2517);
+}
+.tp-child-theme :where(.tp-materie-card:nth-child(6n + 3 of .tp-materie-card)) {
+	--tp-materie-card-x: 219.78;
+	--tp-materie-card-y: calc(855.34 + var(--tp-materie-card-lap, 0) * 2517);
+}
+.tp-child-theme :where(.tp-materie-card:nth-child(6n + 4 of .tp-materie-card)) {
+	--tp-materie-card-x: 140.99;
+	--tp-materie-card-y: calc(1801.57 + var(--tp-materie-card-lap, 0) * 2517);
+}
+.tp-child-theme :where(.tp-materie-card:nth-child(6n + 5 of .tp-materie-card)) {
+	--tp-materie-card-x: 765.39;
+	--tp-materie-card-y: calc(1348.12 + var(--tp-materie-card-lap, 0) * 2517);
+}
+.tp-child-theme :where(.tp-materie-card:nth-child(6n + 6 of .tp-materie-card)) {
+	--tp-materie-card-x: 1015.87;
+	--tp-materie-card-y: calc(1971.35 + var(--tp-materie-card-lap, 0) * 2517);
+}
+.tp-child-theme :where(.tp-materie-card:nth-child(n + 7 of .tp-materie-card)) {
+	--tp-materie-card-lap: 1;
+}
+.tp-child-theme :where(.tp-materie-card:nth-child(n + 13 of .tp-materie-card)) {
+	--tp-materie-card-lap: 2;
+}
+.tp-child-theme :where(.tp-materie-card:nth-child(n + 19 of .tp-materie-card)) {
+	--tp-materie-card-lap: 3;
+}
+.tp-child-theme :where(.tp-materie-card:nth-child(n + 25 of .tp-materie-card)) {
+	--tp-materie-card-lap: 4;
+}
+@media (min-width: 981px) {
+
+	.tp-child-theme :where(#page-container .tp-materie-section:has(.tp-materie-card:nth-child(7 of .tp-materie-card))) {
+		--tp-materie-cards-laps: 1;
+	}
+
+	.tp-child-theme :where(#page-container .tp-materie-section:has(.tp-materie-card:nth-child(13 of .tp-materie-card))) {
+		--tp-materie-cards-laps: 2;
+	}
+
+	.tp-child-theme :where(#page-container .tp-materie-section:has(.tp-materie-card:nth-child(19 of .tp-materie-card))) {
+		--tp-materie-cards-laps: 3;
+	}
+
+	.tp-child-theme :where(#page-container .tp-materie-section:has(.tp-materie-card:nth-child(25 of .tp-materie-card))) {
+		--tp-materie-cards-laps: 4;
+	}
+
+	.tp-child-theme :where(#page-container .tp-materie-section:has(.tp-materie-card:nth-last-child(1 of .tp-materie-card):nth-child(6n + 1 of .tp-materie-card))) {
+		--tp-materie-cards-tail: 517.25px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-materie-section:has(.tp-materie-card:nth-last-child(1 of .tp-materie-card):nth-child(6n + 2 of .tp-materie-card))) {
+		--tp-materie-cards-tail: 774.24px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-materie-section:has(.tp-materie-card:nth-last-child(1 of .tp-materie-card):nth-child(6n + 3 of .tp-materie-card))) {
+		--tp-materie-cards-tail: 1372.59px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-materie-section:has(.tp-materie-card:nth-last-child(1 of .tp-materie-card):nth-child(6n + 4 of .tp-materie-card))) {
+		--tp-materie-cards-tail: 2318.82px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-materie-section:has(.tp-materie-card:nth-last-child(1 of .tp-materie-card):nth-child(6n + 5 of .tp-materie-card))) {
+		--tp-materie-cards-tail: 2318.82px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-materie-section:has(.tp-materie-card:nth-last-child(1 of .tp-materie-card):nth-child(6n + 6 of .tp-materie-card))) {
+		--tp-materie-cards-tail: 2488.6px;
+	}
+
+	/*
+	 * With other than six cards the frame of the cards is as high as its lowest card, 28.4 px under it as in
+	 * the Figma, and the section and its row (3517 px with the six cards) grow or shrink as much.
+	 */
+	.tp-child-theme :where(#page-container .tp-materie-section:not(:has(.tp-materie-card:nth-child(6 of .tp-materie-card):nth-last-child(1 of .tp-materie-card))):has(.tp-materie-card)) {
+		--tp-materie-cards-height: calc(var(--tp-materie-cards-laps, 0) * 2517px + var(--tp-materie-cards-tail, 2488.6px) + 28.4px);
+	}
+
+	body.tp-child-theme.tp-child-theme :where(#page-container .tp-materie-section:not(:has(.tp-materie-card:nth-child(6 of .tp-materie-card):nth-last-child(1 of .tp-materie-card))):has(.tp-materie-card) .tp-materie-cards) {
+		height: var(--tp-materie-cards-height);
+		min-height: 0;
+	}
+
+	body.tp-child-theme.tp-child-theme :where(#page-container .tp-materie-section.et_pb_section:not(:has(.tp-materie-card:nth-child(6 of .tp-materie-card):nth-last-child(1 of .tp-materie-card))):has(.tp-materie-card)),
+	body.tp-child-theme.tp-child-theme :where(#page-container .tp-materie-section:not(:has(.tp-materie-card:nth-child(6 of .tp-materie-card):nth-last-child(1 of .tp-materie-card))):has(.tp-materie-card) .tp-materie-row) {
+		height: calc(var(--tp-materie-cards-height) + 1000px);
+		min-height: 0;
+	}
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* 0.6.7: Materie prime, a card with a copied piece (title, text or tag) or a module the card does not */
+/* have: its title, texts and tags stand one under the other from the place of the title, in their   */
+/* order, instead of lying on each other in the places of the Figma. The photo keeps its place.       */
+/* ------------------------------------------------------------------------------------------------ */
+.tp-child-theme :where(.tp-materie-card:has(> .tp-materie-card-title ~ .tp-materie-card-title, > .tp-materie-card-body ~ .tp-materie-card-body, > .tp-materie-chip ~ .tp-materie-chip, > .et_pb_module:not(.tp-materie-card-image, .tp-materie-card-title, .tp-materie-card-body, .tp-materie-chip))) {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 6px;
+	padding-top: var(--tp-mp-title-top);
+}
+
+/* Such a card grows with what is in it (at least as high as the others) and its panel with it. */
+.tp-child-theme.tp-child-theme :where(.tp-materie-card:has(> .tp-materie-card-title ~ .tp-materie-card-title, > .tp-materie-card-body ~ .tp-materie-card-body, > .tp-materie-chip ~ .tp-materie-chip, > .et_pb_module:not(.tp-materie-card-image, .tp-materie-card-title, .tp-materie-card-body, .tp-materie-chip))) {
+	height: auto;
+	min-height: 517.25px;
+	padding-bottom: 40px;
+}
+
+.tp-child-theme.tp-child-theme.tp-child-theme :where(.tp-materie-card:has(> .tp-materie-card-title ~ .tp-materie-card-title, > .tp-materie-card-body ~ .tp-materie-card-body, > .tp-materie-chip ~ .tp-materie-chip, > .et_pb_module:not(.tp-materie-card-image, .tp-materie-card-title, .tp-materie-card-body, .tp-materie-chip)))::before {
+	height: auto;
+	bottom: 16.62px;
+}
+
+.tp-child-theme.tp-child-theme.tp-child-theme :where(body:not(.et-fb) .tp-materie-card:has(> .tp-materie-card-title ~ .tp-materie-card-title, > .tp-materie-card-body ~ .tp-materie-card-body, > .tp-materie-chip ~ .tp-materie-chip, > .et_pb_module:not(.tp-materie-card-image, .tp-materie-card-title, .tp-materie-card-body, .tp-materie-chip)):hover)::before {
+	bottom: -60px;
+}
+
+.tp-child-theme.tp-child-theme.tp-child-theme :where(.tp-materie-card:has(> .tp-materie-card-title ~ .tp-materie-card-title, > .tp-materie-card-body ~ .tp-materie-card-body, > .tp-materie-chip ~ .tp-materie-chip, > .et_pb_module:not(.tp-materie-card-image, .tp-materie-card-title, .tp-materie-card-body, .tp-materie-chip)) > .et_pb_module:not(.tp-materie-card-image)) {
+	position: relative;
+	left: auto;
+	top: auto;
+	flex: 0 0 auto;
+	max-width: 100%;
+}

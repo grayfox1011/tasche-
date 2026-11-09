@@ -2,12 +2,15 @@
 	'use strict';
 
 	var gsap = window.gsap;
-	var section = document.querySelector('.tp-materie-section');
 
-	if (!section || !gsap) {
+	if (!gsap) {
 		return;
 	}
 
+	// Every Materie prime section of the page (a copied section works as the first one).
+	document.querySelectorAll('.tp-materie-section').forEach(initSection);
+
+	function initSection(section) {
 	var cards = gsap.utils.toArray(section.querySelectorAll('.tp-materie-card'));
 	var marquee = section.querySelector('.tp-materie-marquee');
 	var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -114,4 +117,5 @@
 			}
 		});
 	});
+	}
 })();
