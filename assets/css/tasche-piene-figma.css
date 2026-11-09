@@ -3656,3 +3656,30 @@ body.tp-child-theme :where(.tp-faq .et_pb_toggle_content a) {
 		max-width: calc(100% - 48px);
 	}
 }
+
+/* ------------------------------------------------------------------------------------------------ */
+/* 0.6.9: the dishes of the menu on the computers with a longer name or English line (as the names    */
+/* of taschepiene.it): they stop before the first price (the prices sit at 58% of the dish's width    */
+/* and more) and go on more lines, instead of running under the prices or out of the row; the English */
+/* line follows the name's last line. The Figma's names and lines fit as they are.                     */
+/* ------------------------------------------------------------------------------------------------ */
+@media (min-width: 981px) {
+
+	.tp-child-theme :where(.tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-item > .tp-menu-name) {
+		max-width: calc(58% - 8px);
+	}
+
+	.tp-child-theme :where(.tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-name) :where(h1, h2, h3, h4, h5, h6) {
+		white-space: normal;
+	}
+
+	.tp-child-theme :where(.tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-item > .tp-menu-meta) {
+		top: calc(100% + 5.5px);
+		max-width: calc(58% - 8px);
+		white-space: normal;
+	}
+
+	.tp-child-theme :where(.tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-meta) :where(.et_pb_text_inner, p, span) {
+		white-space: normal;
+	}
+}
