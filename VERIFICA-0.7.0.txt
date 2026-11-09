@@ -1,4 +1,104 @@
-TASCHE PIENE — VERSIONE 0.6.9, CANDIDATA AL COLLAUDO
+TASCHE PIENE — VERSIONE 0.7.0, CANDIDATA AL COLLAUDO
+
+La 0.7.0 mette nella home nuova i testi di taschepiene.it: la grafica resta
+quella del Figma, le parole sono quelle del sito pubblico. I tasti Just Eat
+e Deliveroo restano (si tolgono dal builder, cestino sul gruppo "Consegna a
+domicilio"). Le note delle versioni precedenti, piu' in basso, restano
+valide.
+
+COSA CAMBIA RISPETTO ALLA 0.6.9
+- Hero: "Pensavi / fosse amore / e invece era / Polpetta", "Guarda il
+  menu'" e "Street food · Gastronomia · Genova Centro Storico". Sul
+  computer il bottone e' 11 px piu' largo (la scritta e' piu' lunga di
+  "Scopri il menu'"); sul telefono la riga sotto va a capo.
+- Striscia: le sette frasi del sito.
+- Introduzione e Alberto: i paragrafi e il titolo del sito ("Cucinato ogni
+  mattina nel nostro laboratorio, tutto senza glutine").
+- Tasca o piatto: "Tasca ripiena o vaschetta. / Mangi qui o dove vuoi tu!",
+  "La tasca ripiena" e "La vaschetta" con le tre caratteristiche e il testo
+  del sito. Le caratteristiche, piu' lunghe, vanno su due righe anche su
+  tablet e telefono (prima sarebbero uscite dalla card).
+- Menu': "Il nostro menu'" con l'accento; legenda "Tasca / Di pane
+  ripiena" e "Vaschetta / Media - 200g / Grande - 400g" (il personaggio
+  sta a destra della parola, piu' lunga di PIATTO); i nove piatti del sito
+  con la descrizione in italiano e i prezzi (niente Vitello tonnato; la
+  salsiccia "in rotazione", 7,50 EUR, nella riga della proposta); "I nostri
+  contorni / Cosa ci vuoi vicino?", "Verdure al forno", contorni e dolci
+  senza riga in inglese; le bevande nell'ordine del sito (Acqua, Bevande,
+  Spumetta al bicchiere); l'elenco degli allergeni da 1 a 14 e la nota del
+  sito.
+- Allergeni: accanto ai piatti non ci sono piu' numeri. Il sito pubblico
+  non li ha (tutte le ricette sono senza glutine) e quelli del Figma
+  davano per esempio il glutine (1) a polpette e ripieni. Per rimetterli:
+  un Testo con la classe tp-menu-allergeni dopo il Nome del piatto, oppure
+  i numeri tra parentesi quadre nel nome, "[3,7]". Lo script del tema non
+  mette piu' a un piatto senza numeri quelli di una sua tabella interna.
+- Materie prime: il testo del sito e le sue quattro card (Le ormai celebri
+  polpette, I ripieni liguri, Tutto senza glutine, Spumette a bicchiere)
+  con le quattro foto del sito, senza parole in genovese.
+- Dove siamo: il testo e l'indirizzo del sito ("Via di Scurreria 42/R").
+- Orari: quelli del sito (12-21, il sabato 12-22, domenica chiusi) e la
+  trippa il martedi' e il venerdi': sei righe invece di cinque.
+- Header: La nostra idea, Il menu', Senza glutine, Domande (porta a
+  Informazioni utili), Dove siamo.
+- Footer: "Tasche Piene e' un progetto di Barrakuda S.r.l.", "P.IVA e
+  C.F.: 02789540990 | Via Carducci 5/10, 16121 - Genova", "Privacy Policy |
+  Cookie Policy" e "creato con ♥ da Mochi" con il link a mochidesign.it.
+  Prima la P.IVA era quella d'esempio del Figma. Sul tablet la riga della
+  P.IVA sta su una riga sua.
+- Privacy Policy: titolare del trattamento Barrakuda S.r.l. (Tasche
+  Piene), Via Carducci 5/10, 16121 Genova, P. IVA e C.F. 02789540990.
+- All'aggiornamento, una volta, cambia solo cio' che era ancora come
+  l'aveva scritto il tema: un testo, un prezzo o una foto cambiati a mano
+  restano. Un sito nuovo e uno aggiornato hanno la stessa home.
+
+VERIFICHE EFFETTUATE SULLA 0.7.0
+- Testi: dei 248 pezzi di testo della home di taschepiene.it, 246 sono
+  identici nella home nuova; gli altri due sono la riga del footer, che il
+  sito pubblico scrive in un paragrafo solo e la home nuova divide in voci
+  (le parole ci sono tutte). Le domande di Informazioni utili erano gia'
+  identiche.
+- Aspetto a 1920, 1440, 1100, 981, 820, 768 e 390 px: nessun testo tagliato
+  o sovrapposto dopo gli adattamenti (bottone dell'hero, personaggio della
+  legenda, caratteristiche di Tasca o piatto, riga sotto il titolo
+  dell'hero sul telefono, footer sul tablet). Le card del menu' del
+  telefono tengono su due righe i nomi lunghi; gli orari a sei righe
+  restano larghi quanto il titolo.
+- Visual Builder (computer, tablet, telefono): i testi nuovi, nessun numero
+  di allergene, la legenda con il personaggio accanto a VASCHETTA, sei
+  righe degli orari, il bottone dell'hero intero.
+- Aggiornamento da 0.6.9 e da 0.6.8: alla prima pagina aperta home, header,
+  footer, menu' di WordPress e Privacy Policy prendono i testi e i dati del
+  sito, senza errori PHP; la home e' identica a quella di un sito nuovo
+  (testi, struttura, foto). Dalla 0.6.8 arrivano prima i tasti e
+  Informazioni utili, poi i testi.
+- Installazione nuova (WordPress in italiano, Divi 5.15.1, zip da Aspetto >
+  Temi): home, header, footer e Privacy Policy con testi e dati del sito,
+  nessun errore PHP. Le migrazioni delle versioni precedenti, che
+  prenderebbero i testi del sito (gli stessi di prima della 0.5.9) per
+  testi vecchi del tema, non toccano la home appena creata: dopo la prima
+  pagina aperta e' identica a quella del tema.
+- Il pacchetto dei moduli del builder (scripts/bundle.js) rifatto dai
+  sorgenti: cambiano solo i testi predefiniti di header e footer.
+
+DA SAPERE
+- Sul telefono la descrizione sotto il nome dei piatti non si vede, come
+  nel Figma; sul computer compare col mouse sopra, sul tablet sotto il
+  nome.
+- Il titolo nella scheda del browser e su Google viene da WordPress
+  (Impostazioni > Generali), non dal tema; sul sito pubblico e' "Tasche
+  Piene Genova – Gastronomia & Streetfood – Cucinato caldo in tasca".
+- I link Facebook e Instagram del footer portano ancora a facebook.com e
+  instagram.com: vanno messi gli indirizzi delle pagine (Footer sito >
+  Elementi).
+
+NON PROVATI
+- Safari e un iPhone veri, un database MySQL e il video di sfondo nel
+  builder, come per le versioni precedenti.
+
+==============================================================================
+
+NOTE DELLA 0.6.9
 
 La 0.6.9 porta nella home due cose che ci sono su taschepiene.it e il tema
 non aveva: i tasti Just Eat e Deliveroo sotto il menu' e la sezione
