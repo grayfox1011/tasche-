@@ -33,8 +33,12 @@ trait RenderCallbackTrait {
 		);
 
 		$parsed_block = is_array( $block->parsed_block ?? null ) ? $block->parsed_block : [];
+		$as_items     = tp_child_footer_characters_as_items( $parsed_block );
 
-		$characters_html = tp_child_footer_render_characters_html( $attrs, $elements );
+		// The Personaggio elements (0.6.8), or the theme's three places of the footers not converted yet.
+		$characters_html = $as_items
+			? tp_child_footer_render_character_items_html( $content )
+			: tp_child_footer_render_characters_html( $attrs, $elements );
 		$logo_html       = tp_child_footer_render_logo_html( $attrs, $elements );
 		// The Voci of the module (Footer sito > Elementi); without Voci, the WordPress menus as before.
 		$nav_html        = tp_child_footer_render_nav_monolith_html( $attrs, tp_child_footer_nav_items_from_block( $parsed_block ) );
@@ -47,7 +51,7 @@ trait RenderCallbackTrait {
 				'tag'               => 'footer',
 				'attributes'        => array_filter(
 					[
-						'class' => 'site-footer tp-theme-footer',
+						'class' => 'site-footer tp-theme-footer' . ( $as_items ? ' tp-theme-footer--items' : '' ),
 						'style' => $footer_style ?: null,
 					]
 				),

@@ -584,9 +584,15 @@ function tp_child_seed_footer_block(): string {
 	// The links of the two menus as Voci of Footer sito (Contenuto > Elementi), from the menus the site has.
 	$voci = tp_child_footer_nav_item_blocks( tp_child_footer_nav_columns_without_voci( $attrs ), TP_CHILD_SEED_BUILDER_VERSION );
 
-	return '' !== $voci
-		? tp_child_seed_block_open( 'tp/theme-footer', $attrs ) . $voci . tp_child_seed_block_close( 'tp/theme-footer' )
-		: tp_child_seed_block_single( 'tp/theme-footer', $attrs );
+	// The characters as Personaggi of Footer sito (0.6.8): the couple, the pigeons, the man of the phones.
+	$attrs['characterItems'] = $text_attr( 'on' );
+	$personaggi              = '';
+
+	foreach ( tp_child_footer_character_blocks( [], TP_CHILD_SEED_BUILDER_VERSION, true ) as $character ) {
+		$personaggi .= serialize_block( $character ) . "\n";
+	}
+
+	return tp_child_seed_block_open( 'tp/theme-footer', $attrs ) . $voci . $personaggi . tp_child_seed_block_close( 'tp/theme-footer' );
 }
 
 

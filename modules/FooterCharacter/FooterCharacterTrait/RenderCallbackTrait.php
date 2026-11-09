@@ -1,6 +1,7 @@
 <?php
 /**
- * FooterCharacter::render_callback().
+ * FooterCharacter::render_callback(): the module's box is the character's place (its classes come from
+ * FooterCharacter::module_classnames()), the drawing inside it. Without a drawing nothing is printed.
  */
 
 namespace TaschePieneDiviChild\Modules\FooterCharacter\FooterCharacterTrait;
@@ -9,7 +10,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( 'Direct access forbidden.' );
 }
 
-use ET\Builder\Framework\Utility\HTMLUtility;
 use ET\Builder\FrontEnd\BlockParser\BlockParserStore;
 use ET\Builder\Packages\Module\Layout\Components\ModuleElements\ModuleElements;
 use ET\Builder\Packages\Module\Module;
@@ -25,21 +25,20 @@ trait RenderCallbackTrait {
 		ModuleElements $elements,
 		array $default_printed_style_attrs
 	): string {
-		$slot = sanitize_key( tp_child_chrome_get_string( $attrs, 'slot', 'one' ) );
-		$url  = tp_child_chrome_get_image_url( $attrs, 'image', 'imageUrl', '' );
+		$url = tp_child_chrome_get_image_url( $attrs, 'image', 'imageUrl', '' );
 
-		$img = '' !== $url
-			? tp_child_chrome_build_image_tag( $url, [ 'class' => 'tp-theme-footer-character', 'aria-hidden' => 'true' ] )
-			: '<span class="tp-theme-footer-character tp-footer-character-placeholder"></span>';
+		if ( '' === $url ) {
+			return '';
+		}
 
-		$inner_html = HTMLUtility::render(
+		// A drawing, not information: no alternative text, hidden from screen readers (as the theme's characters).
+		$img = tp_child_chrome_build_image_tag(
+			$url,
 			[
-				'tag'               => 'div',
-				'attributes'        => [
-					'class' => 'tp-theme-footer-character-slot tp-theme-footer-character-slot--' . $slot,
-				],
-				'childrenSanitizer' => 'et_core_esc_previously',
-				'children'          => $img,
+				'class'       => 'tp-theme-footer-character',
+				'aria-hidden' => 'true',
+				'loading'     => 'lazy',
+				'decoding'    => 'async',
 			]
 		);
 
@@ -67,7 +66,7 @@ trait RenderCallbackTrait {
 				'parentName'               => $parent->blockName ?? '',
 				'children'                 => [
 					$elements->style_components( [ 'attrName' => 'module' ] ),
-					$inner_html,
+					$img,
 				],
 			]
 		);

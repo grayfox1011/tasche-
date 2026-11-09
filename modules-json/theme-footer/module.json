@@ -7,7 +7,10 @@
   "moduleClassName": "tp_theme_footer",
   "moduleOrderClassName": "tp_theme_footer",
   "category": "module",
-  "childrenName": ["tp/footer-nav-item"],
+  "childrenName": [
+    "tp/footer-nav-item",
+    "tp/footer-character"
+  ],
   "childModuleName": "tp/footer-nav-item",
   "childModuleTitle": "Voce del footer",
   "attributes": {
@@ -17,6 +20,9 @@
       "styleProps": {
         "spacing": {
           "important": true
+        },
+        "background": {
+          "selector": "{{selector}} .site-footer.tp-theme-footer"
         }
       },
       "settings": {
@@ -1054,6 +1060,35 @@
         }
       }
     },
+    "characterItems": {
+      "type": "object",
+      "default": {
+        "desktop": {
+          "value": ""
+        }
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupSlug": "contentAppearance",
+            "attrName": "characterItems.innerContent",
+            "priority": 90,
+            "render": false,
+            "label": "Personaggi come elementi",
+            "features": {
+              "sticky": false,
+              "responsive": false,
+              "dynamicContent": false
+            },
+            "component": {
+              "name": "divi/text",
+              "type": "field"
+            }
+          }
+        }
+      }
+    },
     "tpDesignText": {
       "type": "object",
       "selector": "{{selector}} .tp-theme-footer-nav a, {{selector}} .tp-theme-footer-nav a *",
@@ -1220,90 +1255,6 @@
     "tpDesignCharacterOne": {
       "type": "object",
       "selector": "{{selector}} .tp-theme-footer-character-slot--one .tp-theme-footer-character",
-      "settings": {
-        "decoration": {
-          "sizing": {
-            "groupType": "group-item",
-            "item": {
-              "groupSlug": "designTpDesignCharacterOne",
-              "priority": 10,
-              "render": true,
-              "component": {
-                "name": "divi/sizing",
-                "type": "group",
-                "props": {
-                  "grouped": true,
-                  "fieldLabel": "Personaggio 1"
-                }
-              }
-            }
-          },
-          "spacing": {
-            "groupType": "group-item",
-            "item": {
-              "groupSlug": "designTpDesignCharacterOne",
-              "priority": 20,
-              "render": true,
-              "component": {
-                "name": "divi/spacing",
-                "type": "group",
-                "props": {
-                  "grouped": true,
-                  "fieldLabel": "Personaggio 1"
-                }
-              }
-            }
-          },
-          "border": {
-            "groupType": "group-item",
-            "item": {
-              "groupSlug": "designTpDesignCharacterOne",
-              "priority": 30,
-              "render": true,
-              "component": {
-                "name": "divi/border",
-                "type": "group",
-                "props": {
-                  "grouped": true,
-                  "fieldLabel": "Personaggio 1"
-                }
-              }
-            }
-          },
-          "boxShadow": {
-            "groupType": "group-item",
-            "item": {
-              "groupSlug": "designTpDesignCharacterOne",
-              "priority": 40,
-              "render": true,
-              "component": {
-                "name": "divi/box-shadow",
-                "type": "group",
-                "props": {
-                  "grouped": true,
-                  "fieldLabel": "Personaggio 1"
-                }
-              }
-            }
-          },
-          "filters": {
-            "groupType": "group-item",
-            "item": {
-              "groupSlug": "designTpDesignCharacterOne",
-              "priority": 50,
-              "render": true,
-              "component": {
-                "name": "divi/filters",
-                "type": "group",
-                "props": {
-                  "grouped": true,
-                  "fieldLabel": "Personaggio 1"
-                }
-              }
-            }
-          }
-        }
-      },
       "styleProps": {
         "sizing": {
           "important": true
@@ -1325,90 +1276,6 @@
     "tpDesignCharacterFour": {
       "type": "object",
       "selector": "{{selector}} .tp-theme-footer-character-slot--four .tp-theme-footer-character",
-      "settings": {
-        "decoration": {
-          "sizing": {
-            "groupType": "group-item",
-            "item": {
-              "groupSlug": "designTpDesignCharacterFour",
-              "priority": 10,
-              "render": true,
-              "component": {
-                "name": "divi/sizing",
-                "type": "group",
-                "props": {
-                  "grouped": true,
-                  "fieldLabel": "Personaggio 4"
-                }
-              }
-            }
-          },
-          "spacing": {
-            "groupType": "group-item",
-            "item": {
-              "groupSlug": "designTpDesignCharacterFour",
-              "priority": 20,
-              "render": true,
-              "component": {
-                "name": "divi/spacing",
-                "type": "group",
-                "props": {
-                  "grouped": true,
-                  "fieldLabel": "Personaggio 4"
-                }
-              }
-            }
-          },
-          "border": {
-            "groupType": "group-item",
-            "item": {
-              "groupSlug": "designTpDesignCharacterFour",
-              "priority": 30,
-              "render": true,
-              "component": {
-                "name": "divi/border",
-                "type": "group",
-                "props": {
-                  "grouped": true,
-                  "fieldLabel": "Personaggio 4"
-                }
-              }
-            }
-          },
-          "boxShadow": {
-            "groupType": "group-item",
-            "item": {
-              "groupSlug": "designTpDesignCharacterFour",
-              "priority": 40,
-              "render": true,
-              "component": {
-                "name": "divi/box-shadow",
-                "type": "group",
-                "props": {
-                  "grouped": true,
-                  "fieldLabel": "Personaggio 4"
-                }
-              }
-            }
-          },
-          "filters": {
-            "groupType": "group-item",
-            "item": {
-              "groupSlug": "designTpDesignCharacterFour",
-              "priority": 50,
-              "render": true,
-              "component": {
-                "name": "divi/filters",
-                "type": "group",
-                "props": {
-                  "grouped": true,
-                  "fieldLabel": "Personaggio 4"
-                }
-              }
-            }
-          }
-        }
-      },
       "styleProps": {
         "sizing": {
           "important": true
@@ -1430,90 +1297,6 @@
     "tpDesignCharacterThree": {
       "type": "object",
       "selector": "{{selector}} .tp-theme-footer-character-slot--three .tp-theme-footer-character",
-      "settings": {
-        "decoration": {
-          "sizing": {
-            "groupType": "group-item",
-            "item": {
-              "groupSlug": "designTpDesignCharacterThree",
-              "priority": 10,
-              "render": true,
-              "component": {
-                "name": "divi/sizing",
-                "type": "group",
-                "props": {
-                  "grouped": true,
-                  "fieldLabel": "Personaggio 3"
-                }
-              }
-            }
-          },
-          "spacing": {
-            "groupType": "group-item",
-            "item": {
-              "groupSlug": "designTpDesignCharacterThree",
-              "priority": 20,
-              "render": true,
-              "component": {
-                "name": "divi/spacing",
-                "type": "group",
-                "props": {
-                  "grouped": true,
-                  "fieldLabel": "Personaggio 3"
-                }
-              }
-            }
-          },
-          "border": {
-            "groupType": "group-item",
-            "item": {
-              "groupSlug": "designTpDesignCharacterThree",
-              "priority": 30,
-              "render": true,
-              "component": {
-                "name": "divi/border",
-                "type": "group",
-                "props": {
-                  "grouped": true,
-                  "fieldLabel": "Personaggio 3"
-                }
-              }
-            }
-          },
-          "boxShadow": {
-            "groupType": "group-item",
-            "item": {
-              "groupSlug": "designTpDesignCharacterThree",
-              "priority": 40,
-              "render": true,
-              "component": {
-                "name": "divi/box-shadow",
-                "type": "group",
-                "props": {
-                  "grouped": true,
-                  "fieldLabel": "Personaggio 3"
-                }
-              }
-            }
-          },
-          "filters": {
-            "groupType": "group-item",
-            "item": {
-              "groupSlug": "designTpDesignCharacterThree",
-              "priority": 50,
-              "render": true,
-              "component": {
-                "name": "divi/filters",
-                "type": "group",
-                "props": {
-                  "grouped": true,
-                  "fieldLabel": "Personaggio 3"
-                }
-              }
-            }
-          }
-        }
-      },
       "styleProps": {
         "sizing": {
           "important": true
@@ -1744,39 +1527,6 @@
           "name": "divi/composite",
           "props": {
             "groupLabel": "Logo"
-          }
-        }
-      },
-      "designTpDesignCharacterOne": {
-        "panel": "design",
-        "priority": 8,
-        "groupName": "designTpDesignCharacterOne",
-        "component": {
-          "name": "divi/composite",
-          "props": {
-            "groupLabel": "Personaggio 1"
-          }
-        }
-      },
-      "designTpDesignCharacterFour": {
-        "panel": "design",
-        "priority": 9,
-        "groupName": "designTpDesignCharacterFour",
-        "component": {
-          "name": "divi/composite",
-          "props": {
-            "groupLabel": "Personaggio 4"
-          }
-        }
-      },
-      "designTpDesignCharacterThree": {
-        "panel": "design",
-        "priority": 10,
-        "groupName": "designTpDesignCharacterThree",
-        "component": {
-          "name": "divi/composite",
-          "props": {
-            "groupLabel": "Personaggio 3"
           }
         }
       },

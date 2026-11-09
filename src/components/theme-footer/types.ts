@@ -20,6 +20,7 @@ export interface ThemeFooterAttrs extends InternalAttrs {
 	characterOneImage?: UploadAttr;
 	characterFourImage?: UploadAttr;
 	characterThreeImage?: UploadAttr;
+	characterItems?: ResponsiveAttr;
 	footerLeft1Text?: ResponsiveAttr;
 	footerLeft1Link?: ResponsiveAttr;
 	footerLeft2Text?: ResponsiveAttr;

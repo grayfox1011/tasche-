@@ -11,6 +11,7 @@ export interface FooterCharacterAttrs extends InternalAttrs {
 	slot?: ResponsiveAttr;
 	image?: ResponsiveAttr;
 	imageUrl?: ResponsiveAttr;
+	flip?: ResponsiveAttr;
 }
 
 export type FooterCharacterEditProps = ModuleEditProps<FooterCharacterAttrs>;

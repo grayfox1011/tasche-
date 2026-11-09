@@ -3738,7 +3738,8 @@ body.tp-child-theme :where(.tp-legal-page .tp-legal-back-wrap) {
 		transform: rotate(-2.5deg);
 	}
 
-	.tp-child-theme :where(.site-footer.tp-theme-footer)::before {
+	/* The man sitting at the right, on the footers made before 0.6.8 only: the others have him as a Personaggio. */
+	.tp-child-theme :where(.site-footer.tp-theme-footer:not(.tp-theme-footer--items))::before {
 		content: "";
 		position: absolute;
 		right: 45px;

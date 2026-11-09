@@ -3126,3 +3126,53 @@ body:not(.et-fb) :where(.tp-materie-card:hover .tp-materie-card-image, .tp-mater
 	flex: 0 0 auto;
 	max-width: 100%;
 }
+
+/* ------------------------------------------------------------------------------------------------ */
+/* 0.6.8: the characters of the footer are elements of Footer sito ("Personaggio del footer"): the box */
+/* of each element is its place (tp-theme-footer-character-slot--four/one/three, chosen in "Posto").  */
+/* The third place, "dove sta l'uomo seduto", on the smaller devices: on the phones where the theme    */
+/* drew the man until 0.6.7 (45 px from the right of the footer, 75 px from its top: the box of the    */
+/* characters ends 10.3 px from its right and starts 110.3 px from its top), on the tablets in the     */
+/* same shares of the logo as on a phone 390 px wide. On the computers it keeps the place it had.      */
+/* ------------------------------------------------------------------------------------------------ */
+@media (min-width: 768px) and (max-width: 980px) {
+
+	.tp-child-theme :where(.tp-theme-footer-character-slot--three) {
+		left: auto;
+		right: 9.46%;
+		width: 7.05%;
+		margin-top: -9.624%;
+	}
+}
+
+@media (max-width: 767px) {
+
+	.tp-child-theme :where(.tp-theme-footer-character-slot--three) {
+		left: auto;
+		right: 34.7px;
+		top: -35.25px;
+		width: 25.8594px;
+	}
+}
+
+/* In the editor of the Theme Builder Divi gives every module position: relative (.et-db #et-boc .et-l .et_pb_module):
+   the places stay absolute there too (same weight, later), and Divi's own Position of an element still wins. */
+.et-db #et-boc .et-l .tp-theme-footer-character-slot {
+	position: absolute;
+}
+
+/* "Capovolgi": the drawing as in a mirror. */
+.tp-child-theme :where(.tp-theme-footer-character-slot--flip .tp-theme-footer-character) {
+	transform: scaleX(-1);
+}
+
+/* In the builder, a Personaggio without a drawing: a dashed box in its place, to find it and click it. */
+.tp-child-theme :where(body.et-fb .tp-theme-footer-character-slot > .tp-footer-character-placeholder) {
+	display: block;
+	width: 100%;
+	min-width: 40px;
+	aspect-ratio: 3 / 4;
+	border: 2px dashed currentColor;
+	border-radius: 8px;
+	opacity: 0.6;
+}

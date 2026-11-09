@@ -8,7 +8,44 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Footer characters block.
+ * Whether the characters of a Footer sito are its Personaggio elements (0.6.8): it has some, or it was made or
+ * converted with them (the hidden attribute characterItems, which stays when the last one is removed, so that
+ * a footer without characters stays without). The others still show the theme's three places as before
+ * (tp_child_footer_render_characters_html()) until tp_child_migrate_footer_characters_068() converts them.
+ *
+ * @param array $parsed_block The block of Footer sito, as parsed (attributes saved, without Divi's defaults).
+ */
+function tp_child_footer_characters_as_items( array $parsed_block ): bool {
+	if ( 'on' === tp_child_chrome_get_string( is_array( $parsed_block['attrs'] ?? null ) ? $parsed_block['attrs'] : [], 'characterItems', '' ) ) {
+		return true;
+	}
+
+	foreach ( $parsed_block['innerBlocks'] ?? [] as $inner_block ) {
+		if ( 'tp/footer-character' === ( $inner_block['blockName'] ?? '' ) ) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+/**
+ * The Personaggi of a Footer sito, printed by Divi (their content: the Voci print nothing), in the box of
+ * the characters.
+ */
+function tp_child_footer_render_character_items_html( string $content ): string {
+	return ET\Builder\Framework\Utility\HTMLUtility::render(
+		[
+			'tag'               => 'div',
+			'attributes'        => [ 'class' => 'tp-theme-footer-characters' ],
+			'childrenSanitizer' => 'et_core_esc_previously',
+			'children'          => trim( $content ),
+		]
+	);
+}
+
+/**
+ * Footer characters block of the footers made before 0.6.8 (the theme's three places).
  *
  * @param ModuleElements $elements Module elements instance.
  */

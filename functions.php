@@ -308,6 +308,7 @@ require_once TP_CHILD_PATH . 'inc/legal-pages.php';
 require_once TP_CHILD_PATH . 'inc/footer-layout-helpers.php';
 require_once TP_CHILD_PATH . 'inc/materie-marquee-migration.php';
 require_once TP_CHILD_PATH . 'inc/shape-wave-colors-067.php';
+require_once TP_CHILD_PATH . 'inc/footer-characters-068.php';
 
 /**
  * Render a single footer menu column from a WordPress menu location.

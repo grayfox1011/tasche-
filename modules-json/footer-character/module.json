@@ -1,12 +1,15 @@
 {
   "name": "tp/footer-character",
   "d4Shortcode": "",
-  "title": "Footer — Personaggio",
-  "titles": "Footer — Personaggi",
+  "title": "Personaggio del footer",
+  "titles": "Personaggi del footer",
   "moduleIcon": "divi/module-image",
   "moduleClassName": "tp_footer_character",
   "moduleOrderClassName": "tp_footer_character",
   "category": "child-module",
+  "parentsName": [
+    "tp/theme-footer"
+  ],
   "childrenName": [],
   "attributes": {
     "module": {
@@ -55,7 +58,7 @@
       "type": "object",
       "default": {
         "desktop": {
-          "value": "one"
+          "value": "three"
         }
       },
       "settings": {
@@ -66,8 +69,8 @@
             "attrName": "slot.innerContent",
             "priority": 10,
             "render": true,
-            "label": "Posizione personaggio",
-            "description": "Scegli in quale slot del footer appare il personaggio.",
+            "label": "Posto",
+            "description": "Dove sta il personaggio sopra la scritta Tasche Piene. Per spostarlo o cambiarne la misura: Design > Trasforma (Sposta, Scala) o Design > Dimensioni. Per mostrarlo solo su alcuni dispositivi: Avanzate > Visibilità.",
             "features": {
               "sticky": false,
               "responsive": false
@@ -77,14 +80,14 @@
               "type": "field",
               "props": {
                 "options": {
-                  "one": {
-                    "label": "Sinistra (uno)"
-                  },
                   "four": {
-                    "label": "Centro (quattro)"
+                    "label": "Dove sta la coppia (sulla «ch» di Tasche)"
+                  },
+                  "one": {
+                    "label": "Dove stanno i piccioni (sulla «ne» di Piene)"
                   },
                   "three": {
-                    "label": "Destra (tre)"
+                    "label": "Dove sta l'uomo seduto (in fondo a destra)"
                   }
                 }
               }
@@ -111,7 +114,8 @@
             "attrName": "image.innerContent",
             "priority": 20,
             "render": true,
-            "label": "Immagine personaggio",
+            "label": "Immagine",
+            "description": "Il disegno del personaggio, meglio con lo sfondo trasparente (PNG, WebP o SVG). Per togliere il personaggio elimina questo elemento (Footer sito > Elementi, icona del cestino).",
             "features": {
               "sticky": false,
               "responsive": false
@@ -119,6 +123,45 @@
             "component": {
               "name": "divi/upload",
               "type": "field"
+            }
+          }
+        }
+      }
+    },
+    "flip": {
+      "type": "object",
+      "default": {
+        "desktop": {
+          "value": "off"
+        }
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupSlug": "contentMain",
+            "attrName": "flip.innerContent",
+            "priority": 30,
+            "render": true,
+            "label": "Capovolgi",
+            "description": "Gira il personaggio dall'altra parte, come allo specchio.",
+            "features": {
+              "sticky": false,
+              "responsive": false
+            },
+            "component": {
+              "name": "divi/toggle",
+              "type": "field",
+              "props": {
+                "options": {
+                  "off": {
+                    "label": "No"
+                  },
+                  "on": {
+                    "label": "Sì"
+                  }
+                }
+              }
             }
           }
         }
