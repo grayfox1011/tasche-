@@ -7,6 +7,7 @@
   "moduleClassName": "tp_header_nav_item",
   "moduleOrderClassName": "tp_header_nav_item",
   "category": "child-module",
+  "parentsName": ["tp/theme-header"],
   "childrenName": [],
   "attributes": {
     "module": {

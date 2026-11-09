@@ -8,7 +8,7 @@ import { createModuleClassnames, createModuleScriptData, createModuleStyles } fr
 import { buildStyleVars, getColor, getString } from '../../utils/attrs';
 import { useDynamicText } from '../../utils/dynamic';
 import { getWpMenuItems, WpNavItem } from '../../utils/wp-menus';
-import { NAV_ITEM_DEFAULTS, navItemValue } from '../header-nav-item/values';
+import { HEADER_NAV_DEFAULT_ITEMS, NAV_ITEM_DEFAULTS, navItemValue } from '../header-nav-item/values';
 import { HeaderNavItemAttrs } from '../header-nav-item/types';
 
 const MODULE_CLASSNAME = 'tp_theme_header';
@@ -17,13 +17,7 @@ const ModuleStyles = createModuleStyles(['tpDesignText', 'tpDesignLogo', 'tpDesi
 const moduleClassnames = createModuleClassnames(MODULE_CLASSNAME);
 const ModuleScriptData = createModuleScriptData();
 
-const DEFAULT_NAV: NavPreviewItem[] = [
-	{ title: 'La nostra idea', url: '#chi-siamo' },
-	{ title: 'Il menù', url: '#menu' },
-	{ title: 'Senza glutine', url: '#materie' },
-	{ title: 'Domande', url: '#faq' },
-	{ title: 'Dove siamo', url: '#location' },
-];
+const DEFAULT_NAV: NavPreviewItem[] = HEADER_NAV_DEFAULT_ITEMS;
 
 export const ThemeHeaderEdit = (props: ThemeHeaderEditProps): ReactElement => {
 	const { attrs, childrenIds = [], elements, id, name } = props;

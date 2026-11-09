@@ -67,6 +67,59 @@ abstract class ModuleBase implements DependencyInterface {
 		);
 	}
 
+	/**
+	 * The attrs without the "Image Title" and "Image Alt" attributes on the module's own element. Divi's
+	 * media field adds them when a photo is chosen from the library, to the element of the photo, or to
+	 * the module's own when the module has no such element (the theme's modules print their images
+	 * themselves): on the site a title there is a tooltip over the whole module, "Tasche Piene" over all
+	 * the footer after choosing its logo (0.8.0). An attribute added by hand in Avanzate > Attributi has
+	 * no such label and stays.
+	 */
+	public static function without_media_attributes( array $attrs ): array {
+		$holder = $attrs['module']['decoration']['attributes'] ?? null;
+
+		if ( ! is_array( $holder ) ) {
+			return $attrs;
+		}
+
+		$clean = static function ( $list ) {
+			if ( ! is_array( $list ) ) {
+				return $list;
+			}
+
+			return array_values(
+				array_filter(
+					$list,
+					static function ( $entry ): bool {
+						$entry  = is_object( $entry ) ? (array) $entry : $entry;
+						$target = is_array( $entry ) ? (string) ( $entry['targetElement'] ?? '' ) : '';
+
+						return ! ( is_array( $entry )
+							&& in_array( $entry['adminLabel'] ?? '', [ 'Image Title', 'Image Alt' ], true )
+							&& in_array( $entry['name'] ?? '', [ 'title', 'alt' ], true )
+							&& in_array( $target, [ '', 'main' ], true ) );
+					}
+				)
+			);
+		};
+
+		foreach ( $holder as $key => $value ) {
+			if ( 'attributes' === $key ) {
+				$holder[ $key ] = $clean( $value );
+			} elseif ( is_array( $value ) ) {
+				foreach ( $value as $state => $state_value ) {
+					if ( is_array( $state_value ) && array_key_exists( 'attributes', $state_value ) ) {
+						$holder[ $key ][ $state ]['attributes'] = $clean( $state_value['attributes'] );
+					}
+				}
+			}
+		}
+
+		$attrs['module']['decoration']['attributes'] = $holder;
+
+		return $attrs;
+	}
+
 	/** Style props of the module element; a module can add its own selectors or filters. */
 	protected static function module_style_props( array $args ): array {
 		return [

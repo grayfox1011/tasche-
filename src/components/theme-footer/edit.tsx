@@ -11,6 +11,7 @@ import { DynamicText, useDynamicText } from '../../utils/dynamic';
 import { getWpMenuItems, WpNavItem } from '../../utils/wp-menus';
 import { NAV_ITEM_DEFAULTS, navItemValue } from '../header-nav-item/values';
 import { FooterNavItemAttrs } from '../footer-nav-item/types';
+import { FOOTER_NAV_DEFAULT_LEFT, FOOTER_NAV_DEFAULT_RIGHT } from '../footer-nav-item/values';
 
 const MODULE_CLASSNAME = 'tp_theme_footer';
 
@@ -42,17 +43,8 @@ const FOOTER_CHARACTERS: Array<{
 	},
 ];
 
-const DEFAULT_NAV_LEFT = [
-	{ title: 'MENÙ', url: '#menu' },
-	{ title: 'DOVE SIAMO', url: '#location' },
-	{ title: 'SU DI NOI', url: '#chi-siamo' },
-];
-
-const DEFAULT_NAV_RIGHT = [
-	{ title: 'TORNA SÙ', url: '#home' },
-	{ title: 'FACEBOOK', url: 'https://facebook.com', target: '_blank' },
-	{ title: 'INSTAGRAM', url: 'https://instagram.com', target: '_blank' },
-];
+const DEFAULT_NAV_LEFT = FOOTER_NAV_DEFAULT_LEFT;
+const DEFAULT_NAV_RIGHT = FOOTER_NAV_DEFAULT_RIGHT;
 
 const COPYRIGHT_LINES: Array<{ textKey: keyof ThemeFooterAttrs; linkKey: keyof ThemeFooterAttrs; fallback: string; linkFallback?: string }> = [
 	{ textKey: 'copyrightLine1', linkKey: 'copyrightLink1', fallback: 'Tasche Piene è un progetto di Barrakuda S.r.l.' },

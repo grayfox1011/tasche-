@@ -119,7 +119,8 @@ trait RenderCallbackTrait {
 			[
 				'orderIndex'               => $parsed_block['orderIndex'] ?? 0,
 				'storeInstance'            => $store,
-				'attrs'                    => $attrs,
+				// Without the title of the logo's photo on the module's own element (a tooltip over all of it).
+				'attrs'                    => ThemeHeader::without_media_attributes( $attrs ),
 				'elements'                 => $elements,
 				'defaultPrintedStyleAttrs' => $default_printed_style_attrs,
 				'classnamesFunction'       => [ ThemeHeader::class, 'module_classnames' ],
