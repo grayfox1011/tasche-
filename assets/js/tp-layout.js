@@ -20,6 +20,44 @@
 
 	/* Scales ---------------------------------------------------------------- */
 
+	// Tasca o piatto (0.6.8): each card gets the height of its texts (--tp-scelta-text-h: texts longer than the
+	// Figma's rise until they fit when the card opens), and with more than two cards the board and the section
+	// get the height that reaches the last card (--tp-scelta-board, --tp-scelta-height). The builder does the
+	// same (tp_child_vb_choice_scale_script()).
+	function fitChoiceCards(phone, tablet, scale, width) {
+		var rows = document.querySelector('.tp-scelta-schede');
+		var root = document.documentElement;
+		if (!rows) {
+			return;
+		}
+		var cards = Array.prototype.filter.call(rows.children, function (child) {
+			return child.classList.contains('tp-scelta-scheda');
+		});
+		cards.forEach(function (card) {
+			var text = card.querySelector('.tp-scelta-testo');
+			if (text) {
+				card.style.setProperty('--tp-scelta-text-h', text.offsetHeight + 'px');
+			}
+		});
+		var extra = 0;
+		if (cards.length > 2) {
+			var last = 0;
+			cards.forEach(function (card) {
+				last = Math.max(last, card.offsetTop + card.offsetHeight);
+			});
+			// The Figma's two cards end with the first line of cards (on phones, one under the other, with the second).
+			var ref = cards[phone ? 1 : 0];
+			extra = last - (ref.offsetTop + ref.offsetHeight);
+		}
+		if (extra > 0.5) {
+			var board = (phone ? 963 : (tablet ? width * 0.90531746 : 1263)) + extra;
+			root.style.setProperty('--tp-scelta-board', board.toFixed(2) + 'px');
+			root.style.setProperty('--tp-scelta-height', (tablet ? board : board * scale).toFixed(2) + 'px');
+		} else {
+			root.style.removeProperty('--tp-scelta-board');
+		}
+	}
+
 	// Tasca/Piatto stage: 1512px wide on desktop, 390px reference width on phones. The section made of
 	// Divi modules (.tp-scelta) reads the same scale and height from CSS variables on the page.
 	function updateChoiceStage() {
@@ -37,6 +75,7 @@
 				root.style.setProperty(phone ? '--tp-scelta-scale-phone' : '--tp-scelta-scale', stageScale.toFixed(6));
 				root.style.setProperty('--tp-scelta-height', ((phone ? 963 : 1263) * stageScale).toFixed(2) + 'px');
 			}
+			fitChoiceCards(phone, tablet, stageScale, width);
 		}
 		document.querySelectorAll('.tp-choice-standalone').forEach(function (section) {
 			var viewportWidth = window.innerWidth || document.documentElement.clientWidth || section.clientWidth;
@@ -89,6 +128,33 @@
 
 	onReady(updateScales);
 	window.addEventListener('resize', updateScales, { passive: true });
+
+	// The texts of the Tasca o piatto cards take their size with the fonts and the photos: measured again then.
+	onReady(function () {
+		var rows = document.querySelector('.tp-scelta-schede');
+		if (!rows) {
+			return;
+		}
+		if (document.fonts && document.fonts.ready) {
+			document.fonts.ready.then(updateChoiceStage);
+		}
+		if (typeof ResizeObserver !== 'undefined') {
+			var pending = false;
+			var observer = new ResizeObserver(function () {
+				if (pending) {
+					return;
+				}
+				pending = true;
+				window.requestAnimationFrame(function () {
+					pending = false;
+					updateChoiceStage();
+				});
+			});
+			rows.querySelectorAll('.tp-scelta-testo').forEach(function (text) {
+				observer.observe(text);
+			});
+		}
+	});
 
 	/* Titles ---------------------------------------------------------------- */
 

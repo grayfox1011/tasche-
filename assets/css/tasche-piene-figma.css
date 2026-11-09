@@ -3176,3 +3176,147 @@ body:not(.et-fb) :where(.tp-materie-card:hover .tp-materie-card-image, .tp-mater
 	border-radius: 8px;
 	opacity: 0.6;
 }
+
+/* ------------------------------------------------------------------------------------------------ */
+/* 0.6.8: Tasca o piatto, "Caratteristiche" > Design > Sfondo colours its tags. The module's box keeps */
+/* the theme's colour (green; burgundy for the Piatto) but paints it only under its letters, which the */
+/* tags cover; the tags take it from the box, through the text and the list (painted the same way):   */
+/* a colour or gradient set in Divi replaces the theme's.                                             */
+/* ------------------------------------------------------------------------------------------------ */
+.tp-child-theme :where(.tp-scelta-chip) {
+	background-color: var(--tp-green, #054726);
+	-webkit-background-clip: text;
+	background-clip: text;
+}
+
+.tp-child-theme :where(.tp-scelta-scheda--piatto .tp-scelta-chip) {
+	background-color: var(--tp-bordeaux, #560b22);
+}
+
+/* (In the builder a box for the inline editing stands between the text and the list.) */
+.tp-child-theme :where(.tp-scelta-chip .et_pb_text_inner, .tp-scelta-chip .et_pb_text_inner > div, .tp-scelta-chip ul) {
+	background-color: inherit;
+	background-image: inherit;
+	background-position: inherit;
+	background-size: inherit;
+	background-repeat: inherit;
+	-webkit-background-clip: text;
+	background-clip: text;
+}
+
+.tp-child-theme :where(.tp-scelta-chip li) {
+	background-color: inherit;
+	background-image: inherit;
+	background-position: inherit;
+	background-size: inherit;
+	background-repeat: inherit;
+	-webkit-background-clip: border-box;
+	background-clip: border-box;
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* 0.6.8: Tasca o piatto with longer texts or more cards.                                             */
+/* - When a card opens, texts longer than the Figma's (a longer description, a copied piece) rise    */
+/*   until they end 12 px from its bottom instead of being cut; tp-layout.js gives each card the     */
+/*   height of its texts (--tp-scelta-text-h). The Figma's texts fit as they are: nothing moves.     */
+/* - With more than two cards (a card copied) they go on more lines and the board and the section    */
+/*   grow to the last one (tp-layout.js: --tp-scelta-board, --tp-scelta-height).                      */
+/* ------------------------------------------------------------------------------------------------ */
+.tp-child-theme :where(.tp-scelta-scheda:hover .tp-scelta-testo, .tp-scelta-scheda:focus .tp-scelta-testo, .tp-scelta-scheda.is-active .tp-scelta-testo) {
+	top: min(71.43%, calc(100% - var(--tp-scelta-text-h, 0px) - 12px));
+}
+
+.tp-child-theme :where(.tp-scelta-testata, .tp-scelta-schede) {
+	height: var(--tp-scelta-board, 1263px);
+}
+
+.tp-child-theme :where(.tp-scelta-schede:has(> :nth-child(3 of .tp-scelta-scheda))) {
+	flex-wrap: wrap;
+	align-content: flex-start;
+	row-gap: 23.55px;
+	padding-right: 0;
+}
+
+@media (min-width: 768px) and (max-width: 980px) {
+
+	.tp-child-theme :where(.tp-scelta-scheda:hover .tp-scelta-testo, .tp-scelta-scheda:focus .tp-scelta-testo, .tp-scelta-scheda.is-active .tp-scelta-testo) {
+		top: min(58%, calc(100% - var(--tp-scelta-text-h, 0px) - 12px));
+	}
+
+	.tp-child-theme :where(.tp-scelta) {
+		height: var(--tp-scelta-height, 90.531746vw);
+		min-height: var(--tp-scelta-height, 90.531746vw);
+	}
+
+	.tp-child-theme :where(.tp-scelta-testata, .tp-scelta-schede) {
+		height: var(--tp-scelta-board, 90.531746vw);
+	}
+
+	.tp-child-theme :where(.tp-scelta-schede:has(> :nth-child(3 of .tp-scelta-scheda))) {
+		row-gap: 1.55754vw;
+	}
+}
+
+@media (max-width: 767px) {
+
+	.tp-child-theme :where(.tp-scelta-scheda:hover .tp-scelta-testo, .tp-scelta-scheda:focus .tp-scelta-testo, .tp-scelta-scheda.is-active .tp-scelta-testo) {
+		top: min(179px, calc(100% - var(--tp-scelta-text-h, 0px) - 12px));
+	}
+
+	.tp-child-theme :where(.tp-scelta-testata, .tp-scelta-schede) {
+		height: var(--tp-scelta-board, 963px);
+	}
+
+	/* One under the other, as the Figma's two. */
+	.tp-child-theme :where(.tp-scelta-schede:has(> :nth-child(3 of .tp-scelta-scheda))) {
+		flex-wrap: nowrap;
+		row-gap: 8.94px;
+		padding-right: 16px;
+	}
+
+	/* The phone's picture of the section (waves, burgundy, the two cards) is 963 px high: with more cards its top
+	   (to the end of the second card) stays at the top, its last 141 px (the bottom wave) go to the bottom, and
+	   burgundy fills between them. */
+	.tp-child-theme :where(.tp-scelta:has(.tp-scelta-schede > :nth-child(3 of .tp-scelta-scheda)) .tp-scelta-testata) {
+		background: var(--tp-bordeaux, #560b22);
+	}
+
+	.tp-child-theme :where(.tp-scelta:has(.tp-scelta-schede > :nth-child(3 of .tp-scelta-scheda)) .tp-scelta-testata)::before {
+		bottom: auto;
+		height: 822px;
+	}
+
+	.tp-child-theme :where(.tp-scelta:has(.tp-scelta-schede > :nth-child(3 of .tp-scelta-scheda)) .tp-scelta-testata)::after {
+		content: "";
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 2;
+		display: block;
+		height: 141px;
+		background: url("../images/choice/mobile-wave-layer-390x963.webp?ver=20260522-wave-layer-editable") center bottom / 390px 963px no-repeat;
+		pointer-events: none;
+	}
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* 0.6.8: the legend of the menu with more than two boxes (a box copied): on the computers, when they */
+/* do not fit beside the title they go on two lines instead of being cut, the last boxes on top (the  */
+/* man sits on the Piatto, the last box of the Figma). Only the first Piatto has the man.            */
+/* ------------------------------------------------------------------------------------------------ */
+@media (min-width: 981px) {
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-legend:has(> :nth-child(3 of .tp-menu-legend-box))) {
+		flex: 0 1 auto;
+		flex-wrap: wrap-reverse;
+		justify-content: flex-end;
+		min-width: 0;
+		height: auto;
+		min-height: 243.6px;
+	}
+}
+
+.tp-child-theme :where(.tp-menu-legend-piatto ~ .tp-menu-legend-piatto)::after {
+	display: none;
+}

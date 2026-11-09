@@ -1438,6 +1438,40 @@ function tp_child_vb_choice_scale_script() {
 	?>
 <script id="tp-vb-choice-scale-js">
 (function(){
+	// As fitChoiceCards() of tp-layout.js (0.6.8): the height of each card's texts, and with more than two cards
+	// the height of the board and of the section to the last card.
+	function fit(phone, tablet, scale, width){
+		var rows = document.querySelector('.tp-scelta-schede');
+		var root = document.documentElement;
+		if (!rows) {
+			return;
+		}
+		var cards = Array.prototype.filter.call(rows.children, function (child) {
+			return child.classList.contains('tp-scelta-scheda');
+		});
+		cards.forEach(function (card) {
+			var text = card.querySelector('.tp-scelta-testo');
+			if (text) {
+				card.style.setProperty('--tp-scelta-text-h', text.offsetHeight + 'px');
+			}
+		});
+		var extra = 0;
+		if (cards.length > 2) {
+			var last = 0;
+			cards.forEach(function (card) {
+				last = Math.max(last, card.offsetTop + card.offsetHeight);
+			});
+			var ref = cards[phone ? 1 : 0];
+			extra = last - (ref.offsetTop + ref.offsetHeight);
+		}
+		if (extra > 0.5) {
+			var board = (phone ? 963 : (tablet ? width * 0.90531746 : 1263)) + extra;
+			root.style.setProperty('--tp-scelta-board', board.toFixed(2) + 'px');
+			root.style.setProperty('--tp-scelta-height', (tablet ? board : board * scale).toFixed(2) + 'px');
+		} else {
+			root.style.removeProperty('--tp-scelta-board');
+		}
+	}
 	function upd(){
 		var root = document.documentElement;
 		var width = window.innerWidth || root.clientWidth;
@@ -1448,13 +1482,38 @@ function tp_child_vb_choice_scale_script() {
 		if (tablet) {
 			root.style.removeProperty('--tp-scelta-scale');
 			root.style.removeProperty('--tp-scelta-height');
+		} else {
+			root.style.setProperty(phone ? '--tp-scelta-scale-phone' : '--tp-scelta-scale', scale.toFixed(6));
+			root.style.setProperty('--tp-scelta-height', ((phone ? 963 : 1263) * scale).toFixed(2) + 'px');
+		}
+		fit(phone, tablet, scale, width);
+	}
+	var pending = false;
+	function schedule(){
+		if (pending) {
 			return;
 		}
-		root.style.setProperty(phone ? '--tp-scelta-scale-phone' : '--tp-scelta-scale', scale.toFixed(6));
-		root.style.setProperty('--tp-scelta-height', ((phone ? 963 : 1263) * scale).toFixed(2) + 'px');
+		pending = true;
+		window.requestAnimationFrame(function(){
+			pending = false;
+			upd();
+		});
 	}
 	upd();
 	window.addEventListener('resize', upd, { passive: true });
+	// In the builder the cards and their texts change while one works: copied, removed, written.
+	if (typeof MutationObserver !== 'undefined') {
+		new MutationObserver(function (mutations) {
+			for (var i = 0; i < mutations.length; i++) {
+				var target = mutations[i].target;
+				var el = target.nodeType === 1 ? target : target.parentElement;
+				if (el && el.closest && el.closest('.tp-scelta')) {
+					schedule();
+					return;
+				}
+			}
+		}).observe(document.documentElement, { childList: true, subtree: true, characterData: true });
+	}
 })();
 </script>
 	<?php
