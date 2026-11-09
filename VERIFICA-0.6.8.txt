@@ -1,4 +1,111 @@
-TASCHE PIENE — VERSIONE 0.6.7, CANDIDATA AL COLLAUDO
+TASCHE PIENE — VERSIONE 0.6.8, CANDIDATA AL COLLAUDO
+
+La 0.6.8 fa dei personaggi del footer degli elementi di Divi, da togliere,
+duplicare, aggiungere e cambiare, e prova pezzo per pezzo Tasca o piatto, il
+Menu' e gli Orari: colori, sfondi, bordi, colori col mouse sopra e duplicati.
+Le note delle versioni precedenti, piu' in basso, restano valide.
+
+COSA CAMBIA RISPETTO ALLA 0.6.7
+- Personaggi del footer: sono elementi "Personaggio del footer" di Footer
+  sito, nell'elenco Contenuto > Elementi dopo le voci (Theme Builder >
+  Footer Globale). Il cestino ne toglie uno; l'icona accanto alla matita ne
+  aggiunge uno uguale; tasto destro sul footer > Aggiungi Elemento >
+  Aggiungi Elemento All'Interno > Personaggio del footer ne aggiunge uno
+  nuovo, con un disegno del tema. Fino alla 0.6.7 c'erano tre posti fissi
+  in Footer sito (il terzo vuoto dalla 0.5.9) e l'uomo seduto dei telefoni
+  era disegnato dal CSS: non si potevano togliere, e l'uomo seduto non si
+  poteva cambiare.
+- Ogni personaggio ha Posto (dove sta la coppia, sulla "ch" di Tasche; dove
+  stanno i piccioni, sulla "ne" di Piene; dove sta l'uomo seduto, in fondo
+  a destra), Immagine e Capovolgi; da Divi, Design > Dimensionamento per la
+  larghezza, Trasformare (Trasla, Scala) per spostarlo o ingrandirlo,
+  Filtro, e Avanzate > Visibilita' per mostrarlo solo su alcuni
+  dispositivi.
+- All'aggiornamento, una volta, ogni Footer sito riceve un personaggio per
+  ognuno di quelli che mostra oggi: la coppia e i piccioni con il disegno
+  scelto in Divi (o quello del tema) e le stesse impostazioni di Design, il
+  terzo posto solo se aveva un disegno (visibile solo sul computer, come
+  prima), l'uomo seduto visibile solo sul telefono. Il sito non cambia.
+- Un Footer sito nuovo arriva con la coppia, i piccioni e l'uomo seduto.
+  Tolto l'ultimo personaggio, il footer resta senza personaggi.
+- Un Footer sito non convertito (un layout vecchio importato dopo
+  l'aggiornamento) mostra i tre posti come prima.
+- Footer sito > Design > Sfondo colora il footer. Prima finiva dietro il
+  verde del tema e non si vedeva. Contenuto > Aspetto footer resta.
+- Tasca o piatto, Caratteristiche (le pillole sotto il nome): prendono lo
+  sfondo di Caratteristiche > Design > Sfondo, sul sito e nel builder.
+  Prima restavano verdi (Tasca) o bordeaux (Piatto).
+- Tasca o piatto, card con una descrizione piu' lunga o un testo duplicato:
+  quando la card si apre i testi salgono quanto serve e restano 12 px
+  sopra il fondo. Prima la fine veniva tagliata.
+- Tasca o piatto, terza card (una card duplicata): sul computer e sul
+  tablet va a capo sotto le prime due e la sezione si allunga; sul telefono
+  va sotto le altre e l'onda finale resta in fondo alla sezione. Prima la
+  terza card finiva a destra, fuori dallo schermo.
+- Menu', legenda con un riquadro in piu' (computer): quando non sta accanto
+  al titolo va su due righe, Piatto sopra; la figura sopra il riquadro
+  Piatto resta una sola. Prima i riquadri in piu' venivano tagliati.
+- Tutto il resto di queste tre sezioni andava gia' (verifiche qui sotto).
+
+VERIFICHE EFFETTUATE SULLA 0.6.8
+- Footer, posizioni: dopo la conversione la coppia e i piccioni sono
+  esattamente dove erano, a 11 larghezze da 390 a 1920 px; l'uomo seduto
+  del telefono e' nello stesso punto (meno di un decimo di pixel). Il suo
+  disegno ora e' un'immagine invece di uno sfondo del CSS: uguale a occhio,
+  con sfumature diverse su qualche pixel delle linee sottili.
+- Footer nel Visual Builder (Theme Builder): un personaggio tolto, uno
+  duplicato e uno aggiunto con Aggiungi Elemento All'Interno, salvati: sul
+  sito e nel builder ognuno al suo posto, la copia nello stesso posto
+  dell'originale, come sul sito. Un Footer sito nuovo arriva con i tre
+  personaggi. Prova automatica (valori scritti come li scrivono i campi,
+  salvati, misurati): larghezza (Dimensionamento), spostamento
+  (Trasformare), filtro e Capovolgi di un personaggio, colore delle voci e
+  del copyright, sfondo di Footer sito: come impostati, sul sito e nel
+  builder.
+- Conversione: un footer con disegni e impostazioni di Design scelti in
+  Divi li ritrova nei suoi personaggi; un footer non convertito resta con
+  i tre posti di prima.
+- Tasca o piatto, Menu', Orari: prova automatica di 31 modifiche (sfondi e
+  bordi di card, riquadri della legenda, piatti e giorni; colori di titoli,
+  nomi, descrizioni, allergeni, prezzi, etichette e note; bordo delle foto;
+  sfondo col mouse sopra di piatti e giorni), salvate e misurate sul sito a
+  1440 px: tutte come impostate. Nel builder tutte, tranne i colori col
+  mouse sopra, che li' la prova non sa misurare. Lo sfondo col mouse sopra
+  di una card Tasca/Piatto non si vede perche' quando la card si apre la
+  copre la foto: come prima.
+- Duplicati con il pulsante Duplica di Divi, salvati: un piatto, un dolce,
+  un riquadro della legenda, un giorno degli orari, una terza card di
+  Tasca o piatto, una descrizione lunga e un testo duplicato in una card:
+  sul sito (computer, tablet e telefono) e nel builder niente sovrapposto e
+  niente tagliato.
+- Aspetto invariato senza modifiche, aggiornando un sito di prova 0.6.7
+  (home e footer creati dalla 0.6.7): 44 foto di sezione della home (1440,
+  1100, 820 e 390 px) uguali, tranne l'uomo seduto del footer a 390 px
+  (stesso disegno nello stesso punto, sfumature su qualche pixel, vedi
+  sopra). Stati col mouse sopra: 22 su 22 uguali. Builder: 29 viste su 32
+  uguali; le altre tre sono il footer: nelle viste computer e tablet l'uomo
+  seduto, nascosto su quei dispositivi, si vede semitrasparente, come Divi
+  mostra ogni elemento nascosto; nella vista telefono le sue sfumature.
+  Alcune foto (una foto di Materie a 1100 px non ancora caricata, la
+  scritta che scorre, tre stati col mouse sopra coperti dall'header) sono
+  venute diverse una volta e uguali rifacendole.
+- Aggiornamento: la conversione del footer avviene alla prima pagina
+  aperta dopo l'aggiornamento, senza errori PHP; il footer ha poi la
+  coppia, i piccioni e l'uomo seduto, con le 6 voci di prima.
+- Installazione nuova (WordPress in italiano, Divi 5.15.1, zip caricato da
+  Aspetto > Temi): la home e il footer creati dal tema hanno i tre
+  personaggi e le 6 voci, nessun errore PHP; le 44 foto di sezione sono
+  uguali a quelle del sito aggiornato.
+- Il pacchetto dei moduli del builder (scripts/bundle.js) rifatto dai
+  sorgenti esce identico.
+
+NON PROVATI
+- Safari e un iPhone veri, un database MySQL e il video di sfondo nel
+  builder, come per le versioni precedenti.
+
+==============================================================================
+
+NOTE DELLA 0.6.7
 
 La 0.6.7 rende modificabile da Divi la sezione Materie prime ("Non sono
 principi astratti, sono scelte.", quella con le parole in genovese) e fa
