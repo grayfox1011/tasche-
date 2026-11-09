@@ -1,4 +1,93 @@
-TASCHE PIENE — VERSIONE 0.6.5, CANDIDATA AL COLLAUDO
+TASCHE PIENE — VERSIONE 0.6.6, CANDIDATA AL COLLAUDO
+
+La 0.6.6 corregge i problemi trovati rifacendo la home da una pagina bianca,
+su un sito nuovo, seguendo la guida. Le note delle versioni precedenti, piu'
+in basso, restano valide.
+
+COSA CAMBIA RISPETTO ALLA 0.6.5
+- Pagine fatte a mano: una modifica fatta per un solo dispositivo resta su
+  quel dispositivo anche sul sito. Fino alla 0.6.5 il tema riconosceva le
+  sue sezioni solo dal campo Classe CSS, dove le scrive il tema; una sezione
+  fatta nel Visual Builder ha la classe in Avanzate > Attributi, e li' il
+  builder separava i dispositivi ma il sito no: un valore del computer
+  arrivava anche su tablet e telefono, uno del tablet anche sul telefono.
+  All'aggiornamento il tema scrive una volta su tablet e telefono i valori
+  che queste pagine prendono oggi dal computer, come la 0.6.5 ha fatto per
+  la home, quindi l'aspetto non cambia. Home, pagine legali, header e footer
+  del tema non sono toccati.
+- Bottoni con la freccia nel Visual Builder: "Scopri il menù", "Le materie
+  prime" e "Mappe" sono come sul sito a riposo, su computer, tablet e
+  telefono. Prima nella home erano senza freccia e piu' larghi, "Scopri il
+  menù" bianco e verde invece che crema e bordeaux, e sul telefono senza
+  fondo; in un Pulsante nuovo, che ha l'icona di Divi accesa, compariva una
+  freccia sottile fuori posto. Va bene con l'icona di Divi accesa o spenta.
+- Telefono: il bottone "Le materie prime" dell'introduzione e' bordeaux,
+  come "Mappe". Dalla 0.5.9 doveva restare anche sul telefono, ma era crema
+  su crema: non si vedeva, eppure si poteva toccare.
+- Foto: col mouse sopra una foto delle sezioni del tema non compare piu' un
+  riquadro che ripete il testo alternativo (Divi copia dalla libreria anche
+  il titolo, che dalla 0.6.1 e' il testo alternativo). Le foto del menu che
+  compaiono al passaggio del mouse hanno testo alternativo vuoto e nessun
+  titolo; prima, in una pagina rifatta, mostravano "Flow Menu Melanzane" e
+  simili, e due avevano il testo alternativo di un'altra foto. Nella Libreria
+  media la foto dell'introduzione e quella della mappa hanno i titoli della
+  home, "Alberto al lavoro" e "Tasche Piene nei caruggi di Genova".
+- Guida: la sezione Tasca o piatto va fatta con l'id come-mangi, a cui
+  porta "Come mangi" del menu in alto. La guida non lo diceva.
+
+VERIFICHE EFFETTUATE SULLA 0.6.6
+- Sito nuovo in italiano (WordPress, Divi 5.15.1, zip 0.6.5): la home rifatta
+  da una pagina bianca seguendo la guida, solo con clic nel Visual Builder (9
+  sezioni, 267 moduli, foto e video dalla Libreria media). Confronto con la
+  home del tema: sezioni identiche al pixel a 1440, 1100, 820 e 390 px (44 su
+  44, header e footer compresi), 11 stati col mouse sopra identici, bottoni a
+  riposo e col mouse identici, link, foto e nomi nella vista wireframe uguali
+  (303 elementi). Stile calcolato di ogni elemento a 15 larghezze, da 360 a
+  1920 px: solo differenze che non si vedono (vedi sotto).
+- Le 16 modifiche per un solo dispositivo della 0.6.5 (4 telefono, 5 tablet,
+  7 computer) fatte sulla pagina rifatta: con la 0.6.5 erano giuste nel
+  builder, ma sul sito 12 su 16 arrivavano anche su altri dispositivi. Con la
+  0.6.6: 16 su 16 solo sul loro dispositivo, nel builder e sul sito, sia su
+  una pagina fatta dopo l'aggiornamento sia su una pagina gia' fatta, dopo
+  che il tema ha scritto i suoi valori.
+- Aggiornamento dalla 0.6.5 sul sito della prova: la pagina rifatta riceve
+  una volta i valori per tablet e telefono (l'a capo delle righe, i 20 px del
+  giorno nel primo orario) e resta identica al pixel alla home (44 su 44);
+  home, pagine legali, header e footer non cambiano. Senza quella scrittura
+  la pagina fatta seguendo la guida e' identica lo stesso (44 su 44).
+- Bottoni nel Visual Builder, nella home e nella pagina rifatta, viste
+  Desktop, Tablet e Telefono: colori, posizione del testo e della freccia
+  misurati elemento per elemento e confrontati con il sito alla stessa
+  larghezza: uguali (freccia ↗ su computer e tablet, → su "Scopri il menù"
+  sul telefono; "Le materie prime" e "Mappe" senza freccia sul telefono,
+  come sul sito).
+- Sito della home prima e dopo, 44 sezioni a 4 larghezze: cambia solo
+  l'introduzione sul telefono, dove ora si vede il bottone; resta bordeaux
+  anche al tocco.
+- Foto: testo alternativo e titolo di ogni immagine della home e della
+  pagina rifatta uguali, tranne la quarta card delle Materie prime (sotto).
+  Riscegliendo nel builder la foto dell'introduzione e quella della mappa,
+  Divi copia i titoli nuovi della libreria.
+
+DIFFERENZE CON LA HOME, CHE NON SI VEDONO
+- La quarta card delle Materie prime prende dalla libreria il testo
+  alternativo "Piatto di ripieni alla genovese" (nella home "Ripieni di
+  verdure di stagione"): e' la stessa foto del piatto del menu.
+- Il fondo della sezione Hero, coperto dal video: trasparente nella home,
+  scuro nella pagina rifatta.
+- Nei riquadri dei tre bottoni l'allineamento e' "start" invece di "left";
+  sul telefono 4 righe hanno l'a capo acceso invece che spento, con le
+  stesse posizioni; il giorno del primo orario, nascosto sul telefono, misura
+  16 px invece di 20 px in una pagina fatta dopo l'aggiornamento.
+
+NON PROVATI
+- Safari e un iPhone veri, un database MySQL e il video di sfondo nel
+  builder, come per le versioni precedenti. In questa prova header e footer
+  non sono stati rifatti da zero (lo sono stati nella 0.6.1).
+
+==============================================================================
+
+NOTE DELLA 0.6.5
 
 La 0.6.5 fa valere ogni modifica fatta in Divi solo sul dispositivo per cui
 la si fa: computer, tablet o telefono. Le note delle versioni precedenti,

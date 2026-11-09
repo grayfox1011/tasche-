@@ -162,8 +162,26 @@ function tp_child_bp_collect_background( $html, $block ) {
 }
 add_filter( 'render_block', 'tp_child_bp_collect_background', 999, 2 );
 
+/**
+ * The classes of a section, wherever Divi keeps them: in the theme's content in the CSS Class field, in a section
+ * made in the Visual Builder in Advanced > Attributes (tp_child_block_class_names()). Until 0.6.6 only the first
+ * place was read, so on the site the sections made by hand kept Divi's cascade (the builder already ranged them).
+ */
 function tp_child_bp_section_class( array $block ): string {
+	if ( function_exists( 'tp_child_block_class_names' ) ) {
+		return tp_child_block_class_names( (array) ( $block['attrs'] ?? [] ) );
+	}
+
 	return (string) ( $block['attrs']['module']['advanced']['htmlAttributes']['desktop']['value']['class'] ?? '' );
+}
+
+/**
+ * 0.6.6: a section with its tp- class only in Advanced > Attributes, the ones the 0.6.5 freeze did not see.
+ */
+function tp_child_bp_section_attributes_only( array $block ): bool {
+	$field = (string) ( $block['attrs']['module']['advanced']['htmlAttributes']['desktop']['value']['class'] ?? '' );
+
+	return ! preg_match( '/(^|\s)tp-/', $field ) && (bool) preg_match( '/(^|\s)tp-/', tp_child_bp_section_class( $block ) );
 }
 
 /**
@@ -762,22 +780,28 @@ function tp_child_bp_freeze_group( array $value, string $group ): array {
 }
 
 /**
- * Blocks: the modules inside the sections with a tp- class.
+ * Blocks: the modules inside the sections with a tp- class (with $attributes_only, only the sections that have it
+ * in Advanced > Attributes alone).
  */
-function tp_child_bp_freeze_blocks( array $blocks, bool $in_scope = false ): array {
+function tp_child_bp_freeze_blocks( array $blocks, bool $in_scope = false, bool $attributes_only = false ): array {
 	foreach ( $blocks as $i => $block ) {
 		if ( empty( $block['blockName'] ) ) {
 			continue;
 		}
 
-		$here = $in_scope || ( 'divi/section' === $block['blockName'] && preg_match( '/(^|\s)tp-/', tp_child_bp_section_class( $block ) ) );
+		$section = 'divi/section' === $block['blockName'] && (
+			$attributes_only
+				? tp_child_bp_section_attributes_only( $block )
+				: preg_match( '/(^|\s)tp-/', tp_child_bp_section_class( $block ) )
+		);
+		$here    = $in_scope || $section;
 
 		if ( $here && ! empty( $block['attrs'] ) && is_array( $block['attrs'] ) ) {
 			$blocks[ $i ]['attrs'] = tp_child_bp_freeze_attrs( $block['attrs'] );
 		}
 
 		if ( ! empty( $block['innerBlocks'] ) ) {
-			$blocks[ $i ]['innerBlocks'] = tp_child_bp_freeze_blocks( $block['innerBlocks'], $here );
+			$blocks[ $i ]['innerBlocks'] = tp_child_bp_freeze_blocks( $block['innerBlocks'], $here, $attributes_only );
 		}
 	}
 
@@ -787,14 +811,14 @@ function tp_child_bp_freeze_blocks( array $blocks, bool $in_scope = false ): arr
 /**
  * One post: written only when something changes (one revision more).
  */
-function tp_child_bp_freeze_post( int $post_id ): bool {
+function tp_child_bp_freeze_post( int $post_id, bool $attributes_only = false ): bool {
 	$content = (string) get_post_field( 'post_content', $post_id );
 
 	if ( '' === $content || false === strpos( $content, 'tp-' ) || false === strpos( $content, 'wp:divi/' ) ) {
 		return false;
 	}
 
-	$frozen = serialize_blocks( tp_child_bp_freeze_blocks( parse_blocks( $content ) ) );
+	$frozen = serialize_blocks( tp_child_bp_freeze_blocks( parse_blocks( $content ), false, $attributes_only ) );
 
 	if ( $frozen === $content || serialize_blocks( parse_blocks( $content ) ) === $frozen ) {
 		return false;
@@ -813,7 +837,7 @@ function tp_child_bp_freeze_post( int $post_id ): bool {
 /**
  * The posts with the theme's sections: pages, posts, Theme Builder layouts, Divi Library.
  */
-function tp_child_bp_freeze_posts( array $ids = [] ): int {
+function tp_child_bp_freeze_posts( array $ids = [], bool $attributes_only = false ): int {
 	if ( ! $ids ) {
 		$ids = get_posts(
 			[
@@ -828,7 +852,7 @@ function tp_child_bp_freeze_posts( array $ids = [] ): int {
 	$changed = 0;
 
 	foreach ( array_unique( array_map( 'intval', $ids ) ) as $id ) {
-		if ( $id > 0 && tp_child_bp_freeze_post( $id ) ) {
+		if ( $id > 0 && tp_child_bp_freeze_post( $id, $attributes_only ) ) {
 			++$changed;
 		}
 	}
@@ -855,6 +879,28 @@ function tp_child_bp_freeze_065(): void {
 	update_option( $flag, TP_CHILD_VERSION, true );
 }
 add_action( 'init', 'tp_child_bp_freeze_065', 47 );
+
+/**
+ * Once after the update to 0.6.6: the sections made by hand in the Visual Builder (their tp- class in Advanced >
+ * Attributes) get on the site the device ranges that the builder already showed. What shows today on each device
+ * stays, as the 0.6.5 did for the theme's sections; from now on a change made for one device stays on it.
+ */
+function tp_child_bp_freeze_066(): void {
+	$flag = 'tp_child_bp_freeze_066_v1';
+
+	if ( get_option( $flag ) ) {
+		return;
+	}
+
+	if ( tp_child_bp_ranges() ) {
+		tp_child_bp_freeze_posts( [], true );
+	}
+
+	// The CSS Divi saved for those pages has no ranges yet.
+	tp_child_clear_divi_static_css();
+	update_option( $flag, TP_CHILD_VERSION, true );
+}
+add_action( 'init', 'tp_child_bp_freeze_066', 48 );
 
 /**
  * Visual Builder: the same ranges on the <style> of the modules inside the theme's sections.

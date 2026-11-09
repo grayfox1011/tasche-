@@ -2812,3 +2812,113 @@
 .tp-child-theme.tp-child-theme :where(body.et-fb .tp-materie-cards) {
 	z-index: auto;
 }
+
+/* ------------------------------------------------------------------------------------------------ */
+/* 0.6.6: the buttons with the arrow ("Scopri il menù", "Le materie prime", "Mappe") in the Visual    */
+/* Builder as on the site at rest. On the site tasche-piene.js moves the text of the button into a    */
+/* label and adds the arrow (.tp-intro-button__label, .tp-intro-button__arrow); in the builder the    */
+/* text stays in the link, so here the link takes the colours of the label and the shape of label   */
+/* and arrow (clip-path), and ::after draws the arrow, whether Divi's button icon is on or off (a new */
+/* button has it on, the home's have it off; on the site Divi's icon is never shown).                */
+/* ------------------------------------------------------------------------------------------------ */
+.tp-child-theme.tp-child-theme.tp-child-theme :where(body.et-fb #page-container a.et_pb_button.tp-intro-button, body.et-fb #page-container a.et_pb_button.tp-location-button) {
+	clip-path: inset(0 calc(100% - var(--tp-intro-button-arrow-left) - 54px) 0 0 round 15px);
+}
+
+.tp-child-theme.tp-child-theme.tp-child-theme :where(body.et-fb #page-container a.et_pb_button.tp-hero-button, body.et-fb #page-container a.et_pb_button.tp-hero-button:hover, body.et-fb #page-container a.et_pb_button.tp-hero-button:focus) {
+	background: var(--tp-cream);
+	color: var(--tp-bordeaux);
+}
+
+body.et-fb #page-container .et_pb_section a.et_pb_button.tp-intro-button::after,
+body.et-fb #page-container .et_pb_section a.et_pb_button.tp-location-button::after {
+	content: "\2192" !important;
+	position: absolute;
+	top: 0;
+	right: auto;
+	bottom: auto;
+	left: 0;
+	display: block !important;
+	width: auto;
+	height: auto;
+	margin: 0;
+	padding: 0;
+	border-radius: 0;
+	background: none;
+	color: inherit !important;
+	opacity: 1 !important;
+	font-family: var(--tp-font-body), Arial, sans-serif !important;
+	font-size: 20px !important;
+	font-weight: 700;
+	line-height: 26.04px !important;
+	transform: translate(var(--tp-intro-button-arrow-left), 0) matrix(0.70710677, -0.70710677, 0.70710677, 0.70710677, 12.1508, 23.4645);
+	transform-origin: 0 0;
+	transition: none;
+}
+
+@media (min-width: 768px) and (max-width: 980px) {
+
+	.tp-child-theme.tp-child-theme.tp-child-theme :where(body.et-fb #page-container a.et_pb_button.tp-hero-button, body.et-fb #page-container a.et_pb_button.tp-hero-button:hover, body.et-fb #page-container a.et_pb_button.tp-hero-button:focus) {
+		padding-top: 15px;
+		padding-bottom: 13px;
+		background: var(--tp-white);
+	}
+
+	/* "Mappe" 25.5 px from the left edge on tablets, as the site's label (29 px only on computers). */
+	body.et-fb #page-container .et_pb_section a.et_pb_button.tp-location-button,
+	body.et-fb #page-container .et_pb_section a.et_pb_button.tp-location-button:hover {
+		padding-left: 25.5px !important;
+	}
+}
+
+@media (max-width: 767px) {
+
+	.tp-child-theme.tp-child-theme.tp-child-theme :where(body.et-fb #page-container a.et_pb_button.tp-hero-button, body.et-fb #page-container a.et_pb_button.tp-hero-button:hover, body.et-fb #page-container a.et_pb_button.tp-hero-button:focus) {
+		padding-top: 12.52px;
+		text-indent: 22.83px;
+		background: var(--tp-white);
+		clip-path: inset(0 calc(100% - var(--tp-intro-button-arrow-left) - 48.33px) 0 0 round 13.43px);
+	}
+
+	body.et-fb #page-container .et_pb_section a.et_pb_button.tp-hero-button::after {
+		display: flex !important;
+		align-items: center;
+		justify-content: center;
+		width: 48.33px;
+		height: 48.33px;
+		font-size: 17.9px !important;
+		line-height: 23.31px !important;
+		text-indent: 0;
+		transform: translate(var(--tp-intro-button-arrow-left), 0);
+	}
+
+	/* Le materie prime and Mappe: no arrow on phones, as on the site. */
+	.tp-child-theme.tp-child-theme.tp-child-theme :where(body.et-fb #page-container a.et_pb_button.tp-intro-button:not(.tp-hero-button), body.et-fb #page-container a.et_pb_button.tp-location-button) {
+		clip-path: none;
+	}
+
+	body.et-fb #page-container .et_pb_section a.et_pb_button.tp-intro-button:not(.tp-hero-button)::after,
+	body.et-fb #page-container .et_pb_section a.et_pb_button.tp-location-button::after {
+		display: none !important;
+	}
+
+	/* The text of "Le materie prime" in the middle of the button, in the weight of the site's label. */
+	.tp-child-theme.tp-child-theme.tp-child-theme :where(body.et-fb #page-container a.et_pb_button.tp-intro-button:not(.tp-hero-button)) {
+		padding: 6.1px 14px;
+		font-weight: 400;
+		text-align: center;
+	}
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* 0.6.6: phones, "Le materie prime" of the introduction. The 0.5.9 kept it on phones (the phone      */
+/* board has no button there), but once tasche-piene.js had set up the button the link lost its      */
+/* bordeaux (the label is transparent on phones): cream on cream, it could not be seen yet could be   */
+/* tapped. It is bordeaux again, as before the script runs and as "Mappe".                            */
+/* ------------------------------------------------------------------------------------------------ */
+@media (max-width: 767px) {
+
+	.tp-child-theme.tp-child-theme.tp-child-theme :where(body #page-container .et_pb_section a.et_pb_button.tp-intro-button.tp-figma-button--enhanced:not(.tp-hero-button), body #page-container .et_pb_section a.et_pb_button.tp-intro-button.tp-figma-button--enhanced:not(.tp-hero-button):hover, body #page-container .et_pb_section a.et_pb_button.tp-intro-button.tp-figma-button--enhanced:not(.tp-hero-button):focus) {
+		background: var(--tp-bordeaux);
+	}
+}

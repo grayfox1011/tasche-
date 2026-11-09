@@ -45,6 +45,8 @@ function tp_child_migration_callbacks(): array {
 			'tp_child_refresh_divi_css_060',
 			'tp_child_fill_media_alt_061',
 			'tp_child_bp_freeze_065',
+			'tp_child_fill_media_title_066',
+			'tp_child_bp_freeze_066',
 		],
 	];
 }

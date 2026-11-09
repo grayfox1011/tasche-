@@ -7,6 +7,9 @@
  * still made from the file name are changed: what is written in the library stays.
  * The texts are those of the home; the photos that only appear on hover in the menu, and the drawings of the
  * footer, are decorative and keep none.
+ * 0.6.6: the two photos that have a title of their own in the home ("Alberto al lavoro", "Tasche Piene nei caruggi
+ * di Genova") get it in the library too, so a section made anew gets it as well; the theme no longer shows a
+ * title that only repeats the alternative text (tp_child_image_alt_title() in functions.php).
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -36,6 +39,17 @@ function tp_child_media_alt_texts(): array {
 }
 
 /**
+ * 0.6.6: the title of the photos that have one of their own in the home, by file name (the others take their
+ * alternative text).
+ */
+function tp_child_media_title_texts(): array {
+	return [
+		'fig-intro-alberto-impasto.webp' => 'Alberto al lavoro',
+		'fig-intro-caruggi.webp'         => 'Tasche Piene nei caruggi di Genova',
+	];
+}
+
+/**
  * Alternative text for a file of the theme ("assets/images/intro/fig-alberto-pentola.webp"), empty if it has none.
  */
 function tp_child_media_alt_for_asset( string $relative_path ): string {
@@ -45,7 +59,8 @@ function tp_child_media_alt_for_asset( string $relative_path ): string {
 /**
  * Gives a photo the theme imported its alternative text, when the library has none for it, and the same words
  * as title while it still has the one made from the file name ("Fig Intro Alberto Impasto"): Divi copies the
- * title too, and the browser shows it when the mouse stops on the photo.
+ * title too, and the browser shows it when the mouse stops on the photo. A photo with a title of its own in the
+ * home (tp_child_media_title_texts()) gets that one, also in place of the alternative text the 0.6.1 gave it.
  */
 function tp_child_media_fill_alt( int $attachment_id, string $relative_path ): void {
 	$alt = tp_child_media_alt_for_asset( $relative_path );
@@ -70,11 +85,17 @@ function tp_child_media_fill_alt( int $attachment_id, string $relative_path ): v
 		$fallback[] = tp_child_seed_media_title_from_filename( basename( $file ) );
 	}
 
+	$own = tp_child_media_title_texts()[ basename( $relative_path ) ] ?? '';
+
+	if ( '' !== $own && $title === $alt ) {
+		$fallback[] = $alt;
+	}
+
 	if ( in_array( $title, $fallback, true ) ) {
 		wp_update_post(
 			[
 				'ID'         => $attachment_id,
-				'post_title' => $alt,
+				'post_title' => '' !== $own ? $own : $alt,
 			]
 		);
 	}
@@ -109,3 +130,38 @@ function tp_child_fill_media_alt_061(): void {
 }
 
 add_action( 'init', 'tp_child_fill_media_alt_061', 45 );
+
+/**
+ * 0.6.6, once after the update: the two photos with a title of their own get it in the library (only where the
+ * title is still the alternative text the 0.6.1 gave it, or the one made from the file name).
+ */
+function tp_child_fill_media_title_066(): void {
+	$flag = 'tp_child_media_title_066_v1';
+
+	if ( get_option( $flag ) ) {
+		return;
+	}
+
+	$ids = get_posts(
+		[
+			'post_type'      => 'attachment',
+			'post_status'    => 'inherit',
+			'posts_per_page' => -1,
+			'fields'         => 'ids',
+			'meta_key'       => '_tp_child_seed_asset_path',
+			'no_found_rows'  => true,
+		]
+	);
+
+	foreach ( $ids as $id ) {
+		$path = (string) get_post_meta( (int) $id, '_tp_child_seed_asset_path', true );
+
+		if ( isset( tp_child_media_title_texts()[ basename( $path ) ] ) ) {
+			tp_child_media_fill_alt( (int) $id, $path );
+		}
+	}
+
+	update_option( $flag, TP_CHILD_VERSION, true );
+}
+
+add_action( 'init', 'tp_child_fill_media_title_066', 46 );

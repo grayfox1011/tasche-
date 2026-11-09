@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( "TP_CHILD_VERSION", "0.6.5" );
+define( "TP_CHILD_VERSION", "0.6.6" );
 define( 'TP_CHILD_PATH', trailingslashit( get_stylesheet_directory() ) );
 define( 'TP_CHILD_URL', trailingslashit( get_stylesheet_directory_uri() ) );
 define( 'TP_CHILD_MODULES_JSON_PATH', TP_CHILD_PATH . 'modules-json/' );
@@ -1032,6 +1032,56 @@ function tp_child_scelta_photo_sizes( string $block_content, array $block ): str
 	);
 }
 add_filter( 'render_block', 'tp_child_scelta_photo_sizes', 10, 2 );
+
+/**
+ * 0.6.6: the photos of the theme's sections (an Image module with a tp- class) show no tooltip that only repeats
+ * their alternative text. Divi's Image module copies the title of the photo chosen in the library, which since
+ * 0.6.1 is its alternative text, and the browser shows it when the mouse stops on the photo; the photos of the
+ * home have none. A title that says something else ("Alberto al lavoro") stays. The photos that only appear on
+ * hover in the menu (.tp-menu-row-image) are decorative: empty alternative text and no title, whatever the
+ * library has for them ("Flow Menu Melanzane", or the text of the same photo used elsewhere).
+ */
+function tp_child_image_alt_title( string $block_content, array $block ): string {
+	if ( 'divi/image' !== ( $block['blockName'] ?? '' ) || false === strpos( $block_content, '<img' ) ) {
+		return $block_content;
+	}
+
+	$class = tp_child_block_class_names( $block['attrs'] ?? [] );
+
+	if ( ! preg_match( '/(?:^| )tp-/', $class ) ) {
+		return $block_content;
+	}
+
+	$decorative = (bool) preg_match( '/(?:^| )tp-menu-row-image(?: |$)/', $class );
+
+	return (string) preg_replace_callback(
+		'/<img\b[^>]*>/',
+		static function ( array $match ) use ( $decorative ): string {
+			$img = $match[0];
+
+			if ( $decorative ) {
+				$img = (string) preg_replace( '/\s(?:alt|title)="[^"]*"/', '', $img );
+
+				return (string) preg_replace( '/^<img\b/', '<img alt=""', $img );
+			}
+
+			$text = static function ( string $name ) use ( $img ): ?string {
+				return preg_match( '/\s' . $name . '="([^"]*)"/', $img, $found )
+					? trim( html_entity_decode( $found[1], ENT_QUOTES | ENT_HTML5, 'UTF-8' ) )
+					: null;
+			};
+			$title = $text( 'title' );
+
+			if ( null !== $title && ( '' === $title || $title === $text( 'alt' ) ) ) {
+				$img = (string) preg_replace( '/\stitle="[^"]*"/', '', $img, 1 );
+			}
+
+			return $img;
+		},
+		$block_content
+	);
+}
+add_filter( 'render_block', 'tp_child_image_alt_title', 10, 2 );
 
 /**
  * A note in brackets at the end of the name of a dish typed in small letters, as "(di Venerdì)" of the
