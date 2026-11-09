@@ -1,4 +1,119 @@
-TASCHE PIENE — VERSIONE 0.6.8, CANDIDATA AL COLLAUDO
+TASCHE PIENE — VERSIONE 0.6.9, CANDIDATA AL COLLAUDO
+
+La 0.6.9 porta nella home due cose che ci sono su taschepiene.it e il tema
+non aveva: i tasti Just Eat e Deliveroo sotto il menu' e la sezione
+Informazioni utili con le domande che si aprono. Allontana le card di Tasca
+o piatto dal titolo e rende piu' facile modificare il Menu' dal Visual
+Builder, riga in inglese compresa. Le note delle versioni precedenti, piu'
+in basso, restano valide.
+
+COSA CAMBIA RISPETTO ALLA 0.6.8
+- Consegna a domicilio, nella sezione Menu' sotto Note e allergeni: la riga
+  "Ti portiamo la vaschetta a casa o in ufficio:" e i tasti di Just Eat e
+  Deliveroo, con le immagini e i link di taschepiene.it (si aprono in una
+  nuova scheda). Ogni tasto e' un modulo Immagine di Divi: Contenuto >
+  Immagine cambia il disegno, Link > URL link immagine l'indirizzo;
+  Duplica Elemento aggiunge un tasto, e i tasti vanno a capo da soli. La
+  riga e' un Testo: colore, carattere e misura si cambiano da Divi.
+- Informazioni utili, dopo gli Orari (id "faq", come il link "Domande" di
+  taschepiene.it): il titolo in un riquadro e il modulo Accordion di Divi
+  con le 11 domande e risposte di taschepiene.it, la prima aperta. I
+  titoli delle domande alternano verde e bordeaux da soli, anche quando se
+  ne aggiunge una. Colori e sfondi si cambiano dall'Accordion (Colore
+  Sfondo Sezione Aperta, Colore sfondo Sezione Chiusa, testo del titolo,
+  icona, bordo, testo delle risposte) o dalla singola domanda.
+- All'aggiornamento, una volta, la home di un sito fatto prima riceve i
+  tasti e Informazioni utili, uguali a quelli della home nuova, se non li
+  ha gia'. Il resto della home e le altre pagine non cambiano.
+- Tasca o piatto: le card stanno piu' lontane dal titolo. Lo spazio sotto
+  l'ultima riga del titolo passa da 28 a 61 px a 1440 px, da 21 a 46 a
+  1100, da 29 a 53 a 820, da 11 a 32 a 390. E' il margine inferiore del
+  Titolo (Titolo > Design > Spaziatura), quindi si cambia da Divi.
+- Tasca o piatto, titolo piu' lungo (prova con quello di taschepiene.it,
+  "Tasca ripiena o vaschetta. Mangi qui o dove vuoi tu!"): sul telefono
+  finiva sotto le card (fino a 38 px coperti); ora le card scendono quanto
+  serve e la sezione si allunga. Sul computer una riga troppo lunga veniva
+  tagliata; ora va a capo. Lo stesso nel Visual Builder.
+- Menu' nel Visual Builder, sul computer: un clic sul nome, sugli
+  allergeni o sulla riga in inglese di un piatto apre quel pezzo. Prima si
+  apriva Prezzi, il gruppo dei prezzi, che copre tutta la riga. Anche la
+  foto che appare col mouse sopra si puo' cliccare.
+- Riga in inglese sotto il nome di un piatto: e' il modulo Descrizione
+  dentro "Nome e descrizione". Sul computer compare col mouse sopra il
+  piatto, sul sito e nel builder: porta il mouse sul piatto e fai clic
+  sulla riga che compare. Nei Livelli e nella vista wireframe: Piatto: ...
+  > Nome e descrizione > Descrizione. Sul tablet si vede sotto il nome;
+  sul telefono non c'e', come nel Figma.
+- Menu', nomi e righe in inglese lunghi (computer): vanno a capo prima del
+  primo prezzo invece di passare sotto i prezzi; la riga in inglese segue
+  l'ultima riga del nome. I nomi di adesso restano su una riga.
+- Menu' nelle viste tablet e telefono del builder: il nome lascia agli
+  allergeni lo spazio dentro la card, invece di spingerli fuori.
+
+VERIFICHE EFFETTUATE SULLA 0.6.9
+- Tasti e Informazioni utili confrontati con taschepiene.it a 1440, 820 e
+  390 px: stessi testi, colori, caratteri, misure e spazi, sul sito e nel
+  builder. Le domande si aprono e si chiudono; il link #faq porta alla
+  sezione.
+- Prova automatica di 18 modifiche (valori scritti come li scrivono i
+  campi, salvati, misurati sul sito a 1440 px e nel builder): sfondo e
+  spaziatura della sezione Informazioni utili; sfondo, colore e margine
+  del titolo; sfondo delle domande chiuse e di quella aperta, colore dei
+  loro titoli, icona, bordo, colore delle risposte; sfondo e colore del
+  titolo di una sola domanda; colore del testo della consegna, bordo e
+  larghezza di un tasto; margine sotto il titolo di Tasca o piatto. Tutte
+  come impostate, sul sito e nel builder.
+- Duplicati con il pulsante Duplica di Divi, salvati: una domanda (12 in
+  tutto, i colori continuano ad alternarsi) e un tasto (il terzo va a capo
+  sotto i primi due). Niente sovrapposto, niente tagliato.
+- Menu' nel builder, computer: clic sul nome e sulla riga in inglese di
+  tutte le 17 righe (piatti, contorni, dolci, bevande): si apre ogni volta
+  il modulo giusto.
+- Nomi lunghi: nomi e righe in inglese di taschepiene.it vanno a capo
+  prima dei prezzi da 981 a 1920 px; i nomi del tema restano su una riga.
+- Tasca o piatto con il titolo lungo, misurato a 12 larghezze da 360 a
+  1920 px: le card restano sempre sotto il titolo, ad almeno 30 px.
+- Aspetto senza modifiche, aggiornando un sito di prova 0.6.8: delle 44
+  foto di sezione della home (1440, 1100, 820 e 390 px) 19 sono uguali e 8
+  cambiano come previsto (Tasca o piatto: card piu' in basso, sezione da
+  21 a 33 px piu' alta; Menu': i tasti in fondo). Nelle altre 17 il
+  contenuto e' lo stesso: le sezioni sotto Tasca o piatto scendono di una
+  misura con decimali (per esempio 280,375 px sul telefono) e i bordi di
+  testi e foto cadono su pixel diversi; qualche foto e' alta 1 px in piu'
+  o in meno per l'arrotondamento; poi la scritta che scorre, e il footer,
+  che e' fisso e nella foto mostra la sezione sopra di lui (ora
+  Informazioni utili): in fondo alla pagina e' identico. Stati col mouse
+  sopra: 22 foto, 6 uguali, le altre con le stesse sfumature o Tasca o
+  piatto piu' alta; una a 1100 px mostrava evidenziata un'altra riga:
+  rifatta senza far scorrere la pagina dopo il passaggio del mouse, e'
+  uguale alla 0.6.8. Builder: 32 viste, 15 uguali, 6 cambiano come
+  previsto (Tasca o piatto e Menu'), le altre con le stesse sfumature.
+- Aggiornamento: alla prima pagina aperta dopo l'aggiornamento la home
+  riceve i tasti e Informazioni utili (nel contenuto 42 righe in piu',
+  nessuna tolta), senza errori PHP.
+- Installazione nuova (WordPress in italiano, Divi 5.15.1, zip caricato
+  da Aspetto > Temi): la home creata dal tema ha i tasti e le 11 domande,
+  nessun errore PHP. Le sezioni stanno negli stessi punti del sito
+  aggiornato (al millesimo di pixel, a 390 e 820 px); 39 foto su 48 sono
+  uguali, le altre 9 con le sfumature dei bordi.
+- Il pacchetto dei moduli del builder (scripts/bundle.js) rifatto dai
+  sorgenti esce identico: la 0.6.9 non cambia i moduli.
+
+LIMITI CONOSCIUTI
+- Nelle viste tablet e telefono del builder gli allergeni stanno a destra
+  del nome e l'ovale del giorno non c'e': sul sito li sistema uno script
+  che nel builder non gira. Solo nel builder, come prima.
+- L'header del Figma non ha il link "Domande" di taschepiene.it: se serve,
+  in Theme Builder > Header > Voci del menu si aggiunge una Voce con link
+  #faq, come le altre voci.
+
+NON PROVATI
+- Safari e un iPhone veri, un database MySQL e il video di sfondo nel
+  builder, come per le versioni precedenti.
+
+==============================================================================
+
+NOTE DELLA 0.6.8
 
 La 0.6.8 fa dei personaggi del footer degli elementi di Divi, da togliere,
 duplicare, aggiungere e cambiare, e prova pezzo per pezzo Tasca o piatto, il
