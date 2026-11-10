@@ -1,7 +1,7 @@
 TASCHE PIENE — VERSIONE 0.8.1, CANDIDATA AL COLLAUDO
 
 La 0.8.1 nasce da un controllo del Menu', la sezione dei piatti e il menu'
-in alto, su telefono, tablet e computer: 18 larghezze da 320 a 1920 px, a
+in alto, su telefono, tablet e computer: 22 larghezze da 320 a 1920 px, a
 riposo e col mouse sui piatti, con e senza animazioni, contro i testi di
 taschepiene.it. I contenuti erano giusti (16 piatti, 32 prezzi, note,
 tasti di consegna, link); i difetti trovati erano di impaginazione e sono
@@ -68,6 +68,9 @@ VERIFICHE EFFETTUATE SULLA 0.8.1
   aprendo la pagina direttamente con #menu, #faq, #chi-siamo, #location.
 - Visual Builder (computer, tablet, telefono): la sezione Menu' ha le
   stesse misure della 0.8.0.
+- Aggiornamento: lo zip 0.8.1 caricato da Aspetto > Temi sopra la 0.8.0
+  su un sito di prova si installa senza errori; li' il mouse sui 12 piatti
+  a 1100, 1280 e 1440 px da' lo stesso risultato.
 
 DA SAPERE
 - Sul telefono la descrizione sotto il nome dei piatti continua a non
