@@ -1,4 +1,124 @@
-TASCHE PIENE — VERSIONE 0.8.1, CANDIDATA AL COLLAUDO
+TASCHE PIENE — VERSIONE 0.8.2, CANDIDATA AL COLLAUDO
+
+La 0.8.2 nasce da una prova di modificabilita' da Divi, su computer,
+tablet e telefono: prima una prova automatica (ogni modulo del Menu' con
+sfondo, bordo, spazi e testo, nelle tre fasce), poi il Visual Builder
+vero, col mouse, nelle sue tre viste (ogni pezzo di un piatto cliccato in
+tre punti; testi, colori e misure cambiati, un piatto duplicato ed
+eliminato, la pagina salvata e riletta sul sito), e infine il menu' in
+alto dal Theme Builder. Sul sito non cambia niente, tranne il riquadro
+del menu' aperto su telefono e tablet quando in Header sito si sceglie un
+colore di sfondo. Il resto riguarda solo il Visual Builder. Le note delle
+versioni precedenti, piu' in basso, restano valide.
+
+COSA CAMBIA RISPETTO ALLA 0.8.1
+- Visual Builder, viste Tablet e Telefono, card dei piatti: le scritte
+  "Tasca" e "Piatto", le lettere S, M, L e i prezzi non si potevano
+  cliccare. Il tema disegna quelle parole al posto del Figma dentro la
+  card e lasciava il loro modulo grande zero: il mouse non lo incontrava
+  mai e un clic su un prezzo apriva il gruppo "Prezzi". Nel builder ogni
+  modulo sta ora dov'e' la sua parola: il clic su un prezzo apre quel
+  prezzo. Nulla si sposta (misurato pezzo per pezzo, vedi sotto).
+- Visual Builder, viste Tablet e Telefono: un clic sul nome di un piatto
+  apriva spesso il gruppo "Nome e descrizione" o cadeva su uno dei suoi
+  tastini (copia, cestino: nella prova un clic sul nome ha duplicato il
+  gruppo). Il gruppo e' grande quanto il nome e la sua barretta ci stava
+  sopra. Stesso difetto sul prezzo di contorni, dolci e bere (gruppo
+  "Prezzi"); nelle card lo strato dei prezzi, grande quanto la card,
+  prendeva il mouse e un clic sulla card apriva "Prezzi" invece del
+  piatto. Sotto i 981 px questi due gruppi non mostrano piu' barretta ne'
+  "+" (restano nel pannello Livelli e nella vista Computer) e il clic
+  sulla card apre il piatto; la barretta in cima alla card, quella del
+  piatto, duplica ed elimina il piatto intero (provato).
+- Visual Builder, tutte le viste: la barretta di Divi di nomi, numeri
+  degli allergeni, etichette e prezzi dei piatti sta sopra il pezzo
+  invece che sopra le sue parole (sono alti una riga: la barretta li
+  copriva, e sul computer il clic a meta' di un prezzo apriva "Altre
+  opzioni"). Stessa cosa per la barretta dei gruppi "titolo e riga" di
+  contorni, dolci e bere e "Consegna a domicilio".
+- Visual Builder, viste Tablet e Telefono: un promemoria in alto a
+  sinistra ("Vista Telefono: testi, prezzi, colori e misure cambiati qui
+  valgono solo sui telefoni..."). Divi tiene per quel solo dispositivo
+  tutto quello che si cambia in quelle viste, anche un testo o un prezzo:
+  nella prova un prezzo scritto in vista Telefono e' rimasto quello
+  vecchio su computer e tablet. Il promemoria non blocca i clic, non e'
+  nella pagina e sparisce in vista Computer.
+- Sito, telefono e tablet: il riquadro del menu' aperto prende il colore
+  scelto in Header sito > Sfondo e colori menu > Sfondo barra menu, come
+  la barra del computer. Prima restava crema: con parole chiare (per una
+  barra scura) le voci non si leggevano. Senza un colore scelto resta
+  com'era.
+
+VERIFICHE EFFETTUATE SULLA 0.8.2
+- Prova automatica sulla sezione Menu' (179 moduli, sfondo, bordo, spazi
+  e testo dati da Divi a ogni modulo, nelle tre fasce): arrivano tutti,
+  come nella 0.8.0, salvo i punti noti (vedi DA SAPERE).
+- Visual Builder, clic su 18 pezzi (titolo, nome, descrizione, etichette,
+  prezzi, proposta del mese, titoli e righe dei contorni, note, consegna)
+  in tre punti delle loro parole, nelle tre viste: 144 punti su 147 aprono
+  il pezzo giusto. I tre che restano sono di Divi: una riga di 1 px a
+  meta' colonna in vista Telefono e due punti sulla barretta del pezzo
+  stesso (titolo e sottotitolo dei contorni, vista Computer). Prima della
+  correzione, in vista Telefono: nome 2 punti su 3, prezzi delle card 0
+  su 9, prezzo dei contorni 0 su 3.
+- Visual Builder, misure: posizione e grandezza delle parole di ogni
+  pezzo dei piatti (128 misure in vista Tablet e in vista Telefono, con
+  in piu' un piatto di prova a quattro misure S, M, L; 116 in vista
+  Computer) sono identiche con e senza le regole nuove.
+- Visual Builder, modifiche vere su una copia della home: nome, colore e
+  misura di un piatto (computer 26 px blu, tablet 24 px, telefono 19 px:
+  tre valori diversi), prezzi, descrizione, un piatto duplicato e
+  rinominato, un piatto duplicato ed eliminato in vista Telefono dalla
+  barretta della card. Dopo il salvataggio il sito mostra a 1440, 820, 390
+  e 375 px esattamente quei valori, ciascuno sul suo dispositivo, e gli
+  altri piatti come prima.
+- Menu' in alto dal Theme Builder (Header sito): voce rinominata, voce
+  aggiunta, voce tolta, colore delle scritte e dello sfondo. Sul sito a
+  1440, 820 e 390 px le voci sono quelle, portano alla loro sezione e sul
+  telefono chiudono il menu'. Riaprendo il builder le voci hanno preso il
+  nome nuovo nell'elenco.
+- Sito: la sezione Menu' della home alle 22 larghezze della 0.8.1 (da 320
+  a 1920 px) e' identica alla 0.8.1.
+- Vista wireframe del builder: non cambia (le regole nuove non la toccano).
+- Aggiornamento: lo zip 0.8.2 caricato da Aspetto > Temi sopra la 0.8.1
+  su un sito di prova si installa senza errori; li' il Menu' a 390, 820
+  e 1440 px e' senza difetti e nel builder, in vista Telefono, nome,
+  etichetta e prezzi dei piatti si aprono al clic e il promemoria compare.
+
+DA SAPERE
+- Testi e prezzi vanno cambiati in vista Computer (quella con cui si
+  apre il builder). In vista Tablet o Telefono Divi li cambia solo per
+  quel dispositivo: e' il suo modo di lavorare, utile per colori e
+  misure, pericoloso per un prezzo. Se e' gia' successo: aprire quel
+  pezzo nella vista dove il valore e' diverso, passare il mouse sul nome
+  del campo e premere la freccia "ripristina" che compare li' accanto; il
+  campo torna al valore del computer (provato su un prezzo, poi salvato).
+- Nelle viste Tablet e Telefono i gruppi "Nome e descrizione" e "Prezzi"
+  dei piatti si aprono dal pannello Livelli o dalla vista Computer.
+- Divi mostra la barretta di un modulo sopra il suo angolo: su titoli e
+  testi normali un clic proprio li' prende uno dei suoi tastini. E' cosi'
+  in ogni sito fatto con Divi.
+- Margini sotto, a sinistra e a destra dei moduli Immagine dentro una
+  riga del menu' (le 12 foto col mouse, le due foto grandi su tablet e
+  telefono, i due tasti di consegna): Divi stesso li azzera, il valore
+  scritto non arriva. La misura del testo di "Note e allergeni" sul
+  telefono arriva un po' piu' piccola (21,5 px per 23) perche' il testo
+  ha due misure. Noti dalla 0.8.0.
+- Menu' in alto: nell'elenco di Header sito una voce rinominata tiene il
+  nome vecchio finche' il builder non viene riaperto (sul sito e nella
+  tela il testo e' subito quello nuovo). In vista Telefono del Theme
+  Builder il menu' resta chiuso: aperto si vede sul sito.
+- I due punti aperti della 0.8.1 restano tali: la descrizione dei piatti
+  sul telefono (il Figma non la mostra) e la sua misura sul tablet.
+
+NON PROVATI
+- Safari e un iPhone veri, un database MySQL e il video di sfondo nel
+  builder, come per le versioni precedenti. Il builder e' stato provato
+  con Chromium.
+
+==============================================================================
+
+NOTE DELLA 0.8.1
 
 La 0.8.1 nasce da un controllo del Menu', la sezione dei piatti e il menu'
 in alto, su telefono, tablet e computer: 22 larghezze da 320 a 1920 px, a
@@ -6,8 +126,7 @@ riposo e col mouse sui piatti, con e senza animazioni, contro i testi di
 taschepiene.it. I contenuti erano giusti (16 piatti, 32 prezzi, note,
 tasti di consegna, link); i difetti trovati erano di impaginazione e sono
 corretti qui sotto. A 390 px, la larghezza del Figma, e sul computer a
-riposo non cambia niente. Le note delle versioni precedenti, piu' in
-basso, restano valide.
+riposo non cambia niente.
 
 COSA CAMBIA RISPETTO ALLA 0.8.0
 - Menu', telefoni piu' stretti di 390 px (320, 360, 375: molti Android,

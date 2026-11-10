@@ -1305,6 +1305,8 @@ body.tp-child-theme.tp-child-theme.tp-child-theme :where(.tp-hero-subline) {
 		gap: clamp(4px, 0.72vw, 6px);
 	}
 
+	/* The panel of the open menu takes the colour chosen in Header sito > Sfondo e colori menu, as the bar of the
+	   computers does (0.8.2: it stayed cream, and words in a light colour could not be read on it). */
 	.tp-child-theme :where(.tp-theme-nav-links) {
 		position: absolute;
 		left: 0;
@@ -1312,7 +1314,7 @@ body.tp-child-theme.tp-child-theme.tp-child-theme :where(.tp-hero-subline) {
 		top: calc(100% + 10px);
 		display: grid;
 		gap: 0;
-		background: var(--tp-cream-light);
+		background: var(--tp-nav-bg, var(--tp-cream-light));
 		border-radius: 15px;
 		box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
 		opacity: 0;

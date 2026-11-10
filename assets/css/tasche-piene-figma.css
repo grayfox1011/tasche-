@@ -4618,3 +4618,257 @@ body.et-fb #page-container .et_pb_section a.et_pb_button.tp-hero-button::after {
 		scroll-margin-top: 28px;
 	}
 }
+
+/* ------------------------------------------------------------------------------------------------ */
+/* 0.8.2: the menu in the Visual Builder, piece by piece (only the builder: body.et-fb; the site does */
+/* not read these rules). Found with the mouse in the three views of the builder:                     */
+/*                                                                                                    */
+/* 1. On tablets and phones the labels and the prices of a card (Tasca, Piatto, S, M, L, 5,50 EUR)    */
+/*    had no box of their own: the theme draws their words at the Figma's places of the card and      */
+/*    leaves the module at 0 x 0, so the mouse never met them and a click on a price opened the       */
+/*    "Prezzi" group. Here each module stands at the place of its words (the same numbers as the      */
+/*    rules that place the words: "Menu cards on phones" above, and the card of tablets in            */
+/*    tasche-piene.css; if those change, these change with them) and the words stay inside it.        */
+/* 2. Divi draws the little toolbar of a module over its top. The pieces of a dish are one line high: */
+/*    the toolbar covered the words, and the one of the group around them took the click. The toolbar */
+/*    of a name, an allergens number, a label or a price now stands above the piece; on tablets and   */
+/*    phones the two wrappers of a dish ("Nome e descrizione", "Prezzi"), as big as what they hold,   */
+/*    show no toolbar and no "+" (they are still in Divi's Livelli panel and in the computer view),   */
+/*    and the layer of the prices, as big as the card, lets the click through to the dish.            */
+/* 3. The toolbar of the groups "titolo e riga" of a list and "consegna" stands above the group       */
+/*    instead of over the middle of its first words.                                                  */
+/* ------------------------------------------------------------------------------------------------ */
+@media (max-width: 980px) {
+
+	body.et-fb .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices > .et_pb_module {
+		position: absolute;
+		z-index: 6;
+		width: auto;
+		height: auto;
+	}
+
+	body.et-fb .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices > .et_pb_module > .et_pb_text_inner {
+		position: static;
+	}
+
+	/* The two wrappers of a dish: no toolbar and no "+" of their own under 981 px. */
+	body.et-fb .tp-menu-section .tp-menu-row .tp-menu-item > .et-vb-module-options:not(.et-vb-module-options--wireframe),
+	body.et-fb .tp-menu-section .tp-menu-row .tp-menu-prices > .et-vb-module-options:not(.et-vb-module-options--wireframe),
+	body.et-fb .tp-menu-section .tp-menu-row .tp-menu-item > .et-vb-add-module-wrap,
+	body.et-fb .tp-menu-section .tp-menu-row .tp-menu-prices > .et-vb-add-module-wrap {
+		display: none;
+	}
+
+	/* The layer of the prices covers the card: the click on the card is for the dish (Divi gives the modules of a
+	   group their pointer events back with !important: the pieces inside the layer keep theirs). */
+	body.et-fb .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices {
+		pointer-events: none !important;
+	}
+}
+
+/* The card of tablets (shares of the card, as the words). */
+@media (min-width: 768px) and (max-width: 980px) {
+
+	body.et-fb .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices > .tp-menu-label-tasca {
+		top: 38.60%;
+		left: 12.43%;
+	}
+
+	body.et-fb .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices > .tp-menu-label-piatto {
+		top: 37.01%;
+		left: 38.58%;
+	}
+
+	body.et-fb .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices > .tp-menu-label-m {
+		top: 59.08%;
+		left: 50.88%;
+	}
+
+	body.et-fb .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices > .tp-menu-label-l {
+		top: 59.08%;
+		left: 91.98%;
+	}
+
+	body.et-fb .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices > .tp-menu-price-value-tasca {
+		top: 76.45%;
+		left: 4.17%;
+	}
+
+	body.et-fb .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices > .tp-menu-price-value-m {
+		top: 76.45%;
+		left: 42.08%;
+	}
+
+	body.et-fb .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices > .tp-menu-price-value-l {
+		top: 76.45%;
+		left: 81.15%;
+	}
+
+	/* With the S size: four columns. */
+	body.et-fb .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices > .tp-menu-label-piatto {
+		top: 39.95%;
+		left: 26.48%;
+	}
+
+	body.et-fb .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices > .tp-menu-label-s {
+		top: 59.08%;
+		left: 37.06%;
+	}
+
+	body.et-fb .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices > .tp-menu-label-m {
+		left: 62.90%;
+	}
+
+	body.et-fb .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices > .tp-menu-price-value-s {
+		top: 76.45%;
+		left: 29.27%;
+	}
+
+	body.et-fb .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices > .tp-menu-price-value-m {
+		left: 54.10%;
+	}
+}
+
+/* The card of phones (the Figma's pixels; the prices centred under their icons). */
+@media (max-width: 767px) {
+
+	body.et-fb .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices > .tp-menu-label-tasca {
+		top: 89px;
+		left: 41.7px;
+	}
+
+	body.et-fb .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices > .tp-menu-label-piatto {
+		top: 100.7px;
+		left: 136.8px;
+	}
+
+	body.et-fb .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices > .tp-menu-label-s,
+	body.et-fb .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices > .tp-menu-label-m,
+	body.et-fb .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices > .tp-menu-label-l {
+		top: 153.7px;
+	}
+
+	body.et-fb .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices > .tp-menu-label-m {
+		left: 186.7px;
+	}
+
+	body.et-fb .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices > .tp-menu-label-l {
+		left: 316.7px;
+	}
+
+	body.et-fb .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices > .tp-menu-price {
+		top: 195.7px;
+		transform: translateX(-50%);
+	}
+
+	body.et-fb .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices > .tp-menu-price > .et_pb_text_inner {
+		transform: none;
+	}
+
+	body.et-fb .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices > .tp-menu-price-value-tasca {
+		left: 54.9px;
+	}
+
+	body.et-fb .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices > .tp-menu-price-value-m {
+		left: 174.9px;
+	}
+
+	body.et-fb .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-prices > .tp-menu-price-value-l {
+		left: 293.5px;
+	}
+
+	/* With the S size: four columns, at the shares of the card. */
+	body.et-fb .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices > .tp-menu-label-tasca {
+		left: 4%;
+	}
+
+	body.et-fb .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices > .tp-menu-label-piatto {
+		left: 26.7%;
+	}
+
+	body.et-fb .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices > .tp-menu-label-s {
+		left: 40.1%;
+	}
+
+	body.et-fb .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices > .tp-menu-label-m {
+		left: 63.8%;
+	}
+
+	body.et-fb .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices > .tp-menu-label-l {
+		left: 91.6%;
+	}
+
+	body.et-fb .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices > .tp-menu-price {
+		transform: none;
+	}
+
+	body.et-fb .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices > .tp-menu-price-value-tasca {
+		left: 4.4%;
+	}
+
+	body.et-fb .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices > .tp-menu-price-value-s {
+		left: 28.5%;
+	}
+
+	body.et-fb .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices > .tp-menu-price-value-m {
+		left: 52.6%;
+	}
+
+	body.et-fb .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal):has(.tp-menu-price-value-s) .tp-menu-prices > .tp-menu-price-value-l {
+		left: 79.1%;
+	}
+}
+
+/* The toolbars: above the small pieces of a dish, at every width. */
+body.et-fb .tp-menu-section .tp-menu-row .tp-menu-name > .et-vb-module-options:not(.et-vb-module-options--wireframe),
+body.et-fb .tp-menu-section .tp-menu-row .tp-menu-allergeni > .et-vb-module-options:not(.et-vb-module-options--wireframe),
+body.et-fb .tp-menu-section .tp-menu-row .tp-menu-price > .et-vb-module-options:not(.et-vb-module-options--wireframe),
+body.et-fb .tp-menu-section .tp-menu-row .tp-menu-label > .et-vb-module-options:not(.et-vb-module-options--wireframe),
+body.et-fb .tp-menu-section .tp-menu-sectionhead > .et-vb-module-options:not(.et-vb-module-options--wireframe),
+body.et-fb .tp-menu-section .tp-menu-delivery > .et-vb-module-options:not(.et-vb-module-options--wireframe) {
+	top: auto;
+	bottom: 100%;
+}
+
+/* The one of the name at its left end: on the cards the toolbar of the dish is at the middle of their top. */
+body.et-fb .tp-menu-section .tp-menu-row .tp-menu-name > .et-vb-module-options:not(.et-vb-module-options--wireframe) {
+	right: auto;
+	left: 0;
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* 0.8.2: a reminder in the Visual Builder while the Tablet or Telefono view is on. Divi keeps what  */
+/* one changes there (a text and a price too, not only colours and sizes) for that device alone: a   */
+/* price typed in the Telefono view stayed the old one on computers. The note stands at the top left */
+/* of the builder's own window (not in the page, not on the site), lets every click through and goes */
+/* away in the Computer view.                                                                         */
+/* ------------------------------------------------------------------------------------------------ */
+body.et-vb-root-ancestor[data-app-breakpoint]:not([data-app-breakpoint="desktop"])::after {
+	content: "Questa vista: testi, prezzi, colori e misure cambiati qui valgono solo per questa vista. Per cambiarli dappertutto torna alla vista Computer.";
+	position: fixed;
+	top: 58px;
+	left: 58px;
+	z-index: 9000;
+	box-sizing: border-box;
+	width: 252px;
+	max-width: calc(100vw - 80px);
+	padding: 9px 12px;
+	border-radius: 8px;
+	background: #20292f;
+	box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+	color: #fff;
+	font: 500 12px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+	letter-spacing: 0;
+	text-align: left;
+	text-transform: none;
+	opacity: 0.96;
+	pointer-events: none;
+}
+
+body.et-vb-root-ancestor[data-app-breakpoint][data-app-breakpoint="tablet"]::after {
+	content: "Vista Tablet: testi, prezzi, colori e misure cambiati qui valgono solo sui tablet. Per cambiarli dappertutto torna alla vista Computer.";
+}
+
+body.et-vb-root-ancestor[data-app-breakpoint][data-app-breakpoint="phone"]::after {
+	content: "Vista Telefono: testi, prezzi, colori e misure cambiati qui valgono solo sui telefoni. Per cambiarli dappertutto torna alla vista Computer.";
+}
