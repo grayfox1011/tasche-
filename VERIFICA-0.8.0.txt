@@ -1,4 +1,119 @@
-TASCHE PIENE — VERSIONE 0.7.0, CANDIDATA AL COLLAUDO
+TASCHE PIENE — VERSIONE 0.8.0, CANDIDATA AL COLLAUDO
+
+La 0.8.0 nasce da una prova: su un sito nuovo la home e' stata rifatta a
+mano da una pagina bianca, modulo per modulo nel Visual Builder, e header e
+footer da zero nel Theme Builder, seguendo la guida. La pagina rifatta e'
+venuta uguale alla home del tema; i problemi incontrati lungo la strada
+sono corretti qui sotto. La grafica di serie non cambia. Le note delle
+versioni precedenti, piu' in basso, restano valide.
+
+COSA CAMBIA RISPETTO ALLA 0.7.0
+- Header sito e Footer sito nuovi (Theme Builder, layout fatto da zero): i
+  moduli nascono con le loro voci in Contenuto > Elementi, le cinque del
+  menu' in alto e, nel footer, le sei dei due menu' piu' i tre personaggi.
+  Prima l'elenco era vuoto: le voci si vedevano ma non si potevano
+  modificare, e la prima voce aggiunta le faceva sparire tutte.
+- Logo scelto dalla Libreria in Header sito o Footer sito: Divi metteva il
+  titolo dell'immagine su tutto il modulo, e col mouse su qualsiasi punto
+  del footer compariva il riquadrino "Tasche Piene". Non succede piu',
+  anche nei layout gia' salvati.
+- Bottoni con la freccia (Guarda il menu', Le materie prime, Mappe):
+  - la larghezza segue la scritta. Prima era fissa: una scritta piu' lunga
+    usciva dal bottone o finiva sotto la freccia, una piu' corta lo
+    lasciava largo e mezzo vuoto. Sul telefono "Le materie prime" e
+    "Mappe", che sono un riquadro, crescono soltanto;
+  - i valori di Pulsante > Design arrivano al bottone che si vede: colore
+    del testo (anche al passaggio del mouse), carattere, misura, peso,
+    stile, spaziatura tra le lettere e interlinea; sfondo (colore,
+    sfumatura o immagine, e colore al passaggio del mouse); bordo (ogni
+    lato col suo spessore, stile e colore) e angoli. Prima il testo e gli
+    angoli non cambiavano, lo sfondo usciva come una coda colorata accanto
+    al bottone e il bordo come una cornice fuori posto;
+  - Design > Ombra riquadro segue la forma del bottone (prima era larga
+    quanto il link, 32 px piu' del bottone, 126 per "Mappe");
+  - Design > Allineamento al centro o a destra mette il bottone al posto
+    giusto anche sul sito (prima restava da 16 a 126 px a sinistra, mentre
+    nel builder era giusto);
+  - ogni valore vale per il dispositivo su cui e' stato messo;
+  - nel Visual Builder il bottone e' largo come sul sito e non e' piu'
+    ritagliato: bordo, angoli e ombra si vedono come sul sito.
+- Striscia scorrevole: lo sfondo scelto in Design > Sfondo si vede (prima il
+  verde della striscia lo copriva), sul sito e nel builder.
+- Alberto, telefono: lo spazio sopra la foto grande segue Design >
+  Spaziatura (era bloccato a 25,5 px).
+- Libreria media: le sei foto aggiunte con 0.6.9 e 0.7.0 (i due tasti di
+  consegna e le quattro di Materie prime) ricevono il testo alternativo
+  della home, e la foto della vaschetta si chiama "La vaschetta" (prima "Il
+  piatto"). Una volta sola, e solo dove non e' stato scritto un testo
+  diverso. Una pagina rifatta scegliendo le foto dalla Libreria le prende
+  gia' giuste.
+- Vista wireframe: un tasto di consegna rifatto a mano prende il nome dalla
+  sua immagine ("Tasto: Just Eat"), come quelli della home.
+- Guida: zip aggiornato, classi delle card di Materie prime, come rifare
+  Consegna a domicilio e Informazioni utili, bottoni e Striscia.
+
+VERIFICHE EFFETTUATE SULLA 0.8.0
+- Pagina bianca: WordPress nuovo in italiano, Divi 5.15.1, zip 0.7.0. La
+  home rifatta a mano nel Visual Builder (10 sezioni, 295 moduli, circa 70
+  minuti di clic) e' uguale alla home del tema: 48 immagini di sezione su
+  48 identiche al pixel a 1440, 1100, 820 e 390 px, 20 stati col mouse su
+  20, stessi link e stessi id. Con la 0.8.0 il confronto da' lo stesso
+  risultato; negli stili calcolati restano le differenze che non si vedono
+  (allineamento del testo nei riquadri dei bottoni, righe che vanno a capo
+  sul telefono, fondo dell'hero sotto il video).
+- Nel Visual Builder la pagina rifatta e la home hanno gli stessi 634
+  pezzi con le stesse misure e gli stessi colori nelle viste computer,
+  tablet e telefono (al piu' mezzo pixel di arrotondamento nella vista
+  computer) e gli stessi 275 nomi nella vista wireframe.
+- Header e footer rifatti da zero nel Theme Builder: 5 voci nell'header, 6
+  voci e 3 personaggi nel footer, modificabili; identici al pixel a 1440,
+  1100, 820 e 390 px; nessun titolo sul footer.
+- Modificabilita': a ogni modulo della pagina sono stati dati da Divi
+  sfondo, bordo, spaziature e testo, su computer, tablet e telefono. Home
+  del tema e pagina rifatta danno lo stesso risultato, punto per punto;
+  quello che non passa e' gia' noto (vedi DA SAPERE).
+- Bottoni, su pagine di prova: scritta lunga e corta; colore e misura del
+  testo; sfondo; bordo pieno, tratteggiato e su due soli lati; angoli;
+  ombra; allineamento al centro e a destra; padding. Sito e Visual Builder,
+  computer, tablet e telefono, a riposo e col mouse sopra. Con un bordo o
+  un'ombra il bottone resta al suo posto e della sua misura. I bottoni di
+  serie non cambiano di un pixel.
+- Striscia scorrevole con uno sfondo di Divi: si vede sul dispositivo
+  scelto, sul sito e nel builder; senza, resta il suo verde.
+- Regressioni: la home con la 0.8.0 e' identica a quella con la 0.7.0 (48
+  immagini su 48, 20 stati col mouse su 20). Negli stili calcolati a 15
+  larghezze cambia solo il margine destro dei tre link dei bottoni, da 768
+  px in su, che non sposta nulla.
+- Installazione nuova (zip da Aspetto > Temi): home, header e footer
+  creati, nessun errore PHP, 48 immagini su 48 identiche, stesso contenuto
+  della home.
+- Aggiornamento dalla 0.7.0 caricando lo zip da wp-admin: nessun errore
+  PHP, home invariata, testi alternativi scritti nella Libreria.
+- Il pacchetto dei moduli del builder (scripts/bundle.js) rifatto dai
+  sorgenti.
+
+DA SAPERE
+- Sui tre bottoni con la freccia non hanno effetto: il padding di Design >
+  Spaziatura (lo spazio interno resta quello del design; il margine
+  funziona), la larghezza di Dimensionamento, un'ombra interna e il colore
+  del bordo al passaggio del mouse. Sul telefono il bottone dell'hero ha un
+  posto fisso: l'allineamento non lo sposta.
+- Le pagine rifatte PRIMA della 0.8.0 scegliendo le foto dalla Libreria
+  tengono il testo alternativo che la foto aveva in quel momento: per le
+  sei foto nuove va riscelto o scritto a mano (Immagine > Avanzate >
+  Attributi).
+- Restano come prima: lo spessore della linea delle card di Materie prime
+  (colore e angoli si cambiano da Divi), i margini sotto, a destra e a
+  sinistra di un'Immagine dentro una colonna (li azzera Divi), bordo e
+  spaziatura dell'Accordion (Divi li applica alle singole domande).
+
+NON PROVATI
+- Safari e un iPhone veri, un database MySQL e il video di sfondo nel
+  builder, come per le versioni precedenti.
+
+==============================================================================
+
+NOTE DELLA 0.7.0
 
 La 0.7.0 mette nella home nuova i testi di taschepiene.it: la grafica resta
 quella del Figma, le parole sono quelle del sito pubblico. I tasti Just Eat
