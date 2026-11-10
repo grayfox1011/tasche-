@@ -29,8 +29,8 @@ COSA CAMBIA RISPETTO ALLA 0.7.0
     lato col suo spessore, stile e colore) e angoli. Prima il testo e gli
     angoli non cambiavano, lo sfondo usciva come una coda colorata accanto
     al bottone e il bordo come una cornice fuori posto;
-  - Design > Ombra riquadro segue la forma del bottone (prima era larga
-    quanto il link, 32 px piu' del bottone, 126 per "Mappe");
+  - l'ombra di Design > Box Shadow segue la forma del bottone (prima era
+    larga quanto il link, 32 px piu' del bottone, 126 per "Mappe");
   - Design > Allineamento al centro o a destra mette il bottone al posto
     giusto anche sul sito (prima restava da 16 a 126 px a sinistra, mentre
     nel builder era giusto);

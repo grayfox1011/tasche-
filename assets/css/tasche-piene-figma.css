@@ -4044,7 +4044,7 @@ body.et-fb #page-container .et_pb_section a.et_pb_button.tp-hero-button::after {
 		border-left: var(--tp-own-border-left, 0 none);
 	}
 
-	/* The shadow (Design > Ombra riquadro): the link does not paint it (its box is wider than the button one sees);
+	/* The shadow (Design > Box Shadow): the link does not paint it (its box is wider than the button one sees);
 	   it goes behind label and arrow together and, with the mouse on the button, behind each of the two. The value
 	   is read on the link by tp-button-fit.js (--tp-own-shadow), on a copy this rule leaves alone. */
 	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-shadow-d:not([aria-hidden="true"])) {
@@ -4229,7 +4229,7 @@ body.et-fb #page-container .et_pb_section a.et_pb_button.tp-hero-button::after {
 		border-left: var(--tp-own-border-left, 0 none);
 	}
 
-	/* The shadow (Design > Ombra riquadro): the link does not paint it (its box is wider than the button one sees);
+	/* The shadow (Design > Box Shadow): the link does not paint it (its box is wider than the button one sees);
 	   it goes behind label and arrow together and, with the mouse on the button, behind each of the two. The value
 	   is read on the link by tp-button-fit.js (--tp-own-shadow), on a copy this rule leaves alone. */
 	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-shadow-t:not([aria-hidden="true"])) {
@@ -4439,7 +4439,7 @@ body.et-fb #page-container .et_pb_section a.et_pb_button.tp-hero-button::after {
 		border-left: var(--tp-own-border-left, 0 none);
 	}
 
-	/* The shadow (Design > Ombra riquadro): the link does not paint it (its box is wider than the button one sees);
+	/* The shadow (Design > Box Shadow): the link does not paint it (its box is wider than the button one sees);
 	   it goes behind label and arrow together and, with the mouse on the button, behind each of the two. The value
 	   is read on the link by tp-button-fit.js (--tp-own-shadow), on a copy this rule leaves alone. */
 	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-shadow-p:not([aria-hidden="true"])) {

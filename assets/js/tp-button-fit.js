@@ -10,7 +10,7 @@
  * (the label and the arrow tasche-piene.js makes) and in the Visual Builder (the link drawn as the button). On
  * the phones, where "Le materie prime" and "Mappe" are a box with the words in the middle, the box only grows.
  *
- * The border (Pulsante > Design > Bordo) and the shadow (Design > Ombra riquadro) are the link's, and on the site
+ * The border (Pulsante > Design > Bordo) and the shadow (Design > Box Shadow) are the link's, and on the site
  * the button one sees is label and arrow: the four sides of the border and the shadow are read here and given to
  * the stylesheet, which draws them with the two pieces ("0.8.0: the values of Pulsante > Design").
  */
@@ -121,7 +121,7 @@
 					padding: parseFloat(style['padding' + name]) || 0
 				};
 			}),
-			// The shadow Divi writes on the link (Design > Ombra riquadro).
+			// The shadow Divi writes on the link (Design > Box Shadow).
 			shadow: style.boxShadow
 		};
 		probe.parentNode.removeChild(probe);
@@ -198,7 +198,7 @@
 		set(button, '--tp-own-border-y', own ? measures.sides[0].width + 'px' : '');
 	}
 
-	// The shadow chosen in Design > Ombra riquadro is the link's, whose box is wider than the button one sees: on
+	// The shadow chosen in Design > Box Shadow is the link's, whose box is wider than the button one sees: on
 	// the site the link (class tp-own-shadow-*, from PHP) does not paint it and the stylesheet puts it behind label
 	// and arrow, with the value read here on the copy (an inner shadow, which they cannot share, is left out).
 	function shadow(button, measures, builder) {

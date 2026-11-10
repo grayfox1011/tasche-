@@ -73,7 +73,7 @@ function tp_child_own_design_devices( $node, string $state, callable $test ): ar
 }
 
 /**
- * The classes that say which values of Pulsante > Design (and the shadow of Design > Ombra riquadro) a button
+ * The classes that say which values of Pulsante > Design (and the shadow of Design > Box Shadow) a button
  * has, per device.
  *
  * @param array $attrs Attributes of a divi/button block.
@@ -118,7 +118,7 @@ function tp_child_own_design_button_classes( array $attrs ): array {
 	$add( 'border', tp_child_own_design_devices( $border, 'value', $key( 'styles' ) ) );
 	$add( 'radius', tp_child_own_design_devices( $border, 'value', $key( 'radius' ) ) );
 
-	// The shadow is the module's (Design > Ombra riquadro): Divi writes it on the link.
+	// The shadow is the module's (Design > Box Shadow): Divi writes it on the link.
 	$add(
 		'shadow',
 		tp_child_own_design_devices(
