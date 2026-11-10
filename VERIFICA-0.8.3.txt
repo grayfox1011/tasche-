@@ -98,7 +98,11 @@ VERIFICHE EFFETTUATE SULLA 0.8.3
   primi serviti al posto dei secondi mentre la pagina carica). Home di
   oggi: testata del menu' e titolo "Siamo nei caruggi" con le stesse
   misure a 18 larghezze da 360 a 2560 px; pagina intera identica pixel
-  per pixel a 1440, 1100, 820 e 390 px.
+  per pixel a 1440, 1100, 820 e 390 px. A 390 px, in circa una prova su
+  dieci, alcune zone da Tasca o piatto in giu' escono spostate di 1 px:
+  succede anche con i soli file della 0.8.2 (visto in una prova in cui
+  la pagina con i file nuovi era quella solita e quella con i vecchi
+  no), quindi non viene da questa versione.
 - Controllo del Menu' sul sito alle 22 larghezze della 0.8.1 (da 320 a
   1920 px): stesso esito della 0.8.2 (16 righe, stesse altezze, stesse
   note).
