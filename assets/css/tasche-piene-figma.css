@@ -464,7 +464,8 @@
 		margin-bottom: 49.9px;
 	}
 
-	/* "Il nostro / menu’": the longest word never breaks (tp-layout.js measures it, --tp-title-fit). */
+	/* "Il nostro / menu’": the longest word never breaks (tp-titles.js measures it, --tp-title-fit). From 0.8.3 the
+	   size comes from the rule at the end of this file, where the title is its own container. */
 	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-title h2) {
 		font-size: min(96px, calc((100cqi - 559.1px) * var(--tp-title-fit, .237)));
 		line-height: 1.0115;
@@ -4871,4 +4872,236 @@ body.et-vb-root-ancestor[data-app-breakpoint][data-app-breakpoint="tablet"]::aft
 
 body.et-vb-root-ancestor[data-app-breakpoint][data-app-breakpoint="phone"]::after {
 	content: "Vista Telefono: testi, prezzi, colori e misure cambiati qui valgono solo sui telefoni. Per cambiarli dappertutto torna alla vista Computer.";
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* 0.8.3: the hero video on phones and tablets when the phone does not start it by itself (an iPhone */
+/* in Low Power Mode, for one). iOS then draws its own round "play" over the video, which sits under */
+/* the title: it is hidden, the picture of the hero stays, and the first tap anywhere on the page     */
+/* starts the video (assets/js/tp-layout.js). The video itself takes no taps.                         */
+/* ------------------------------------------------------------------------------------------------ */
+.tp-child-theme :where(.tp-hero-section .tp-hero-native-video) {
+	pointer-events: none;
+}
+
+.tp-hero-section .tp-hero-native-video::-webkit-media-controls-start-playback-button {
+	display: none !important;
+	-webkit-appearance: none;
+}
+
+.tp-hero-section .tp-hero-native-video::-webkit-media-controls {
+	display: none !important;
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* 0.8.3: "Duplica" on the first dish of a list (Visual Builder). Divi centres the toolbar of a      */
+/* group on its top edge: the list of dishes and its first dish have the same top edge and the same   */
+/* centre, so the toolbar of the whole list lay over the one of the first dish, and its "duplica"     */
+/* copied the list (all the dishes again, under the first list) instead of the dish. The toolbar of   */
+/* a list of dishes, and of the group of the Materie prime cards on tablets and phones (same case     */
+/* with the first card), now stands above the list. Only the builder.                                 */
+/* ------------------------------------------------------------------------------------------------ */
+body.et-fb .tp-menu-section .tp-menu-table > .et-vb-module-options:not(.et-vb-module-options--wireframe) {
+	top: auto;
+	bottom: 100%;
+}
+
+@media (max-width: 980px) {
+
+	body.et-fb .tp-materie-section .tp-materie-cards > .et-vb-module-options:not(.et-vb-module-options--wireframe) {
+		top: auto;
+		bottom: 100%;
+	}
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* 0.8.3: the head of the menu follows what is written in it (computers, from 981 px up).            */
+/*                                                                                                  */
+/* The legend. Its two boxes had the width and the height of the Figma's words: a longer text was    */
+/* cut at the edge of the box. Now the Figma's sizes are the least: a box grows as wide as its text, */
+/* and when the legend is as wide as half of the head (or as the Figma's, where that is more) the    */
+/* text goes on more lines and the boxes get taller, both as tall. The band that hides the boxes     */
+/* before they rise is as tall as they are; the lists start under it, as before.                     */
+/*                                                                                                  */
+/* The title. It takes the width the legend leaves and no more, so a long word can no longer push    */
+/* the legend out of the board: the size comes from that width (the title is its own container) and  */
+/* is never under 32 px; a word longer than the line at 32 px is broken. More than three lines: the  */
+/* size goes down until they are three, not under 58% of it (--tp-title-max, assets/js/tp-titles.js). */
+/* ------------------------------------------------------------------------------------------------ */
+@media (min-width: 981px) {
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-header > .tp-menu-title) {
+		flex: 1 1 0;
+		min-width: 0;
+		container: tp-menu-title / inline-size;
+	}
+
+	/* 100cqi is the title's own width: with the Figma's legend, the header less 559.1 px as before. */
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-header > .tp-menu-title h2) {
+		font-size: min(var(--tp-title-max, 96px), max(32px, calc((100cqi + .025px) * var(--tp-title-fit, .237))));
+		overflow-wrap: anywhere;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-legend) {
+		flex: 0 1 auto;
+		align-items: stretch;
+		min-width: 0;
+		max-width: max(527.14px, 50%);
+		height: auto;
+		min-height: 243.6px;
+		padding-bottom: 13.91px;
+	}
+
+	/* More than two boxes (0.6.8): on two lines where they do not fit, each as tall as its own text. */
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-legend:has(> :nth-child(3 of .tp-menu-legend-box))) {
+		align-items: flex-start;
+		padding-bottom: 0;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-legend-box) {
+		flex: 0 1 auto;
+		width: auto;
+		height: auto;
+		min-height: 103.5px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-legend-tasca) {
+		min-width: 165.35px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-legend-piatto) {
+		min-width: 353.99px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-legend-box .et_pb_text_inner) {
+		flex: 1 1 auto;
+		height: auto;
+		overflow-wrap: anywhere;
+		white-space: normal;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-legend-box h4) {
+		white-space: normal;
+	}
+
+	/* Tasca: 8 px at the sides of the longest line, the Figma's 22 px under the last one. */
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-legend-tasca .et_pb_text_inner) {
+		padding: 24.5px 8px 22px;
+	}
+
+	/* (Divi takes the bottom padding off the last element of a Text module, with two classes: .et_pb_text > :last-child.) */
+	.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-legend-tasca .et_pb_text_inner) {
+		padding-bottom: 22px;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-legend-piatto .et_pb_text_inner) {
+		padding-bottom: 21.7px;
+	}
+
+	/* Piatto: the word, then the sizes side by side under it, each as wide as its text (floats: the box is as wide
+	   as the longer of the two lines, and where the sizes do not fit side by side each goes on a line of its own
+	   instead of being squeezed). 11 px stay free at the right of the last size (its margin: as a padding of the box
+	   they would be asked of every size, and one would go on the next line sooner). The word ends 5 px before the
+	   legs of the man (101 px wide, 21 px from the right edge), in a box of any width. */
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-legend-piatto .et_pb_text_inner) {
+		display: flow-root;
+		padding: 19.8px 0 21.7px 20px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-legend-piatto h4) {
+		padding-right: 127px;
+	}
+
+	/* (The word of before is inside the paragraph, whose margin is after it.) */
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-legend-piatto .tp-menu-legend-main) {
+		padding-right: 116px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-legend-piatto p) {
+		float: left;
+		margin: 10px 40px 0 0;
+	}
+
+	/* Three sizes or more: closer. */
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-legend-piatto .et_pb_text_inner:has(p:nth-of-type(3)) p) {
+		margin-right: 24px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-legend-piatto p:last-child) {
+		margin-right: 11px;
+	}
+
+	/* The two spans of before, in one paragraph: where they were. */
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-legend-piatto p:first-child) {
+		margin-top: 0;
+	}
+
+	/* A copy of the Piatto box has no man. */
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-legend-piatto ~ .tp-menu-legend-piatto h4) {
+		padding-right: 11px;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-legend-piatto ~ .tp-menu-legend-piatto .tp-menu-legend-main) {
+		padding-right: 0;
+	}
+
+	/* Before the menu comes into view: each box under the edge of the band, however tall it is. */
+	.tp-child-theme.tp-child-theme :where(html.tp-js body:not(.et-fb) .tp-menu-section .tp-menu-legend:not(.is-revealed) .tp-menu-legend-tasca) {
+		transform: translateY(calc(100% + 38.3px));
+	}
+
+	.tp-child-theme.tp-child-theme :where(html.tp-js body:not(.et-fb) .tp-menu-section .tp-menu-legend:not(.is-revealed) .tp-menu-legend-piatto) {
+		transform: translateY(calc(100% + 157.3px));
+	}
+
+	/* Visual Builder: one more element stands between the box and its words, and a second one while the text is
+	   being written in the page: they hold the floats as the box does on the site. */
+	body.et-fb :where(#page-container .tp-menu-section .tp-menu-legend-piatto .et_pb_text_inner > div),
+	body.et-fb :where(#page-container .tp-menu-section .tp-menu-legend-piatto .et_pb_text_inner > div > .mce-content-body) {
+		display: flow-root;
+		width: auto;
+	}
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* 0.8.3: Visual Builder, a text being written in the page. Divi then puts one more element around   */
+/* the words (.mce-content-body): where the theme lays the words of a module out (the day and its     */
+/* time on one line, the labels of Tasca o piatto with their coloured background) that element does   */
+/* it too, so a click on the text no longer changes how it looks.                                     */
+/* ------------------------------------------------------------------------------------------------ */
+body.et-fb :where(.tp-hours-item .et_pb_text_inner > div > .mce-content-body) {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 24px;
+	width: 100%;
+}
+
+@media (max-width: 767px) {
+
+	body.et-fb :where(.tp-hours-item .et_pb_text_inner > div > .mce-content-body) {
+		gap: 12px;
+	}
+}
+
+.tp-child-theme :where(.tp-scelta-chip .et_pb_text_inner > div > .mce-content-body) {
+	background-color: inherit;
+	background-image: inherit;
+	background-position: inherit;
+	background-size: inherit;
+	background-repeat: inherit;
+	-webkit-background-clip: text;
+	background-clip: text;
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* 0.8.3: Visual Builder, the strip in the middle of a column where a click selected nothing. Divi   */
+/* draws at the left edge of every column a thin handle as tall as the column (it shows the "add a    */
+/* column" button), with no "left" of its own: in a column that centres its content (the menu on      */
+/* tablets and phones, for one) the handle stood in the middle, 11 px wide, over the titles and the   */
+/* photos. It goes back to the left edge.                                                             */
+/* ------------------------------------------------------------------------------------------------ */
+body.et-fb .et_pb_column > .et-vb-column-divider--flex--before,
+body.et-fb .et_pb_column > .et-vb-column-divider--grid--before {
+	left: 0;
 }

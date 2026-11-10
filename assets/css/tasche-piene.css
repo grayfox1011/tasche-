@@ -19291,15 +19291,16 @@ body.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main
  * Titles "Siamo nei caruggi..." and "Il nostro menù" from 981 px up: where the longest word no longer
  * fits at 64 px, the title gets smaller with its column instead of breaking the word in two.
  * --tp-title-fit is 1 / (longest word in font sizes x 1.033, a margin for other browsers' fonts):
- * tp-layout.js measures it on the text written in Divi; the default is today's (NASCOSTI., 6.09 font
- * sizes; NOSTRO, 4.58), used where the script does not run, like the Visual Builder.
+ * tp-titles.js (tp-layout.js up to 0.8.2) measures it on the text written in Divi, on the site and, from
+ * 0.8.3, in the Visual Builder; the default is today's (NASCOSTI., 6.09 font sizes; NOSTRO, 4.58), used
+ * where the script does not run.
  * The menu title has the width the header leaves beside the legend (its boxes, 527.14 px, and the
  * 32 px gap). Browsers without container queries keep 64 px.
  * The location text column is never narrower than the Mappe button's box (277.52 px): below 1090 px
  * the map gives up its left margin (107 px at most) so that the column stays inside the page.
  * A title that wraps with an accent above a capital on a later line (the Ù of "menù") gets 10% more
  * room between its lines: at 64 px the accent reaches 65 px above its baseline and would touch the
- * letters of the line above. tp-layout.js sets tp-title-accent-room; without it, today's menu title
+ * letters of the line above. tp-titles.js sets tp-title-accent-room; without it, today's menu title
  * wraps where the header is narrower than the legend and its gap (559.14 px) plus the title (617.5 px).
  */
 @media (min-width: 981px) {

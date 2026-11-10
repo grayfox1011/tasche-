@@ -1,4 +1,198 @@
-TASCHE PIENE — VERSIONE 0.8.2, CANDIDATA AL COLLAUDO
+TASCHE PIENE — VERSIONE 0.8.3, CANDIDATA AL COLLAUDO
+
+La 0.8.3 nasce da quattro segnalazioni fatte provando la 0.8.2: su un
+iPhone il video in cima alla pagina non parte da solo; nel Visual Builder
+la legenda del menu' (TASCA / VASCHETTA) si scompone appena ci si clicca
+dentro, e un testo piu' lungo viene tagliato; il titolo "Il nostro menu'"
+con un testo diverso esce di lato e spinge la legenda fuori dal riquadro;
+"Duplica" sul primo piatto di una lista copia tutta la lista. Con i testi
+di oggi il sito e' uguale alla 0.8.2 pixel per pixel (vedi le verifiche).
+Le note delle versioni precedenti, piu' in basso, restano valide.
+
+COSA CAMBIA RISPETTO ALLA 0.8.2
+
+Legenda del menu' (computer; su tablet e telefoni non compare, come prima)
+- Visual Builder: quando si clicca dentro il testo di un riquadro per
+  scriverci, Divi mette un elemento in piu' attorno alle parole. Le misure
+  "Media - 200g" e "Grande - 400g" finivano una sotto l'altra e, con il
+  riquadro alto quanto nel Figma, la seconda spariva. Ora restano
+  affiancate come sul sito, prima, durante e dopo la scrittura.
+- I due riquadri seguono il testo. Le misure del Figma (165 e 354 px di
+  larghezza, 103,5 di altezza) sono il minimo: un testo piu' lungo allarga
+  il suo riquadro; quando la legenda arriva a meta' della larghezza della
+  testata il testo va a capo dentro il riquadro, che si alza, e l'altro
+  riquadro si alza quanto lui. Niente viene piu' tagliato. Le liste dei
+  piatti cominciano sotto la legenda, alla distanza di prima.
+- Nel riquadro Vaschetta le misure che non stanno su una riga vanno
+  ciascuna su una riga sua, intere, invece di stringersi. La parola grande
+  si ferma sempre prima delle gambe dell'omino, in un riquadro di
+  qualsiasi larghezza.
+- Con tre misure lunghe la terza era tagliata dal bordo basso del
+  riquadro (gia' nella 0.8.2): ora si vede.
+- Nel builder le misure stavano 10 px piu' in alto che sul sito: ora sono
+  allo stesso posto.
+
+Titolo "Il nostro menu'" (computer)
+- Il titolo prende la larghezza che la legenda gli lascia e non di piu':
+  una parola lunga non puo' piu' allargarlo e spingere la legenda fuori
+  dal riquadro del menu'. Un testo piu' lungo va a capo dentro la sua
+  colonna e le liste dei piatti scendono di conseguenza, senza spostare
+  altro.
+- Nel Visual Builder il titolo ha la misura che avra' sul sito, anche
+  mentre lo si scrive. Prima la misura sulla parola piu' lunga si faceva
+  solo sul sito: nel builder una parola lunga usciva di lato. Vale anche
+  per "Siamo nei caruggi...".
+- Un titolo su piu' di tre righe si rimpicciolisce finche' le righe sono
+  tre, ma non sotto il 58% della sua misura ne' sotto 40 px: resta
+  leggibile e le liste non finiscono una schermata piu' in basso.
+- Una parola che non sta nella colonna nemmeno a 32 px viene spezzata,
+  invece di rimpicciolire tutto il titolo fino a renderlo illeggibile
+  (sul sito una "parola" di 60 lettere lo portava a 5-16 px).
+
+"Duplica" nel Visual Builder
+- Primo piatto di una lista: la barretta della lista intera stava sopra
+  quella del primo piatto, e il suo "Duplica" copiava tutta la lista (i
+  piatti comparivano di nuovo sotto, come una seconda sezione). Ora la
+  barretta della lista sta sopra la lista e sul primo piatto si trova la
+  sua: la copia finisce subito sotto. Lo stesso per la prima card delle
+  Materie prime in vista Tablet e Telefono.
+
+Visual Builder, altri punti trovati durante le prove
+- Orari: cliccando dentro il testo di un giorno per scriverci, giorno e
+  ora restano sulla stessa riga.
+- Etichette di Tasca o piatto ("Tra pinsa e panino"...): mentre le si
+  scrive tengono il fondo colorato.
+- Una striscia verticale larga 11 px a meta' della colonna del menu', in
+  vista Tablet e Telefono, non rispondeva ai clic (titolo, foto, titoli
+  delle liste): e' la maniglia che Divi mette sul bordo sinistro di ogni
+  colonna, finita al centro perche' la colonna centra il suo contenuto.
+  E' tornata sul bordo.
+
+Video dell'hero, telefoni e tablet
+- Quando il telefono rifiuta di avviare un video da solo (l'iPhone in
+  Risparmio energetico, con la batteria gialla, e' il caso piu' comune),
+  il tema riprovava una volta sola, all'inizio di un tocco, che per quei
+  browser non vale come gesto: il video restava fermo per sempre. Ora
+  riprova a ogni tocco, clic o tasto finche' il video parte: basta toccare
+  la pagina in un punto qualsiasi. Fino ad allora resta l'immagine ferma
+  dell'hero, come prima.
+- Il video riparte da solo quando si torna alla pagina (da un'altra app,
+  dal blocco schermo, dal tasto indietro) e quando l'hero torna in vista,
+  se il telefono lo aveva fermato. Prima restava fermo.
+- Sui browser di Apple (iPhone, iPad) il video e' offerto prima in MP4,
+  che ogni iPhone legge da sempre, e poi in WebM, che sugli iPhone e'
+  arrivato solo con le versioni recenti di iOS. Sugli altri telefoni
+  resta prima il WebM, piu' leggero. Se il telefono non riesce a leggere
+  un file passa all'altro.
+- Il tondo "play" che iOS disegna sopra un video che non ha avviato e'
+  nascosto: il video sta dietro al titolo e ai bottoni dell'hero. Al suo
+  posto vale il tocco in un punto qualsiasi della pagina.
+- Per capire un telefono che non si ha in mano: aggiungendo ?tp-video=1
+  all'indirizzo della home compare in basso a sinistra lo stato del video
+  (file usato, fermo o in riproduzione, avvio rifiutato dal telefono,
+  errore). Senza quel pezzo di indirizzo non compare nulla.
+
+VERIFICHE EFFETTUATE SULLA 0.8.3
+- Stesso contenuto con i file della 0.8.2 e con quelli della 0.8.3 (i
+  primi serviti al posto dei secondi mentre la pagina carica). Home di
+  oggi: testata del menu' e titolo "Siamo nei caruggi" con le stesse
+  misure a 18 larghezze da 360 a 2560 px; pagina intera identica pixel
+  per pixel a 1440, 1100, 820 e 390 px.
+- Controllo del Menu' sul sito alle 22 larghezze della 0.8.1 (da 320 a
+  1920 px): stesso esito della 0.8.2 (16 righe, stesse altezze, stesse
+  note).
+- Legenda nel builder, vista Computer: a riposo e durante la scrittura le
+  parole sono dove sono sul sito. Scritti testi piu' lunghi ("Di pane
+  ripiena croccante", "Grande - 400g abbondanti"): i riquadri crescono,
+  alti uguali, niente tagliato. Salvata la pagina, lo stesso sul sito a
+  981, 1100, 1280, 1440 e 1920 px.
+- Entrata della legenda quando il menu' arriva in vista: riquadri
+  nascosti sotto il bordo prima e al loro posto dopo, sia alti 103,5 px
+  sia cresciuti a 133,5.
+- Legenda in altre forme. Tre misure corte ("S - 150g", "M - 200g", "L -
+  400g", quelle della misura S) e formato precedente alla 0.5.3:
+  identiche alla 0.8.2. Tre misure lunghe: la terza non e' piu' tagliata.
+  Tre riquadri (uno copiato): uguale da 1280 px in su; a 981 e 1100 px i
+  riquadri stanno su due righe invece di tre.
+- Titolo, sette testi a 981, 1100, 1280, 1440 e 1920 px (una parola sola,
+  due parole in piu', una parola di 12 lettere, una di 24, diciannove
+  parole, tutto maiuscolo con l'accento, 60 lettere senza spazi): mai
+  fuori dalla sua colonna, mai sopra la legenda, legenda sempre dentro il
+  riquadro, pagina mai scorrevole di lato. "Il nostro menu' di oggi" a
+  1280 e 1440 px sta su tre righe a 96 px come nella 0.8.2. Il titolo di
+  diciannove parole passa da 717-1068 px di altezza a 282-445.
+- Titolo nel builder: scrivendo dentro la pagina "Il nostro
+  menu'buonissimissimissimo" il titolo si rimpicciolisce mentre si
+  scrive e la legenda resta al suo posto (prima il titolo arrivava a 1661
+  px di larghezza e la legenda usciva dalla finestra). Nel testo del
+  titolo non resta niente di aggiunto dal tema.
+- Visual Builder, clic su 18 pezzi dei piatti in tre punti delle loro
+  parole, nelle tre viste: 145 punti su 147 aprono il pezzo giusto (144
+  nella 0.8.2: il punto in piu' era sulla maniglia di colonna, ora sul
+  bordo). I due che restano sono sulla barretta del pezzo stesso, in
+  vista Computer. Titolo del menu', riquadri della legenda, titolo "Siamo
+  nei caruggi" e un orario, vista Computer: 15 punti su 15.
+- Duplica dal primo elemento: la copia compare subito sotto in piatti,
+  contorni, dolci e bevande (vista Computer) e in piatti, contorni e
+  Materie prime (viste Tablet e Telefono).
+- Orari ed etichette di Tasca o piatto durante la scrittura nel builder:
+  stesse posizioni e stessi colori che a riposo.
+- Video. Telefono simulato che avvia i video solo dentro un tocco, a 390
+  e 820 px: con la 0.8.2 il video resta fermo anche dopo due tocchi; con
+  la 0.8.3 e' fermo al caricamento e dopo uno scorrimento (non si puo'
+  fare altro), parte al primo tocco e riparte tornando alla pagina.
+  Telefono normale a 320, 375, 390, 430, 767, 768, 820 e 980 px: il video
+  parte da solo come prima, nessun errore di script, hero delle stesse
+  misure; fermato e poi tornati alla pagina, riparte (nella 0.8.2 no).
+  Come browser di Apple (simulato): l'MP4 e' offerto per primo; il browser
+  di prova non sa leggerlo e passa da solo al WebM. Computer (981 e 1440
+  px): nessun cambiamento, il video e' quello di Divi come prima.
+- Aggiornamento: su un sito di prova riportato alla 0.8.2, lo zip 0.8.3
+  caricato da Aspetto > Temi si installa senza errori. Dopo
+  l'aggiornamento la testata del menu' ha le stesse misure di prima a
+  1100 e 1440 px, il Menu' a 390, 820 e 1440 px e' senza difetti e nel
+  builder il titolo ha la sua misura e le misure della legenda restano
+  affiancate mentre ci si scrive.
+
+DA SAPERE
+- La legenda puo' allargarsi fino a meta' della testata del menu' (o
+  fino alla sua larghezza del Figma, 527 px, dove quella e' di piu');
+  oltre, il testo va a capo nel riquadro. Su uno schermo da 1280 px lo
+  spazio in piu' e' poco (una ventina di px): li' un testo piu' lungo va
+  a capo quasi subito.
+- Con tre misure lunghe che non stanno su una riga il riquadro Vaschetta
+  resta largo quanto gli e' concesso e a destra delle misure resta dello
+  spazio vuoto.
+- Se al Titolo si da' una dimensione da Divi, vale quella e il tema non
+  lo rimpicciolisce piu' da solo; il titolo va comunque a capo nella sua
+  colonna.
+- Su tablet e telefoni il titolo aveva gia' una misura fissa e andava
+  gia' a capo, e la legenda non c'e': li' non cambia niente.
+- In Risparmio energetico l'iPhone non avvia da solo i video di nessun
+  sito: e' una regola di iOS e non si puo' aggirare. Con la 0.8.3 il
+  video parte al primo tocco sulla pagina; uno scorrimento col dito non
+  basta, perche' iOS non lo conta come tocco. Tolto il Risparmio
+  energetico (Impostazioni > Batteria) il video parte da solo.
+- La causa sul telefono della prova non e' stata vista direttamente: il
+  Risparmio energetico e' la piu' comune ed e' l'unica in cui il codice
+  aveva un difetto certo. Se il video non parte da solo nemmeno senza
+  Risparmio energetico, uno screenshot della home aperta con ?tp-video=1
+  dice perche'.
+- Sull'iPad in orizzontale e sul computer il video e' quello di Divi e
+  non ha questa ripartenza al tocco.
+
+NON PROVATI
+- Un iPhone e Safari veri: tutto quanto riguarda il video e' provato con
+  Chromium che si presenta come un iPhone, con il blocco dell'avvio
+  simulato. Il browser di prova non legge l'MP4 (H.264): la riproduzione
+  dell'MP4 su un iPhone vero non e' stata vista.
+- Legenda e titolo su Safari e Firefox: provati solo con Chromium. Le
+  regole usate (container query, :has()) sono le stesse gia' usate dal
+  tema nelle versioni precedenti.
+
+==============================================================================
+
+NOTE DELLA 0.8.2
 
 La 0.8.2 nasce da una prova di modificabilita' da Divi, su computer,
 tablet e telefono: prima una prova automatica (ogni modulo del Menu' con
@@ -8,8 +202,7 @@ tre punti; testi, colori e misure cambiati, un piatto duplicato ed
 eliminato, la pagina salvata e riletta sul sito), e infine il menu' in
 alto dal Theme Builder. Sul sito non cambia niente, tranne il riquadro
 del menu' aperto su telefono e tablet quando in Header sito si sceglie un
-colore di sfondo. Il resto riguarda solo il Visual Builder. Le note delle
-versioni precedenti, piu' in basso, restano valide.
+colore di sfondo. Il resto riguarda solo il Visual Builder.
 
 COSA CAMBIA RISPETTO ALLA 0.8.1
 - Visual Builder, viste Tablet e Telefono, card dei piatti: le scritte

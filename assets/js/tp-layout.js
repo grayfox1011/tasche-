@@ -215,117 +215,112 @@
 		}
 	});
 
-	/* Titles ---------------------------------------------------------------- */
-
-	// "Siamo nei caruggi..." and "Il nostro menù" get smaller with their column from 981px up, so that
-	// their longest word never breaks in two (CSS: --tp-title-fit). The CSS default suits today's words;
-	// here the rate is measured on the text written in Divi. A title that wraps gets 10% more room
-	// between its lines when a later line has an accent above a capital (it would touch the line above).
-	(function () {
-		var TITLES = '.tp-location-title h2, .tp-menu-section .tp-menu-title h2';
-		var MARGIN = 1.033; // other browsers may draw the font a little wider
-		var ACCENT_ABOVE = /[\u0300-\u0315\u031a\u031b]/;
-		var desktop = window.matchMedia ? window.matchMedia('(min-width: 981px)') : null;
-		var frame = 0;
-
-		// The words as written in Divi, read also while the title waits for its font or makes its entrance
-		// (innerText leaves out what is hidden): lines, <br> and blocks part them.
-		function titleWords(title) {
-			var walker = document.createTreeWalker(title, NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT);
-			var text = '';
-			var node;
-			while ((node = walker.nextNode())) {
-				if (node.nodeType === 3) {
-					text += node.nodeValue;
-				} else if (node.nodeName === 'BR' || window.getComputedStyle(node).display.indexOf('inline') !== 0) {
-					text += ' ';
-				}
-			}
-			return text.split(/\s+/).filter(Boolean);
-		}
-
-		function longestWordEm(title) {
-			var words = titleWords(title);
-			var size = parseFloat(window.getComputedStyle(title).fontSize);
-			var probe = document.createElement('span');
-			var widest = 0;
-			probe.style.cssText = 'position:absolute;left:0;top:0;visibility:hidden;white-space:nowrap';
-			title.appendChild(probe);
-			words.forEach(function (word) {
-				probe.textContent = word;
-				widest = Math.max(widest, probe.getBoundingClientRect().width);
-			});
-			title.removeChild(probe);
-			return size > 0 ? widest / size : 0;
-		}
-
-		function accentOnLaterLine(title) {
-			var style = window.getComputedStyle(title);
-			var size = parseFloat(style.fontSize);
-			var upper = style.textTransform === 'uppercase';
-			// While the title makes its entrance its letters rise into place: the line they are in says
-			// where they stand.
-			var entering = !title.classList.contains('is-revealed') && Boolean(title.querySelector('.tp-split-line'));
-			var walker = document.createTreeWalker(title, NodeFilter.SHOW_TEXT);
-			var range = document.createRange();
-			var firstTop = null;
-			var node;
-			while ((node = walker.nextNode())) {
-				var line = entering ? node.parentNode.closest('.tp-split-line') : null;
-				for (var i = 0; i < node.textContent.length; i++) {
-					var ch = node.textContent.charAt(i);
-					if (!/\S/.test(ch)) { continue; }
-					range.setStart(node, i);
-					range.setEnd(node, i + 1);
-					var top = (line || range).getBoundingClientRect().top;
-					if (firstTop === null) { firstTop = top; }
-					if (top > firstTop + size / 2 && (upper || ch !== ch.toLowerCase()) && ACCENT_ABOVE.test(ch.normalize ? ch.normalize('NFD') : ch)) {
-						return true;
-					}
-				}
-			}
-			return false;
-		}
-
-		function update() {
-			frame = 0;
-			if (!desktop || !desktop.matches) { return; }
-			var titles = document.querySelectorAll(TITLES);
-			for (var i = 0; i < titles.length; i++) {
-				var em = longestWordEm(titles[i]);
-				if (em > 0) {
-					titles[i].style.setProperty('--tp-title-fit', (1 / (em * MARGIN)).toFixed(3));
-				}
-			}
-			// After the sizes: the lines depend on them.
-			for (var j = 0; j < titles.length; j++) {
-				titles[j].classList.toggle('tp-title-accent-room', accentOnLaterLine(titles[j]));
-			}
-		}
-
-		function schedule() {
-			if (!frame) { frame = window.requestAnimationFrame(update); }
-		}
-
-		// tp-split-text.js is about to cut a title into lines, now that its font is loaded: the sizes first.
-		document.addEventListener('tp:split-text:lines', update);
-
-		onReady(function () {
-			update();
-			if (document.fonts && document.fonts.ready) { document.fonts.ready.then(update); }
-			window.addEventListener('resize', schedule, { passive: true });
-		});
-	})();
-
 	/* Hero ------------------------------------------------------------------ */
 
 	// Divi's background video uses MediaElement.js, which on iOS Safari resizes the
 	// <video> and breaks inline playback: below 981px a plain muted, looping,
 	// inline video is injected instead. The poster stays as fallback when autoplay
 	// is blocked. Desktop keeps Divi's video.
+	//
+	// 0.8.3, after a test on an iPhone where the video did not start by itself:
+	// - A phone can refuse to start a video by itself (an iPhone in Low Power Mode is the common case: WebKit
+	//   rejects play() with NotAllowedError there, bug 216887): the video starts only inside a gesture of the
+	//   person. The retry was on `touchstart`, which is not a gesture those browsers accept, and happened once:
+	//   the video never started, not even after a tap. It is now retried on every touchend, click and key until
+	//   the video runs.
+	// - The video is started again when the page comes back (another app, the lock screen, the back button) and
+	//   when the hero comes back into view, if the phone stopped it.
+	// - On Apple's browsers the MP4 comes first: every iPhone decodes H.264 in hardware, while WebM (VP9) reached
+	//   iOS only in its recent versions. Elsewhere WebM stays first, as before. A file the phone cannot decode:
+	//   the other one.
+	// - ?tp-video=1 in the address shows the state of the video in a corner of the page, to read a phone one
+	//   cannot hold from a screenshot.
 	(function () {
 		var MQ = '(max-width: 980px)';
+		var GESTURES = ['touchend', 'click', 'keydown'];
 		var injected = false;
+
+		// Starts the video and keeps it running. `state` is what the corner note shows.
+		function keepPlaying(v, media, order, state) {
+			var listening = false;
+			var inView = true;
+
+			function attempt() {
+				if (!v.paused || document.hidden || !inView) { return; }
+				var started;
+				try {
+					started = v.play();
+				} catch (error) {
+					state.refused = (error && error.name) || 'error';
+				}
+				if (started && started.then) {
+					started.then(function () { state.refused = ''; }, function (error) { state.refused = (error && error.name) || 'refused'; });
+				}
+			}
+			function listen() {
+				if (listening) { return; }
+				listening = true;
+				for (var i = 0; i < GESTURES.length; i++) { document.addEventListener(GESTURES[i], attempt, { capture: true, passive: true }); }
+			}
+			function unlisten() {
+				if (!listening) { return; }
+				listening = false;
+				for (var i = 0; i < GESTURES.length; i++) { document.removeEventListener(GESTURES[i], attempt, { capture: true }); }
+			}
+			// The file in use cannot be played (a decoder the phone lacks, a broken download): the other format, once.
+			function otherFormat() {
+				if (state.switched) { return; }
+				var current = v.currentSrc || v.getAttribute('src') || '';
+				for (var i = 0; i < order.length; i++) {
+					var url = media[order[i]];
+					if (url && current.indexOf(url) === -1) {
+						state.switched = order[i];
+						while (v.firstChild) { v.removeChild(v.firstChild); }
+						v.setAttribute('src', url);
+						v.load();
+						attempt();
+						return;
+					}
+				}
+			}
+
+			v.addEventListener('playing', unlisten);
+			v.addEventListener('pause', listen);
+			v.addEventListener('loadeddata', attempt);
+			v.addEventListener('canplay', attempt);
+			v.addEventListener('error', otherFormat);
+			document.addEventListener('visibilitychange', attempt);
+			window.addEventListener('pageshow', attempt);
+			if (window.IntersectionObserver) {
+				new window.IntersectionObserver(function (entries) {
+					inView = entries[entries.length - 1].isIntersecting;
+					attempt();
+				}).observe(v);
+			}
+			listen();
+			attempt();
+		}
+
+		// ?tp-video=1: the state of the video, twice a second, in the bottom left corner.
+		function showState(v, state) {
+			var box = document.createElement('div');
+			box.setAttribute('style', 'position:fixed;left:8px;bottom:8px;z-index:2147483647;max-width:calc(100vw - 16px);padding:8px 10px;border-radius:6px;background:rgba(0,0,0,.82);color:#fff;font:12px/1.45 Menlo,Consolas,monospace;white-space:pre-wrap;word-break:break-word;pointer-events:none');
+			document.body.appendChild(box);
+			var nav = window.navigator || {};
+			var system = (/(?:iPhone OS|CPU OS|Android) [\d_.]+/.exec(nav.userAgent || '') || ['?'])[0].replace(/_/g, '.') + ((/Version\/[\d.]+/.exec(nav.userAgent || '') || [''])[0] ? ' ' + /Version\/[\d.]+/.exec(nav.userAgent)[0] : '');
+			var can = function (type) { return v.canPlayType(type) || 'no'; };
+			window.setInterval(function () {
+				box.textContent = [
+					'tp-video ' + system,
+					'file: ' + ((v.currentSrc || '').split('/').pop() || '-') + (state.switched ? ' (cambiato in ' + state.switched + ')' : ''),
+					'stato: ' + (v.paused ? 'fermo' : 'in riproduzione') + ' ' + v.currentTime.toFixed(1) + 's, dati ' + v.readyState + '/4, rete ' + v.networkState,
+					'avvio: ' + (!v.paused ? 'ok' : (state.refused ? 'rifiutato dal telefono (' + state.refused + ')' : 'in attesa')),
+					'errore: ' + (v.error ? v.error.code + ' ' + (v.error.message || '') : 'nessuno'),
+					'mp4 ' + can('video/mp4; codecs="avc1.640032"') + ', webm ' + can('video/webm; codecs="vp9"') + ', ordine ' + state.order
+				].join('\n');
+			}, 500);
+		}
+
 		function inject() {
 			if (injected) { return; }
 			if (!window.matchMedia || !window.matchMedia(MQ).matches) { return; }
@@ -354,6 +349,9 @@
 			};
 			media = { mp4: pick('mp4'), webm: pick('webm'), poster: media.poster };
 			if (!media.mp4 && !media.webm) { return; }
+			var apple = /Apple/.test((window.navigator && window.navigator.vendor) || '');
+			var order = apple ? ['mp4', 'webm'] : ['webm', 'mp4'];
+			var state = { refused: '', switched: '', order: order.join('>') };
 			var v = document.createElement('video');
 			v.className = 'tp-hero-native-video';
 			v.muted = true; v.defaultMuted = true;
@@ -363,19 +361,22 @@
 			v.setAttribute('loop', '');
 			v.setAttribute('playsinline', '');
 			v.setAttribute('webkit-playsinline', '');
+			v.setAttribute('disablepictureinpicture', '');
+			v.setAttribute('disableremoteplayback', '');
+			v.setAttribute('x-webkit-airplay', 'deny');
+			v.setAttribute('aria-hidden', 'true');
 			v.setAttribute('preload', 'auto');
-			v.setAttribute('poster', media.poster);
-			var sWebm = document.createElement('source');
-			sWebm.src = media.webm; sWebm.type = 'video/webm';
-			var sMp4 = document.createElement('source');
-			sMp4.src = media.mp4; sMp4.type = 'video/mp4';
-			if (media.webm) { v.appendChild(sWebm); }
-			if (media.mp4) { v.appendChild(sMp4); }
+			if (media.poster) { v.setAttribute('poster', media.poster); }
+			for (var i = 0; i < order.length; i++) {
+				if (!media[order[i]]) { continue; }
+				var source = document.createElement('source');
+				source.src = media[order[i]];
+				source.type = 'video/' + order[i];
+				v.appendChild(source);
+			}
 			hero.insertBefore(v, hero.firstChild);
-			var tryPlay = function () { var p = v.play(); if (p && p.catch) { p.catch(function () {}); } };
-			tryPlay();
-			v.addEventListener('canplay', tryPlay, { once: true });
-			document.addEventListener('touchstart', tryPlay, { once: true, passive: true });
+			keepPlaying(v, media, order, state);
+			if (/[?&]tp-video=1(?:&|$)/.test(window.location.search)) { showState(v, state); }
 		}
 		onReady(inject);
 	})();

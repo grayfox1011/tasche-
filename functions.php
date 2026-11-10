@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( "TP_CHILD_VERSION", "0.8.2" );
+define( "TP_CHILD_VERSION", "0.8.3" );
 define( 'TP_CHILD_PATH', trailingslashit( get_stylesheet_directory() ) );
 define( 'TP_CHILD_URL', trailingslashit( get_stylesheet_directory_uri() ) );
 define( 'TP_CHILD_MODULES_JSON_PATH', TP_CHILD_PATH . 'modules-json/' );
@@ -1369,13 +1369,24 @@ add_action( 'wp_head', 'tp_child_viewport_meta', 1 );
  * and of the mobile menu card, mobile hero video, Alberto mobile flow, menu
  * allergens. Printed where they used to be inline, before jQuery and Divi's
  * scripts, so each part still runs on DOMContentLoaded ahead of them.
+ *
+ * assets/js/tp-titles.js (the sizes of "Siamo nei caruggi..." and "Il nostro menù" on computers) goes
+ * before it, and is the only one of the two printed in the Visual Builder (0.8.3): there it measures the
+ * titles again while they are written, so the builder shows the size the site will give them.
  */
 function tp_child_print_layout_script(): void {
-	if ( is_admin() || tp_child_is_visual_builder() ) {
+	if ( is_admin() ) {
 		return;
 	}
 
-	wp_register_script( 'tp-layout', TP_CHILD_URL . 'assets/js/tp-layout.js', [], tp_child_asset_version( 'assets/js/tp-layout.js' ), true );
+	wp_register_script( 'tp-titles', TP_CHILD_URL . 'assets/js/tp-titles.js', [], tp_child_asset_version( 'assets/js/tp-titles.js' ), true );
+
+	if ( tp_child_is_visual_builder() ) {
+		wp_print_scripts( 'tp-titles' );
+		return;
+	}
+
+	wp_register_script( 'tp-layout', TP_CHILD_URL . 'assets/js/tp-layout.js', [ 'tp-titles' ], tp_child_asset_version( 'assets/js/tp-layout.js' ), true );
 	wp_add_inline_script(
 		'tp-layout',
 		'window.tpHeroVideo = ' . wp_json_encode(
