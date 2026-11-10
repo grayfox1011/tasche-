@@ -300,8 +300,16 @@
 		}
 	}
 
+	var observer = null;
+
 	function fitAll() {
 		Array.prototype.forEach.call(document.querySelectorAll(SELECTOR), fit);
+
+		// The copies made to read the stylesheet are not changes of the page: without this the builder would fit
+		// the buttons again at every frame.
+		if (observer) {
+			observer.takeRecords();
+		}
 	}
 
 	var pending = false;
@@ -339,7 +347,7 @@
 
 	// In the Visual Builder the words and the styles change while one works.
 	if (typeof MutationObserver !== 'undefined' && document.body && document.body.classList.contains('et-fb')) {
-		new MutationObserver(function (mutations) {
+		observer = new MutationObserver(function (mutations) {
 			var i;
 			var target;
 			var element;
@@ -354,6 +362,7 @@
 					return;
 				}
 			}
-		}).observe(document.documentElement, { childList: true, subtree: true, characterData: true });
+		});
+		observer.observe(document.documentElement, { childList: true, subtree: true, characterData: true });
 	}
 })();
