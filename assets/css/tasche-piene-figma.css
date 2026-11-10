@@ -4925,7 +4925,7 @@ body.et-fb .tp-menu-section .tp-menu-table > .et-vb-module-options:not(.et-vb-mo
 /*                                                                                                  */
 /* The title. It takes the width the legend leaves and no more, so a long word can no longer push    */
 /* the legend out of the board: the size comes from that width (the title is its own container) and  */
-/* is never under 32 px; a word longer than the line at 32 px is broken. More than three lines: the  */
+/* is never under 24 px; a word longer than the line at 24 px is broken. More than three lines: the  */
 /* size goes down until they are three, not under 58% of it (--tp-title-max, assets/js/tp-titles.js). */
 /* ------------------------------------------------------------------------------------------------ */
 @media (min-width: 981px) {
@@ -4938,7 +4938,7 @@ body.et-fb .tp-menu-section .tp-menu-table > .et-vb-module-options:not(.et-vb-mo
 
 	/* 100cqi is the title's own width: with the Figma's legend, the header less 559.1 px as before. */
 	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-header > .tp-menu-title h2) {
-		font-size: min(var(--tp-title-max, 96px), max(32px, calc((100cqi + .025px) * var(--tp-title-fit, .237))));
+		font-size: min(var(--tp-title-max, 96px), max(24px, calc((100cqi + .025px) * var(--tp-title-fit, .237))));
 		overflow-wrap: anywhere;
 	}
 

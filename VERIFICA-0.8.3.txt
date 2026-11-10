@@ -45,9 +45,10 @@ Titolo "Il nostro menu'" (computer)
 - Un titolo su piu' di tre righe si rimpicciolisce finche' le righe sono
   tre, ma non sotto il 58% della sua misura ne' sotto 40 px: resta
   leggibile e le liste non finiscono una schermata piu' in basso.
-- Una parola che non sta nella colonna nemmeno a 32 px viene spezzata,
-  invece di rimpicciolire tutto il titolo fino a renderlo illeggibile
-  (sul sito una "parola" di 60 lettere lo portava a 5-16 px).
+- Il titolo non scende mai sotto 24 px: una parola che non sta nella
+  colonna nemmeno cosi' viene spezzata, invece di rimpicciolire tutto il
+  titolo fino a renderlo illeggibile (sul sito una "parola" di 60 lettere
+  lo portava a 5-16 px). Le parole vere restano intere come prima.
 
 "Duplica" nel Visual Builder
 - Primo piatto di una lista: la barretta della lista intera stava sopra
