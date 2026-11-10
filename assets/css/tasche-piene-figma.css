@@ -4483,3 +4483,138 @@ body.et-fb #page-container .et_pb_section a.et_pb_button.tp-hero-button::after {
 		background-image: none;
 	}
 }
+
+/* ------------------------------------------------------------------------------------------------ */
+/* 0.8.1: the menu on phones narrower or wider than the Figma's 390 px.                              */
+/* Under 390 px the title "Il nostro menù" stayed on one line (a rule made for a shorter title) and  */
+/* ran out of the screen: it goes on two lines as at 390. Between 360 and 389 px the two photos kept  */
+/* the Figma's 358 px, edge to edge on a 360 px phone, and photos and cards stood 4 px off the middle */
+/* (a margin that added itself to the centring): photos, cards and lists are now 16 px from both      */
+/* edges at every width, as in the Figma. On the narrowest phones the titles of contorni, dolci and   */
+/* bere get smaller instead of leaving the screen, and a longer title goes on a second line.          */
+/* ------------------------------------------------------------------------------------------------ */
+@media (max-width: 389px) {
+
+	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-menu-section .tp-menu-title h2),
+	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-menu-section .tp-menu-title h2 > *),
+	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-menu-section .tp-menu-title .tp-split-line) {
+		font-size: 48px;
+		line-height: 48px;
+		white-space: normal;
+	}
+
+	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-menu-section .tp-menu-title),
+	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-menu-section .tp-menu-title h2) {
+		max-width: calc(100vw - 20px);
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-feature-image--main),
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-feature-image--desserts),
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table:not(.tp-menu-table--main)) {
+		width: calc(100vw - 32px);
+		max-width: calc(100vw - 32px);
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-feature-image--main),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-feature-image--desserts),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table) {
+		margin-left: 0;
+		margin-right: 0;
+	}
+}
+
+@media (max-width: 767px) {
+
+	/* The two photos keep the Figma's shape: the one of the dolci, taller in its file, grew with the screen. */
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-feature-image--main img),
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-feature-image--desserts img) {
+		height: auto;
+		aspect-ratio: 358 / 321.77;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-sectionhead-title),
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-sectionhead-title h3),
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-sectionhead-title .et_pb_module_header),
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-sectionhead-title .tp-split-line) {
+		white-space: normal;
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-sectionhead-title h3),
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-sectionhead-title .et_pb_module_header),
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-sectionhead-title .tp-split-line) {
+		font-size: min(32px, 8.8vw);
+	}
+
+	/* Contorni, dolci and bere: a name that does not fit before its price goes on a second line (it ran */
+	/* over the price: "SPUMETTA (AL BICCHIERE)" at 320 px); 12 px between name and price are enough.     */
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table:not(.tp-menu-table--main) .tp-menu-row) {
+		column-gap: 12px;
+	}
+
+	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-menu-section .tp-menu-table:not(.tp-menu-table--main) .tp-menu-name h4),
+	.tp-child-theme :where(html body.tp-child-theme #page-container .tp-menu-section .tp-menu-table:not(.tp-menu-table--main) .tp-menu-name .et_pb_module_header) {
+		white-space: normal;
+	}
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* 0.8.1: the photo of a dish (the one that comes with the mouse on its row, on computers) next to   */
+/* the dish's words instead of over them. The Figma's places are right for its short names; with the */
+/* names and descriptions of taschepiene.it the photo covered their end and, on narrower windows, the */
+/* first price. assets/js/tp-menu-fit.js measures each row and gives it, only where needed: the       */
+/* centre of the photo (--tp-menu-fit-left), its size (--tp-menu-fit-scale), the width of the         */
+/* description, on two lines of the same length when one line would leave the photo too little room   */
+/* (--tp-menu-fit-meta), and the height of its centre when it has to hang under a long name           */
+/* (--tp-menu-fit-top). Without the values everything is as before.                                   */
+/* ------------------------------------------------------------------------------------------------ */
+@media (min-width: 981px) {
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-row-image) {
+		top: var(--tp-menu-fit-top, var(--tp-menu-row-image-top, 48.3px));
+		left: var(--tp-menu-fit-left, var(--tp-menu-row-image-left, 42.82%));
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-row:hover .tp-menu-row-image),
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-row.is-active .tp-menu-row-image) {
+		transform: translate(-50%, -50%) scale(var(--tp-menu-fit-scale, 1)) rotate(var(--tp-menu-row-image-rotate, 4.49deg));
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-row .tp-menu-item > .tp-menu-meta) {
+		max-width: var(--tp-menu-fit-meta, none);
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-table--main .tp-menu-row:not(.tp-menu-row--proposal) .tp-menu-item > .tp-menu-meta) {
+		max-width: var(--tp-menu-fit-meta, calc(58% - 8px));
+	}
+
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-row .tp-menu-meta),
+	.tp-child-theme :where(#page-container .tp-menu-section .tp-menu-row .tp-menu-meta) :where(.et_pb_text_inner, p, span) {
+		white-space: normal;
+		text-wrap: balance;
+	}
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* 0.8.1: where the links to a section land (the menu at the top, the buttons, the footer). The top  */
+/* of the section went to the top of the window: on computers, where the header stays there, the     */
+/* first line of "Tasche piene di qualcosa di buono" and the title "Informazioni utili" ended under   */
+/* it; on phones the titles of the menu and of "Siamo nei caruggi" touched the edge of the screen.    */
+/* Each of these sections says how far from the top it wants to stay; assets/js/tasche-piene.js       */
+/* passes it to Divi's scroll, and the browser's own jump to an anchor reads it by itself.            */
+/* ------------------------------------------------------------------------------------------------ */
+@media (min-width: 981px) {
+
+	.tp-child-theme :where(#page-container .tp-intro-section),
+	.tp-child-theme :where(#page-container .tp-faq-section) {
+		scroll-margin-top: 96px;
+	}
+}
+
+@media (max-width: 767px) {
+
+	.tp-child-theme :where(#page-container .tp-menu-section),
+	.tp-child-theme :where(#page-container .tp-faq-section),
+	.tp-child-theme :where(#page-container .tp-location-section) {
+		scroll-margin-top: 28px;
+	}
+}

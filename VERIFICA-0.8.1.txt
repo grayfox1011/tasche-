@@ -1,4 +1,99 @@
-TASCHE PIENE — VERSIONE 0.8.0, CANDIDATA AL COLLAUDO
+TASCHE PIENE — VERSIONE 0.8.1, CANDIDATA AL COLLAUDO
+
+La 0.8.1 nasce da un controllo del Menu', la sezione dei piatti e il menu'
+in alto, su telefono, tablet e computer: 18 larghezze da 320 a 1920 px, a
+riposo e col mouse sui piatti, con e senza animazioni, contro i testi di
+taschepiene.it. I contenuti erano giusti (16 piatti, 32 prezzi, note,
+tasti di consegna, link); i difetti trovati erano di impaginazione e sono
+corretti qui sotto. A 390 px, la larghezza del Figma, e sul computer a
+riposo non cambia niente. Le note delle versioni precedenti, piu' in
+basso, restano valide.
+
+COSA CAMBIA RISPETTO ALLA 0.8.0
+- Menu', telefoni piu' stretti di 390 px (320, 360, 375: molti Android,
+  iPhone SE e mini): il titolo "Il nostro menu'" restava su una riga e
+  usciva dallo schermo, tagliato a destra. Va su due righe, come a 390.
+- Menu', telefoni tra 360 e 389 px: le due foto (tasca in mano, dolce)
+  tenevano i 358 px del Figma e a 360 px toccavano i bordi dello schermo;
+  foto e card dei piatti stavano 4 px fuori centro. Ora foto, card e
+  liste stanno a 16 px dai due bordi a ogni larghezza, come nel Figma.
+- Menu', telefoni piu' larghi di 390 px (412, 430 e oltre): la foto dei
+  dolci cresceva in altezza con lo schermo (fino a 477 px contro i 322
+  dell'altra). Le due foto hanno ora la stessa forma.
+- Menu', telefoni da 320 px: "I nostri contorni" usciva dallo schermo e
+  "SPUMETTA (AL BICCHIERE)" finiva sopra il suo prezzo. I titoli di
+  contorni, dolci e bere si rimpiccioliscono quanto serve; nelle card di
+  contorni, dolci e bere un nome che non sta prima del prezzo va a capo, e
+  un titolo piu' lungo va su una seconda riga invece di essere tagliato.
+- Menu', computer: la foto che compare col mouse su un piatto non copre
+  piu' le parole e i prezzi di quel piatto. Il Figma mette ogni foto in un
+  punto della riga, giusto per i suoi nomi corti; con i nomi e le
+  descrizioni di taschepiene.it la foto copriva la fine della descrizione
+  (a 1440 px 125 px della Trippa, 45 dei Ripieni), la fine dei nomi lunghi
+  e, sotto i 1280 px, anche il primo prezzo (fino a 58 px). Ora la foto si
+  sposta a destra fin dove finiscono le parole, senza superare i prezzi;
+  si rimpicciolisce se lo spazio e' meno della foto (mai sotto il 62%); la
+  descrizione va su due righe pari quando su una lascerebbe la foto troppo
+  piccola; e dove nemmeno la foto piu' piccola ha posto dopo il nome (nomi
+  lunghi sotto i 1280 px) la foto scende appena sotto il nome. I piatti
+  dove foto e parole gia' non si toccavano restano come nel Figma.
+- Link verso una sezione (menu' in alto, bottoni, footer, indirizzo con
+  #sezione): Divi porta l'inizio della sezione in cima alla finestra. Sul
+  computer, dove la barra del menu' resta in alto, "La nostra idea"
+  atterrava con la prima riga del titolo sotto la barra e "Domande" con il
+  titolo "Informazioni utili" nascosto; sul telefono "Il menu'", "Domande"
+  e "Dove siamo" atterravano con il titolo attaccato al bordo dello
+  schermo. Ora queste sezioni si fermano un po' piu' in basso (96 px sul
+  computer, 28 sul telefono).
+
+VERIFICHE EFFETTUATE SULLA 0.8.1
+- Sezione Menu' a 320, 340, 360, 375, 389, 390, 393, 412, 430, 480, 600 e
+  767 px (telefono), 768, 820, 834 e 980 (tablet), 981, 1100, 1280, 1440,
+  1680 e 1920 (computer): nessun testo fuori dallo schermo, tagliato o
+  sovrapposto, 16 piatti e 32 prezzi visibili a ogni larghezza, nessun
+  errore. Con le animazioni accese lo stato finale e' lo stesso.
+- Contro la 0.8.0, a riposo: identica al pixel a 390 px e da 768 a 1920
+  px. Cambiano solo i telefoni diversi da 390 px, nei punti qui sopra.
+- Mouse sui 12 piatti con la foto a 981, 1024, 1100, 1200, 1280, 1366,
+  1440, 1536, 1680, 1920 e 2560 px: la foto copre 0 px del nome, della
+  descrizione e dei prezzi del piatto. Vale anche dopo aver ristretto o
+  allargato la finestra e con "riduci movimento" attivo.
+- Contenuto: nomi, descrizioni e prezzi dei 16 piatti, titoli, note sugli
+  allergeni e tasti di consegna uguali a taschepiene.it di oggi.
+- Menu' in alto: su telefono (320 e 390 px) e tablet (820) si apre, si
+  chiude col tasto e con Esc, le cinque voci sono alte 50 px e portano
+  alla loro sezione chiudendo il menu'; sul computer le cinque voci, il
+  bottone "Guarda il menu'" e "MENU'" del footer portano al Menu'.
+  Atterraggio di ogni voce controllato a 390, 820 e 1440 px, anche
+  aprendo la pagina direttamente con #menu, #faq, #chi-siamo, #location.
+- Visual Builder (computer, tablet, telefono): la sezione Menu' ha le
+  stesse misure della 0.8.0.
+
+DA SAPERE
+- Sul telefono la descrizione sotto il nome dei piatti continua a non
+  vedersi, come nel Figma (taschepiene.it la mostra): e' una scelta di
+  grafica, non un difetto.
+- Sul tablet la descrizione e' piccola (10,8 px a 768, 11 a 820), come
+  nella tavola iPad del Figma.
+- taschepiene.it mostra accanto ai nomi dei numeri di allergeni che non
+  sono nei suoi contenuti: li aggiunge lo script del tema vecchio da una
+  tabella del primo Figma (per esempio il glutine, 1, a polpette e
+  ripieni, mentre le sue domande dicono che tutto e' senza glutine). Qui,
+  dalla 0.7.0, non ci sono: vanno scritti con i dati del proprietario (un
+  Testo con la classe tp-menu-allergeni dopo il Nome del piatto, oppure i
+  numeri tra parentesi quadre nel nome, "[3,7]").
+- La foto col mouse copre, come prima, i nomi dei piatti vicini a quello
+  indicato: e' il disegno del Figma.
+- Nel Visual Builder la foto col mouse resta al posto del Figma: lo
+  spostamento avviene sul sito.
+
+NON PROVATI
+- Safari e un iPhone veri, un database MySQL e il video di sfondo nel
+  builder, come per le versioni precedenti.
+
+==============================================================================
+
+NOTE DELLA 0.8.0
 
 La 0.8.0 nasce da una prova: su un sito nuovo la home e' stata rifatta a
 mano da una pagina bianca, modulo per modulo nel Visual Builder, e header e

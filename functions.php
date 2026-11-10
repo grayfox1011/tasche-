@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( "TP_CHILD_VERSION", "0.8.0" );
+define( "TP_CHILD_VERSION", "0.8.1" );
 define( 'TP_CHILD_PATH', trailingslashit( get_stylesheet_directory() ) );
 define( 'TP_CHILD_URL', trailingslashit( get_stylesheet_directory_uri() ) );
 define( 'TP_CHILD_MODULES_JSON_PATH', TP_CHILD_PATH . 'modules-json/' );
@@ -1291,6 +1291,16 @@ function tp_child_enqueue_menu_assets(): void {
 		TP_CHILD_URL . 'assets/js/tp-menu.js',
 		[ 'gsap-core' ],
 		tp_child_asset_version( 'assets/js/tp-menu.js' ),
+		true
+	);
+
+	// 0.8.1: the photo that comes with the mouse on a dish next to its words, not over them. On its own, without
+	// GSAP: tp-menu.js stops where the visitor asks for less motion, and the photos come with the mouse there too.
+	wp_enqueue_script(
+		'tp-menu-fit',
+		TP_CHILD_URL . 'assets/js/tp-menu-fit.js',
+		[],
+		tp_child_asset_version( 'assets/js/tp-menu-fit.js' ),
 		true
 	);
 }

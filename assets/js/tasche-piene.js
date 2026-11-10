@@ -384,8 +384,51 @@
 		bindActiveState(items, { outside: '.tp-hours-item' });
 	}
 
+	// A link to a section of the page (the menu's, the buttons', the footer's) lands where Divi puts it: the top
+	// of the section at the top of the window, without looking at the header that stays there on computers nor at
+	// a title that starts with the section. Divi's own scroll ignores the CSS that says how far a section wants
+	// to stay from the top (scroll-margin-top, in assets/css/tasche-piene-figma.css, "0.8.1"): here it gets a
+	// target that stands that much higher. A section without that margin is scrolled as before.
+	function initScrollMargins() {
+		function wrap() {
+			var divi = window.et_pb_smooth_scroll;
+
+			if ('function' !== typeof divi || divi.tpScrollMargin) {
+				return;
+			}
+
+			window.et_pb_smooth_scroll = function (target) {
+				var args = Array.prototype.slice.call(arguments);
+				var element = target && target[0];
+				var margin = element && window.getComputedStyle ? parseFloat(window.getComputedStyle(element).scrollMarginTop) || 0 : 0;
+				var moved;
+
+				if (margin && 'function' === typeof target.offset) {
+					moved = Object.create(target);
+					moved.offset = function () {
+						var offset = target.offset();
+
+						return offset ? { top: offset.top - margin, left: offset.left } : offset;
+					};
+					args[0] = moved;
+				}
+
+				return divi.apply(this, args);
+			};
+
+			window.et_pb_smooth_scroll.tpScrollMargin = true;
+		}
+
+		// Divi's script can come after this one: again when the page is ready and right before any click is handled.
+		wrap();
+		document.addEventListener('DOMContentLoaded', wrap);
+		window.addEventListener('load', wrap);
+		document.addEventListener('click', wrap, true);
+	}
+
 	initIOSHeaderFallback();
 	initThemeNav();
 	initIntroButtons();
 	initHoursItems();
+	initScrollMargins();
 })();
