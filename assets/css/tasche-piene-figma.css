@@ -3750,6 +3750,50 @@ body.tp-child-theme :where(.tp-faq .et_pb_toggle_content a) {
 }
 
 /* ------------------------------------------------------------------------------------------------ */
+/* 0.8.0: Divi's alignment and padding on the buttons with the arrow.                                 */
+/* The link is wider than the button one sees, for the arrow that comes away with the mouse: Divi's  */
+/* alignment (Design > Allineamento) places the link, so a button in the middle or on the right     */
+/* stood 16 to 126 px to the left of its place. The link gives that room back with its margin: its   */
+/* place in the line is the button's. Left-aligned, as the theme's buttons are, nothing moves.        */
+/* The room inside the buttons is the design's: a padding chosen in Divi (Design > Spaziatura) is      */
+/* written on the link, where on computers and tablets it changes nothing one sees, and on phones,   */
+/* where "Le materie prime" and "Mappe" are the link, it pushed the words out of the box.            */
+/* ------------------------------------------------------------------------------------------------ */
+@media (min-width: 768px) {
+
+	.tp-child-theme :where(a.tp-intro-button, a.tp-hero-button) {
+		--tp-intro-button-room: 32.016px;
+	}
+
+	.tp-child-theme :where(a.tp-location-button) {
+		--tp-intro-button-room: 126.016px;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.et_pb_button.tp-intro-button, a.et_pb_button.tp-location-button, a.et_pb_button.tp-hero-button) {
+		margin-right: calc(-1 * var(--tp-intro-button-room, 0px));
+	}
+}
+
+@media (min-width: 981px) {
+
+	/* The hero's link is as wide as its button on computers. */
+	.tp-child-theme :where(a.tp-hero-button) {
+		--tp-intro-button-room: 0px;
+	}
+}
+
+@media (max-width: 767px) {
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.et_pb_button.tp-intro-button:not(.tp-hero-button)) {
+		padding: 0 !important;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.et_pb_button.tp-location-button) {
+		padding: 0.799232px !important;
+	}
+}
+
+/* ------------------------------------------------------------------------------------------------ */
 /* 0.8.0: in the Visual Builder the link is drawn as the button (0.6.6). It was as wide as the link of */
 /* the site, which is wider than the button for the arrow that comes away with the mouse, and was    */
 /* cut to the button's shape (clip-path): a border chosen in Divi lost its right side and the corners */
@@ -3773,6 +3817,8 @@ body.tp-child-theme :where(.tp-faq .et_pb_toggle_content a) {
 	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(body.et-fb #page-container a.et_pb_button.tp-intro-button, body.et-fb #page-container a.et_pb_button.tp-location-button) {
 		width: calc(var(--tp-intro-button-arrow-left) + 54px);
 		padding-right: 54px;
+		/* The words start at the left as in the site's label, also in a button Divi aligns in the middle. */
+		text-align: left;
 		clip-path: none;
 	}
 }
@@ -3781,6 +3827,7 @@ body.tp-child-theme :where(.tp-faq .et_pb_toggle_content a) {
 
 	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(body.et-fb #page-container a.et_pb_button.tp-hero-button) {
 		width: calc(var(--tp-intro-button-arrow-left) + 48.33px);
+		text-align: left;
 		clip-path: none;
 	}
 }
@@ -3791,6 +3838,56 @@ body.et-fb #page-container .et_pb_section a.et_pb_button.tp-intro-button::after,
 body.et-fb #page-container .et_pb_section a.et_pb_button.tp-location-button::after,
 body.et-fb #page-container .et_pb_section a.et_pb_button.tp-hero-button::after {
 	margin: calc(-1 * var(--tp-own-border-y, 0px)) 0 0 calc(-1 * var(--tp-own-border-x, 0px));
+}
+
+/* In the builder the link is as wide as the button: no room to give back. Its paddings are the design's, also
+   over a padding chosen in Divi (which is written with !important), as on the site. */
+.tp-child-theme :where(body.et-fb a.tp-intro-button, body.et-fb a.tp-location-button, body.et-fb a.tp-hero-button) {
+	--tp-intro-button-room: 0px;
+}
+
+@media (min-width: 768px) {
+
+	body.et-fb #page-container .et_pb_section a.et_pb_button.tp-intro-button,
+	body.et-fb #page-container .et_pb_section a.et_pb_button.tp-intro-button:hover {
+		padding: 14px 54px 14px 25.5px !important;
+	}
+
+	body.et-fb #page-container .et_pb_section a.et_pb_button.tp-location-button,
+	body.et-fb #page-container .et_pb_section a.et_pb_button.tp-location-button:hover {
+		padding: 14px 54px 14px 29px !important;
+	}
+}
+
+@media (min-width: 768px) and (max-width: 980px) {
+
+	body.et-fb #page-container .et_pb_section a.et_pb_button.tp-hero-button,
+	body.et-fb #page-container .et_pb_section a.et_pb_button.tp-hero-button:hover {
+		padding: 15px 54px 13px 25.5px !important;
+	}
+
+	body.et-fb #page-container .et_pb_section a.et_pb_button.tp-location-button,
+	body.et-fb #page-container .et_pb_section a.et_pb_button.tp-location-button:hover {
+		padding: 14px 54px 14px 25.5px !important;
+	}
+}
+
+@media (max-width: 767px) {
+
+	body.et-fb #page-container .et_pb_section a.et_pb_button.tp-hero-button,
+	body.et-fb #page-container .et_pb_section a.et_pb_button.tp-hero-button:hover {
+		padding: 12.52px 0 0 !important;
+	}
+
+	body.et-fb #page-container .et_pb_section a.et_pb_button.tp-intro-button:not(.tp-hero-button),
+	body.et-fb #page-container .et_pb_section a.et_pb_button.tp-intro-button:not(.tp-hero-button):hover {
+		padding: 6.1px 14px !important;
+	}
+
+	body.et-fb #page-container .et_pb_section a.et_pb_button.tp-location-button,
+	body.et-fb #page-container .et_pb_section a.et_pb_button.tp-location-button:hover {
+		padding: 0.799232px !important;
+	}
 }
 
 /* ------------------------------------------------------------------------------------------------ */
@@ -3947,6 +4044,44 @@ body.et-fb #page-container .et_pb_section a.et_pb_button.tp-hero-button::after {
 		border-left: var(--tp-own-border-left, 0 none);
 	}
 
+	/* The shadow (Design > Ombra riquadro): the link does not paint it (its box is wider than the button one sees);
+	   it goes behind label and arrow together and, with the mouse on the button, behind each of the two. The value
+	   is read on the link by tp-button-fit.js (--tp-own-shadow), on a copy this rule leaves alone. */
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-shadow-d:not([aria-hidden="true"])) {
+		box-shadow: none;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-shadow-d .tp-intro-button__label)::before,
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-shadow-d .tp-intro-button__arrow)::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: -1;
+		width: 100%;
+		height: 100%;
+		border-radius: inherit;
+		pointer-events: none;
+	}
+
+	/* As wide as label and arrow together and painted as the label: under the edge of the arrow, which the
+	   browser does not place on the same half pixel, there is the button and not the page. */
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-shadow-d .tp-intro-button__label)::before {
+		width: calc(var(--tp-intro-button-arrow-left) + 54px);
+		background: inherit;
+		box-shadow: var(--tp-own-shadow, none);
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-shadow-d:hover .tp-intro-button__label)::before,
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-shadow-d:focus-visible .tp-intro-button__label)::before {
+		width: 100%;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-shadow-d:hover .tp-intro-button__arrow)::before,
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-shadow-d:focus-visible .tp-intro-button__arrow)::before {
+		box-shadow: var(--tp-own-shadow, none);
+	}
+
 	/* Striscia scorrevole: a background chosen in Design > Sfondo shows through the strip. */
 	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(.tp_marquee.tp-own-bg-d .tp-marquee) {
 		background-color: transparent;
@@ -4094,6 +4229,44 @@ body.et-fb #page-container .et_pb_section a.et_pb_button.tp-hero-button::after {
 		border-left: var(--tp-own-border-left, 0 none);
 	}
 
+	/* The shadow (Design > Ombra riquadro): the link does not paint it (its box is wider than the button one sees);
+	   it goes behind label and arrow together and, with the mouse on the button, behind each of the two. The value
+	   is read on the link by tp-button-fit.js (--tp-own-shadow), on a copy this rule leaves alone. */
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-shadow-t:not([aria-hidden="true"])) {
+		box-shadow: none;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-shadow-t .tp-intro-button__label)::before,
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-shadow-t .tp-intro-button__arrow)::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: -1;
+		width: 100%;
+		height: 100%;
+		border-radius: inherit;
+		pointer-events: none;
+	}
+
+	/* As wide as label and arrow together and painted as the label: under the edge of the arrow, which the
+	   browser does not place on the same half pixel, there is the button and not the page. */
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-shadow-t .tp-intro-button__label)::before {
+		width: calc(var(--tp-intro-button-arrow-left) + 54px);
+		background: inherit;
+		box-shadow: var(--tp-own-shadow, none);
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-shadow-t:hover .tp-intro-button__label)::before,
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-shadow-t:focus-visible .tp-intro-button__label)::before {
+		width: 100%;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-shadow-t:hover .tp-intro-button__arrow)::before,
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-own-shadow-t:focus-visible .tp-intro-button__arrow)::before {
+		box-shadow: var(--tp-own-shadow, none);
+	}
+
 	/* Striscia scorrevole: a background chosen in Design > Sfondo shows through the strip. */
 	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(.tp_marquee.tp-own-bg-t .tp-marquee) {
 		background-color: transparent;
@@ -4188,19 +4361,21 @@ body.et-fb #page-container .et_pb_section a.et_pb_button.tp-hero-button::after {
 		background-image: none;
 	}
 
-	/* "Mappe" on phones: its label is the box, 0.8 px inside the link; with a border of Divi's the label fills
-	   the link, whose border and corners frame it. "Le materie prime": the link is the box, and its label, as
+	/* "Mappe" on phones: its label is the box, 0.8 px inside the link; with a border or a shadow of Divi's the
+	   label fills the link, whose border, corners and shadow frame it. "Le materie prime": the link is the box, and its label, as
 	   tall as the link without a border, takes the room inside it (the words stay in the middle). */
 	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-intro-button.tp-own-border-p:not(.tp-hero-button) .tp-intro-button__label) {
 		height: 100%;
 	}
 
-	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-location-button.tp-own-border-p) {
-		padding: 0;
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.et_pb_button.tp-location-button.tp-own-border-p),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.et_pb_button.tp-location-button.tp-own-shadow-p) {
+		padding: 0 !important;
 		overflow: hidden;
 	}
 
-	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-location-button.tp-own-border-p .tp-intro-button__label) {
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-location-button.tp-own-border-p .tp-intro-button__label),
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-location-button.tp-own-shadow-p .tp-intro-button__label) {
 		border-radius: 0;
 	}
 
@@ -4262,6 +4437,44 @@ body.et-fb #page-container .et_pb_section a.et_pb_button.tp-hero-button::after {
 	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-border-p:hover .tp-intro-button__arrow)::after,
 	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-border-p:focus-visible .tp-intro-button__arrow)::after {
 		border-left: var(--tp-own-border-left, 0 none);
+	}
+
+	/* The shadow (Design > Ombra riquadro): the link does not paint it (its box is wider than the button one sees);
+	   it goes behind label and arrow together and, with the mouse on the button, behind each of the two. The value
+	   is read on the link by tp-button-fit.js (--tp-own-shadow), on a copy this rule leaves alone. */
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-shadow-p:not([aria-hidden="true"])) {
+		box-shadow: none;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-shadow-p .tp-intro-button__label)::before,
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-shadow-p .tp-intro-button__arrow)::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: -1;
+		width: 100%;
+		height: 100%;
+		border-radius: inherit;
+		pointer-events: none;
+	}
+
+	/* As wide as label and arrow together and painted as the label: under the edge of the arrow, which the
+	   browser does not place on the same half pixel, there is the button and not the page. */
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-shadow-p .tp-intro-button__label)::before {
+		width: calc(var(--tp-intro-button-arrow-left) + 48.33px);
+		background: inherit;
+		box-shadow: var(--tp-own-shadow, none);
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-shadow-p:hover .tp-intro-button__label)::before,
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-shadow-p:focus-visible .tp-intro-button__label)::before {
+		width: 100%;
+	}
+
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-shadow-p:hover .tp-intro-button__arrow)::before,
+	.tp-child-theme.tp-child-theme.tp-child-theme.tp-child-theme :where(a.tp-hero-button.tp-own-shadow-p:focus-visible .tp-intro-button__arrow)::before {
+		box-shadow: var(--tp-own-shadow, none);
 	}
 
 	/* Striscia scorrevole: a background chosen in Design > Sfondo shows through the strip. */

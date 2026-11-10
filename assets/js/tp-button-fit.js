@@ -10,9 +10,9 @@
  * (the label and the arrow tasche-piene.js makes) and in the Visual Builder (the link drawn as the button). On
  * the phones, where "Le materie prime" and "Mappe" are a box with the words in the middle, the box only grows.
  *
- * The border (Pulsante > Design > Bordo) is the link's, and on the site the button one sees is label and arrow:
- * the widths, styles and colours of its four sides are read here and given to the stylesheet, which draws them
- * inside the two pieces ("0.8.0: the values of Pulsante > Design").
+ * The border (Pulsante > Design > Bordo) and the shadow (Design > Ombra riquadro) are the link's, and on the site
+ * the button one sees is label and arrow: the four sides of the border and the shadow are read here and given to
+ * the stylesheet, which draws them with the two pieces ("0.8.0: the values of Pulsante > Design").
  */
 (function () {
 	'use strict';
@@ -120,7 +120,9 @@
 					color: style['border' + name + 'Color'],
 					padding: parseFloat(style['padding' + name]) || 0
 				};
-			})
+			}),
+			// The shadow Divi writes on the link (Design > Ombra riquadro).
+			shadow: style.boxShadow
 		};
 		probe.parentNode.removeChild(probe);
 
@@ -196,6 +198,21 @@
 		set(button, '--tp-own-border-y', own ? measures.sides[0].width + 'px' : '');
 	}
 
+	// The shadow chosen in Design > Ombra riquadro is the link's, whose box is wider than the button one sees: on
+	// the site the link (class tp-own-shadow-*, from PHP) does not paint it and the stylesheet puts it behind label
+	// and arrow, with the value read here on the copy (an inner shadow, which they cannot share, is left out).
+	function shadow(button, measures, builder) {
+		var value = '';
+
+		if (!builder && measures.shadow && measures.shadow !== 'none' && /(^|\s)tp-own-shadow-[dtp](\s|$)/.test(button.className)) {
+			value = measures.shadow.split(/,(?![^(]*\))/).filter(function (part) {
+				return !/(^|\s)inset(\s|$)/.test(part);
+			}).join(',').trim();
+		}
+
+		set(button, '--tp-own-shadow', value);
+	}
+
 	function fit(button) {
 		var label = button.querySelector('.tp-intro-button__label');
 		var builder = !label;
@@ -216,6 +233,7 @@
 
 		measures = stylesheetMeasures(button);
 		border(button, measures, builder);
+		shadow(button, measures, builder);
 		style = window.getComputedStyle(label || button);
 		text = words(button, label);
 

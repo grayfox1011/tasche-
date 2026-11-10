@@ -5,11 +5,11 @@
  * - The buttons with the arrow ("Guarda il menù", "Le materie prime", "Mappe": classes tp-hero-button,
  *   tp-intro-button, tp-location-button). On the site tasche-piene.js moves the text of the link into a label
  *   and adds the arrow: the button one sees is those two pieces, not the link, so the colour, the font, the
- *   background, the border and the corners chosen in Pulsante > Design reached the link and nothing changed
- *   (or a coloured box came out beside the button). The link now says which values it has, with a class per
- *   value and device (tp-own-color-d, tp-own-bg-t, tp-own-border-p ...), and the stylesheet lets the pieces
- *   take those values from the link (assets/css/tasche-piene-figma.css, "0.8.0"). A button without values of
- *   its own has no such class and is drawn as before.
+ *   background, the border, the corners and the shadow chosen in Divi reached the link and nothing changed
+ *   (or a coloured box, or a shadow wider than the button, came out beside it). The link now says which
+ *   values it has, with a class per value and device (tp-own-color-d, tp-own-bg-t, tp-own-border-p ...), and
+ *   the stylesheet lets the pieces take those values from the link (assets/css/tasche-piene-figma.css,
+ *   "0.8.0"). A button without values of its own has no such class and is drawn as before.
  * - The Striscia scorrevole: the strip painted its green over the module's background (Design > Sfondo). A
  *   module with a background of its own says so (tp-own-bg-*) and the strip lets it through.
  *
@@ -73,7 +73,8 @@ function tp_child_own_design_devices( $node, string $state, callable $test ): ar
 }
 
 /**
- * The classes that say which values of Pulsante > Design a button has, per device.
+ * The classes that say which values of Pulsante > Design (and the shadow of Design > Ombra riquadro) a button
+ * has, per device.
  *
  * @param array $attrs Attributes of a divi/button block.
  * @return string[]
@@ -116,6 +117,18 @@ function tp_child_own_design_button_classes( array $attrs ): array {
 
 	$add( 'border', tp_child_own_design_devices( $border, 'value', $key( 'styles' ) ) );
 	$add( 'radius', tp_child_own_design_devices( $border, 'value', $key( 'radius' ) ) );
+
+	// The shadow is the module's (Design > Ombra riquadro): Divi writes it on the link.
+	$add(
+		'shadow',
+		tp_child_own_design_devices(
+			$attrs['module']['decoration']['boxShadow'] ?? null,
+			'value',
+			static function ( $value ): bool {
+				return is_array( $value ) && tp_child_own_design_has( $value['style'] ?? null ) && 'none' !== $value['style'];
+			}
+		)
+	);
 
 	return array_values( array_unique( $classes ) );
 }
