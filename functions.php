@@ -1216,7 +1216,9 @@ function tp_child_localize_vb_chrome_menus(): void {
 	wp_enqueue_script( 'tp-chrome-menus-vb' );
 	wp_add_inline_script(
 		'tp-chrome-menus-vb',
-		'window.tpChromeMenus = ' . wp_json_encode( tp_child_chrome_collect_vb_menus() ) . ';',
+		'window.tpChromeMenus = ' . wp_json_encode( tp_child_chrome_collect_vb_menus() ) . ';'
+		// 0.8.0: whether a value set for one device is of that device only (src/utils/own-design.ts).
+		. 'window.tpChildDevices = ' . wp_json_encode( [ 'isolated' => function_exists( 'tp_child_bp_ranges' ) && null !== tp_child_bp_ranges() ] ) . ';',
 		'before'
 	);
 }

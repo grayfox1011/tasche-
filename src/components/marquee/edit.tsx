@@ -10,6 +10,7 @@ import { createModuleClassnames, createModuleScriptData, createModuleStyles } fr
 import { clampNumber, getString } from '../../utils/attrs';
 import { DynamicText, withoutDynamicContent } from '../../utils/dynamic';
 import { getMarqueeVariant, getSeparator, isMaterieMarquee } from '../../utils/marquee';
+import { ownBackgroundClassnames } from '../../utils/own-design';
 
 const MODULE_CLASSNAME = 'tp_marquee';
 
@@ -24,7 +25,13 @@ const getChildClass = (childId: string): string =>
 	typeof getModuleOrderClassName === 'function' ? getModuleOrderClassName(childId) : '';
 
 const ModuleStyles = createModuleStyles(['tpDesignText', 'tpDesignStrip'], metadata.customCssFields);
-const moduleClassnames = createModuleClassnames(MODULE_CLASSNAME);
+const baseModuleClassnames = createModuleClassnames(MODULE_CLASSNAME);
+
+// A background chosen in Design > Sfondo shows through the strip, as on the site (inc/own-design-080.php).
+const moduleClassnames = (args: any): void => {
+	baseModuleClassnames(args);
+	ownBackgroundClassnames(args?.attrs).forEach((className) => args.classnamesInstance.add(className, true));
+};
 const ModuleScriptData = createModuleScriptData();
 
 const getPhrase = (attrs?: { phrase?: { innerContent?: { desktop?: { value?: unknown } }; desktop?: { value?: unknown } } }): string =>
