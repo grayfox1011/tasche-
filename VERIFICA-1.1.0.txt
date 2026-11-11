@@ -1,20 +1,49 @@
-TASCHE PIENE - VERSIONE 1.0.0, TEMA RIFATTO DA CAPO
+TASCHE PIENE - VERSIONE 1.1.0
 
-La 1.0.0 non e' un aggiornamento della 0.8.3: e' un tema nuovo. Il motivo:
-nella 0.8.3 il sito era tenuto al posto del Figma da un foglio di stile del
-tema e da moduli fatti apposta (Header sito, Footer sito, Striscia, Onda,
-Titolo animato). Bastava cambiare un testo in Divi perche' un'altezza
-restasse bloccata o un pezzo uscisse dal suo posto, e nel pie' di pagina
-alcune cose non si potevano scrivere.
+La 1.0.0 ha rifatto il tema da capo: il sito e' fatto solo di moduli Divi
+(sezioni, righe, colonne, gruppi, testi, titoli, immagini, pulsanti,
+elenchi con icone, accordion, collegamenti, icone, galleria). Misure,
+spazi, colori, caratteri e disposizione sono nei campi di ogni modulo, per
+computer, tablet e telefono. Il tema non fissa nessuna altezza: una sezione
+e' alta quanto quello che contiene.
 
-Ora il sito e' fatto solo di moduli Divi (sezioni, righe, colonne, gruppi,
-testi, titoli, immagini, pulsanti, elenchi con icone, accordion,
-collegamenti, icone). Misure, spazi, colori, caratteri e disposizione sono
-nei campi di ogni modulo, per computer, tablet e telefono. Il tema non
-fissa nessuna altezza: una sezione e' alta quanto quello che contiene.
+La 1.1.0 fa due cose in piu'.
 
-Moduli per pagina: home 327, testata 12, pie' di pagina 22, Privacy Policy
-7, Cookie Policy 7.
+1. Parte dai testi e dalle foto che erano sul sito online l'11 novembre
+   2026 (la 0.8.3 modificata a mano): introduzione, "Cuciniamo tutto noi",
+   card Tasca o vaschetta, menu' con le foto nuove dei piatti, materie
+   prime senza titolo, domande, galleria di 14 foto in fondo.
+2. Riporta gli effetti della 0.8.3, fatti sopra i moduli Divi: il logo
+   all'apertura della pagina, le card Tasca o vaschetta che si aprono, la
+   scritta diagonale che resta in vista mentre le card le passano sopra,
+   le card delle materie prime che entrano ruotate e diventano verdi sotto
+   il mouse, le scritte che scorrono alla velocita' di prima.
+
+Moduli per pagina: home 334, testata 12, pie' di pagina 22, Privacy Policy
+7, Cookie Policy 7. Lo zip ha 87 file, 17,1 MB.
+
+
+COSA E' STATO PRESO DAL SITO ONLINE, E COSA NO
+
+Presi come sono: tutti i testi (con i grassetti e i link), i prezzi, le 23
+foto nuove, l'ordine delle sezioni, la galleria.
+
+Scelte fatte dove il sito online era incerto o rotto. Vanno controllate:
+- Orari: sul sito online la sezione "Quando siamo aperti?" non c'e' piu'
+  (gli orari sono solo tra le domande). Qui e' rimasta, con gli stessi
+  orari: se non serve, si elimina la sezione in Divi.
+- Verdure al forno: sul sito online si legge 4,50, perche' un secondo
+  riquadro del prezzo e' finito sopra il suo. Qui 1,50, il suo prezzo
+  (lo dice anche la domanda "Quanto costa un pranzo?").
+- Acqua: sul sito online ci sono due prezzi uno sull'altro (1,00 e 4,50) e
+  non si legge. Qui 1,00, il suo.
+- Strudel di mele: sul sito online non ha prezzo. Qui 4,50, come gli altri
+  dolci e come dice la domanda "Quanto costa un pranzo?". Da confermare.
+- Pie' di pagina: la voce "Nuova voce" (porta a #home, e' il testo di una
+  voce appena aggiunta) non e' stata copiata.
+- Galleria: sul sito online si vedono 12 foto su 14, disposte per colonne.
+  Qui si vedono tutte e 14, tre per riga (due su telefono).
+- Allergeni: copiati cosi' come sono, senza aggiungere nulla.
 
 
 COSA FA ANCORA IL TEMA
@@ -23,7 +52,8 @@ COSA FA ANCORA IL TEMA
 2. Pochi effetti, ognuno legato a una classe scritta in Avanzate >
    Attributi del modulo (tolta la classe l'effetto sparisce, il contenuto
    resta):
-   tp-scorre          la scritta che scorre
+   tp-scorre          la scritta che scorre (data-durata: i secondi di un
+                      giro; data-velocita: pixel al secondo)
    tp-lettere         il titolo che entra lettera per lettera (GSAP)
    tp-piatto          la riga di un piatto: con il mouse sopra mostra foto
                       e descrizione (i moduli con tp-al-passaggio)
@@ -32,9 +62,16 @@ COSA FA ANCORA IL TEMA
                       testata; su telefono un tocco su una voce chiude il
                       menu'; una pagina aperta su un'ancora (/#menu) mostra
                       la sezione sotto la testata
-   tp-panino          l'icona che apre il menu' su tablet e telefono: e'
-                      il pulsante che tp-testata preme per richiuderlo, e
-                      si usa anche da tastiera
+   tp-panino          l'icona che apre il menu' su tablet e telefono
+   tp-apertura        la sezione che apre la pagina: il logo a tutto
+                      schermo, poi la pagina (GSAP)
+   tp-scheda          la card la cui foto (tp-scheda-foto) la riempie con
+                      il mouse sopra o con un tocco, mentre compare cio'
+                      che ha tp-scheda-nascosto
+   tp-resta           il pezzo che su computer resta in vista mentre la
+                      sua sezione scorre (la scritta diagonale)
+   tp-carte           il gruppo le cui card entrano una alla volta, un po'
+                      ruotate, e si accendono sotto il mouse
    Nel Visual Builder gli effetti stanno fermi.
 3. Crea il sito la prima volta: home, testata e pie' di pagina nel Theme
    Builder, Privacy Policy e Cookie Policy, immagini e video nella libreria
@@ -92,116 +129,110 @@ Ambiente: WordPress 7.1.3 su SQLite, PHP 8.3, Divi 5.15.1, Chromium.
 
 Sul sito
 - Nessuno sbordo orizzontale a 16 larghezze, da 320 a 1920 px.
-- Scritte che scorrono in movimento (circa 70 px al secondo), domande che
-  si aprono e chiudono, panino che apre, chiude e torna a posto cambiando
-  larghezza, titoli a lettere che lasciano il testo com'era, animazioni di
-  ingresso che finiscono visibili. Nessun errore di script.
-- Foto al passaggio del mouse: da 981 a 1920 px non copre mai i prezzi.
-- Nome e descrizione di un piatto lunghissimi, a 8 larghezze: i prezzi
-  restano dove sono e larghi uguale, la riga cresce, niente esce di lato.
-- Testata con 6 e con 8 voci: nessuna voce si spezza su due righe; le
-  ultime vanno su una seconda riga, la barra cresce, il logo non si
-  restringe. Con le 5 voci di oggi la barra e' alta 61-64 px (0.8.3: 60-66).
-- Ancore aperte da un'altra pagina (/#chi-siamo, #menu, #materie,
-  #location, #faq), computer e telefono: la sezione comincia sotto la
-  testata.
-- Caratteri: nessuna richiesta a Google nella home e nella Privacy Policy.
+- Apertura: lo schermo con il logo c'e' dal primo istante, la testata
+  aspetta dietro, il logo sale in due righe, a circa 2 secondi lo schermo
+  si alza e torna la testata, poi entra il titolo lettera per lettera.
+  Tempi e movimenti sono quelli della 0.8.3. Provata a 1440 e a 390 px.
+- Card Tasca o vaschetta, a 1440, 1024, 820 e 390 px: chiusa, la card e'
+  alta quanto foto, nome ed etichette (662 x 543 px a 1440; sul sito
+  online 682 x 553); aperta, la foto copre tutta la card, il nome diventa
+  chiaro e la descrizione sta dentro, con lo stesso margine dal fondo.
+  Provata anche con una descrizione lunga il doppio. Su telefono un tocco
+  apre, un tocco sull'altra card la chiude.
+- Materie prime a 1440 px: la scritta diagonale si ferma al 39% dello
+  schermo e ci resta per 860 px di scorrimento, poi riparte con la sezione
+  (sul sito online resta per 1614 px, anche dopo l'ultima card). La
+  sezione e' alta 2053 px (sul sito online 3347). Le card entrano una alla
+  volta.
+  Sotto il mouse: fondo e bordo verdi, testi chiari, card al 105%.
+- Scritte che scorrono: striscia 196 px al secondo a 1440 e 116 a 390 (sul
+  sito online 214 e 103); scritta diagonale 280 (sul sito online 281).
+- Domande che si aprono e chiudono, panino che apre e chiude, menu' su
+  telefono che si richiude dopo un tocco su una voce, ancore aperte da
+  un'altra pagina sotto la testata. Nessun errore di script.
+- Foto al passaggio del mouse sui piatti: da 981 a 1920 px non copre mai i
+  prezzi.
+- Con "meno movimento" chiesto al dispositivo: niente apertura, descrizione
+  delle card sempre visibile sotto le etichette, card delle materie prime
+  ferme. Tutto leggibile.
+- Galleria: 14 foto, tre per riga a 1440 e a 820 px, due a 390.
+- Caratteri: nessuna richiesta a Google.
 
 Nel Visual Builder
-- Altezza delle sezioni uguale tra builder e sito su computer (tranne hero
-  e striscia, fermi nel builder), entro 5 px su tablet e telefono.
+- La sezione "Apertura" e' una sezione normale in cima alla pagina, con il
+  logo: si cambiano li' immagine e colore.
+- Card Tasca o vaschetta: la descrizione sta sotto le etichette e si
+  scrive con il doppio clic. Riscritta e salvata: nella pagina cambia 1
+  blocco su 333.
+- Galleria: un clic apre le sue impostazioni, con le 14 foto in Contenuto
+  > Immagini.
 - Sotto il mouse c'e' il testo e non uno strumento di Divi (provato su
-  inizio, centro e fine di ogni testo): testata 5 su 5, pie' di pagina 10
-  su 10, home 128 su 128 in vista computer e 142 su 142 in vista telefono.
-  In tre testi della home il centro e' coperto e si clicca all'inizio:
-  vedi "Limiti noti".
-- Una voce della testata, pannello Design > Dimensionamento: Divi mostra
-  "Personalizzato" con Riduzione 0, cioe' legge l'impostazione che
-  impedisce alla voce di restringersi.
-- Doppio clic e scrittura: nome di un piatto (la riga passa da 100 a 169
-  px, le altre non cambiano), un prezzo, una voce della testata, una nota
-  e una voce del pie' di pagina.
-- Duplica (tasto destro): un piatto, la copia compare subito sotto; una
-  voce della testata.
-- Salva: cambiato un prezzo, nella pagina salvata cambia 1 blocco su 326;
-  cambiata una voce della testata, cambia 1 blocco su 17.
-- Testata e pie' di pagina aperti come si fa a mano, da Divi > Theme
-  Builder con la matita.
+  inizio, centro e fine di ogni testo): home 128 su 128 in vista computer
+  e 142 su 142 in vista telefono. In due testi il centro e' coperto: vedi
+  "Limiti noti".
+- Le prove della 1.0.0 su testata e pie' di pagina (5 su 5 e 10 su 10,
+  duplica voce, salva) valgono ancora: non sono cambiati.
 
-Creazione del sito, con lo zip di questa versione caricato
-dall'amministrazione come si fa a mano
-
-- Sito nuovo (WordPress appena installato): zip caricato e attivato;
-  WordPress apre da solo Aspetto > Tasche Piene e la creazione parte.
-  Interrotta apposta dopo un secondo, chiudendo la pagina: in bacheca
-  compare l'avviso con "Crea il sito"; ripresa da li', finisce in 26
-  secondi. Risultato: Home (327 moduli) come pagina iniziale, Privacy
-  Policy e Cookie Policy pubblicate, testata e pie' di pagina nel Theme
-  Builder, permalink /%postname%/, 40 file nella libreria Media, nessuna
-  immagine presa dalla cartella del tema, opzioni di Divi e preferenze del
-  builder impostate. Nel builder di questo sito: nessuna barretta sul
-  prezzo sotto il mouse, doppio clic e scrittura del prezzo riusciti.
-- Aggiornamento (copia di un sito con la 0.8.3, 30 file nella libreria):
-  zip caricato, "Sostituisci"; anche qui creazione interrotta e ripresa.
-  Risultato: Home nuova come pagina iniziale all'indirizzo /home/; la
-  vecchia in bozza come "Home (versione precedente)", con i suoi blocchi
-  del vecchio tema intatti; testata e pie' di pagina riscritti negli
-  stessi layout del Theme Builder (12 e 22 moduli, nessun blocco del
-  vecchio tema); Privacy e Cookie Policy riscritte; libreria Media da 30 a
-  41 file. Il sito non carica piu' nessun file del vecchio tema.
-- Tutti e due i siti confrontati con quello di sviluppo modulo per modulo,
-  a 390, 1024 e 1440 px: 359 scatole su 359 uguali, entro 1 px.
-- Creazione non interrotta, misurata prima su due siti con una versione
-  precedente di questo stesso codice: 26 e 28 secondi.
+Creazione del sito, con lo zip caricato dall'amministrazione come si fa a
+mano
+- Aggiornamento di una copia di un sito con la 0.8.3, dove cinque delle
+  foto nuove erano gia' state caricate a mano nella libreria (come sul
+  sito online): "Sostituisci", poi la creazione parte da sola e finisce in
+  13 secondi. Home nuova come pagina iniziale, la vecchia in bozza come
+  "Home (versione precedente)", le cinque foto gia' presenti usate cosi'
+  come sono (nessun doppione), libreria da 35 a 65 file. Confronto con il
+  sito di sviluppo modulo per modulo a 390 e 1440 px: 366 scatole su 366
+  uguali, entro 2 px.
+- Sito con la 1.0.0 aggiornato alla 1.1.0: le pagine fatte dalla 1.0.0
+  restano e funzionano (non hanno la sezione di apertura, quindi la pagina
+  si apre subito). "Rifai il sito da capo" le sostituisce con quelle
+  nuove in 11 secondi.
 
 
-DIFFERENZE DALLA 0.8.3
+DIFFERENZE RIMASTE DALLA 0.8.3
 
-Aspetto e comportamento
-- Non c'e' piu' la schermata di caricamento iniziale.
-- Card "Tasca o vaschetta": niente effetto al passaggio del mouse, la
-  descrizione e' sempre visibile.
-- Legenda del menu': non sale piu' con l'animazione.
+- Card Tasca o vaschetta: la card e' alta quanto il suo contenuto, non ha
+  piu' un'altezza fissa; la foto parte dal riquadro che ha in Divi.
+- Card delle materie prime: sotto il mouse diventano verdi e crescono un
+  poco; nella 0.8.3 il riquadro verde si allargava molto oltre la card.
+  Ogni card entra quando arriva sullo schermo (nella 0.8.3 tutte insieme,
+  anche quelle ancora fuori dallo schermo).
+- Materie prime: niente tratto finale vuoto con la sola scritta.
+- Legenda del menu': non sale con l'animazione.
 - Menu' su telefono: una foto in cima invece delle foto che scorrono.
 - Menu' su tablet e telefono: la descrizione dei piatti si vede sempre; sui
   prezzi ci sono i nomi Tasca, Media, Grande con il loro disegno.
-- Card delle materie prime: entrano con l'animazione di Divi (dal basso),
-  senza rotazione.
-- La scritta in diagonale scorre ma non resta ferma mentre si scorre la
-  pagina.
 - Testata su telefono: barra chiara fissa con il logo bordeaux (prima era
   trasparente sopra il video).
-- Testata su computer: se le voci non stanno su una riga, le ultime vanno
-  su una seconda riga e la barra cresce.
-- Pie' di pagina: due personaggi invece di tre.
+- Pie' di pagina: due personaggi (anche sul sito online se ne vedono due).
 - Domande: quella aperta ha lo stesso bordo delle altre.
 - Orari su telefono: giorni scritti per intero.
 - Etichette delle card: icone di Font Awesome.
 - Le onde tra le sezioni sono immagini: i colori si cambiano con un file
   nuovo, non da Divi.
-
-Per chi modifica
-- I moduli del vecchio tema non esistono piu'.
-- Tutte le classi tp-... della 0.8.3 non hanno piu' effetto: restano solo
-  quelle elencate sopra (con tp-al-passaggio).
+- I moduli e le classi tp-... del vecchio tema non esistono piu'.
 
 
 LIMITI NOTI
 
+- Le foto nuove sono quelle caricate sul sito online, in "dimensioni
+  medie" (640 px di lato): nei riquadri grandi (introduzione, card Tasca o
+  vaschetta aperta) sono ingrandite e un poco morbide. Si sostituiscono da
+  Divi con gli originali.
+- Nel builder la card Tasca o vaschetta e' piu' alta che sul sito, perche'
+  mostra la descrizione sotto le etichette (584 px contro 543).
+- Nel builder la sezione Apertura sta sopra l'hero: sul sito non occupa
+  spazio.
 - Legenda del menu', riquadro Vaschetta: sulle due misure ("Media - 200g",
   "Grande - 400g") cadono i "+" dei riquadri che le contengono. Si
   cliccano all'inizio della scritta, oppure dal pannello Livelli.
-- Titolo "Le cose che finiscono in tasca...": le card gli passano sopra al
-  centro, per disegno. Si clicca all'inizio.
-- La striscia "Street food - Gastronomia..." in vista telefono: il "+"
-  cade al centro della scritta. Si clicca all'inizio o alla fine.
+- Scritta diagonale: nel builder le card le passano sopra al centro, per
+  disegno. Si clicca all'inizio.
 - Con le icone al passaggio del mouse riaccese, sui testi alti una riga la
   barretta copre il testo (succede in ogni sito Divi 5 con pezzi piccoli).
-- Una voce della testata riscritta con il doppio clic viene salvata da Divi
-  dentro un paragrafo: sul sito ha lo stesso aspetto.
-- Aprendo testata o pie' di pagina con un indirizzo diretto, e non dalla
-  matita del Theme Builder, Divi 5.15.1 disegna la pagina sotto le sue
-  barre. Succede anche con il vecchio tema: non dipende da questo.
+- L'apertura si vede a ogni caricamento della home, come nella 0.8.3.
+- Senza JavaScript Divi stesso lascia nascosti alcuni pezzi (la riga
+  dell'hero con il video): era cosi' anche prima.
 
 
 NON PROVATO
@@ -212,3 +243,5 @@ NON PROVATO
 - Il video dell'hero in formato MP4: il browser di prova non lo legge
   (parte la versione WebM). Su iPhone conta l'MP4.
 - Un sito con plugin di cache o di ottimizzazione.
+- L'aggiornamento sul sito online vero: e' stato provato su una copia di
+  un sito 0.8.3 con la home originale, non con la home modificata a mano.
