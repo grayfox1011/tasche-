@@ -95,8 +95,9 @@ Aspetto > Tasche Piene e il sito nuovo viene creato:
 - la home nuova prende l'indirizzo /home/ e diventa la pagina iniziale;
 - la home vecchia resta tra le bozze come "Home (versione precedente)".
   Era fatta con moduli che il tema non ha piu': non si puo' riaprire
-  com'era. I testi cambiati a mano nella vecchia home NON passano nella
-  nuova, che parte dai testi del tema;
+  com'era. La home nuova parte dai testi e dalle foto che erano online
+  l'11 novembre 2026: quello che viene cambiato sul sito DOPO quella data
+  non passa, va riscritto nella home nuova;
 - testata e pie' di pagina del Theme Builder vengono riscritti;
 - Privacy e Cookie Policy create dal tema vengono riscritte; una pagina
   scritta a mano allo stesso indirizzo resta com'e';

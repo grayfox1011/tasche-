@@ -36,8 +36,9 @@ Alla prima pagina di amministrazione WordPress apre *Aspetto > Tasche Piene* e c
 
 - la home nuova prende l'indirizzo `/home/` e diventa la pagina iniziale;
 - la home vecchia resta tra le bozze come *Home (versione precedente)*: era fatta con i moduli
-  che il tema non ha più, quindi non si può riaprire com'era. I testi cambiati a mano nella
-  vecchia home non passano nella nuova, che parte dai testi del tema;
+  che il tema non ha più, quindi non si può riaprire com'era. La home nuova parte dai testi e
+  dalle foto che erano sul sito l'11 novembre 2026: quello che viene cambiato sul sito dopo
+  quella data non passa, va riscritto nella home nuova;
 - testata e piè di pagina del Theme Builder vengono riscritti con moduli Divi;
 - Privacy Policy e Cookie Policy create dal tema vengono riscritte; una pagina scritta a mano
   allo stesso indirizzo resta com'è;
