@@ -9,6 +9,7 @@ WordPress and are changed from Divi: this script is only the way they were first
 {{media:path}} stands for a file of assets/: the import puts it in the Media Library and writes its address.
 """
 import os
+import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -599,10 +600,12 @@ def gallery():
                           at('image.advanced.galleryIds', ids),
                           at('image.advanced.orientation', 'portrait'),
                           at('module.advanced.fullwidth', 'off'),
-                          at('module.advanced.postsNumber', '12'),
+                          # All the photos on one page (the number is "Images per page"): three in a row, two on phones.
+                          at('module.advanced.postsNumber', '15'),
                           at('module.advanced.showTitleAndCaption', 'off'),
-                          at('pagination.advanced.showPagination', 'on'),
-                          at('pagination.decoration.font.font', {'color': CREAM})),
+                          at('pagination.advanced.showPagination', 'off'),
+                          at('galleryGrid.decoration.layout', {'display': 'grid', 'gridColumnCount': R('3', phone='2'),
+                                                              'columnGap': '10px', 'rowGap': '10px'})),
                 ]),
             ], sizing(width='90%', maxWidth='1296px')),
         ],
@@ -739,6 +742,10 @@ def legal(key):
 
 
 def write(name, content):
+    # Every file a page asks for must be in assets/: a wrong name would only show when the site is created.
+    missing = sorted({found for found in re.findall(r'\{\{(?:media|id):([^}]+)\}\}', content)
+                      if not os.path.isfile(os.path.join(ROOT, 'assets', found))})
+    assert not missing, '%s asks for files that are not in assets/: %s' % (name, ', '.join(missing))
     path = os.path.join(ROOT, 'content', name)
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, 'w', encoding='utf8', newline='\n') as handle:

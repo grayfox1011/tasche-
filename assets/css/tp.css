@@ -285,6 +285,25 @@ html.tp-anima body:not(.et-fb) .tp-apertura .et_pb_image {
 	background-position: center bottom;
 }
 
+/* The header waits behind the opening and comes back when the screen starts to lift (tp-scopre, from the
+   script; by itself after six seconds, should the script never come). */
+html.tp-anima:has(.tp-apertura):not(.tp-scopre):not(.tp-aperto) body:not(.et-fb) .tp-testata {
+	opacity: 0;
+	visibility: hidden;
+	animation: tp-apertura-testata .01s linear 6s forwards;
+}
+
+html.tp-anima body:not(.et-fb) .tp-testata {
+	transition: opacity .55s ease;
+}
+
+@keyframes tp-apertura-testata {
+	to {
+		opacity: 1;
+		visibility: visible;
+	}
+}
+
 /* While the opening plays, the titles of the first screen wait for it. */
 html.tp-apre .tp-lettere {
 	animation: none;

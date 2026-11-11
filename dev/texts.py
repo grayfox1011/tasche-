@@ -201,7 +201,7 @@ GALLERY = {'images': ['images/sito/Trippa-dorata-con-verdure-in-padella-dimensio
             'images/sito/Tasche-29-dimensioni-medie.jpeg',
             'images/sito/Tasche-2-dimensioni-medie.jpeg',
             'images/sito/Tasche-11-dimensioni-medie.jpeg',
-            'images/sito/flow-menu-vitello-tonnato.webp',
+            'images/dishes/flow-menu-vitello-tonnato.webp',
             'images/dishes/flow-menu-melanzane.webp',
             'images/dishes/flow-menu-acciughe-stracciatella.webp',
             'images/sito/TASCHE-10-dimensioni-medie-1.jpeg',

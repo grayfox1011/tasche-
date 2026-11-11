@@ -328,7 +328,7 @@
 			window.removeEventListener('wheel', hold);
 			window.removeEventListener('touchmove', hold);
 			root.classList.remove('tp-apre');
-			root.classList.add('tp-aperto');
+			root.classList.add('tp-scopre', 'tp-aperto');
 			lift();
 		};
 		if (!box || !gsap || !root.classList.contains('tp-anima')) { finish(); return; }
@@ -372,7 +372,9 @@
 			if (logo) {
 				timeline.to(pieces[0], { yPercent: 0, duration: 0.62 }, 0.14).to(pieces[1], { yPercent: 0, duration: 0.62 }, 0.20);
 			}
-			timeline.to({}, { duration: 1.18 }, 0.82).to(box, { yPercent: -112, duration: 1, ease: 'power2.inOut' }, 2.0);
+			timeline.to({}, { duration: 1.18 }, 0.82)
+				.add(function () { root.classList.add('tp-scopre'); }, 2.0) // the header comes back under the lifting screen
+				.to(box, { yPercent: -112, duration: 1, ease: 'power2.inOut' }, 2.0);
 			if (logo) {
 				timeline.to(logo, { yPercent: -70, autoAlpha: 0, duration: 0.9, ease: 'power2.inOut' }, 2.0);
 			}
@@ -446,17 +448,23 @@
 			var open = function () { card.classList.add('tp-scheda--aperta'); };
 			var close = function () { card.classList.remove('tp-scheda--aperta'); };
 			if (hover) {
+				// With a mouse: the card under it, or the one reached with the Tab key.
 				card.addEventListener('mouseenter', open);
 				card.addEventListener('mouseleave', close);
+				card.addEventListener('focus', open);
+				card.addEventListener('blur', close);
 			} else {
-				card.addEventListener('click', function () {
+				// With a finger: a tap opens the card, a second tap (or a tap elsewhere) closes it.
+				var toggle = function () {
 					var was = card.classList.contains('tp-scheda--aperta');
 					all.forEach(function (other) { other.classList.remove('tp-scheda--aperta'); });
 					if (!was) { open(); }
+				};
+				card.addEventListener('click', toggle);
+				card.addEventListener('keydown', function (event) {
+					if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); toggle(); }
 				});
 			}
-			card.addEventListener('focus', open);
-			card.addEventListener('blur', close);
 		});
 
 		if (!hover && all.length) {
