@@ -172,6 +172,13 @@ html.tp-ha-testata body:not(.home) #et-main-area {
 	padding-top: calc(var(--tp-testata, 78px) + 12px);
 }
 
+/* A link to a piece of a page, opened from another page (…/#menu): the piece stops under the header and
+   not behind it. (On the same page Divi's own scroll already takes the header into account.) */
+html:has(.tp-testata),
+html.tp-ha-testata {
+	scroll-padding-top: var(--tp-testata, 78px);
+}
+
 /* The sandwich of the header is pressed like a button. */
 .tp-panino .et-pb-icon {
 	cursor: pointer;

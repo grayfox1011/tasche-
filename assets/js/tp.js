@@ -6,7 +6,8 @@
  *   tp-scorre            the words of a Text module run across the screen
  *   tp-lettere           a title comes in letter by letter (GSAP, assets/vendor)
  *   tp-video-telefono    the background video of a section also runs on phones and tablets
- *   tp-testata           the header: its height is told to the page, its menu closes after a tap on a voice
+ *   tp-testata           the header: its height is told to the page, its menu closes after a tap on a voice,
+ *                        a page opened at an anchor (…/#menu) shows the piece under the header
  */
 (function () {
 	'use strict';
@@ -258,6 +259,22 @@
 		measure();
 		window.addEventListener('resize', measure, { passive: true });
 		window.addEventListener('load', measure);
+
+		// A page opened at one of its pieces (…/#menu, from a link on another page): Divi brings the piece to
+		// the very top of the screen, behind the header, because it measures the header only a moment later.
+		// Put it under the header, where the page's scroll-padding says (assets/css/tp.css). With Divi's
+		// "smooth scrolling" on, Divi scrolls later, when it knows the header's height: nothing to do then.
+		var underHeader = function () {
+			if (!window.location.hash || document.body.classList.contains('et_smooth_scroll')) { return; }
+			var target = null;
+			try { target = document.getElementById(decodeURIComponent(window.location.hash.slice(1))); } catch (error) { target = null; }
+			if (target && Math.abs(target.getBoundingClientRect().top) < 2) { target.scrollIntoView(); }
+		};
+		if (document.readyState === 'complete') {
+			window.setTimeout(underHeader, 60);
+		} else {
+			window.addEventListener('load', function () { window.setTimeout(underHeader, 60); });
+		}
 
 		bar.addEventListener('click', function (event) {
 			var voice = event.target.closest ? event.target.closest('.et_pb_group a, .et_pb_group .et_pb_link') : null;

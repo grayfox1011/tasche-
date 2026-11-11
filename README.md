@@ -41,11 +41,16 @@ Alla prima pagina di amministrazione WordPress apre *Aspetto > Tasche Piene* e c
 ## Modificare il sito
 
 - **Home**: *Pagine > Home > Modifica con Divi*.
-- **Testata e piè di pagina**: *Divi > Theme Builder*, modello *Tasche Piene: tutto il sito*
-  (oppure un clic sulla testata o sul piè di pagina mentre si modifica una pagina).
+- **Testata e piè di pagina**: *Divi > Theme Builder*, riquadro *Template Del Sito Web
+  Predefinito*, la matita accanto a *Header Globale* o a *Footer Globale*.
 - **Un testo**: doppio clic sul testo e si scrive. La sezione si allunga o si accorcia da sola.
 - **Un piatto in più**: tasto destro sulla riga del piatto > *Duplica Gruppo*; la copia compare
   subito sotto, con lo stesso aspetto. Lo stesso per una scheda, un orario, una voce.
+- **Una voce in più nella testata**: tasto destro su una voce > *Duplica Collegamento*. Una voce
+  non si spezza mai su due righe: quando le voci sono più di quante la barra ne tiene, le ultime
+  vanno su una seconda riga e la barra cresce. Per riaverle su una riga si riduce lo spazio tra le
+  voci (gruppo *Voci del menù*, scheda *Design*, *Layout*, *Spazio Orizzontale*) o la misura del
+  carattere delle voci.
 - **Una foto**: clic sulla foto > *Contenuto > Immagine*. La foto che compare su un piatto con il
   mouse si vede passando sulla riga.
 - **Colori, caratteri, misure, spazi**: scheda *Design* del modulo. L'icona del dispositivo
@@ -59,12 +64,13 @@ Due preferenze del builder che il tema imposta la prima volta, dove nessuno le a
 
 - i moduli spenti per un dispositivo non vengono disegnati nella vista di quel dispositivo, come
   sul sito (preferenza `hide_disabled_modules`);
-- le icone che Divi mostra al passaggio del mouse (impostazioni, duplica, elimina, "+") partono
-  spente. Sui pezzi piccoli di questo sito, un prezzo, un giorno, una voce, coprono il testo: non
-  si riesce a cliccarlo e un clic può finire su "elimina". Senza icone: doppio clic per scrivere,
-  un clic per le impostazioni, tasto destro per duplicare o eliminare. Si riaccendono dalla barra
-  laterale del builder: *Icone azione al passaggio del mouse* (e *Icone azione del genitore al
-  passaggio del mouse* per quelle delle scatole intorno).
+- la barretta di icone che Divi mostra al passaggio del mouse (sposta, impostazioni, duplica,
+  elimina) parte spenta. Sui pezzi piccoli di questo sito, un prezzo, un giorno, una voce, copre
+  il testo: non si riesce a cliccarlo e un clic può finire su "elimina". Senza barretta: doppio
+  clic per scrivere, un clic per le impostazioni, tasto destro per duplicare o eliminare. Si
+  riaccende dalla barra laterale del builder: *Icone azione al passaggio del mouse* (e *Icone
+  azione del genitore al passaggio del mouse* per quelle delle scatole intorno). Il "+" per
+  aggiungere un modulo resta sempre: i pezzi piccoli sono fatti in modo che non cada sul testo.
 
 ## Gli effetti del tema
 
@@ -79,7 +85,7 @@ Nel Visual Builder gli effetti stanno fermi, per poter scrivere.
 | `tp-piatto` | Gruppo (la riga di un piatto) | Su computer, con il mouse sopra, mostra i moduli al suo interno che hanno `tp-al-passaggio` (foto, descrizione). |
 | `tp-al-passaggio` | Modulo dentro un `tp-piatto` | Vedi sopra. Dove non c'è il mouse (tablet, telefono) resta sempre visibile. |
 | `tp-video-telefono` | Sezione con video di sfondo | Il video parte anche su telefono e tablet (un video semplice prende il posto di quello di Divi, che lì non parte; se il telefono lo blocca, resta l'immagine di sfondo). |
-| `tp-testata` | Sezione della testata | Le pagine diverse dalla home iniziano sotto la testata; su telefono un tocco su una voce chiude il menù. |
+| `tp-testata` | Sezione della testata | Le pagine diverse dalla home iniziano sotto la testata; su telefono un tocco su una voce chiude il menù; una pagina aperta su un'àncora (`…/#menu`, da un link di un'altra pagina) mostra la sezione sotto la testata e non dietro. |
 
 Tutto il resto è Divi: il panino della testata apre e chiude le voci con le *Interazioni* di
 Divi (*Avanzate > Interazioni* dell'icona), le domande sono un modulo Accordion, il video
@@ -126,6 +132,19 @@ Dopo la creazione le pagine vivono in WordPress: `content/` serve solo a un sito
 pagine legali allo stato iniziale.
 
 Nel Visual Builder Divi disegna i suoi strumenti sopra il pezzo sotto il mouse: una barretta in
-alto e un "+" poco sopra il fondo. Un testo corto che riempie da solo la sua scatola finisce
-sotto e non si riesce a cliccare. Per questo i prezzi tengono dentro di sé lo spazio della riga
-(più sotto che sopra) e non stanno in gruppi a loro misura: vedi `price()` in `dev/build.py`.
+alto (24 px) e un "+" largo 40 px al centro, tra 42 e 22 px sopra il fondo del pezzo. Un testo
+corto in una scatola alta una sessantina di pixel finisce proprio sotto il "+" e non si riesce a
+cliccare. Due modi per evitarlo, usati in `dev/build.py`:
+
+- il pezzo tiene dentro di sé lo spazio della riga, più sotto che sopra, così il "+" resta sotto
+  il testo: i prezzi (`price()`), che per questo non stanno in gruppi a loro misura, e giorno e
+  orario di ogni riga degli orari (lì un margine inferiore negativo toglie dall'altezza della riga
+  lo spazio in più, e la riga resta alta come prima);
+- il pezzo è alto solo quanto il suo testo e lo spazio sta nella scatola intorno, così il "+"
+  resta sopra il testo: le voci della testata (lo spazio è nel padding della riga), i nomi dei
+  piatti.
+
+"Non restringere" e "riempi" (flex-shrink, flex-grow) in Divi sono la scelta *Dimensionamento >
+Dimensione* (*Riduci Per Adattare*, *Espandi Per Riempire*, *Personalizzato*) e si salvano nel
+campo `size`: i soli numeri `flexGrow` e `flexShrink` non vengono letti. `sizing()` in
+`dev/divi.py` li scrive nel modo giusto.

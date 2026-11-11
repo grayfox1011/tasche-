@@ -506,7 +506,11 @@ def hours():
     for index, item in enumerate(d['rows']):
         color = GREEN if index % 2 == 0 else BORDEAUX
         style = body_font(R('20px', phone='17px'), color, weight='900', line='1.2em')
-        air = spacing(padding=box(R('28px', phone='20px'), '0px'))
+        # The row's space is inside the two texts, more below than above, and a negative margin of the same
+        # amount takes the extra off the row's height: the row is as high as before, and in the Visual Builder
+        # Divi's "+" (some 30 px above the bottom of the piece under the mouse) lands under the words.
+        air = spacing(padding=box(R('28px', phone='20px'), '0px', R('44px', phone='42px'), '0px'),
+                      margin=box('0px', '0px', R('-16px', phone='-22px'), '0px'))
         rows.append(group('Orario: ' + item['day'], [
             text('Giorno', '<p>%s</p>' % item['day'], air, sizing(flexShrink='0'), **style),
             text('Orario', '<p>%s</p>' % item['hours'], air, sizing(flexGrow='1', minWidth='0px'), **merge(style, {'textAlign': 'right'})),
