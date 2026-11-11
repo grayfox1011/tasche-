@@ -65,9 +65,13 @@
 			copy.setAttribute('aria-hidden', 'true');
 			ribbon.appendChild(copy);
 		}
+		// How fast: data-durata="10" is the seconds the whole text takes to go by once, whatever its length (so
+		// it is slower where the letters are smaller, as in version 0.8.3); or data-velocita="70", pixels a
+		// second; 70 pixels a second when neither is there.
+		var seconds = parseFloat(module.getAttribute('data-durata'));
 		var speed = parseFloat(module.getAttribute('data-velocita')) || 70;
 		module.style.setProperty('--tp-scorre-passo', step + 'px');
-		module.style.setProperty('--tp-scorre-tempo', Math.max(4, step / speed) + 's');
+		module.style.setProperty('--tp-scorre-tempo', (seconds > 0 ? Math.max(1, seconds) : Math.max(4, step / speed)) + 's');
 	}
 
 	function running() {

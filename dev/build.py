@@ -138,8 +138,9 @@ def strip():
         'Striscia che scorre', [
             row('Striscia', [
                 column([
+                    # data-durata: the seconds the whole text takes to go by once (as on the site before this version).
                     text('Scritta che scorre', '<p>%s</p>' % T.STRIP,
-                         attrs(cls='tp-scorre'),
+                         attrs(cls='tp-scorre', data_durata='10'),
                          **display_font(R('22px', phone='13px'), CREAM, line='1.3em')),
                 ]),
             ], FULL),
@@ -450,7 +451,7 @@ def ingredients():
             row('Schede', [
                 column([
                     # tp-scorre: the words run. tp-resta: on computers they stay in view while the cards go by over them.
-                    text('Scritta obliqua che scorre', '<p>%s</p>' % d['marquee'], attrs(cls='tp-scorre tp-resta'), hide_on(phone=True),
+                    text('Scritta obliqua che scorre', '<p>%s</p>' % d['marquee'], attrs(cls='tp-scorre tp-resta', data_durata='5'), hide_on(phone=True),
                          transform(rotate='-4deg'), z_index('1'), spacing(margin=box(R('17vw', tablet='0px'), '-4%', '0px', '-4%')),
                          **display_font(R('clamp(44px, 5vw, 72px)', tablet='40px'), GREEN, line='1.3em')),
                     # tp-carte: the cards come in one by one, a little turned, when they enter the screen.
