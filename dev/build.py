@@ -89,6 +89,11 @@ def picture(name, item, *attributes, rad='20px', **options):
     return image(name, media(item['src']), item.get('alt', ''), *attributes, title=item.get('title') or None, rad=rad, **options)
 
 
+def rise(delay='0ms'):
+    """Design > Animation: the piece comes up into place when it enters the screen."""
+    return animation(style='slide', direction='bottom', duration='800ms', delay=delay, intensity='6%', curve='ease-out')
+
+
 def wave(name, computer, phone):
     """A wave between two sections: one picture for computers and tablets, one for phones."""
     return row(name, [
@@ -114,7 +119,7 @@ def hero():
                     text('Sottotitolo', '<p>%s</p>' % T.HERO_SUBLINE,
                          spacing(margin=box(R('34px', phone='70px'), '0px', '0px', '0px')),
                          **body_font(R('22px', phone='19px'), CREAM, line='1.15em')),
-                ], layout(direction='column', gap=R('34px', phone='24px'), align='flex-start')),
+                ], layout(direction='column', gap=R('34px', phone='24px'), align='stretch')),
             ], WIDE),
         ],
         attrs(id='home', cls='tp-video-telefono'),
@@ -156,7 +161,7 @@ def intro():
                     title('Titolo', d['title'], 'h2', BORDEAUX),
                     copy('Testo', d['html'], BORDEAUX),
                     cta('Pulsante', d['button'], d['button_url'], CREAM, BORDEAUX),
-                ], layout(direction='column', gap=R('28px', phone='22px'), align='flex-start'), spacing(padding=box('0px', R('7%', tablet='0px'), '0px', '0px')),
+                ], layout(direction='column', gap=R('28px', phone='22px'), align='stretch'), spacing(padding=box('0px', R('7%', tablet='0px'), '0px', '0px')),
                     size=R('15_24', tablet='24_24'), name='Colonna testi'),
             ], WIDE, layout(direction=R('row', tablet='column-reverse'), gap=R('9%', tablet='36px'), align=R('center', tablet='stretch'), wrap='nowrap'), columns=2),
         ],
@@ -213,14 +218,14 @@ def chip_list(name, phrases, paper, icons):
     )
 
 
-def choice_card(d, ink, icons):
+def choice_card(d, ink, icons, delay='0ms'):
     return column([
         picture('Foto', d['image'], full=True, aspect=R((600, 341), phone=(7, 4)), rad='12px'),
         title('Nome', d['name'], 'h3', ink, size=R('clamp(26px, 2.5vw, 38px)', phone='20px'), upper_on_phone=False),
         chip_list('Etichette', d['chips'], ink, icons),
         text('Descrizione', d['html'], **body_font(R('16px', phone='15px'), ink, weight='400', line='1.5em')),
     ], background(color=CREAM), border(rad='20px'), spacing(padding=box(R('30px', phone='17px'))),
-        layout(direction='column', gap=R('18px', phone='12px')), size=R('12_24', tablet='24_24'), name='Scheda: ' + d['name'])
+        layout(direction='column', gap=R('18px', phone='12px')), rise(delay), size=R('12_24', tablet='24_24'), name='Scheda: ' + d['name'])
 
 
 def choice():
@@ -236,7 +241,7 @@ def choice():
             ], WIDE, spacing(margin=box(R('-11vw', tablet='-4vw', phone='0px'), 'auto', '0px', 'auto'))),
             row('Schede', [
                 choice_card(d['cards'][0], GREEN, ['&#xf70e;', '&#xf2e7;', '&#xf805;']),
-                choice_card(d['cards'][1], BORDEAUX, ['&#xf24e;', '&#xf4d8;', '&#xf7ec;']),
+                choice_card(d['cards'][1], BORDEAUX, ['&#xf24e;', '&#xf4d8;', '&#xf7ec;'], delay='120ms'),
             ], WIDE, layout(direction=R('row', tablet='column'), gap=R('24px', phone='16px'), align='stretch', wrap='nowrap'), columns=2),
         ],
         attrs(id='come-mangi'),
@@ -253,15 +258,41 @@ CELL_GAP = '8px'
 PRICE = R('20px', tablet='19px', phone='18px')
 
 
-def price_cell(name, value, color, width, drawing=None, tag=None, *attributes):
-    """A price; on tablets and phones, where the legend is not shown, with its drawing and its name."""
-    children = []
-    if drawing:
-        children.append(image(name + ': disegno', media(drawing), '', hide_on(desktop=True), width='42px', align='center', bottom_space=False))
-    if tag:
-        children.append(text(name + ': nome', '<p>%s</p>' % tag, hide_on(desktop=True), **body_font('14px', color, weight='600', line='1.1em', textAlign='center')))
-    children.append(text(name, '<p>%s</p>' % value, **body_font(PRICE, color, weight='900', line='1.1em', textAlign='center')))
-    return group(name, children, sizing(width=width, flexShrink='0'), layout(direction='column', gap='7px', align='center'), *attributes)
+# In the Visual Builder Divi draws its tools over the piece under the mouse: a small bar along the top
+# (24 px) and a "+" in the middle, some 30 px above the bottom. A short text that is all there is in its
+# box ends up under them and cannot be clicked. So a price keeps the row's space inside itself, a little
+# more below than above: the bar sits over it, the "+" under it, the price stays free between the two.
+AIR_ABOVE = R('30px', tablet='0px')
+AIR_BELOW = R('46px', tablet='0px')
+
+
+def price(name, value, color, *attributes):
+    return text(name, '<p>%s</p>' % value, spacing(padding=box(AIR_ABOVE, '0px', AIR_BELOW, '0px')), *attributes,
+                **body_font(PRICE, color, weight='900', line='1.1em', textAlign='center'))
+
+
+def price_table(prices):
+    """Tasca, media and grande: on computers three columns under the legend; on tablets and phones, where
+    the legend is not shown, each price has its drawing and its name above. One grid for both: a row of
+    drawings, a row of names (only tablets and phones), a row of prices."""
+    kinds = [('tasca', 'Tasca', GREEN, 'svg/menu-tasca-icon.svg'), ('media', 'Media', BORDEAUX, 'svg/menu-piatto-m-icon.svg'),
+             ('grande', 'Grande', BORDEAUX, 'svg/menu-piatto-l-icon.svg')]
+    cells = [image('Disegno ' + kind, media(drawing), '', hide_on(desktop=True), width='42px', align='center', bottom_space=False)
+             for kind, _, _, drawing in kinds]
+    cells += [text('Nome ' + kind, '<p>%s</p>' % tag, hide_on(desktop=True), **body_font('14px', color, weight='600', line='1.1em', textAlign='center'))
+              for kind, tag, color, _ in kinds]
+    cells += [price('Prezzo ' + kind, value, color) for (kind, _, color, _), value in zip(kinds, prices)]
+    return group('Prezzi', cells,
+                 at('module.decoration.layout', {
+                     'display': 'grid',
+                     'gridColumnWidths': R('manual', tablet='equal'),
+                     'gridTemplateColumns': '%s %s %s' % (CELL_TASCA, CELL_HALF, CELL_HALF),
+                     'gridColumnCount': '3',
+                     'columnGap': R(CELL_GAP, tablet='0px'),
+                     'rowGap': R('0px', tablet='7px'),
+                     'alignItems': 'center',
+                 }),
+                 sizing(flexShrink='0', width=R('auto', tablet='100%')))
 
 
 def dish(d, table=True):
@@ -270,37 +301,31 @@ def dish(d, table=True):
     if d.get('meta'):
         name.append(text('Descrizione', '<p>%s</p>' % d['meta'], attrs(cls='tp-al-passaggio'),
                          **body_font(R('13px', tablet='14px'), '#5b5348', weight='500', line='1.25em', capitalization=R('uppercase', tablet='none'))))
-    parts = [group('Nome e descrizione', name, layout(direction='column', gap='6px'), sizing(flexGrow='1', flexShrink='1', minWidth='0px'))]
+    # The name stands on the line of the prices (see AIR_ABOVE).
+    parts = [group('Nome e descrizione', name, layout(direction='column', gap='6px', justify='flex-start'), sizing(flexGrow='1', flexShrink='1', minWidth='0px'),
+                   spacing(padding=box(R('29px', tablet='0px'), '0px', R('22px', tablet='0px'), '0px')))]
     if d.get('image'):
         parts.append(image('Foto al passaggio del mouse', media(d['image']), '', attrs(cls='tp-al-passaggio'), hide_on(tablet=True, phone=True),
-                           position('absolute', horizontal='36%', origin='center left'), transform(rotate='8deg'), z_index('20'),
+                           # Its right side stops before the prices, whatever the width of the screen.
+                           position('absolute', horizontal='calc(%s + 2 * %s + 2 * %s + %s + 34px)' % (CELL_TASCA, CELL_HALF, CELL_GAP, SIDE['desktop']), origin='center right'),
+                           transform(rotate='8deg'), z_index('20'),
                            shadow(vertical='18px', blur='40px', color='rgba(62,55,46,0.28)', element='image'),
                            width='clamp(210px, 21vw, 300px)', aspect=(3, 4), rad='10px', bottom_space=False))
     prices = d['prices']
-    if table and len(prices) == 3:
-        cells = [
-            price_cell('Prezzo tasca', prices[0], GREEN, R(CELL_TASCA, tablet='33.33%'), 'svg/menu-tasca-icon.svg', 'Tasca'),
-            price_cell('Prezzo media', prices[1], BORDEAUX, R(CELL_HALF, tablet='33.33%'), 'svg/menu-piatto-m-icon.svg', 'Media'),
-            price_cell('Prezzo grande', prices[2], BORDEAUX, R(CELL_HALF, tablet='33.33%'), 'svg/menu-piatto-l-icon.svg', 'Grande'),
-        ]
-        stacked = True
+    stacked = table and len(prices) == 3
+    if stacked:
+        parts.append(price_table(prices))
     elif table:
         # Only the tasca: its price stays in the tasca's column.
-        cells = [price_cell('Prezzo tasca', prices[0], GREEN, R(CELL_TASCA, tablet='auto'), None, None,
-                            spacing(margin=box('0px', R('calc(2 * %s + 2 * %s)' % (CELL_HALF, CELL_GAP), tablet='0px'), '0px', '0px')))]
-        stacked = False
+        parts.append(price('Prezzo tasca', prices[0], GREEN, sizing(width=R(CELL_TASCA, tablet='auto'), flexShrink='0'),
+                           spacing(margin=box('0px', R('calc(2 * %s + 2 * %s)' % (CELL_HALF, CELL_GAP), tablet='0px'), '0px', '0px'))))
     else:
-        cells = [price_cell('Prezzo', prices[0], d.get('color', GREEN), R(CELL_HALF, tablet='auto'))]
-        stacked = False
-    parts.append(group('Prezzi', cells,
-                       layout(direction='row', gap=R(CELL_GAP, tablet='0px'), align=R('center', tablet='flex-end'), justify='flex-start', wrap='nowrap'),
-                       sizing(flexShrink='0', width=R('auto', tablet='100%') if stacked else 'auto')))
+        parts.append(price('Prezzo', prices[0], d.get('color', GREEN), sizing(width=R(CELL_HALF, tablet='auto'), flexShrink='0')))
     return group(
         'Piatto: ' + d['name'], parts, attrs(cls='tp-piatto'),
         layout(direction=R('row', tablet='column') if stacked else 'row', gap=R('30px', tablet='22px') if stacked else R('30px', tablet='16px'),
-               align=R('center', tablet='stretch') if stacked else 'center', justify='space-between', wrap='nowrap'),
-        spacing(padding=box(R('26px', tablet='22px'), R(SIDE['desktop'], tablet='20px'), R('26px', tablet='22px'), R('53px', tablet='20px'))),
-        sizing(minHeight=R('100px', tablet='0px')),
+               align=R('stretch', tablet='stretch') if stacked else R('stretch', tablet='center'), justify='space-between', wrap='nowrap'),
+        spacing(padding=box(R('0px', tablet='22px'), R(SIDE['desktop'], tablet='20px'), R('0px', tablet='22px'), R('53px', tablet='20px'))),
         background(color=R(CREAM, hover=PAPER, tablet=PAPER)),
         border(rad=R('0px', tablet='18px'), sides={'bottom': {'width': '3px', 'color': LINE}, 'top': {'width': R('0px', tablet='3px'), 'color': LINE},
                                                   'left': {'width': R('0px', tablet='3px'), 'color': LINE}, 'right': {'width': R('0px', tablet='3px'), 'color': LINE}}),
@@ -328,13 +353,11 @@ def legend():
     small = body_font('clamp(14px, 1.39vw, 20px)', CREAM, weight='900', line='1.05em')
     big = display_font('clamp(22px, 2.22vw, 32px)', CREAM, line='1em')
     return group('Legenda', [
-        group('Legenda: tasca', [
-            text('Nome', '<p>%s</p>' % d[0]['name'], **merge(big, {'textAlign': 'center'})),
-            text('Dettaglio', '<p>%s</p>' % d[0]['lines'][0], **merge(small, {'textAlign': 'center'})),
-        ], background(color=GREEN), border(rad='10px'), sizing(width=CELL_TASCA, flexShrink='0'), spacing(padding=box('22px', '6px', '20px', '6px')),
-            layout(direction='column', gap='6px', align='stretch', justify='center')),
+        text('Legenda: tasca', '<h4>%s</h4><p>%s</p>' % (d[0]['name'], d[0]['lines'][0]),
+             background(color=GREEN), border(rad='10px'), sizing(width=CELL_TASCA, flexShrink='0'), spacing(padding=box('24px', '6px', '20px', '6px')),
+             headings={'h4': merge(big, {'textAlign': 'center'})}, **merge(small, {'textAlign': 'center'})),
         group('Legenda: vaschetta', [
-            text('Nome', '<p>%s</p>' % d[1]['name'], **big),
+            text('Nome', '<h4>%s</h4>' % d[1]['name'], spacing(padding=box('21px', '0px', '0px', '0px')), headings={'h4': big}),
             group('Misure', [
                 text('Misura media', '<p>%s</p>' % d[1]['lines'][0], sizing(width='50%'), **small),
                 text('Misura grande', '<p>%s</p>' % d[1]['lines'][1], sizing(width='50%'), **small),
@@ -342,7 +365,7 @@ def legend():
             image('Personaggio', media('svg/mascot-piatto.svg'), '', position('absolute', vertical='46%', horizontal='1.5%', origin='bottom right'),
                   z_index('3'), width='28%', bottom_space=False),
         ], background(color=BORDEAUX), border(rad='10px'), overflow('visible'), sizing(width='calc(2 * %s + %s)' % (CELL_HALF, CELL_GAP), flexShrink='0'),
-            spacing(padding=box('19px', '14px', '20px', '20px')), layout(direction='column', gap='9px', align='stretch', justify='center')),
+            spacing(padding=box('0px', '14px', '20px', '20px')), layout(direction='column', gap='0px', align='stretch', justify='center')),
     ], hide_on(tablet=True, phone=True), layout(direction='row', gap=CELL_GAP, align='stretch', wrap='nowrap'), sizing(flexShrink='0'))
 
 
@@ -431,7 +454,8 @@ def ingredients():
                     text('Scritta obliqua che scorre', '<p>%s</p>' % d['marquee'], attrs(cls='tp-scorre'), hide_on(phone=True),
                          transform(rotate='-4deg'), z_index('1'), spacing(margin=box(R('17vw', tablet='0px'), '-4%', '0px', '-4%')),
                          **display_font(R('clamp(44px, 5vw, 72px)', tablet='40px'), GREEN, line='1.3em')),
-                    group('Schede', [ingredient_card(card, spacing(margin=margin)) for card, margin in zip(cards, stagger)],
+                    group('Schede', [ingredient_card(card, spacing(margin=margin), rise('%dms' % (index * 110)))
+                                     for index, (card, margin) in enumerate(zip(cards, stagger))],
                           z_index('2'), layout(direction='column', gap=R('0px', tablet='20px'), align=R('flex-start', tablet='stretch')),
                           spacing(margin=box(R('-23vw', tablet='28px'), '0px', '0px', '0px'))),
                 ], layout(direction='column', gap='0px', align='stretch')),
@@ -461,7 +485,7 @@ def location():
                         text('Via', '<p>%s</p>' % d['address'], **body_font(COPY, BORDEAUX, weight='700', line='1.3em')),
                     ], layout(direction='row', gap='10px', align='center', wrap='nowrap')),
                     cta('Pulsante', d['button'], d['button_url'], CREAM, BORDEAUX, target='on'),
-                ], layout(direction='column', gap=R('22px', phone='18px'), align='flex-start'), size=R('14_24', tablet='24_24'), name='Colonna testi'),
+                ], layout(direction='column', gap=R('22px', phone='18px'), align='stretch'), size=R('14_24', tablet='24_24'), name='Colonna testi'),
             ], WIDE, layout(direction=R('row', tablet='column-reverse'), gap=R('5%', tablet='28px'), align=R('center', tablet='stretch'), wrap='nowrap'),
                 spacing(padding=box('0px', R('4.5%', tablet='0px'))), columns=2),
         ],
@@ -482,11 +506,12 @@ def hours():
     for index, item in enumerate(d['rows']):
         color = GREEN if index % 2 == 0 else BORDEAUX
         style = body_font(R('20px', phone='17px'), color, weight='900', line='1.2em')
+        air = spacing(padding=box(R('28px', phone='20px'), '0px'))
         rows.append(group('Orario: ' + item['day'], [
-            text('Giorno', '<p>%s</p>' % item['day'], **style),
-            text('Orario', '<p>%s</p>' % item['hours'], **merge(style, {'textAlign': 'right'})),
-        ], *boxed, spacing(padding=box(R('28px', phone='18px'), R('30px', phone='16px')), margin=box('-3px', '0px', '0px', '0px')),
-            layout(direction='row', gap='16px', justify='space-between', align='center', wrap='wrap')))
+            text('Giorno', '<p>%s</p>' % item['day'], air, sizing(flexShrink='0'), **style),
+            text('Orario', '<p>%s</p>' % item['hours'], air, sizing(flexGrow='1', minWidth='0px'), **merge(style, {'textAlign': 'right'})),
+        ], *boxed, spacing(padding=box('0px', R('30px', phone='16px')), margin=box('-3px', '0px', '0px', '0px')),
+            layout(direction='row', gap='16px', justify='space-between', align='center', wrap='nowrap')))
     return section(
         'Orari', [
             row('Orari', [
@@ -563,7 +588,7 @@ def header():
     voices_label = 'Gruppo (Voci del menù)'
     voices = group(
         'Voci del menù',
-        [link('Voce: ' + words, words, '{{url:home}}' + url, sizing(flexShrink='0'),
+        [link('Voce: ' + words, words, '{{url:home}}' + url, sizing(flexShrink='0'), spacing(padding=box(R('21px', tablet='4px'), '0px')),
               **display_font(R('clamp(15px, 1.39vw, 20px)', tablet='22px'), R(BROWN, hover=BORDEAUX), line='1.2em'))
          for words, url in T.NAV],
         # On tablets and phones the voices are hidden (Advanced > Visibility) until the sandwich is pressed.
@@ -572,7 +597,7 @@ def header():
         # The space between the voices grows with the screen: 16 px on a small laptop, 60 px from 1440 px up.
         layout(direction=R('row', tablet='column'), gap=R('clamp(14px, calc(9.5vw - 77px), 60px)', tablet='20px'), align=R('center', tablet='flex-start'), wrap='nowrap'),
         sizing(width=R('auto', tablet='100%'), flexShrink='0'),
-        spacing(padding=box(R('0px', tablet='18px'), '0px', R('0px', tablet='10px'), '0px')),
+        spacing(padding=box(R('0px', tablet='14px'), '0px', R('0px', tablet='10px'), '0px'), margin=box(R('0px', tablet='14px'), '0px', '0px', '0px')),
         border(sides={'top': {'width': R('0px', tablet='2px'), 'color': LINE}}),
     )
     burger = icon(
@@ -597,7 +622,7 @@ def header():
                 ], layout(direction='row', gap=R('32px', tablet='0px'), justify=R('space-between', tablet='space-between'), align='center', wrap=R('nowrap', tablet='wrap'))),
             ], sizing(width=R('calc(100% - 100px)', tablet='calc(100% - 32px)', phone='calc(100% - 24px)'), maxWidth='1432px'),
                 background(color=CREAM), border(rad='15px'),
-                spacing(padding=box(R('20px', tablet='14px'), R('clamp(24px, 3.6vw, 52px)', tablet='20px')))),
+                spacing(padding=box(R('0px', tablet='14px'), R('clamp(24px, 3.6vw, 52px)', tablet='20px')))),
         ],
         attrs(cls='tp-testata'),
         position('fixed', vertical='0px', horizontal='0px', origin='top left'), z_index('9999'), sizing(width='100%'),

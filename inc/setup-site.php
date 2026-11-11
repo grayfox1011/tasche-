@@ -454,6 +454,18 @@ function tp_setup_divi_options(): void {
 	// view. Builder settings > "Nascondi moduli disabilitati" turns it back.
 	$choices['et_fb_pref_hide_disabled_modules'] = 'true';
 
+	// With the mouse over a piece Divi draws its tools on top of it (a bar with settings, duplicate and
+	// delete, and a "+"), and those of every box around it. On the small pieces of this site, a price,
+	// a day, a voice of the menu, the tools cover the text: one cannot click it to write, and a click
+	// meant for the text can land on "delete". So the tools on hover start switched off: a double click
+	// writes in a text, a click opens the settings, the right mouse button duplicates and deletes.
+	// They come back from the builder's side bar: "Icone azione al passaggio del mouse".
+	$choices['et_fb_pref_app.interaction_layers'] = [
+		'actionOnHover'       => false,
+		'parentActionOnHover' => false,
+		'xRay'                => false,
+	];
+
 	foreach ( $choices as $name => $value ) {
 		$current = et_get_option( $name, '' );
 		if ( '' === $current || false === $current || null === $current ) {
@@ -717,6 +729,7 @@ function tp_setup_page(): void {
 			<div class="tp-setup__ready card" <?php echo $done ? '' : 'hidden'; ?>>
 				<h2><?php esc_html_e( 'Il sito è pronto', 'tasche-piene' ); ?></h2>
 				<p><?php esc_html_e( 'La home è in Pagine > Home ed è la pagina iniziale. Testata e piè di pagina sono in Divi > Theme Builder.', 'tasche-piene' ); ?></p>
+				<p><?php esc_html_e( 'Nel builder: doppio clic su un testo per scriverci, un clic su un pezzo per aprirne le impostazioni, tasto destro per duplicare o eliminare (per esempio la riga di un piatto). Le icone che Divi mostra al passaggio del mouse partono spente, perché sui pezzi piccoli coprono il testo: si riaccendono dalla barra laterale del builder, "Icone azione al passaggio del mouse".', 'tasche-piene' ); ?></p>
 				<p>
 					<a class="button button-primary tp-setup__edit" href="<?php echo esc_url( add_query_arg( 'et_fb', '1', $home_url ) ); ?>"><?php esc_html_e( 'Modifica la home con Divi', 'tasche-piene' ); ?></a>
 					<a class="button tp-setup__view" href="<?php echo esc_url( home_url( '/' ) ); ?>" target="_blank" rel="noopener"><?php esc_html_e( 'Vedi il sito', 'tasche-piene' ); ?></a>

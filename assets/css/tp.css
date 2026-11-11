@@ -88,27 +88,27 @@
 	}
 }
 
-/* The menu: what appears with the mouse over a dish (or while one writes in it). Where there is no
-   mouse, nothing is hidden. A text takes its place only while it shows, so the name stays in the
-   middle of its line; a photo fades in over the lines without moving them. */
+/* The menu: what appears with the mouse over a dish (or while one writes in it): the photo and the
+   description. They keep their place when unseen, so nothing moves when they show. Where there is
+   no mouse, nothing is hidden. */
 @media (hover: hover) and (min-width: 981px) {
-	.tp-piatto:not(:hover):not(:focus-within) .tp-al-passaggio:not(.et_pb_image):not(.et-vb-module--is-edited) {
-		display: none;
+	.tp-piatto .tp-al-passaggio {
+		opacity: 0;
+		transition: opacity .25s ease;
 	}
 
-	.tp-piatto .tp-al-passaggio:not(.et_pb_image) {
-		animation: tp-appare .25s ease both;
+	.tp-piatto:hover .tp-al-passaggio,
+	.tp-piatto:focus-within .tp-al-passaggio {
+		opacity: 1;
 	}
 
 	.tp-piatto .et_pb_image.tp-al-passaggio {
-		opacity: 0;
 		visibility: hidden;
 		transition: opacity .25s ease, visibility 0s linear .25s;
 	}
 
 	.tp-piatto:hover .et_pb_image.tp-al-passaggio,
 	.tp-piatto:focus-within .et_pb_image.tp-al-passaggio {
-		opacity: 1;
 		visibility: visible;
 		transition: opacity .25s ease;
 	}
@@ -126,15 +126,8 @@
 	}
 
 	body.et-fb .tp-piatto .tp-al-passaggio.et-vb-module--is-edited {
-		display: flex;
 		opacity: 1;
 		visibility: visible;
-	}
-}
-
-@keyframes tp-appare {
-	from {
-		opacity: 0;
 	}
 }
 
