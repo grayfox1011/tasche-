@@ -39,15 +39,20 @@
  * tp-scorre            a Text module whose words run across the screen (assets/js/tp.js starts it;
  *                      data-velocita="70" in the same Attributes sets the pixels per second)
  * tp-piatto            a row of the menu: on computers, with the mouse over it, it shows the modules
- *                      inside it that have the class tp-al-passaggio (the photo, the description)
+ *                      inside it that have the class tp-al-passaggio (the photo, the description);
+ *                      it comes up, fading in, the first time it enters the screen
+ * tp-entra             any module that must come up in the same way when it is reached
  * tp-lettere           a title that comes in letter by letter the first time it is seen
  * tp-video-telefono    the section whose background video must also run on phones and tablets
  * tp-testata           the header that lies over the top of the page
  * tp-apertura          the section that is the first thing one sees: the logo on a full screen, then the page
  * tp-scheda            a card whose photo (tp-scheda-foto) fills it with the mouse over, while what has
  *                      tp-scheda-nascosto comes up over the photo
- * tp-resta             a piece that stays in view on computers while its section goes by (the diagonal words)
+ * tp-resta             a piece that stays in view on computers while its section goes by (the diagonal words);
+ *                      with tp-scorre on the same module, the running words cross the whole screen
  * tp-carte             a group whose cards come in one by one, a little turned, and light up under the mouse
+ *
+ * And one correction: the waves between the sections (SVG pictures) reach both sides of any screen.
  */
 
 /* The words that run: one line, as wide as it needs, moving left by one copy of the text and again. */
@@ -412,8 +417,16 @@ html.tp-anima .tp-scheda--misura > *::after {
 /*
  * The ingredient cards (class tp-carte on their group). The script brings each card in when it enters the
  * screen. With the mouse over a card its colours are Divi's own "hover" values of the card (background and
- * border); here the words turn light and the card grows a little.
+ * border); here the words turn light, whenever those colours show, and on computers the card grows a little.
  */
+body:not(.et-fb) .tp-carte > * :is(h1, h2, h3, h4, h5, h6, p) {
+	transition: color .5s ease;
+}
+
+body:not(.et-fb) .tp-carte > *:hover :is(h1, h2, h3, h4, h5, h6, p) {
+	color: #fff5e9 !important;
+}
+
 @media (hover: hover) and (min-width: 981px) {
 	body:not(.et-fb) .tp-carte > * {
 		transition: scale .6s cubic-bezier(.22, 1, .36, 1), box-shadow .6s cubic-bezier(.22, 1, .36, 1), background-color .5s ease, border-color .5s ease;
@@ -424,17 +437,72 @@ html.tp-anima .tp-scheda--misura > *::after {
 		scale: 1.05;
 		box-shadow: 0 34px 80px rgba(5, 71, 38, .22);
 	}
+}
 
-	body:not(.et-fb) .tp-carte > * :is(h1, h2, h3, h4, h5, h6, p) {
-		transition: color .5s ease;
+/* Under a finger there is no "mouse over": a card touched while the page is scrolled would take the hover
+   colours and keep them until the next tap elsewhere. On touch screens the cards do not feel the finger
+   (a link written in a card still does). */
+@media (hover: none), (pointer: coarse) {
+	body:not(.et-fb) .tp-carte > * {
+		pointer-events: none;
 	}
 
-	body:not(.et-fb) .tp-carte > *:hover :is(h1, h2, h3, h4, h5, h6, p) {
-		color: #fff5e9 !important;
+	body:not(.et-fb) .tp-carte > * a {
+		pointer-events: auto;
 	}
 }
 
 /* The words that stay in view (tp-resta): the script moves them down as the page goes up. */
 .tp-resta {
 	will-change: translate;
+}
+
+/*
+ * Running words that stay (tp-scorre and tp-resta on the same Text: the tilted line of the ingredients) cross
+ * the whole screen, whatever the width of the row they are in, and a little more: tilted, a line as wide as
+ * the screen would show its two ends. So the width and the left and right margins of this module are set
+ * here and not in Divi (its top margin, its tilt, its font and its colour are Divi's). The section cuts
+ * what goes beyond the screen, so the page never scrolls sideways. In the Visual Builder, where the words
+ * stand still to be written, the module keeps the place Divi gives it and its first letters are in sight.
+ */
+body:not(.et-fb) .et_pb_module.tp-scorre.tp-resta {
+	width: 108vw !important;
+	max-width: none !important;
+	margin-right: 0 !important;
+	margin-left: calc(50% - 54vw) !important;
+}
+
+.et_pb_section:has(.tp-scorre.tp-resta) {
+	overflow-x: hidden;
+	overflow-x: clip;
+}
+
+/* Visual Builder: the cards of the ingredients lie over these words. Where no card covers them, a click
+   reaches the words and not the empty part of the cards' group (which is still reached from its cards). */
+body.et-fb .et_pb_column:has(> .tp-scorre.tp-resta) > .tp-carte {
+	pointer-events: none;
+}
+
+body.et-fb .et_pb_column:has(> .tp-scorre.tp-resta) > .tp-carte > * {
+	pointer-events: auto;
+}
+
+/*
+ * The waves between the sections are SVG pictures with Divi's "Force Fullwidth" on. Divi keeps an SVG at the
+ * width it was drawn (.et_pb_image .et_pb_image_wrap img[src*=".svg"] { width: auto }): on a screen wider
+ * than the drawing (1440 px the computers' one, 390 px the phones' one) the wave stopped before the right
+ * edge. The theme's waves (files named onda-…) follow the width of their frame.
+ */
+.et_pb_image .et_pb_image_wrap img[src*="/onda-"][src*=".svg"] {
+	width: 100%;
+}
+
+/* On paper nothing waits to come in: what the script keeps unseen until it is reached is printed. */
+@media print {
+	.tp-piatto,
+	.tp-entra,
+	.tp-carte > * {
+		opacity: 1 !important;
+		transform: none !important;
+	}
 }

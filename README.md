@@ -1,4 +1,4 @@
-# Tasche Piene, tema figlio di Divi (1.1.0)
+# Tasche Piene, tema figlio di Divi (1.1.1)
 
 Il sito è fatto **solo di moduli Divi**: sezioni, righe, colonne, gruppi, testi, titoli, immagini,
 pulsanti, elenchi con icone, accordion. Misure, spazi, colori, caratteri e disposizione sono nei
@@ -20,6 +20,17 @@ compresa) e riporta gli effetti della 0.8.3: il logo all'apertura della pagina, 
 vaschetta* che si aprono, la scritta diagonale che resta in vista, le card delle materie prime
 che entrano ruotate e si accendono. Sono fatti sui moduli Divi: i contenuti restano in Divi.
 
+La 1.1.1 corregge quattro cose viste sul sito con la 1.1.0, tutte nel tema (CSS e script): basta
+caricare lo zip, le pagine non vengono toccate.
+
+- Le onde tra le sezioni arrivano ai due bordi a ogni larghezza (si fermavano a 1440 px sui
+  computer e a 390 px sui telefoni).
+- Su telefono e tablet le card delle ricette non diventano più verdi al tocco (era il colore del
+  passaggio del mouse, che sotto un dito restava, con i testi scuri).
+- La scritta diagonale attraversa tutto lo schermo a ogni larghezza, come la striscia in alto.
+- Le card del menù e i titoli dei suoi gruppi salgono e compaiono quando si arriva a loro, anche
+  su telefono, come le righe del menù nella 0.8.3.
+
 ## Installare
 
 Servono WordPress 6.5 o successivo, PHP 7.4 o successivo e il tema Divi 5 installato (provato con
@@ -28,6 +39,13 @@ Divi 5.15.1).
 1. *Aspetto > Temi > Aggiungi > Carica tema*: caricare lo zip e attivarlo.
 2. WordPress apre *Aspetto > Tasche Piene*, che crea il sito da sola e mostra a che punto è
    (circa mezzo minuto). Se la pagina non si apre, c'è un avviso con il pulsante *Crea il sito*.
+
+### Aggiornare dalla 1.0.0 o dalla 1.1.0
+
+*Aspetto > Temi > Aggiungi > Carica tema*, lo zip nuovo, *Sostituisci l'attuale con quello
+caricato*. Cambiano solo i file del tema: home, testata, piè di pagina e pagine legali restano
+come sono, con tutte le modifiche fatte in Divi. Poi svuotare la cache del sito, se c'è un
+plugin di cache, e ricaricare la pagina (su telefono: chiuderla e riaprirla).
 
 ### Aggiornare un sito che ha una versione precedente (0.8.3 o più vecchia)
 
@@ -93,18 +111,19 @@ Nel Visual Builder gli effetti stanno fermi, per poter scrivere.
 
 | Classe | Su quale modulo | Cosa fa |
 | --- | --- | --- |
-| `tp-scorre` | Testo | La scritta scorre da destra a sinistra senza interruzione. Attributo `data-velocita` (pixel al secondo, 70 se manca); `data-verso="destra"` per l'altro verso. |
+| `tp-scorre` | Testo | La scritta scorre da destra a sinistra senza interruzione. Attributo `data-durata` (i secondi che il testo impiega a passare una volta) oppure `data-velocita` (pixel al secondo, 70 se mancano tutti e due); `data-verso="destra"` per l'altro verso. |
 | `tp-lettere` | Titolo, o Testo con un titolo dentro | Il titolo entra una lettera dopo l'altra la prima volta che si vede (GSAP). |
-| `tp-piatto` | Gruppo (la riga di un piatto) | Su computer, con il mouse sopra, mostra i moduli al suo interno che hanno `tp-al-passaggio` (foto, descrizione). |
+| `tp-piatto` | Gruppo (la riga di un piatto) | Sale e compare la prima volta che arriva sullo schermo, anche su telefono. Su computer, con il mouse sopra, mostra i moduli al suo interno che hanno `tp-al-passaggio` (foto, descrizione). |
 | `tp-al-passaggio` | Modulo dentro un `tp-piatto` | Vedi sopra. Dove non c'è il mouse (tablet, telefono) resta sempre visibile. |
+| `tp-entra` | Qualunque modulo | Sale e compare la prima volta che arriva sullo schermo, come le card del menù (ce l'hanno i titoli *I nostri contorni*, *I nostri dolci*, *Da bere*). Quelli che entrano insieme si seguono uno dopo l'altro. |
 | `tp-video-telefono` | Sezione con video di sfondo | Il video parte anche su telefono e tablet (un video semplice prende il posto di quello di Divi, che lì non parte; se il telefono lo blocca, resta l'immagine di sfondo). |
 | `tp-testata` | Sezione della testata | Le pagine diverse dalla home iniziano sotto la testata; su telefono un tocco su una voce chiude il menù; una pagina aperta su un'àncora (`…/#menu`, da un link di un'altra pagina) mostra la sezione sotto la testata e non dietro. |
 | `tp-panino` | Icona (il panino della testata) | È il pulsante che `tp-testata` preme per richiudere il menù dopo un tocco su una voce; si usa anche da tastiera (Invio o Spazio). |
 | `tp-apertura` | Sezione (la prima della home) | Sul sito è lo schermo che apre la pagina: il logo sale in due righe, poi lo schermo si alza e si vede la pagina. Nel builder, senza JavaScript o con "meno movimento" chiesto al dispositivo, non c'è nessuno schermo. |
 | `tp-scheda` | Colonna o gruppo (una card) | Con il mouse sopra (un tocco su telefono) la foto con `tp-scheda-foto` riempie la card e si scurisce, nome ed etichette salgono e compare quello che ha `tp-scheda-nascosto`. La card è alta quanto foto, nome ed etichette. |
 | `tp-scheda-foto`, `tp-scheda-nascosto` | Moduli dentro una `tp-scheda` | Vedi sopra. |
-| `tp-resta` | Modulo (la scritta diagonale) | Su computer resta in vista, al 39% dell'altezza dello schermo, mentre la sua sezione scorre; attributo `data-posizione` per un'altra altezza (in percentuale). |
-| `tp-carte` | Gruppo di card | Ogni card entra dal basso, un po' ruotata, quando arriva sullo schermo (ferme su telefono). Con il mouse sopra una card i testi diventano chiari e la card cresce un poco; fondo e bordo al passaggio sono i valori *hover* della card in Divi. |
+| `tp-resta` | Modulo (la scritta diagonale) | Su computer resta in vista, al 39% dell'altezza dello schermo, mentre la sua sezione scorre; attributo `data-posizione` per un'altra altezza (in percentuale). Insieme a `tp-scorre` sullo stesso Testo: sul sito la scritta attraversa tutto lo schermo, e un po' di più perché è inclinata; larghezza e margini sinistro e destro di quel modulo li dà il tema, il resto (margine sopra, inclinazione, carattere, colore) si cambia in Divi. |
+| `tp-carte` | Gruppo di card | Ogni card entra dal basso, un po' ruotata, quando arriva sullo schermo (ferme su telefono). Con il mouse sopra una card i testi diventano chiari e, su computer, la card cresce un poco; fondo e bordo al passaggio sono i valori *hover* della card in Divi. Sugli schermi che si toccano (telefono, tablet) le card non reagiscono al dito: lì il "passaggio del mouse" resterebbe acceso dopo il tocco. |
 
 Tutto il resto è Divi: il panino della testata apre e chiude le voci con le *Interazioni* di
 Divi (*Avanzate > Interazioni* dell'icona), le domande sono un modulo Accordion, la galleria è
@@ -112,7 +131,13 @@ il modulo Galleria, il video dell'hero è lo sfondo video della sezione, la test
 con *Posizione: fissa*.
 
 Le onde tra le sezioni sono immagini (`assets/svg/onda-*.svg`): per cambiarne i colori serve un
-file nuovo.
+file nuovo. Sono SVG con *Forza larghezza intera*: Divi da solo lascia un SVG alla larghezza del
+disegno, il tema fa arrivare ai bordi quelli che si chiamano `onda-…` (un'onda in PNG, WebP o
+JPG arriva ai bordi con la sola opzione di Divi).
+
+Quello che entra allo scorrimento (`tp-piatto`, `tp-entra`, `tp-carte`) aspetta invisibile solo
+finché è sotto lo schermo: senza JavaScript, con "meno movimento" chiesto al dispositivo, in
+stampa e nel builder è sempre visibile.
 
 ## Caratteri
 

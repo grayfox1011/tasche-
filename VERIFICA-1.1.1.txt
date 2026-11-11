@@ -1,4 +1,110 @@
-TASCHE PIENE - VERSIONE 1.1.0
+TASCHE PIENE - VERSIONE 1.1.1
+
+La 1.1.1 corregge quattro cose viste sul sito online con la 1.1.0. Sono
+tutte nei file del tema (assets/css/tp.css, assets/js/tp.js): per averle
+basta caricare lo zip e scegliere "Sostituisci". Home, testata, pie' di
+pagina e pagine legali non vengono toccate, con tutte le modifiche fatte in
+Divi.
+
+1. Onde tagliate.
+   Cosa si vedeva: su un telefono piu' largo di 390 px e su un computer
+   piu' largo di 1440 px l'onda finiva prima del bordo destro, con un
+   taglio netto (a 430 px mancavano 40 px, a 1920 px ne mancavano 480).
+   Perche': le onde sono immagini SVG con "Forza larghezza intera", ma
+   Divi lascia un SVG alla larghezza del disegno (1440 px quello per
+   computer e tablet, 390 quello per telefono).
+   Ora: l'onda e' larga quanto lo schermo a ogni larghezza e cresce in
+   proporzione, come faceva la 0.8.3.
+
+2. Verde sulle card delle ricette, su telefono.
+   Cosa si vedeva: toccando una card mentre si scorre, la card diventava
+   verde con i testi scuri (illeggibili) e restava cosi' fino al tocco
+   successivo altrove.
+   Perche': fondo e bordo verdi sono i colori "al passaggio del mouse"
+   della card in Divi; sotto un dito il passaggio del mouse resta acceso
+   dopo il tocco, e i testi chiari erano previsti solo per i computer.
+   Ora: sugli schermi che si toccano (telefono, tablet) le card non
+   reagiscono al dito. Con il mouse tutto come prima: verde, testi chiari,
+   card al 105%. I testi diventano chiari ogni volta che il verde compare,
+   anche in una finestra stretta.
+
+3. Scritta diagonale su una parte sola dello schermo.
+   Cosa si vedeva: sugli schermi piu' larghi di circa 1550 px la scritta
+   occupava una fascia al centro (1549 px su 1920) e si vedevano le due
+   estremita'; la striscia in alto invece era a tutto schermo.
+   Perche': la scritta stava nella larghezza della sua riga (al massimo
+   1432 px) con un margine negativo del 4% per lato.
+   Ora: attraversa tutto lo schermo a ogni larghezza (108% dello schermo,
+   perche' e' inclinata), su computer e su tablet.
+
+4. Animazioni che su telefono non si vedevano.
+   Nella 0.8.3 le righe del menu' e i titoli dei suoi gruppi salivano e
+   comparivano man mano che si arrivava a loro, anche su telefono; nella
+   1.1.0 erano fermi. Ora le 17 card dei piatti e i tre titoli (I nostri
+   contorni, I nostri dolci, Da bere) lo fanno di nuovo, su ogni schermo.
+   Su telefono restano fermi, come nella 0.8.3: le card delle ricette
+   (entrano ruotate solo da 768 px in su) e la scritta diagonale, che su
+   telefono e' nascosta. Per mostrarla anche li': modulo "Scritta obliqua
+   che scorre" > Avanzate > Visibilita', togliere il telefono. Provata
+   cosi' a 390 px: scorre inclinata sopra la prima card, a tutto schermo,
+   senza sbordi.
+
+Per chi crea il sito da capo (sito nuovo o "Rifai il sito da capo") i
+contenuti sono gli stessi della 1.1.0, con due ritocchi: i tre titoli del
+menu' hanno la classe tp-entra, e la scritta diagonale non ha piu' i
+margini laterali in Divi (ora li da' il tema).
+
+
+VERIFICHE DELLA 1.1.1
+
+Ambiente: WordPress 7.1.3 su SQLite, PHP 8.3, Divi 5.15.1, Chromium, con
+telefoni e tablet emulati (iPhone 14, Pixel 7, iPad Mini: schermo che si
+tocca, nessun mouse).
+
+- I quattro difetti sono stati prima riprodotti sul sito online con la
+  1.1.0, poi cercati di nuovo dopo la correzione.
+- Aggiornamento con il solo zip, caricato dall'amministrazione come si fa a
+  mano ("Sostituisci"), su un sito creato dallo zip della 1.1.0: la pagina
+  di creazione non si riapre, la home ha la stessa data di modifica e lo
+  stesso contenuto di prima (confronto dell'intero testo della pagina), e
+  le quattro correzioni ci sono.
+- Onde: larghe quanto lo schermo a 430, 820, 1440, 1920 e 2560 px (la
+  prima e' alta 140 px a 430, 395 a 1440, 527 a 1920).
+- Card delle ricette: un tocco su iPhone, su Android e su tablet non cambia
+  nulla (prima: fondo verde, testi scuri). Mouse a 1440 px: verde, testi
+  chiari, 105%. Mouse in una finestra di 900 px: verde con testi chiari
+  (prima scuri).
+- Scritta diagonale: a 1920 px va da -78 a 1997 px (prima da 185 a 1734);
+  controllata anche a 768, 820, 1024, 1280, 1440 e 2560 px. Su computer
+  resta ferma al 39% dello schermo mentre le card passano, come prima
+  (misurata a 1440 e a 1920 px).
+- Ingresso di card e titoli del menu', su telefono e su computer: partono
+  quando entrano nello schermo; dopo aver scorso tutta la pagina nessun
+  pezzo resta nascosto e nessuno conserva stili aggiunti. Nessun pezzo
+  resta nascosto nemmeno: con un salto in fondo alla pagina, con la pagina
+  aperta su un'ancora piu' in basso (/#location), con "meno movimento"
+  chiesto al dispositivo, in stampa.
+- Nessuno sbordo orizzontale a 22 larghezze, da 320 a 2560 px.
+- Confronto di tutte le 366 scatole della home, prima e dopo, a 10
+  larghezze: a 360 e 390 px non cambia nulla; da 768 a 1440 px cambia solo
+  la scritta diagonale; a 430, 1920 e 2560 px le onde sono piu' alte e
+  quello che segue scende di conseguenza (29 px in tutto a 430, 222 a
+  1920). Null'altro si e' mosso.
+- Sito creato da capo con i contenuti nuovi: stesse 366 scatole del sito
+  aggiornato con il solo zip, alle stesse 10 larghezze.
+- Secondo sito di prova, quello aggiornato dalla 0.8.3 alla 1.1.0 con le
+  cinque foto caricate a mano. Solo zip: home identica a prima. Poi "Rifai
+  il sito da capo" dalla pagina Aspetto > Tasche Piene: 8 secondi, nessun
+  errore, libreria Media ferma a 65 file (nessun doppione), i tre titoli
+  del menu' con tp-entra; 365 scatole su 365 uguali al sito di sviluppo a
+  390, 1440 e 1920 px, entro 2 px.
+- Visual Builder: sotto il mouse c'e' il testo e non uno strumento di Divi
+  in 128 testi su 128 (vista computer) e 142 su 142 (vista telefono), come
+  nella 1.1.0. La scritta diagonale ora si clicca in tutti i tratti che le
+  card non coprono (prima solo all'inizio).
+
+
+DALLA 1.1.0: QUELLO CHE SEGUE VALE ANCORA
 
 La 1.0.0 ha rifatto il tema da capo: il sito e' fatto solo di moduli Divi
 (sezioni, righe, colonne, gruppi, testi, titoli, immagini, pulsanti,
@@ -55,8 +161,11 @@ COSA FA ANCORA IL TEMA
    tp-scorre          la scritta che scorre (data-durata: i secondi di un
                       giro; data-velocita: pixel al secondo)
    tp-lettere         il titolo che entra lettera per lettera (GSAP)
-   tp-piatto          la riga di un piatto: con il mouse sopra mostra foto
-                      e descrizione (i moduli con tp-al-passaggio)
+   tp-piatto          la riga di un piatto: sale e compare quando si
+                      arriva a lei; con il mouse sopra mostra foto e
+                      descrizione (i moduli con tp-al-passaggio)
+   tp-entra           qualunque modulo che deve salire e comparire allo
+                      stesso modo (i titoli dei gruppi del menu')
    tp-video-telefono  il video di sfondo parte anche su telefono e tablet
    tp-testata         le pagine diverse dalla home iniziano sotto la
                       testata; su telefono un tocco su una voce chiude il
@@ -69,9 +178,13 @@ COSA FA ANCORA IL TEMA
                       il mouse sopra o con un tocco, mentre compare cio'
                       che ha tp-scheda-nascosto
    tp-resta           il pezzo che su computer resta in vista mentre la
-                      sua sezione scorre (la scritta diagonale)
+                      sua sezione scorre (la scritta diagonale); con
+                      tp-scorre sullo stesso modulo la scritta attraversa
+                      tutto lo schermo (larghezza e margini laterali li
+                      da' il tema)
    tp-carte           il gruppo le cui card entrano una alla volta, un po'
-                      ruotate, e si accendono sotto il mouse
+                      ruotate, e si accendono sotto il mouse (non sotto
+                      un dito)
    Nel Visual Builder gli effetti stanno fermi.
 3. Crea il sito la prima volta: home, testata e pie' di pagina nel Theme
    Builder, Privacy Policy e Cookie Policy, immagini e video nella libreria
@@ -88,6 +201,11 @@ INSTALLARE E AGGIORNARE
 
 Sito nuovo: caricare lo zip, attivare. Si apre Aspetto > Tasche Piene, che
 crea il sito e mostra a che punto e' (circa mezzo minuto).
+
+Sito con la 1.0.0 o la 1.1.0: caricare lo zip e scegliere "Sostituisci".
+Cambiano solo i file del tema, le pagine restano come sono. Se il sito ha
+una cache (plugin o hosting) va svuotata; sul telefono la pagina va chiusa
+e riaperta.
 
 Sito con la 0.8.3 o precedente: copia del database, poi caricare lo zip e
 scegliere "Sostituisci". Alla prima pagina di amministrazione si apre
@@ -124,7 +242,7 @@ piccoli (prezzi, orari, voci della testata, nomi dei piatti) sono fatti in
 modo che non cada sulle parole.
 
 
-VERIFICHE FATTE
+VERIFICHE FATTE PER LA 1.1.0
 
 Ambiente: WordPress 7.1.3 su SQLite, PHP 8.3, Divi 5.15.1, Chromium.
 
@@ -200,7 +318,16 @@ DIFFERENZE RIMASTE DALLA 0.8.3
   anche quelle ancora fuori dallo schermo).
 - Materie prime: niente tratto finale vuoto con la sola scritta.
 - Legenda del menu': non sale con l'animazione.
+- Hero: il sottotitolo non entra in dissolvenza dopo il titolo.
 - Menu' su telefono: una foto in cima invece delle foto che scorrono.
+- Menu' su telefono: e' un riquadro chiaro dentro la sezione bordeaux, con
+  un filo bordeaux ai lati, e l'onda viene dopo il menu' (come su
+  computer). Nella 0.8.3, su telefono, il menu' era su fondo chiaro a
+  tutta larghezza e l'onda stava tra le card Tasca o vaschetta e il menu'.
+  E' la differenza che su telefono si nota di piu'; per toglierla vanno
+  cambiati i contenuti (fondo della sezione, larghezza della riga,
+  posto dell'onda per telefono), non il tema.
+- Card delle ricette su telefono: piu' compatte.
 - Menu' su tablet e telefono: la descrizione dei piatti si vede sempre; sui
   prezzi ci sono i nomi Tasca, Media, Grande con il loro disegno.
 - Testata su telefono: barra chiara fissa con il logo bordeaux (prima era
@@ -227,8 +354,21 @@ LIMITI NOTI
 - Legenda del menu', riquadro Vaschetta: sulle due misure ("Media - 200g",
   "Grande - 400g") cadono i "+" dei riquadri che le contengono. Si
   cliccano all'inizio della scritta, oppure dal pannello Livelli.
-- Scritta diagonale: nel builder le card le passano sopra al centro, per
-  disegno. Si clicca all'inizio.
+- Scritta diagonale: nel builder le card le passano sopra, per disegno. Si
+  clicca nei tratti che le card non coprono (dalla 1.1.1 tutti, non solo
+  l'inizio). Sul sito la sua larghezza e i margini laterali li da' il
+  tema: cambiarli in Divi non ha effetto (margine sopra, inclinazione,
+  carattere e colore si').
+- Card delle ricette sugli schermi che si toccano: non reagiscono al dito
+  (nella 0.8.3 un tocco le faceva diventare verdi, con i testi chiari).
+- Onde: seguono la larghezza dello schermo e crescono in proporzione; su
+  uno schermo di 2560 px la prima e' alta 702 px. Solo i file che si
+  chiamano onda-... ; un'onda nuova in SVG con un altro nome resterebbe
+  alla larghezza del disegno (in PNG, WebP o JPG basta "Forza larghezza
+  intera").
+- Card e titoli del menu' aspettano invisibili finche' sono sotto lo
+  schermo: chi salta molto in basso con la barra di scorrimento li trova
+  gia' al loro posto, senza movimento.
 - Con le icone al passaggio del mouse riaccese, sui testi alti una riga la
   barretta copre il testo (succede in ogni sito Divi 5 con pezzi piccoli).
 - L'apertura si vede a ogni caricamento della home, come nella 0.8.3.
@@ -238,11 +378,16 @@ LIMITI NOTI
 
 NON PROVATO
 
-- iPhone e Safari veri, Firefox, Edge.
+- iPhone e Safari veri, Firefox, Edge. Le prove "su telefono" sono fatte
+  con telefoni emulati in Chromium: il riconoscimento dello schermo che si
+  tocca (da cui dipende il verde delle card) e' quello standard dei
+  browser, ma su un telefono vero non e' stato visto.
 - Database MySQL (le prove sono su SQLite).
 - Versioni di Divi diverse dalla 5.15.1.
 - Il video dell'hero in formato MP4: il browser di prova non lo legge
   (parte la versione WebM). Su iPhone conta l'MP4.
 - Un sito con plugin di cache o di ottimizzazione.
-- L'aggiornamento sul sito online vero: e' stato provato su una copia di
-  un sito 0.8.3 con la home originale, non con la home modificata a mano.
+- L'aggiornamento sul sito online vero. Dalla 0.8.3 e' stato provato su
+  una copia di un sito 0.8.3 con la home originale, non con la home
+  modificata a mano; dalla 1.1.0 alla 1.1.1 su un sito di prova creato
+  dallo zip della 1.1.0, non sul sito online.

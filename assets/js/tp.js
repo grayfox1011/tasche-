@@ -12,6 +12,7 @@
  *   tp-scheda            a card whose photo fills it with the mouse over, while its hidden text comes up
  *   tp-resta             a piece that stays in view on computers while its section goes by
  *   tp-carte             a group whose cards come in one by one, a little turned (GSAP)
+ *   tp-piatto, tp-entra  the cards of the menu, and any module with tp-entra, come up when they are reached (GSAP)
  */
 (function () {
 	'use strict';
@@ -530,35 +531,110 @@
 		if (window.ResizeObserver) { new window.ResizeObserver(again).observe(document.body); }
 	}
 
-	/* Cards that come in ---------------------------------------------------------------------------- */
+	/* What comes in when it is reached ---------------------------------------------------------------- */
+
+	// Pieces that wait unseen below the screen and come in the first time they enter it. Each item says where
+	// its piece starts from (from: y, rotate), how long it takes (seconds) and how far behind the one before
+	// it starts when several enter together (gap). Only what is still below the screen waits (unseen, but
+	// there for who listens to the page); what is above it, or is passed by a jump down the page (a link to a
+	// piece further down, a page opened again where it was), is simply there.
+	function bringIn(items, threshold) {
+		var gsap = window.gsap;
+		var waiting = [];
+		var frame = 0;
+		var watch;
+		var ask = function () { if (!frame) { frame = window.requestAnimationFrame(passed); } };
+		var take = function (piece) {
+			for (var i = 0; i < waiting.length; i++) {
+				if (waiting[i].piece === piece) {
+					var item = waiting.splice(i, 1)[0];
+					watch.unobserve(piece);
+					if (!waiting.length) { window.removeEventListener('scroll', ask); }
+					return item;
+				}
+			}
+			return null;
+		};
+		var passed = function () {
+			frame = 0;
+			waiting.slice().forEach(function (item) {
+				if (item.piece.getBoundingClientRect().bottom < 0 && take(item.piece)) { gsap.set(item.piece, { clearProps: 'transform,opacity' }); }
+			});
+		};
+		watch = new window.IntersectionObserver(function (entries) {
+			var together = 0;
+			entries.forEach(function (entry) {
+				var item = entry.isIntersecting ? take(entry.target) : null;
+				if (!item) { return; }
+				var to = {
+					opacity: 1, y: 0, duration: item.seconds, delay: Math.min(together, 8) * item.gap, ease: 'power3.out', overwrite: 'auto',
+					onComplete: function () { gsap.set(item.piece, { clearProps: 'transform,opacity' }); }
+				};
+				if (item.from.rotate) { to.rotate = 0; }
+				gsap.to(item.piece, to);
+				together++;
+			});
+		}, { threshold: threshold });
+
+		items.forEach(function (item) {
+			var box = item.piece.getBoundingClientRect();
+			if (!(box.height > 0) || box.top < window.innerHeight) { return; }
+			var from = { opacity: 0, y: item.from.y };
+			if (item.from.rotate) { from.rotate = item.from.rotate; }
+			gsap.set(item.piece, from);
+			waiting.push(item);
+			watch.observe(item.piece);
+		});
+		if (waiting.length) { window.addEventListener('scroll', ask, { passive: true }); }
+	}
+
+	function moves() {
+		return window.gsap && window.IntersectionObserver && document.documentElement.classList.contains('tp-anima');
+	}
 
 	// The cards of a group with the class tp-carte: each one comes up from below, a little turned (one to the
 	// left, the next to the right), when it enters the screen. As in version 0.8.3; still on phones.
 	function arrive() {
-		var gsap = window.gsap;
-		var root = document.documentElement;
-		if (!gsap || !window.IntersectionObserver || !root.classList.contains('tp-anima')) { return; }
-		if (window.matchMedia && window.matchMedia('(max-width: 767px)').matches) { return; }
-
+		if (!moves() || (window.matchMedia && window.matchMedia('(max-width: 767px)').matches)) { return; }
 		each('.tp-carte', function (group) {
 			if (group.tpCarte) { return; }
 			group.tpCarte = true;
-			var list = Array.prototype.filter.call(group.children, function (card) { return card.getBoundingClientRect().height > 0; });
-			var watch = new window.IntersectionObserver(function (entries) {
-				entries.forEach(function (entry) {
-					if (!entry.isIntersecting) { return; }
-					watch.unobserve(entry.target);
-					gsap.to(entry.target, {
-						autoAlpha: 1, y: 0, rotate: 0, duration: 1.08, ease: 'power3.out', overwrite: 'auto',
-						onComplete: function () { gsap.set(entry.target, { clearProps: 'transform,opacity,visibility' }); }
-					});
-				});
-			}, { threshold: 0.14 });
-			list.forEach(function (card, index) {
-				gsap.set(card, { autoAlpha: 0, y: 96, rotate: index % 2 === 0 ? -2.8 : 2.8 });
-				watch.observe(card);
-			});
+			bringIn(Array.prototype.map.call(group.children, function (card, index) {
+				return { piece: card, from: { y: 96, rotate: index % 2 === 0 ? -2.8 : 2.8 }, seconds: 1.08, gap: 0.11 };
+			}), 0.14);
 		});
+	}
+
+	// The cards of the menu (tp-piatto) and whatever has the class tp-entra come up from a little below, fading
+	// in: on phones too, as the rows of the menu did in version 0.8.3.
+	function enter() {
+		if (!moves()) { return; }
+		var pieces = [];
+		var add = function (piece, y, seconds) {
+			if (piece.tpEntra) { return; }
+			piece.tpEntra = true;
+			pieces.push({ piece: piece, from: { y: y }, seconds: seconds, gap: 0.045 });
+		};
+		each('.tp-entra', function (piece) { add(piece, 52, 1.15); });
+		each('.tp-piatto', function (card) {
+			add(card, 34, 0.95);
+			// A home made with version 1.1.0 has no tp-entra on the titles of the menu's groups ("I nostri
+			// contorni"): they are the group with a title right above a list of dishes (a photo may be between).
+			var list = card.parentNode;
+			if (!list || list.tpEntraTitle) { return; }
+			list.tpEntraTitle = true;
+			var above = list.previousElementSibling;
+			while (above && above.classList.contains('et_pb_image')) { above = above.previousElementSibling; }
+			if (above && above.classList.contains('et_pb_group') && above.querySelector('h1, h2, h3, h4, h5, h6') &&
+				!above.querySelector('.tp-piatto, .tp-lettere')) {
+				above.classList.add('tp-entra');
+				add(above, 52, 1.15);
+			}
+		});
+		if (!pieces.length) { return; }
+		// In the order of the page: those that enter together follow one another from the top.
+		pieces.sort(function (a, b) { return a.piece.compareDocumentPosition(b.piece) & 2 ? 1 : -1; });
+		bringIn(pieces, 0.15);
 	}
 
 	/* Start --------------------------------------------------------------------------------------- */
@@ -570,6 +646,7 @@
 		running();
 		cards();
 		arrive();
+		enter();
 		stay();
 		var fonts = document.fonts && document.fonts.ready ? document.fonts.ready : null;
 		if (fonts) {

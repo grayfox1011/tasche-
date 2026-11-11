@@ -349,7 +349,8 @@ def menu_head(d, color):
         heading('Titolo', d['title'], 'h3', UNDER, **display_font(R('clamp(24px, 2.2vw, 32px)', phone='clamp(26px, 8vw, 34px)'), color, line='1.05em')),
         text('Sottotitolo', '<p>%s</p>' % d['subtitle'], **merge(display_font(R('clamp(24px, 2.2vw, 32px)', tablet='20px'), color, line='1.05em'),
                                                            {'family': R(DISPLAY, tablet=BODY), 'weight': R('400', tablet='700')})),
-    ], layout(direction=R('row', tablet='column'), gap=R('28px', tablet='8px'), justify='space-between', align=R('center', tablet='flex-start'), wrap='wrap'),
+    ], attrs(cls='tp-entra'),  # it comes up when it is reached, as the cards of the menu do
+        layout(direction=R('row', tablet='column'), gap=R('28px', tablet='8px'), justify='space-between', align=R('center', tablet='flex-start'), wrap='wrap'),
         spacing(padding=box(R('96px', tablet='64px', phone='52px'), SIDE, R('38px', tablet='22px'), SIDE)))
 
 
@@ -451,8 +452,9 @@ def ingredients():
             row('Schede', [
                 column([
                     # tp-scorre: the words run. tp-resta: on computers they stay in view while the cards go by over them.
+                    # The two together: the line crosses the whole screen (its width and side margins are the theme's).
                     text('Scritta obliqua che scorre', '<p>%s</p>' % d['marquee'], attrs(cls='tp-scorre tp-resta', data_durata='5'), hide_on(phone=True),
-                         transform(rotate='-4deg'), z_index('1'), spacing(margin=box(R('17vw', tablet='0px'), '-4%', '0px', '-4%')),
+                         transform(rotate='-4deg'), z_index('1'), spacing(margin=box(R('17vw', tablet='0px'), '0px', '0px', '0px')),
                          **display_font(R('clamp(44px, 5vw, 72px)', tablet='40px'), GREEN, line='1.3em')),
                     # tp-carte: the cards come in one by one, a little turned, when they enter the screen.
                     group('Schede', [ingredient_card(card, spacing(margin=margin)) for card, margin in zip(cards, stagger)],
