@@ -42,10 +42,11 @@ Divi 5.15.1).
 
 ### Aggiornare dalla 1.0.0 o dalla 1.1.0
 
-*Aspetto > Temi > Aggiungi > Carica tema*, lo zip nuovo, *Sostituisci l'attuale con quello
-caricato*. Cambiano solo i file del tema: home, testata, piè di pagina e pagine legali restano
-come sono, con tutte le modifiche fatte in Divi. Poi svuotare la cache del sito, se c'è un
-plugin di cache, e ricaricare la pagina (su telefono: chiuderla e riaprirla).
+*Aspetto > Temi > Aggiungi tema > Carica tema*, lo zip nuovo, *Installa ora*, poi *Sostituisci
+il tema installato con quello caricato*. Cambiano solo i file del tema: home, testata, piè di
+pagina e pagine legali restano come sono, con tutte le modifiche fatte in Divi. Non serve
+*Rifai il sito da capo*. Poi svuotare la cache del sito, se c'è un plugin di cache, e
+ricaricare la pagina (su telefono: chiuderla e riaprirla).
 
 ### Aggiornare un sito che ha una versione precedente (0.8.3 o più vecchia)
 
