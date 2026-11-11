@@ -43,6 +43,11 @@
  * tp-lettere           a title that comes in letter by letter the first time it is seen
  * tp-video-telefono    the section whose background video must also run on phones and tablets
  * tp-testata           the header that lies over the top of the page
+ * tp-apertura          the section that is the first thing one sees: the logo on a full screen, then the page
+ * tp-scheda            a card whose photo (tp-scheda-foto) fills it with the mouse over, while what has
+ *                      tp-scheda-nascosto comes up over the photo
+ * tp-resta             a piece that stays in view on computers while its section goes by (the diagonal words)
+ * tp-carte             a group whose cards come in one by one, a little turned, and light up under the mouse
  */
 
 /* The words that run: one line, as wide as it needs, moving left by one copy of the text and again. */
@@ -198,4 +203,219 @@ body.et-fb .theme-builder-area--inactive .tp-testata {
 		position: absolute !important;
 		visibility: hidden !important;
 	}
+}
+
+/*
+ * The opening. A section with the class tp-apertura (the first of the home: a colour and the logo, as any Divi
+ * section) is, on the site, a screen over the whole page: the logo comes up in two lines, then the screen
+ * lifts (assets/js/tp.js). Where nothing moves (no script, "less motion" asked to the device) the section is
+ * simply not there. In the Visual Builder it is a section like the others, so it can be changed.
+ */
+body:not(.et-fb) .tp-apertura {
+	display: none !important;
+}
+
+html.tp-anima body:not(.et-fb) .tp-apertura {
+	position: fixed !important;
+	top: 0;
+	right: 0;
+	bottom: -12vh;
+	left: 0;
+	z-index: 100000;
+	display: flex !important;
+	align-items: center;
+	justify-content: center;
+	width: auto;
+	max-width: none;
+	margin: 0 !important;
+	padding: 0 0 12vh !important;
+	overflow: hidden;
+	border-radius: 0 0 20px 20px;
+	/* If the script never comes, the page shows all the same. */
+	animation: tp-apertura-via .01s linear 6s forwards;
+}
+
+html.tp-anima.tp-aperto body:not(.et-fb) .tp-apertura {
+	display: none !important;
+}
+
+/* The logo of the section waits unseen: the script draws it again as two lines that come up. */
+html.tp-anima body:not(.et-fb) .tp-apertura .et_pb_image {
+	visibility: hidden;
+}
+
+.tp-apertura__logo {
+	position: absolute;
+	pointer-events: none;
+}
+
+.tp-apertura__riga {
+	position: absolute;
+	left: 0;
+	width: 100%;
+	overflow: hidden;
+}
+
+.tp-apertura__riga--su {
+	top: -1.5%;
+	height: 49%;
+}
+
+.tp-apertura__riga--giu {
+	bottom: -1.5%;
+	height: 45%;
+}
+
+.tp-apertura__pezzo {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-repeat: no-repeat;
+	background-size: 100% auto;
+	will-change: transform;
+}
+
+.tp-apertura__riga--su .tp-apertura__pezzo {
+	background-position: center top;
+}
+
+.tp-apertura__riga--giu .tp-apertura__pezzo {
+	background-position: center bottom;
+}
+
+/* While the opening plays, the titles of the first screen wait for it. */
+html.tp-apre .tp-lettere {
+	animation: none;
+}
+
+@keyframes tp-apertura-via {
+	to {
+		visibility: hidden;
+		opacity: 0;
+		pointer-events: none;
+	}
+}
+
+/*
+ * The cards "Tasca o vaschetta" (class tp-scheda on the card). With the mouse over the card, or after a tap
+ * where there is no mouse, its photo (tp-scheda-foto) grows to fill it and darkens, the name and the labels go
+ * up and what has tp-scheda-nascosto (the description) appears under them. The card is as high as its photo,
+ * name and labels: the sizes come from Divi, the script only measures them (assets/js/tp.js adds
+ * tp-scheda--pronta when it has). Without the script, and in the Visual Builder, the description is simply
+ * under the labels.
+ */
+html.tp-anima .tp-scheda--pronta {
+	position: relative;
+	overflow: hidden;
+	isolation: isolate;
+	cursor: pointer;
+}
+
+html.tp-anima .tp-scheda--pronta > * {
+	position: relative;
+	z-index: 2;
+	transition: transform 1.02s cubic-bezier(.22, 1, .36, 1);
+}
+
+html.tp-anima .tp-scheda--pronta > .tp-scheda-foto {
+	z-index: 1;
+	transform-origin: 0 0;
+}
+
+html.tp-anima .tp-scheda--pronta > .tp-scheda-foto::after {
+	content: "";
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	border-radius: inherit;
+	background: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .95) 100%), rgba(0, 0, 0, .2);
+	opacity: 0;
+	transition: opacity .8s cubic-bezier(.22, 1, .36, 1);
+	pointer-events: none;
+}
+
+html.tp-anima .tp-scheda--pronta > .tp-scheda-nascosto {
+	position: absolute;
+	top: calc(100% + var(--tp-scheda-giu, 0px));
+	right: var(--tp-scheda-destra, 30px);
+	left: var(--tp-scheda-sinistra, 30px);
+	width: auto;
+	margin: 0;
+	opacity: 0;
+	transition: transform 1.02s cubic-bezier(.22, 1, .36, 1), opacity .8s cubic-bezier(.22, 1, .36, 1);
+}
+
+html.tp-anima .tp-scheda--pronta :is(h1, h2, h3, h4, h5, h6) {
+	transition: color .5s ease;
+}
+
+/* Open. */
+html.tp-anima .tp-scheda--aperta > * {
+	transform: translate3d(0, calc(-1 * var(--tp-scheda-su, 0px)), 0);
+}
+
+html.tp-anima .tp-scheda--aperta > .tp-scheda-foto {
+	transform: translate3d(var(--tp-scheda-x, 0px), var(--tp-scheda-y, 0px), 0) scale(var(--tp-scheda-s, 1));
+}
+
+html.tp-anima .tp-scheda--aperta > .tp-scheda-foto::after {
+	opacity: 1;
+}
+
+html.tp-anima .tp-scheda--aperta > .tp-scheda-nascosto {
+	transform: translate3d(0, calc(-1 * var(--tp-scheda-fondo, 0px)), 0);
+	opacity: 1;
+}
+
+/* Over the photo the words are light. */
+html.tp-anima .tp-scheda--aperta > :not(.et_pb_icon_list) :is(h1, h2, h3, h4, h5, h6),
+html.tp-anima .tp-scheda--pronta > .tp-scheda-nascosto,
+html.tp-anima .tp-scheda--pronta > .tp-scheda-nascosto :is(p, li, span, a) {
+	color: #fff5e9 !important;
+}
+
+/* While the script takes the measures nothing moves. */
+html.tp-anima .tp-scheda--misura,
+html.tp-anima .tp-scheda--misura > *,
+html.tp-anima .tp-scheda--misura > *::after {
+	transition: none !important;
+}
+
+.tp-scheda:focus-visible {
+	outline: 3px solid #fff;
+	outline-offset: 4px;
+}
+
+/*
+ * The ingredient cards (class tp-carte on their group). The script brings each card in when it enters the
+ * screen. With the mouse over a card its colours are Divi's own "hover" values of the card (background and
+ * border); here the words turn light and the card grows a little.
+ */
+@media (hover: hover) and (min-width: 981px) {
+	body:not(.et-fb) .tp-carte > * {
+		transition: scale .6s cubic-bezier(.22, 1, .36, 1), box-shadow .6s cubic-bezier(.22, 1, .36, 1), background-color .5s ease, border-color .5s ease;
+	}
+
+	body:not(.et-fb) .tp-carte > *:hover {
+		z-index: 5;
+		scale: 1.05;
+		box-shadow: 0 34px 80px rgba(5, 71, 38, .22);
+	}
+
+	body:not(.et-fb) .tp-carte > * :is(h1, h2, h3, h4, h5, h6, p) {
+		transition: color .5s ease;
+	}
+
+	body:not(.et-fb) .tp-carte > *:hover :is(h1, h2, h3, h4, h5, h6, p) {
+		color: #fff5e9 !important;
+	}
+}
+
+/* The words that stay in view (tp-resta): the script moves them down as the page goes up. */
+.tp-resta {
+	will-change: translate;
 }

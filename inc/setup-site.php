@@ -76,7 +76,8 @@ function tp_setup_media_paths(): array {
 	$paths = [];
 
 	foreach ( tp_setup_items() as $item ) {
-		if ( preg_match_all( '/\{\{media:([a-z0-9_.\/-]+)\}\}/i', tp_setup_raw_content( $item['content'] ), $matches ) ) {
+		// {{media:...}} is a file's address in the library, {{id:...}} its number there (a gallery keeps numbers).
+		if ( preg_match_all( '/\{\{(?:media|id):([a-z0-9_.\/-]+)\}\}/i', tp_setup_raw_content( $item['content'] ), $matches ) ) {
 			$paths = array_merge( $paths, $matches[1] );
 		}
 	}
@@ -100,7 +101,54 @@ function tp_setup_attachment_for( string $path ): int {
 		]
 	);
 
-	return $found ? (int) $found[0] : 0;
+	if ( $found ) {
+		return (int) $found[0];
+	}
+
+	return tp_setup_same_file_in_library( $path );
+}
+
+/**
+ * A file somebody already uploaded by hand: same name and same content as the theme's. It is taken as it
+ * is, where it is, instead of loading a second copy (the photos added to the site before this version).
+ */
+function tp_setup_same_file_in_library( string $path ): int {
+	$file = TP_PATH . 'assets/' . $path;
+	$name = wp_basename( $path );
+
+	if ( ! is_readable( $file ) ) {
+		return 0;
+	}
+
+	$candidates = get_posts(
+		[
+			'post_type'      => 'attachment',
+			'post_status'    => 'inherit',
+			'posts_per_page' => 20,
+			'fields'         => 'ids',
+			'no_found_rows'  => true,
+			'meta_query'     => [ // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+				[
+					'key'     => '_wp_attached_file',
+					'value'   => $name,
+					'compare' => 'LIKE',
+				],
+			],
+		]
+	);
+
+	foreach ( $candidates as $id ) {
+		$attached = get_attached_file( (int) $id );
+
+		if ( $attached && wp_basename( $attached ) === $name && is_readable( $attached )
+			&& filesize( $attached ) === filesize( $file ) && md5_file( $attached ) === md5_file( $file ) ) {
+			update_post_meta( (int) $id, TP_MEDIA_META, 'assets/' . $path );
+
+			return (int) $id;
+		}
+	}
+
+	return 0;
 }
 
 /**
@@ -219,9 +267,20 @@ function tp_setup_content( string $name, array $posts ): string {
 		$content = str_replace( $mark, tp_setup_json_text( $value ), $content );
 	}
 
-	return (string) preg_replace_callback(
+	$content = (string) preg_replace_callback(
 		'/\{\{media:([a-z0-9_.\/-]+)\}\}/i',
 		static fn( array $match ): string => tp_setup_json_text( tp_setup_media_url( $match[1] ) ),
+		$content
+	);
+
+	// The number of the file in the library (0 when the library could not take it).
+	return (string) preg_replace_callback(
+		'/\{\{id:([a-z0-9_.\/-]+)\}\}/i',
+		static function ( array $match ): string {
+			tp_setup_media_url( $match[1] );
+
+			return (string) tp_setup_attachment_for( $match[1] );
+		},
 		$content
 	);
 }

@@ -8,6 +8,10 @@
  *   tp-video-telefono    the background video of a section also runs on phones and tablets
  *   tp-testata           the header: its height is told to the page, its menu closes after a tap on a voice,
  *                        a page opened at an anchor (…/#menu) shows the piece under the header
+ *   tp-apertura          the section that opens the page: the logo on a full screen, then the page (GSAP)
+ *   tp-scheda            a card whose photo fills it with the mouse over, while its hidden text comes up
+ *   tp-resta             a piece that stays in view on computers while its section goes by
+ *   tp-carte             a group whose cards come in one by one, a little turned (GSAP)
  */
 (function () {
 	'use strict';
@@ -293,21 +297,277 @@
 		});
 	}
 
+	/* Opening ------------------------------------------------------------------------------------- */
+
+	// The section with the class tp-apertura covers the page when it loads (assets/css/tp.css): its logo comes
+	// up in two lines, as the two words of the name, then the section lifts and the page is there. The times
+	// are those of version 0.8.3. What must wait for the page to be seen (the title that comes in letter by
+	// letter) asks afterOpening().
+	var lifted = true;
+	var waiting = [];
+
+	function afterOpening(callback) {
+		if (lifted) { callback(); } else { waiting.push(callback); }
+	}
+
+	function lift() {
+		if (lifted) { return; }
+		lifted = true;
+		waiting.splice(0).forEach(function (callback) { callback(); });
+	}
+
+	function opening() {
+		var root = document.documentElement;
+		var box = document.querySelector('.tp-apertura');
+		var gsap = window.gsap;
+		var hold = function (event) { event.preventDefault(); };
+		var finished = false;
+		var finish = function () {
+			if (finished) { return; }
+			finished = true;
+			window.removeEventListener('wheel', hold);
+			window.removeEventListener('touchmove', hold);
+			root.classList.remove('tp-apre');
+			root.classList.add('tp-aperto');
+			lift();
+		};
+		if (!box || !gsap || !root.classList.contains('tp-anima')) { finish(); return; }
+
+		lifted = false;
+		root.classList.add('tp-apre');
+		box.setAttribute('aria-hidden', 'true');
+		window.addEventListener('wheel', hold, { passive: false });
+		window.addEventListener('touchmove', hold, { passive: false });
+		window.setTimeout(finish, 5200); // whatever happens, the page shows
+
+		var image = box.querySelector('.et_pb_image img');
+		var started = false;
+		var play = function () {
+			if (started || finished) { return; }
+			started = true;
+			var logo = null;
+			var pieces = [];
+			var rect = image ? image.getBoundingClientRect() : null;
+			if (rect && rect.width > 0 && rect.height > 0) {
+				logo = document.createElement('div');
+				logo.className = 'tp-apertura__logo';
+				logo.style.width = rect.width + 'px';
+				logo.style.height = rect.height + 'px';
+				logo.style.left = ((window.innerWidth - rect.width) / 2) + 'px';
+				logo.style.top = ((window.innerHeight - rect.height) / 2) + 'px';
+				['su', 'giu'].forEach(function (name) {
+					var line = document.createElement('div');
+					var piece = document.createElement('div');
+					line.className = 'tp-apertura__riga tp-apertura__riga--' + name;
+					piece.className = 'tp-apertura__pezzo';
+					piece.style.backgroundImage = 'url("' + (image.currentSrc || image.src) + '")';
+					line.appendChild(piece);
+					logo.appendChild(line);
+					pieces.push(piece);
+				});
+				box.appendChild(logo);
+				gsap.set(pieces, { yPercent: 112 });
+			}
+			var timeline = gsap.timeline({ defaults: { ease: 'power2.out' }, onComplete: finish });
+			if (logo) {
+				timeline.to(pieces[0], { yPercent: 0, duration: 0.62 }, 0.14).to(pieces[1], { yPercent: 0, duration: 0.62 }, 0.20);
+			}
+			timeline.to({}, { duration: 1.18 }, 0.82).to(box, { yPercent: -112, duration: 1, ease: 'power2.inOut' }, 2.0);
+			if (logo) {
+				timeline.to(logo, { yPercent: -70, autoAlpha: 0, duration: 0.9, ease: 'power2.inOut' }, 2.0);
+			}
+			timeline.add(lift, 2.42);
+		};
+		if (image && !image.complete) {
+			image.addEventListener('load', play);
+			image.addEventListener('error', play);
+			window.setTimeout(play, 1500);
+		} else {
+			play();
+		}
+	}
+
+	/* Cards whose photo fills them ------------------------------------------------------------------ */
+
+	// A card with the class tp-scheda: its photo (tp-scheda-foto) and its hidden text (tp-scheda-nascosto) keep
+	// the sizes Divi gives them. Here they are only measured, to know how far the photo must grow to cover the
+	// card and how far the words must go up to make room for the hidden text.
+	function cards() {
+		var root = document.documentElement;
+		if (!root.classList.contains('tp-anima')) { return; }
+		var hover = window.matchMedia && window.matchMedia('(hover: hover)').matches;
+		var all = [];
+
+		each('.tp-scheda', function (card) {
+			var photo = card.querySelector('.tp-scheda-foto');
+			if (!photo || card.tpScheda) { return; }
+			card.tpScheda = true;
+			all.push(card);
+
+			var measure = function () {
+				var open = card.classList.contains('tp-scheda--aperta');
+				card.classList.add('tp-scheda--misura', 'tp-scheda--pronta');
+				card.classList.remove('tp-scheda--aperta');
+				var style = window.getComputedStyle(card);
+				var gap = parseFloat(style.rowGap) || 0;
+				var up = 0;
+				card.style.setProperty('--tp-scheda-sinistra', (parseFloat(style.paddingLeft) || 0) + 'px');
+				card.style.setProperty('--tp-scheda-destra', (parseFloat(style.paddingRight) || 0) + 'px');
+				Array.prototype.forEach.call(card.querySelectorAll('.tp-scheda-nascosto'), function (piece) {
+					piece.style.setProperty('--tp-scheda-giu', up + 'px');
+					up += piece.offsetHeight + gap;
+				});
+				var outer = card.getBoundingClientRect();
+				var inner = photo.getBoundingClientRect();
+				if (!(inner.width > 0 && inner.height > 0)) { card.classList.remove('tp-scheda--misura'); return; }
+				var grow = Math.max(outer.width / inner.width, outer.height / inner.height);
+				card.style.setProperty('--tp-scheda-s', grow.toFixed(4));
+				card.style.setProperty('--tp-scheda-x', ((outer.width - inner.width * grow) / 2 - (inner.left - outer.left)).toFixed(1) + 'px');
+				card.style.setProperty('--tp-scheda-y', ((outer.height - inner.height * grow) / 2 - (inner.top - outer.top)).toFixed(1) + 'px');
+				card.style.setProperty('--tp-scheda-su', up + 'px');
+				card.style.setProperty('--tp-scheda-fondo', (up ? up - gap + (parseFloat(style.paddingBottom) || 0) : 0) + 'px');
+				void card.offsetWidth;
+				card.classList.remove('tp-scheda--misura');
+				if (open) { card.classList.add('tp-scheda--aperta'); }
+			};
+			var frame = 0;
+			var later = function () {
+				window.cancelAnimationFrame(frame);
+				frame = window.requestAnimationFrame(measure);
+			};
+
+			measure();
+			if (window.ResizeObserver) { new window.ResizeObserver(later).observe(card); }
+			window.addEventListener('load', later);
+			if (document.fonts && document.fonts.ready) { document.fonts.ready.then(later); }
+			each('img', function (picture) { if (card.contains(picture) && !picture.complete) { picture.addEventListener('load', later); } });
+
+			if (!card.hasAttribute('tabindex')) { card.setAttribute('tabindex', '0'); }
+			var open = function () { card.classList.add('tp-scheda--aperta'); };
+			var close = function () { card.classList.remove('tp-scheda--aperta'); };
+			if (hover) {
+				card.addEventListener('mouseenter', open);
+				card.addEventListener('mouseleave', close);
+			} else {
+				card.addEventListener('click', function () {
+					var was = card.classList.contains('tp-scheda--aperta');
+					all.forEach(function (other) { other.classList.remove('tp-scheda--aperta'); });
+					if (!was) { open(); }
+				});
+			}
+			card.addEventListener('focus', open);
+			card.addEventListener('blur', close);
+		});
+
+		if (!hover && all.length) {
+			document.addEventListener('click', function (event) {
+				if (event.target.closest && event.target.closest('.tp-scheda')) { return; }
+				all.forEach(function (card) { card.classList.remove('tp-scheda--aperta'); });
+			});
+		}
+	}
+
+	/* What stays in view ---------------------------------------------------------------------------- */
+
+	// A piece with the class tp-resta (the diagonal words of the ingredients): on computers, once its middle
+	// has come to 39% of the screen's height it stays there while the rest of its section goes by, until the
+	// section's end reaches the bottom of the screen. data-posizione="50" changes the 39. The piece is moved
+	// with "translate", which adds itself to the rotation set in Divi.
+	function stay() {
+		var pieces = Array.prototype.slice.call(document.querySelectorAll('.tp-resta'));
+		if (!pieces.length || !('translate' in document.documentElement.style) || !window.matchMedia) { return; }
+		var wide = window.matchMedia('(min-width: 981px)');
+		var places = [];
+		var frame = 0;
+
+		var place = function () {
+			frame = 0;
+			var screen = window.innerHeight;
+			var scrolled = window.pageYOffset;
+			places.forEach(function (item) {
+				if (!wide.matches) { item.piece.style.translate = ''; return; }
+				var pin = screen * item.share;
+				var most = Math.max(0, item.end - screen + pin - item.middle);
+				var move = Math.min(Math.max(scrolled + pin - item.middle, 0), most);
+				item.piece.style.translate = move > 0.5 ? '0 ' + move.toFixed(1) + 'px' : '';
+			});
+		};
+		var measure = function () {
+			places = pieces.map(function (piece) {
+				piece.style.translate = '';
+				var section = (piece.closest && piece.closest('.et_pb_section')) || piece.parentNode;
+				var box = piece.getBoundingClientRect();
+				var share = parseFloat(piece.getAttribute('data-posizione'));
+				return {
+					piece: piece,
+					middle: box.top + box.height / 2 + window.pageYOffset,
+					end: section.getBoundingClientRect().bottom + window.pageYOffset,
+					share: (share > 0 && share < 100 ? share : 39) / 100
+				};
+			});
+			place();
+		};
+		var ask = function () { if (!frame) { frame = window.requestAnimationFrame(place); } };
+		var timer = 0;
+		var again = function () { window.clearTimeout(timer); timer = window.setTimeout(measure, 120); };
+
+		measure();
+		window.addEventListener('scroll', ask, { passive: true });
+		window.addEventListener('resize', again, { passive: true });
+		window.addEventListener('load', again);
+		if (window.ResizeObserver) { new window.ResizeObserver(again).observe(document.body); }
+	}
+
+	/* Cards that come in ---------------------------------------------------------------------------- */
+
+	// The cards of a group with the class tp-carte: each one comes up from below, a little turned (one to the
+	// left, the next to the right), when it enters the screen. As in version 0.8.3; still on phones.
+	function arrive() {
+		var gsap = window.gsap;
+		var root = document.documentElement;
+		if (!gsap || !window.IntersectionObserver || !root.classList.contains('tp-anima')) { return; }
+		if (window.matchMedia && window.matchMedia('(max-width: 767px)').matches) { return; }
+
+		each('.tp-carte', function (group) {
+			if (group.tpCarte) { return; }
+			group.tpCarte = true;
+			var list = Array.prototype.filter.call(group.children, function (card) { return card.getBoundingClientRect().height > 0; });
+			var watch = new window.IntersectionObserver(function (entries) {
+				entries.forEach(function (entry) {
+					if (!entry.isIntersecting) { return; }
+					watch.unobserve(entry.target);
+					gsap.to(entry.target, {
+						autoAlpha: 1, y: 0, rotate: 0, duration: 1.08, ease: 'power3.out', overwrite: 'auto',
+						onComplete: function () { gsap.set(entry.target, { clearProps: 'transform,opacity,visibility' }); }
+					});
+				});
+			}, { threshold: 0.14 });
+			list.forEach(function (card, index) {
+				gsap.set(card, { autoAlpha: 0, y: 96, rotate: index % 2 === 0 ? -2.8 : 2.8 });
+				watch.observe(card);
+			});
+		});
+	}
+
 	/* Start --------------------------------------------------------------------------------------- */
 
 	onReady(function () {
+		opening();
 		header();
 		videos();
 		running();
+		cards();
+		arrive();
+		stay();
 		var fonts = document.fonts && document.fonts.ready ? document.fonts.ready : null;
 		if (fonts) {
 			// The lines of a title are cut with its own font: wait for it, but not for long.
 			var started = false;
-			var go = function () { if (!started) { started = true; running(); letters(); } };
+			var go = function () { if (!started) { started = true; running(); afterOpening(letters); } };
 			fonts.then(go);
 			window.setTimeout(go, 1500);
 		} else {
-			letters();
+			afterOpening(letters);
 		}
 		var timer = 0;
 		var width = window.innerWidth;

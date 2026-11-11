@@ -219,12 +219,15 @@ def chip_list(name, phrases, paper, icons):
 
 
 def choice_card(d, ink, icons, delay='0ms'):
+    # tp-scheda: with the mouse over the card (a tap on phones) the photo (tp-scheda-foto) fills it and what has
+    # tp-scheda-nascosto, the description, comes up over it. In the Visual Builder everything is in view, to be written.
     return column([
-        picture('Foto', d['image'], full=True, aspect=R((600, 341), phone=(7, 4)), rad='12px'),
+        picture('Foto', d['image'], attrs(cls='tp-scheda-foto'), full=True, aspect=R((600, 341), phone=(7, 4)), rad='12px'),
         title('Nome', d['name'], 'h3', ink, size=R('clamp(26px, 2.5vw, 38px)', phone='20px'), upper_on_phone=False),
         chip_list('Etichette', d['chips'], ink, icons),
-        text('Descrizione', d['html'], **body_font(R('16px', phone='15px'), ink, weight='400', line='1.5em')),
-    ], background(color=CREAM), border(rad='20px'), spacing(padding=box(R('30px', phone='17px'))),
+        text('Descrizione (compare al passaggio del mouse)', d['html'], attrs(cls='tp-scheda-nascosto'),
+             **body_font(R('16px', phone='15px'), ink, weight='400', line='1.5em')),
+    ], attrs(cls='tp-scheda'), background(color=CREAM), border(rad='20px'), spacing(padding=box(R('30px', phone='17px'))),
         layout(direction='column', gap=R('18px', phone='12px')), rise(delay), size=R('12_24', tablet='24_24'), name='Scheda: ' + d['name'])
 
 
@@ -424,7 +427,7 @@ def ingredient_card(d, *attributes):
         heading('Titolo', d['title'], 'h3', **display_font(R('clamp(19px, 1.67vw, 24px)', tablet='24px', phone='22px'), BORDEAUX, line='1em', textAlign='center')),
         text('Testo', '<p>%s</p>' % d['text'], sizing(maxWidth='300px', alignSelf='center'),
              **body_font(R('16px', phone='15px'), '#353535', line='1.3em', textAlign='center')),
-    ], background(color=PAPER), border(rad='20px', width='3px', color=LINE),
+    ], background(color=R(PAPER, hover=GREEN)), border(rad='20px', width='3px', color=R(LINE, hover=GREEN)),
         spacing(padding=box(R('44px', phone='28px'), '18px', R('40px', phone='30px'), '18px')),
         layout(direction='column', gap='10px', align='stretch'),
         sizing(width=R('clamp(280px, 27vw, 383px)', tablet='100%')), *attributes)
@@ -443,23 +446,19 @@ def ingredients():
     return section(
         'Materie prime', [
             wave('Onda', 'svg/onda-bordeaux-crema.svg', 'svg/onda-bordeaux-crema-telefono.svg'),
-            row('Titolo e testo', [
-                column([
-                    title('Titolo', d['title'], 'h2', GREEN, capitalization='uppercase', upper_on_phone=False),
-                    copy('Testo', d['html'], GREEN),
-                ], layout(direction='column', gap=R('20px', phone='18px')), sizing(maxWidth='900px')),
-            ], WIDE, spacing(padding=box(R('70px', phone='20px'), '0px', '0px', R('7%', tablet='0px')))),
             row('Schede', [
                 column([
-                    text('Scritta obliqua che scorre', '<p>%s</p>' % d['marquee'], attrs(cls='tp-scorre'), hide_on(phone=True),
+                    # tp-scorre: the words run. tp-resta: on computers they stay in view while the cards go by over them.
+                    text('Scritta obliqua che scorre', '<p>%s</p>' % d['marquee'], attrs(cls='tp-scorre tp-resta'), hide_on(phone=True),
                          transform(rotate='-4deg'), z_index('1'), spacing(margin=box(R('17vw', tablet='0px'), '-4%', '0px', '-4%')),
                          **display_font(R('clamp(44px, 5vw, 72px)', tablet='40px'), GREEN, line='1.3em')),
-                    group('Schede', [ingredient_card(card, spacing(margin=margin), rise('%dms' % (index * 110)))
-                                     for index, (card, margin) in enumerate(zip(cards, stagger))],
+                    # tp-carte: the cards come in one by one, a little turned, when they enter the screen.
+                    group('Schede', [ingredient_card(card, spacing(margin=margin)) for card, margin in zip(cards, stagger)],
+                          attrs(cls='tp-carte'),
                           z_index('2'), layout(direction='column', gap=R('0px', tablet='20px'), align=R('flex-start', tablet='stretch')),
                           spacing(margin=box(R('-23vw', tablet='28px'), '0px', '0px', '0px'))),
                 ], layout(direction='column', gap='0px', align='stretch')),
-            ], WIDE),
+            ], WIDE, spacing(padding=box(R('40px', tablet='20px'), '0px', '0px', '0px'))),
         ],
         attrs(id='materie'),
         background(color=CREAM),
@@ -570,8 +569,51 @@ def faq():
     )
 
 
+def opening():
+    """The first thing one sees: the logo on a full screen, then the page. On the site the theme turns this section
+    into that screen (class tp-apertura); in the Visual Builder it is a section like the others, to change the
+    logo or the colour. Without the class, or without the section, the page opens at once."""
+    return section(
+        'Apertura: il logo che si vede all\'inizio (solo sul sito)', [
+            row('Logo', [
+                column([
+                    image('Logo', media('svg/logo-tasche-piene.svg'), 'Tasche Piene', width=R('clamp(220px, 31.95vw, 483px)'), align='center',
+                          bottom_space=False),
+                ], layout(direction='column', align='center')),
+            ], WIDE),
+        ],
+        attrs(cls='tp-apertura'),
+        background(color=CREAM),
+        spacing(padding=box(R('60px', phone='40px'), '0px')),
+    )
+
+
+def gallery():
+    """The photos at the end of the page: Divi's own Gallery module (Content > Images to add, remove or sort them)."""
+    ids = ','.join('{{id:%s}}' % path for path in T.GALLERY['images'])
+    return section(
+        'Galleria', [
+            row('Galleria', [
+                column([
+                    block('divi/gallery', label('Galleria di foto'),
+                          at('image.advanced.galleryIds', ids),
+                          at('image.advanced.orientation', 'portrait'),
+                          at('module.advanced.fullwidth', 'off'),
+                          at('module.advanced.postsNumber', '12'),
+                          at('module.advanced.showTitleAndCaption', 'off'),
+                          at('pagination.advanced.showPagination', 'on'),
+                          at('pagination.decoration.font.font', {'color': CREAM})),
+                ]),
+            ], sizing(width='90%', maxWidth='1296px')),
+        ],
+        attrs(id='galleria'),
+        background(color='#315431'),
+        spacing(padding=box('54px', '0px')),
+    )
+
+
 def home():
-    return document([hero(), strip(), intro(), alberto(), choice(), menu(), ingredients(), location(), hours(), faq()])
+    return document([opening(), hero(), strip(), intro(), alberto(), choice(), menu(), ingredients(), location(), hours(), faq(), gallery()])
 
 
 # ---------------------------------------------------------------------------------------------

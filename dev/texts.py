@@ -1,4 +1,5 @@
-"""The words and pictures of the site as first written (taken from the home of version 0.8.3).
+"""The words and pictures of the site as first written: taken from the home of version 0.8.3 as it was online
+on 11 November 2026, with the texts and the photos changed there by hand.
 
 After the import they live in WordPress and are changed from Divi.
 """
@@ -9,49 +10,55 @@ HERO_BUTTON = 'Guarda il menù'
 
 HERO_SUBLINE = 'Street food · Gastronomia · Genova Centro Storico'
 
-STRIP = ('Fatto nel laboratorio, ogni mattina · Stoccafisso alla ligure · Trippe accomodate · Polpette al sugo · Le acciughe di Luciano · Anche senza '
- 'glutine · Gastronomia o Street Food')
+STRIP = ('Gastronomia o Street Food · Fatto nel laboratorio, ogni mattina · Anche senza glutine · Stoccafisso alla ligure · Trippe accomodate · Polpette al '
+ 'sugo')
 
-INTRO = {'image': {'src': 'images/intro/fig-intro-alberto-impasto.webp',
+INTRO = {'image': {'src': 'images/sito/Tasche-3-dimensioni-medie.jpeg',
            'alt': 'Alberto prepara il ripieno nel laboratorio di Tasche Piene',
            'title': 'Alberto al lavoro'},
  'title': 'Tasche piene di qualcosa di buono',
- 'html': '<p>Un’idea di Davide e Alberto, imprenditori genovesi che di stare con le mani in mano non sono capaci.</p>\n'
-         '<p>Genova ha un centro storico che molte città si sognano. Ogni anno diventa più bella e più curata… ma un po’ meno sé stessa. I locali si '
-         'moltiplicano, le insegne si assomigliano tutte, i menù cominciano sempre con «street food» e finiscono con «concept». Di quella musica lì, '
-         'ne abbiamo le tasche piene.</p>\n'
-         '<p>Ogni mattina nel nostro laboratorio cuociono le polpette nel sugo, lo stocco, la trippa, i ripieni liguri. Li mettiamo in tasca ancora '
-         'caldi: il sugo inzuppa il pane e ogni morso è una scarpetta.</p>',
- 'button': 'Le materie prime',
+ 'html': '<p>I caruggi si riempiono di locali con insegne tutte uguali. Davide e Alberto hanno scelto una strada diversa: riportare nel centro '
+         'storico la <b>cucina delle case genovesi</b>.</p>\n'
+         '<p>Nel laboratorio di Via di Scurreria le pentole si accendono presto. Polpette morbide, stoccafisso accomodato, trippa e verdure ripiene '
+         'cuociono con i tempi giusti, <b>senza semilavorati o cibi riscaldati</b>.</p>\n'
+         '<p>La tasca racchiude i piatti della tradizione in un pane croccante che raccoglie il sugo: effetto scarpetta assicurato! Un pranzo '
+         'completo a partire da <b>5,50 €</b>, pensato per chi lavora in zona, per chi abita nel quartiere e per chi passa da Piazza San Lorenzo per '
+         'la prima volta.</p>',
+ 'button': 'Le ricette più iconiche',
  'button_url': '#materie'}
 
-ALBERTO = {'title': 'Cucinato ogni mattina nel nostro laboratorio, tutto senza glutine',
- 'html': '<p>Da Tasche Piene è come una volta: profumo di sugo, cucina fresca ogni mattina e le acciughe di Luciano, il papà di Davide. Tutte le '
-         'nostre ricette sono senza glutine: niente farina e niente pangrattato, nemmeno nel polpettone. Usiamo teglie chiuse e separate, ma la '
-         'cucina è una sola. Il consiglio? Passate al banco, ne parliamo a voce!</p>',
- 'photo_main': {'src': 'images/intro/fig-alberto-pentola.webp', 'alt': 'Il ripieno preparato nella pentola', 'title': ''},
+ALBERTO = {'title': 'Cuciniamo tutto noi ed è (quasi) tutto senza glutine',
+ 'html': '<p>Tutte le ricette del banco sono prive di farina e pangrattato. Anche le polpette al sugo — impastate con amido di mais — e il '
+         'polpettone sono <b>100% senza glutine</b>.</p>\n'
+         '<p>Proponiamo due versioni della tasca, classica e senza glutine. Entrambe restano croccanti e raccolgono bene il sugo. Il pane senza '
+         'glutine è confezionato singolarmente e viene scaldato in un <b>forno dedicato</b>. La cucina è una sola, ma usiamo <b>teglie chiuse e '
+         'separate</b> per evitare contaminazioni.</p>\n'
+         '<p>In caso di celiachia, segnalalo allo staff al banco prima di ordinare oppure <b>indicatelo chiaramente nelle note del tuo ordine '
+         'delivery</b>.</p>\n'
+         '<p>Per informazioni dettagliate su ingredienti e preparazioni, puoi chiamarci o passare direttamente in locale.</p>',
+ 'photo_main': {'src': 'images/sito/TASCHE-22-1-dimensioni-medie.jpeg', 'alt': '', 'title': ''},
  'photo_sub': {'src': 'images/dishes/flow-menu-pomodoro-mozzarella-pesto.webp', 'alt': 'Alberto con una teglia di pomodori', 'title': ''}}
 
 SCELTA = {'title_html': 'Tasca ripiena o vaschetta.<br />Mangi qui o dove vuoi tu!',
- 'cards': [{'image': {'src': 'images/dishes/flow-choice-tasca.webp', 'alt': 'La tasca ripiena', 'title': ''},
+ 'cards': [{'image': {'src': 'images/sito/dolce-e-salata-tasca-composizione-dimensioni-medie.jpeg', 'alt': 'La tasca ripiena', 'title': ''},
             'name': 'La tasca ripiena',
             'chips': ['Tra pinsa e panino', 'Il sugo inzuppa la mollica', 'È come fare la scarpetta'],
             'html': '<p>Anche senza glutine, dolci comprese: le scaldiamo in una vaschetta chiusa. La cucina è una sola, se hai la celiachia dillo '
                     'al banco.</p>'},
-           {'image': {'src': 'images/dishes/flow-choice-piatto.webp', 'alt': 'La vaschetta', 'title': ''},
+           {'image': {'src': 'images/sito/TASCHE-22-1-dimensioni-medie.jpeg', 'alt': 'La vaschetta', 'title': ''},
             'name': 'La vaschetta',
             'chips': ['Media da 200 g o grande da 400 g', 'Con un contorno incluso', 'Il pane croccante, se vuoi, a parte'],
             'html': '<p>Stesse ricette, nel piatto: tanto sugo, contorno e pane croccante per la scarpetta. Arriva anche a casa con Deliveroo e Just '
                     'Eat.</p>'}]}
 
-MENU = {'title': 'Il nostro menù',
+MENU = {'title': 'Il menù',
  'legend': [{'name': 'TASCA', 'lines': ['Di pane ripiena']}, {'name': 'VASCHETTA', 'lines': ['Media - 200g', 'Grande - 400g']}],
  'feature': [{'src': 'images/dishes/fig-menu-feature.webp', 'alt': 'Piatto di ripieni alla genovese', 'title': ''},
              {'src': 'images/dishes/flow-menu-tiramisu.webp', 'alt': 'Tiramisù in tasca', 'title': ''}],
  'dishes': [{'name': 'MELANZANA ALLA PARMIGIANA',
              'prices': ['5,50€', '6,00€', '9,00€'],
              'meta': 'Strati di melanzana, sugo e formaggio filante',
-             'image': 'images/dishes/flow-menu-melanzane.webp'},
+             'image': 'images/sito/Panino-rustico-con-melanzane-e-parmigiano-dimensioni-medie.jpeg'},
             {'name': 'RIPIENI LIGURI DI STAGIONE',
              'prices': ['5,50€', '6,00€', '9,00€'],
              'meta': 'Zucchina, cipolla, peperone. Cambia con la stagione',
@@ -63,35 +70,38 @@ MENU = {'title': 'Il nostro menù',
             {'name': 'POLLO ALLA LIGURE, OLIVE TAGGIASCHE, PINOLI',
              'prices': ['6,50€', '7,50€', '10,50€'],
              'meta': 'Pollo in umido, sughetto di olive e pinoli',
-             'image': 'images/dishes/flow-menu-pollo-ligure.webp'},
-            {'name': 'TRIPPA - MARTEDÌ E VENERDÌ',
+             'image': 'images/sito/Panino-rustico-ligure-con-pollo-e-olive-dimensioni-medie.jpeg'},
+            {'name': 'TRIPPA',
              'prices': ['7,50€', '7,50€', '10,50€'],
              'meta': 'Quella genovese, con le trippe della Tripperia La Casana. Max 10-12 porzioni',
-             'image': 'images/dishes/flow-menu-trippa.webp'},
-            {'name': 'STOCCAFISSO - TUTTI I GIORNI',
+             'image': 'images/sito/Panino-rustico-con-trippa-e-formaggio-dimensioni-medie.jpeg'},
+            {'name': 'STOCCAFISSO',
              'prices': ['7,50€', '7,50€', '10,50€'],
              'meta': 'Ricetta tradizionale ligure. Max 10-12 porzioni',
-             'image': 'images/dishes/flow-menu-stoccafisso.webp'},
+             'image': 'images/sito/Stocafisso-alla-ligure-dimensioni-medie.jpeg'},
             {'name': 'CAPRESE, PESTO GENOVESE, BUFALA',
              'prices': ['5,50€', '6,00€', '9,00€'],
              'meta': 'Pomodoro fresco, stracciatella e pesto',
-             'image': 'images/dishes/flow-menu-pomodoro-mozzarella-pesto.webp'},
-            {'name': 'LE ACCIUGHE DI LUCIANO + STRACCIATELLA',
+             'image': 'images/sito/Panino-rustico-caprese-al-pesto-dimensioni-medie.jpeg'},
+            {'name': 'ACCIUGHE + STRACCIATELLA',
              'prices': ['6,50€', '7,50€', '10,50€'],
              'meta': 'Olive, capperi e ricetta di Luciano',
-             'image': 'images/dishes/flow-menu-acciughe-stracciatella.webp'},
-            {'name': 'SALSICCIA, ALLORO E PEPERONI CONFIT',
-             'prices': ['7,50€'],
-             'meta': 'IN ROTAZIONE · PULLED PORK, CAVOLO VIOLA E MAYO SPICY',
-             'image': 'images/dishes/flow-menu-proposta-mese.webp'}],
+             'image': 'images/sito/Pane-Croccante-con-Burrata-e-Acciuga-dimensioni-medie.jpeg'},
+            {'name': 'VITELLO TONNATO', 'prices': ['7,50€'], 'meta': 'COTTO A BASSA TEMPERATURA'}],
  'groups': [{'title': 'I nostri contorni',
              'subtitle': 'Cosa ci vuoi vicino?',
-             'rows': [{'name': 'PATATE AL FORNO', 'prices': ['1,50€'], 'image': 'images/dishes/flow-menu-patate.webp'},
-                      {'name': 'VERDURE AL FORNO', 'prices': ['1,50€'], 'image': 'images/dishes/flow-menu-verdure.webp'}]},
+             'rows': [{'name': 'PATATE AL FORNO', 'prices': ['1,50€']}, {'name': 'VERDURE AL FORNO', 'prices': ['1,50€']}]},
             {'title': 'I nostri dolci',
              'subtitle': 'Finiscila bene',
-             'rows': [{'name': 'TIRAMISÙ IN TASCA', 'prices': ['4,50€'], 'image': 'images/dishes/flow-menu-tiramisu.webp'},
-                      {'name': 'Strudel di mele', 'prices': ['4,50€']}]},
+             'rows': [{'name': 'TIRAMISÙ IN TASCA',
+                       'prices': ['4,50€'],
+                       'image': 'images/sito/tasca-ripiena-dolce-anche-gluten-free-tiramisu-genova-dimensioni-medie.jpeg'},
+                      {'name': 'NUTELLA',
+                       'prices': ['4,50€'],
+                       'image': 'images/sito/Taschetta-di-pane-ripiena-di-crema-alle-nocciole-dimensioni-medie.jpeg'},
+                      {'name': 'STRUDEL DI MELE',
+                       'prices': ['4,50€'],
+                       'image': 'images/sito/Tasca-dolce-anche-gluten-free-strudel-di-mele-dimensioni-medie.jpeg'}]},
             {'title': 'Da bere',
              'subtitle': 'Hai sete?',
              'rows': [{'name': 'ACQUA', 'prices': ['1,00€']},
@@ -111,14 +121,7 @@ MENU = {'title': 'Il nostro menù',
                'title': 'Tasche Piene su Deliveroo',
                'url': 'https://deliveroo.it/it/menu/genova/genova-centro/tasche-piene-genova-centro'}]}
 
-MATERIE = {'title': 'Non sono principi astratti, sono scelte.',
- 'html': '<p>Ogni cosa che vedi nel banco è il risultato di una scelta precisa. Non compriamo pronto, non riscaldiamo per rivendere: se è nel banco, '
-         "qualcuno l'ha cucinato quella mattina. Polpette, stocco, trippa, ripieni liguri: ricette che si cucinano da quando Genova è Genova. Noi "
-         'non le abbiamo reinventate, le abbiamo solo messe in tasca.</p>\n'
-         "<p>Siamo in piazza San Lorenzo, centro storico vero. Un posto senza età, senza fretta, senza liste d'attesa per chi lavora qui vicino, per "
-         'chi abita nel quartiere, per chi capita nei caruggi per la prima volta.<br>5,50 € per un pasto vero: né un euro di meno, né uno di più del '
-         'necessario.</p>',
- 'marquee': 'Le cose che finiscono in tasca',
+MATERIE = {'marquee': 'Le cose che finiscono in tasca',
  'cards': [{'image': {'src': 'images/materie-prime/polpette.webp', 'alt': 'Polpette pronte per il sugo', 'title': ''},
             'title': 'Le ormai celebri polpette',
             'text': "Ricetta del papà di Davide, con l'amido al posto del pane: morbide, nel sugo da scarpetta."},
@@ -126,7 +129,7 @@ MATERIE = {'title': 'Non sono principi astratti, sono scelte.',
             'title': 'I ripieni liguri',
             'text': 'Verdure di stagione svuotate, riempite e passate in forno fino alla crosticina.'},
            {'image': {'src': 'images/materie-prime/melanzane.webp', 'alt': 'Melanzane alla parmigiana', 'title': ''},
-            'title': 'Tutto senza glutine',
+            'title': '(quasi) tutto senza glutine',
             'text': 'Niente farina né pangrattato, nemmeno nel polpettone. Hai la celiachia? Chiedi al banco.'},
            {'image': {'src': 'images/materie-prime/spuma.webp', 'alt': 'Una bottiglia di spuma', 'title': ''},
             'title': 'Spumette a bicchiere',
@@ -191,6 +194,22 @@ FAQ = {'title': 'Informazioni utili',
             'html': "<p>Chiedi al banco: sappiamo cosa c'è in ogni ricetta perché la facciamo noi. La lista degli allergeni è esposta in negozio e "
                     'sul menù qui sopra.</p>'}]}
 
+# The photos of the gallery at the end of the home, in their order.
+GALLERY = {'images': ['images/sito/Trippa-dorata-con-verdure-in-padella-dimensioni-medie.jpeg',
+            'images/sito/Mortadella-e-stracciatella-dimensioni-medie.jpeg',
+            'images/sito/Tasche-48-dimensioni-medie.jpeg',
+            'images/sito/Tasche-29-dimensioni-medie.jpeg',
+            'images/sito/Tasche-2-dimensioni-medie.jpeg',
+            'images/sito/Tasche-11-dimensioni-medie.jpeg',
+            'images/sito/flow-menu-vitello-tonnato.webp',
+            'images/dishes/flow-menu-melanzane.webp',
+            'images/dishes/flow-menu-acciughe-stracciatella.webp',
+            'images/sito/TASCHE-10-dimensioni-medie-1.jpeg',
+            'images/sito/TASCHE-11-1-dimensioni-medie.jpeg',
+            'images/sito/TASCHE-25-dimensioni-medie-1.jpeg',
+            'images/sito/TASCHE-22-1-dimensioni-medie.jpeg',
+            'images/sito/TASCHE-8-dimensioni-medie-1.jpeg']}
+
 # The legal pages. {{url:...}} are the addresses of the pages, {{date}} the day the page is created.
 LEGAL = {'privacy': {'slug': 'privacy-policy',
              'title': 'Privacy Policy',
@@ -254,11 +273,7 @@ LEGAL = {'privacy': {'slug': 'privacy-policy',
             'back': '<p><a href="{{url:home}}">Torna alla home</a> · <a href="{{url:privacy}}">Privacy Policy</a></p>'}}
 
 # Header and footer.
-NAV = [('La nostra idea', '#chi-siamo'),
- ('Il menù', '#menu'),
- ('Senza glutine', '#materie'),
- ('Domande', '#faq'),
- ('Dove siamo', '#location')]
+NAV = [('La nostra idea', '#chi-siamo'), ('Il menù', '#menu'), ('Senza glutine', '#materie'), ('Domande', '#faq'), ('Dove siamo', '#location')]
 
 FOOTER = {'left': [('MENÙ', '#menu'), ('DOVE SIAMO', '#location'), ('SU DI NOI', '#chi-siamo')],
  'right': [('TORNA SÙ', '#home', 'off'), ('FACEBOOK', 'https://facebook.com', 'on'), ('INSTAGRAM', 'https://instagram.com', 'on')],
