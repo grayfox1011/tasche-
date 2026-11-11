@@ -96,6 +96,53 @@ add_filter( 'style_loader_src', 'tp_filter_google_fonts_stylesheet', 20, 2 );
 add_filter( 'et_builder_google_fonts_get_url', 'tp_google_fonts_url_without_local', 20 );
 
 /**
- * Divi lists its fonts for the pickers from Google's catalogue: the two fonts are there already.
- * Nothing to add; the files are declared in assets/css/tp.css under the same names.
+ * Is a Google font other than the theme's two still asked for by this page?
  */
+function tp_google_fonts_still_needed(): bool {
+	$styles = wp_styles();
+
+	foreach ( (array) $styles->queue as $handle ) {
+		$src = $styles->registered[ $handle ]->src ?? '';
+
+		if ( is_string( $src ) && false !== strpos( $src, 'fonts.googleapis.com' ) && '' !== tp_google_fonts_url_without_local( $src ) ) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+/**
+ * No early contact with Google's servers when nothing is loaded from them.
+ *
+ * @param array  $urls     Addresses the browser is told to get ready for.
+ * @param string $relation dns-prefetch, preconnect...
+ * @return array
+ */
+function tp_filter_google_resource_hints( $urls, $relation ) {
+	if ( ! in_array( $relation, [ 'dns-prefetch', 'preconnect' ], true ) || tp_google_fonts_still_needed() ) {
+		return $urls;
+	}
+
+	return array_values(
+		array_filter(
+			(array) $urls,
+			static function ( $url ): bool {
+				$href = is_array( $url ) ? (string) ( $url['href'] ?? '' ) : (string) $url;
+
+				return false === strpos( $href, 'fonts.googleapis.com' ) && false === strpos( $href, 'fonts.gstatic.com' );
+			}
+		)
+	);
+}
+add_filter( 'wp_resource_hints', 'tp_filter_google_resource_hints', 20, 2 );
+
+/**
+ * Divi prints a "preconnect" to Google's font server on every page before it knows which fonts the
+ * page asks for: taken away, since the site's own fonts do not come from there. (Divi adds its
+ * hook after this file is read: it is taken away just before it would run.)
+ */
+function tp_remove_divi_google_preconnect(): void {
+	remove_action( 'wp_enqueue_scripts', 'et_builder_preconnect_google_fonts', 9 );
+}
+add_action( 'wp_enqueue_scripts', 'tp_remove_divi_google_preconnect', 1 );

@@ -262,22 +262,36 @@ function tp_setup_find_post( string $key, array $item ): int {
 }
 
 /**
- * The home of the theme before 1.0.0, or any other page at /home/: kept as a draft under another address.
+ * The home of the theme before 1.0.0 (its modules were the theme's own, and are gone), and any other
+ * page at /home/: kept as drafts, so the new home takes the address and the front of the site.
  */
 function tp_setup_put_aside_old_home(): void {
-	$post = get_page_by_path( 'home', OBJECT, 'page' );
-	if ( ! $post instanceof WP_Post || '1' === get_post_meta( $post->ID, '_tp_content', true ) ) {
-		return;
+	$old = [];
+
+	$at_home = get_page_by_path( 'home', OBJECT, 'page' );
+	if ( $at_home instanceof WP_Post ) {
+		$old[] = $at_home;
 	}
 
-	wp_update_post(
-		[
-			'ID'          => $post->ID,
-			'post_name'   => 'home-versione-precedente',
-			'post_title'  => $post->post_title . ' (versione precedente)',
-			'post_status' => 'draft',
-		]
-	);
+	$front = get_post( (int) get_option( 'page_on_front' ) );
+	if ( $front instanceof WP_Post && 'page' === $front->post_type && '1' === get_post_meta( $front->ID, '_tp_child_seed_managed', true ) ) {
+		$old[] = $front;
+	}
+
+	foreach ( $old as $post ) {
+		if ( '1' === get_post_meta( $post->ID, '_tp_content', true ) || 'draft' === get_post_status( $post->ID ) ) {
+			continue;
+		}
+
+		wp_update_post(
+			[
+				'ID'          => $post->ID,
+				'post_name'   => 'home-versione-precedente',
+				'post_title'  => $post->post_title . ' (versione precedente)',
+				'post_status' => 'draft',
+			]
+		);
+	}
 }
 
 function tp_setup_save_post( string $key, array $item, array $posts ): int {
@@ -690,7 +704,8 @@ function tp_setup_page(): void {
 	$home_id   = (int) ( $state['posts']['home'] ?? 0 );
 	$home_url  = $home_id ? (string) get_permalink( $home_id ) : home_url( '/' );
 	$autostart = ! $done && ! empty( $_GET['tp_start'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-	$old_home  = get_page_by_path( 'home-versione-precedente', OBJECT, 'page' );
+	$old_homes = get_posts( [ 'post_type' => 'page', 'post_status' => 'draft', 'name' => 'home-versione-precedente', 'posts_per_page' => 1, 'no_found_rows' => true ] );
+	$old_home  = $old_homes ? $old_homes[0] : null;
 	$bar       = 'max-width:520px;height:12px;margin:12px 0 8px;background:#dcdcde;border-radius:6px;overflow:hidden';
 	$fill      = 'display:block;width:0;height:100%;background:#2271b1;border-radius:6px;transition:width .4s ease';
 	?>

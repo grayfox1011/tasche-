@@ -156,8 +156,9 @@ def intro():
                     title('Titolo', d['title'], 'h2', BORDEAUX),
                     copy('Testo', d['html'], BORDEAUX),
                     cta('Pulsante', d['button'], d['button_url'], CREAM, BORDEAUX),
-                ], layout(direction='column', gap=R('28px', phone='22px'), align='flex-start'), size=R('15_24', tablet='24_24'), name='Colonna testi'),
-            ], WIDE, layout(direction=R('row', tablet='column-reverse'), gap=R('8%', tablet='36px'), align=R('center', tablet='stretch'), wrap='nowrap'), columns=2),
+                ], layout(direction='column', gap=R('28px', phone='22px'), align='flex-start'), spacing(padding=box('0px', R('7%', tablet='0px'), '0px', '0px')),
+                    size=R('15_24', tablet='24_24'), name='Colonna testi'),
+            ], WIDE, layout(direction=R('row', tablet='column-reverse'), gap=R('9%', tablet='36px'), align=R('center', tablet='stretch'), wrap='nowrap'), columns=2),
         ],
         attrs(id='chi-siamo'),
         background(color=CREAM),
@@ -174,7 +175,7 @@ def alberto():
                     title('Titolo', d['title'], 'h2', GREEN),
                     copy('Testo', d['html'], GREEN),
                 ], layout(direction='column', gap=R('26px', phone='20px')), spacing(padding=box('0px', '0px', '0px', R('5%', tablet='0px'))),
-                    size=R('14_24', tablet='24_24'), name='Colonna testi'),
+                    size=R('15_24', tablet='24_24'), name='Colonna testi'),
                 column([
                     picture('Foto in alto', d['photo_sub'], transform(rotate=R('7deg', phone='0deg')), z_index('3'),
                             width=R('62%', phone='100%'), aspect=R((348, 245), phone=(3, 2)),
@@ -182,8 +183,8 @@ def alberto():
                     picture('Foto in basso', d['photo_main'], transform(rotate=R('-5deg', phone='0deg')),
                             width=R('92%', phone='100%'), aspect=R((522, 368), phone=(3, 2)), rad=R('16px', phone='18px')),
                 ], layout(direction=R('column', phone='column-reverse'), gap=R('0px', phone='10px'), align=R('flex-start', phone='stretch')),
-                    size=R('10_24', tablet='24_24'), name='Colonna foto'),
-            ], WIDE, layout(direction=R('row', tablet='column'), gap=R('5%', tablet='32px'), align=R('center', tablet='stretch'), wrap='nowrap'), columns=2),
+                    size=R('9_24', tablet='24_24'), name='Colonna foto'),
+            ], WIDE, layout(direction=R('row', tablet='column'), gap=R('3%', tablet='32px'), align=R('center', tablet='stretch'), wrap='nowrap'), columns=2),
         ],
         background(color=CREAM),
         spacing(padding=box(R('60px', phone='40px'), '0px', R('70px', phone='40px'), '0px')),
@@ -232,7 +233,7 @@ def choice():
                     text('Titolo', '<h2>%s</h2>' % d['title_html'], attrs(cls='tp-lettere'),
                          headings={'h2': display_font(BIG, WHITE, line=R('1.1em', phone='1.02em'))}),
                 ]),
-            ], WIDE, spacing(padding=box(R('10px', phone='0px'), '0px', '0px', '0px'))),
+            ], WIDE, spacing(margin=box(R('-11vw', tablet='-4vw', phone='0px'), 'auto', '0px', 'auto'))),
             row('Schede', [
                 choice_card(d['cards'][0], GREEN, ['&#xf70e;', '&#xf2e7;', '&#xf805;']),
                 choice_card(d['cards'][1], BORDEAUX, ['&#xf24e;', '&#xf4d8;', '&#xf7ec;']),
@@ -414,7 +415,7 @@ def ingredients():
         box('0px', '0px', '0px', R('17.5%', tablet='0px')),
         box(R('-17vw', tablet='0px'), '0px', '0px', R('65%', tablet='0px')),
         box(R('5vw', tablet='0px'), '0px', '0px', R('15%', tablet='0px')),
-        box(R('7vw', tablet='0px'), '0px', '0px', R('52%', tablet='0px')),
+        box(R('9vw', tablet='0px'), '0px', '0px', R('10%', tablet='0px')),
     ]
     return section(
         'Materie prime', [
@@ -462,7 +463,7 @@ def location():
                     cta('Pulsante', d['button'], d['button_url'], CREAM, BORDEAUX, target='on'),
                 ], layout(direction='column', gap=R('22px', phone='18px'), align='flex-start'), size=R('14_24', tablet='24_24'), name='Colonna testi'),
             ], WIDE, layout(direction=R('row', tablet='column-reverse'), gap=R('5%', tablet='28px'), align=R('center', tablet='stretch'), wrap='nowrap'),
-                spacing(padding=box('0px', R('7%', tablet='0px'))), columns=2),
+                spacing(padding=box('0px', R('4.5%', tablet='0px'))), columns=2),
         ],
         attrs(id='location'),
         background(color=CREAM),
@@ -562,13 +563,15 @@ def header():
     voices_label = 'Gruppo (Voci del menù)'
     voices = group(
         'Voci del menù',
-        [link('Voce: ' + words, words, '{{url:home}}' + url, **display_font(R('clamp(15px, 1.39vw, 20px)', tablet='22px'), R(BROWN, hover=BORDEAUX), line='1.2em'))
+        [link('Voce: ' + words, words, '{{url:home}}' + url, sizing(flexShrink='0'),
+              **display_font(R('clamp(15px, 1.39vw, 20px)', tablet='22px'), R(BROWN, hover=BORDEAUX), line='1.2em'))
          for words, url in T.NAV],
         # On tablets and phones the voices are hidden (Advanced > Visibility) until the sandwich is pressed.
         hide_on(tablet=True, phone=True),
         {'module': {'decoration': {'interactionTarget': voices_id}}},
-        layout(direction=R('row', tablet='column'), gap=R('clamp(22px, 4.1vw, 60px)', tablet='20px'), align=R('center', tablet='flex-start'), wrap='nowrap'),
-        sizing(width=R('auto', tablet='100%')),
+        # The space between the voices grows with the screen: 16 px on a small laptop, 60 px from 1440 px up.
+        layout(direction=R('row', tablet='column'), gap=R('clamp(14px, calc(9.5vw - 77px), 60px)', tablet='20px'), align=R('center', tablet='flex-start'), wrap='nowrap'),
+        sizing(width=R('auto', tablet='100%'), flexShrink='0'),
         spacing(padding=box(R('0px', tablet='18px'), '0px', R('0px', tablet='10px'), '0px')),
         border(sides={'top': {'width': R('0px', tablet='2px'), 'color': LINE}}),
     )
@@ -587,7 +590,8 @@ def header():
         'Testata', [
             row('Barra', [
                 column([
-                    image('Logo', media('svg/logo-tasche-piene-line.svg'), 'Tasche Piene', link='{{url:home}}', width=R('clamp(150px, 14.3vw, 206px)', tablet='168px'), bottom_space=False),
+                    image('Logo', media('svg/logo-tasche-piene-line.svg'), 'Tasche Piene', sizing(flexShrink='0'), link='{{url:home}}',
+                          width=R('clamp(150px, 14.3vw, 206px)', tablet='168px'), bottom_space=False),
                     burger,
                     voices,
                 ], layout(direction='row', gap=R('32px', tablet='0px'), justify=R('space-between', tablet='space-between'), align='center', wrap=R('nowrap', tablet='wrap'))),
