@@ -32,7 +32,10 @@ BODY = 'DM Sans'
 # The page is as wide as the screen less a margin on each side, up to 1432 px.
 WIDE = sizing(width=R('calc(100% - 92px)', tablet='calc(100% - 64px)', phone='calc(100% - 32px)'), maxWidth='1432px')
 FULL = sizing(width='100%', maxWidth='100%')
+WIDTH_NARROW = R('calc(100% - 92px)', tablet='calc(100% - 64px)', phone='calc(100% - 32px)')
 ARROW = {'unicode': '&#x26;', 'type': 'divi', 'weight': '400'}
+# Divi leaves 10 px under every title: taken back where a title sits beside something else.
+UNDER = spacing(margin=box('0px', '0px', '-10px', '0px'))
 
 
 def media(path):
@@ -262,7 +265,7 @@ def price_cell(name, value, color, width, drawing=None, tag=None, *attributes):
 
 def dish(d, table=True):
     """table=True: the three prices of tasca, media and grande; False: one price on the right."""
-    name = [heading('Nome', d['name'], 'h3', **body_font(R('20px', tablet='18px', phone='16px'), '#000000', weight='900', line='1.15em', capitalization='uppercase'))]
+    name = [heading('Nome', d['name'], 'h3', UNDER, **body_font(R('20px', tablet='18px', phone='16px'), '#000000', weight='900', line='1.15em', capitalization='uppercase'))]
     if d.get('meta'):
         name.append(text('Descrizione', '<p>%s</p>' % d['meta'], attrs(cls='tp-al-passaggio'),
                          **body_font(R('13px', tablet='14px'), '#5b5348', weight='500', line='1.25em', capitalization=R('uppercase', tablet='none'))))
@@ -312,10 +315,10 @@ def dish_list(name, dishes, table=True, color=GREEN):
 
 def menu_head(d, color):
     return group('Titolo: ' + d['title'], [
-        heading('Titolo', d['title'], 'h3', **display_font(R('clamp(24px, 2.2vw, 32px)', phone='clamp(26px, 8vw, 34px)'), color, line='1.05em')),
+        heading('Titolo', d['title'], 'h3', UNDER, **display_font(R('clamp(24px, 2.2vw, 32px)', phone='clamp(26px, 8vw, 34px)'), color, line='1.05em')),
         text('Sottotitolo', '<p>%s</p>' % d['subtitle'], **merge(display_font(R('clamp(24px, 2.2vw, 32px)', tablet='20px'), color, line='1.05em'),
                                                            {'family': R(DISPLAY, tablet=BODY), 'weight': R('400', tablet='700')})),
-    ], layout(direction=R('row', tablet='column'), gap=R('28px', tablet='8px'), justify='space-between', align=R('flex-end', tablet='flex-start'), wrap='wrap'),
+    ], layout(direction=R('row', tablet='column'), gap=R('28px', tablet='8px'), justify='space-between', align=R('center', tablet='flex-start'), wrap='wrap'),
         spacing(padding=box(R('96px', tablet='64px', phone='52px'), SIDE, R('38px', tablet='22px'), SIDE)))
 
 
@@ -335,9 +338,9 @@ def legend():
                 text('Misura media', '<p>%s</p>' % d[1]['lines'][0], sizing(width='50%'), **small),
                 text('Misura grande', '<p>%s</p>' % d[1]['lines'][1], sizing(width='50%'), **small),
             ], layout(direction='row', gap='0px', align='flex-start', wrap='nowrap')),
-            image('Personaggio', media('svg/mascot-piatto.svg'), '', position('absolute', vertical='-62%', horizontal='4%', origin='top right'),
+            image('Personaggio', media('svg/mascot-piatto.svg'), '', position('absolute', vertical='46%', horizontal='1.5%', origin='bottom right'),
                   z_index('3'), width='28%', bottom_space=False),
-        ], background(color=BORDEAUX), border(rad='10px'), sizing(width='calc(2 * %s + %s)' % (CELL_HALF, CELL_GAP), flexShrink='0'),
+        ], background(color=BORDEAUX), border(rad='10px'), overflow('visible'), sizing(width='calc(2 * %s + %s)' % (CELL_HALF, CELL_GAP), flexShrink='0'),
             spacing(padding=box('19px', '14px', '20px', '20px')), layout(direction='column', gap='9px', align='stretch', justify='center')),
     ], hide_on(tablet=True, phone=True), layout(direction='row', gap=CELL_GAP, align='stretch', wrap='nowrap'), sizing(flexShrink='0'))
 
@@ -346,19 +349,21 @@ def menu():
     d = T.MENU
     panel = [
         group('Testata del menù', [
-            heading('Titolo', d['title'], 'h2', attrs(cls='tp-lettere'), sizing(flexGrow='1', maxWidth=R('7.4em', tablet='100%')),
+            heading('Titolo', d['title'], 'h2', attrs(cls='tp-lettere'), sizing(flexGrow='1', flexShrink='1', minWidth='0px'),
                     **display_font(BIG, R(BROWN, tablet=BORDEAUX), line='1.02em')),
             legend(),
-        ], layout(direction='row', gap='32px', justify='space-between', align='flex-end', wrap='wrap'),
+        ], layout(direction='row', gap='32px', justify='space-between', align='flex-end', wrap=R('nowrap', tablet='wrap')),
             spacing(padding=box('0px', SIDE, R('50px', tablet='24px'), SIDE))),
-        picture('Foto (tablet e telefono)', d['feature'][0], hide_on(desktop=True), full=True, aspect=(358, 322), rad='18px',
-                margin=box('0px', R(SIDE['tablet'], phone=SIDE['phone']), '20px', R(SIDE['tablet'], phone=SIDE['phone']))),
+        picture('Foto (tablet e telefono)', d['feature'][0], hide_on(desktop=True), full=True, align='center',
+                width=R('100%', tablet='calc(100% - 64px)', phone='calc(100% - 36px)'), aspect=R((358, 322), tablet=(2, 1), phone=(358, 322)), rad='18px',
+                margin=box('0px', 'auto', '20px', 'auto')),
         dish_list('Piatti', d['dishes']),
         menu_head(d['groups'][0], GREEN),
         dish_list('Contorni', d['groups'][0]['rows'], table=False, color=GREEN),
         menu_head(d['groups'][1], BORDEAUX),
-        picture('Foto dei dolci (tablet e telefono)', d['feature'][1], hide_on(desktop=True), full=True, aspect=(358, 322), rad='18px',
-                margin=box('0px', R(SIDE['tablet'], phone=SIDE['phone']), '20px', R(SIDE['tablet'], phone=SIDE['phone']))),
+        picture('Foto dei dolci (tablet e telefono)', d['feature'][1], hide_on(desktop=True), full=True, align='center',
+                width=R('100%', tablet='calc(100% - 64px)', phone='calc(100% - 36px)'), aspect=R((358, 322), tablet=(2, 1), phone=(358, 322)), rad='18px',
+                margin=box('0px', 'auto', '20px', 'auto')),
         dish_list('Dolci', d['groups'][1]['rows'], table=False, color=BORDEAUX),
         menu_head(d['groups'][2], GREEN),
         dish_list('Da bere', d['groups'][2]['rows'], table=False, color=GREEN),
@@ -387,8 +392,270 @@ def menu():
     )
 
 
+def ingredient_card(d, *attributes):
+    return group('Scheda: ' + d['title'], [
+        group('Foto con sfondo', [
+            picture('Foto', d['image'], full=True, aspect=(5, 4), rad='999px'),
+        ], background(color=BORDEAUX), border(rad='110px'), spacing(padding=box('8%', '10%')), sizing(width='72%', alignSelf='center')),
+        heading('Titolo', d['title'], 'h3', **display_font(R('clamp(19px, 1.67vw, 24px)', tablet='24px', phone='22px'), BORDEAUX, line='1em', textAlign='center')),
+        text('Testo', '<p>%s</p>' % d['text'], sizing(maxWidth='300px', alignSelf='center'),
+             **body_font(R('16px', phone='15px'), '#353535', line='1.3em', textAlign='center')),
+    ], background(color=PAPER), border(rad='20px', width='3px', color=LINE),
+        spacing(padding=box(R('44px', phone='28px'), '18px', R('40px', phone='30px'), '18px')),
+        layout(direction='column', gap='10px', align='stretch'),
+        sizing(width=R('clamp(280px, 27vw, 383px)', tablet='100%')), *attributes)
+
+
+def ingredients():
+    d = T.MATERIE
+    cards = d['cards']
+    # On computers the cards are out of line, as on the board: each one has its own left and top margins.
+    stagger = [
+        box('0px', '0px', '0px', R('17.5%', tablet='0px')),
+        box(R('-17vw', tablet='0px'), '0px', '0px', R('65%', tablet='0px')),
+        box(R('5vw', tablet='0px'), '0px', '0px', R('15%', tablet='0px')),
+        box(R('7vw', tablet='0px'), '0px', '0px', R('52%', tablet='0px')),
+    ]
+    return section(
+        'Materie prime', [
+            wave('Onda', 'svg/onda-bordeaux-crema.svg', 'svg/onda-bordeaux-crema-telefono.svg'),
+            row('Titolo e testo', [
+                column([
+                    title('Titolo', d['title'], 'h2', GREEN, capitalization='uppercase', upper_on_phone=False),
+                    copy('Testo', d['html'], GREEN),
+                ], layout(direction='column', gap=R('20px', phone='18px')), sizing(maxWidth='900px')),
+            ], WIDE, spacing(padding=box(R('70px', phone='20px'), '0px', '0px', R('7%', tablet='0px')))),
+            row('Schede', [
+                column([
+                    text('Scritta obliqua che scorre', '<p>%s</p>' % d['marquee'], attrs(cls='tp-scorre'), hide_on(phone=True),
+                         transform(rotate='-4deg'), z_index('1'), spacing(margin=box(R('17vw', tablet='0px'), '-4%', '0px', '-4%')),
+                         **display_font(R('clamp(44px, 5vw, 72px)', tablet='40px'), GREEN, line='1.3em')),
+                    group('Schede', [ingredient_card(card, spacing(margin=margin)) for card, margin in zip(cards, stagger)],
+                          z_index('2'), layout(direction='column', gap=R('0px', tablet='20px'), align=R('flex-start', tablet='stretch')),
+                          spacing(margin=box(R('-23vw', tablet='28px'), '0px', '0px', '0px'))),
+                ], layout(direction='column', gap='0px', align='stretch')),
+            ], WIDE),
+        ],
+        attrs(id='materie'),
+        background(color=CREAM),
+        overflow('hidden', 'visible'),
+        layout(direction='column', gap=R('40px', phone='28px'), align='center'),
+        spacing(padding=box('0px', '0px', R('120px', phone='56px'), '0px')),
+    )
+
+
+def location():
+    d = T.LOCATION
+    return section(
+        'Dove siamo', [
+            row('Dove siamo', [
+                column([
+                    picture('Foto', d['image'], full=True, aspect=R((546, 566), tablet=(16, 10), phone=(357, 217)), rad=R('20px', phone='18px')),
+                ], size=R('10_24', tablet='24_24'), name='Colonna foto'),
+                column([
+                    title('Titolo', d['title'], 'h2', BORDEAUX, capitalization='uppercase', upper_on_phone=False),
+                    copy('Testo', '<p>%s</p>' % d['text'], BORDEAUX),
+                    group('Indirizzo', [
+                        image('Segnaposto', media('svg/location-map-pin.svg'), '', width='24px', bottom_space=False),
+                        text('Via', '<p>%s</p>' % d['address'], **body_font(COPY, BORDEAUX, weight='700', line='1.3em')),
+                    ], layout(direction='row', gap='10px', align='center', wrap='nowrap')),
+                    cta('Pulsante', d['button'], d['button_url'], CREAM, BORDEAUX, target='on'),
+                ], layout(direction='column', gap=R('22px', phone='18px'), align='flex-start'), size=R('14_24', tablet='24_24'), name='Colonna testi'),
+            ], WIDE, layout(direction=R('row', tablet='column-reverse'), gap=R('5%', tablet='28px'), align=R('center', tablet='stretch'), wrap='nowrap'),
+                spacing(padding=box('0px', R('7%', tablet='0px'))), columns=2),
+        ],
+        attrs(id='location'),
+        background(color=CREAM),
+        spacing(padding=box(R('60px', phone='24px'), '0px', R('90px', phone='48px'), '0px')),
+    )
+
+
+def hours():
+    d = T.HOURS
+    boxed = [background(color=PAPER), border(rad='14px', width='3px', color=LINE)]
+    rows = [
+        group('Titolo', [
+            heading('Titolo', d['title'], 'h2', UNDER, **display_font(R('clamp(24px, 2.2vw, 32px)', phone='28px'), R(BROWN, phone=BORDEAUX), line='1.05em', textAlign=R('center', phone='left'))),
+        ], *boxed, spacing(padding=box(R('26px', phone='20px'), R('30px', phone='16px'))), layout(direction='column', align='stretch')),
+    ]
+    for index, item in enumerate(d['rows']):
+        color = GREEN if index % 2 == 0 else BORDEAUX
+        style = body_font(R('20px', phone='17px'), color, weight='900', line='1.2em')
+        rows.append(group('Orario: ' + item['day'], [
+            text('Giorno', '<p>%s</p>' % item['day'], **style),
+            text('Orario', '<p>%s</p>' % item['hours'], **merge(style, {'textAlign': 'right'})),
+        ], *boxed, spacing(padding=box(R('28px', phone='18px'), R('30px', phone='16px')), margin=box('-3px', '0px', '0px', '0px')),
+            layout(direction='row', gap='16px', justify='space-between', align='center', wrap='wrap')))
+    return section(
+        'Orari', [
+            row('Orari', [
+                column(rows, layout(direction='column', gap='0px', align='stretch')),
+            ], sizing(width=WIDTH_NARROW, maxWidth='660px')),
+        ],
+        attrs(id='orari'),
+        background(color=CREAM),
+        spacing(padding=box(R('30px', phone='16px'), '0px', R('70px', phone='40px'), '0px')),
+    )
+
+
+def faq():
+    d = T.FAQ
+    items = []
+    for index, item in enumerate(d['items']):
+        color = GREEN if index % 2 == 0 else BORDEAUX
+        items.append(block(
+            'divi/accordion-item', label('Domanda: ' + item['question']),
+            at('title.innerContent', item['question']),
+            at('content.innerContent', item['html']),
+            at('module.advanced.open', 'on' if index == 0 else 'off'),
+            at('title.decoration.font.font', body_font(R('20px', phone='17px'), color, weight='900', line='1.2em')),
+            at('closedToggleIcon.decoration.icon', {'color': color, 'useSize': 'on', 'size': '20px'}),
+            border(rad='20px', width='3px', color=LINE),
+            spacing(padding=box(R('26px', phone='20px'), R('32px', phone='20px'))),
+        ))
+    accordion = block(
+        'divi/accordion', label('Domande e risposte'),
+        at('title.decoration.font.font', merge({'headingLevel': 'h3'}, body_font(R('20px', phone='17px'), GREEN, weight='900', line='1.2em'))),
+        at('content.decoration.bodyFont.body.font', body_font(R('17px', phone='16px'), BROWN, line='1.5em')),
+        at('closedToggle.decoration.background', {'color': PAPER}),
+        at('openToggle.decoration.background', {'color': PAPER}),
+        layout(direction='column', gap='10px'),
+        children=items,
+    )
+    return section(
+        'Informazioni utili', [
+            row('Informazioni utili', [
+                column([
+                    group('Titolo', [
+                        heading('Titolo', d['title'], 'h2', UNDER, **display_font(R('clamp(24px, 2.2vw, 32px)', phone='26px'), BROWN, line='1.05em', textAlign='center')),
+                    ], background(color=PAPER), border(rad='20px', width='3px', color=LINE), spacing(padding=box(R('34px', phone='22px'), '20px')),
+                        layout(direction='column', align='stretch')),
+                    accordion,
+                ], layout(direction='column', gap=R('44px', phone='28px'), align='stretch')),
+            ], sizing(width=WIDTH_NARROW, maxWidth='690px')),
+        ],
+        attrs(id='faq'),
+        background(color=CREAM),
+        spacing(padding=box(R('40px', phone='20px'), '0px', R('120px', phone='64px'), '0px')),
+    )
+
+
 def home():
-    return document([hero(), strip(), intro(), alberto(), choice(), menu()])
+    return document([hero(), strip(), intro(), alberto(), choice(), menu(), ingredients(), location(), hours(), faq()])
+
+
+# ---------------------------------------------------------------------------------------------
+# Header and footer (Theme Builder) and the legal pages.
+
+def interaction(trigger, effect, target, target_label, trigger_id, **more):
+    """Advanced > Interactions, as Divi stores one."""
+    return merge({
+        'id': uid('interaction:%s:%s:%s' % (trigger, effect, target)), 'enableInteraction': 'on', 'trigger': trigger, 'effect': effect,
+        'target': {'targetClass': 'et-interaction-target-' + target, 'label': target_label, 'moduleId': '', 'targetType': 'module'},
+        'replaceExistingPreset': False, 'sensitivity': 50, 'mouseMovementType': 'translate', 'cookieName': '', 'cookieValue': '',
+        'triggerClass': 'et-interaction-trigger-' + trigger_id, 'presetId': '',
+    }, more)
+
+
+def header():
+    voices_id, burger_id = 'tpvocimenu', 'tppaninotp'
+    voices_label = 'Gruppo (Voci del menù)'
+    voices = group(
+        'Voci del menù',
+        [link('Voce: ' + words, words, '{{url:home}}' + url, **display_font(R('clamp(15px, 1.39vw, 20px)', tablet='22px'), R(BROWN, hover=BORDEAUX), line='1.2em'))
+         for words, url in T.NAV],
+        # On tablets and phones the voices are hidden (Advanced > Visibility) until the sandwich is pressed.
+        hide_on(tablet=True, phone=True),
+        {'module': {'decoration': {'interactionTarget': voices_id}}},
+        layout(direction=R('row', tablet='column'), gap=R('clamp(22px, 4.1vw, 60px)', tablet='20px'), align=R('center', tablet='flex-start'), wrap='nowrap'),
+        sizing(width=R('auto', tablet='100%')),
+        spacing(padding=box(R('0px', tablet='18px'), '0px', R('0px', tablet='10px'), '0px')),
+        border(sides={'top': {'width': R('0px', tablet='2px'), 'color': LINE}}),
+    )
+    burger = icon(
+        'Panino (tablet e telefono)', '&#x61;', hide_on(desktop=True),
+        {'module': {'decoration': {'interactionTrigger': burger_id, 'interactions': rv({'interactions': [
+            interaction('click', 'toggleVisibility', voices_id, voices_label, burger_id),
+            # Back on a computer the voices are always there, whatever was pressed before.
+            interaction('breakpointEnter', 'addVisibility', voices_id, voices_label, burger_id, breakpointName='desktop'),
+            interaction('breakpointExit', 'removeVisibility', voices_id, voices_label, burger_id, breakpointName='desktop'),
+        ]})}}},
+        attrs(cls='tp-panino', role='button', aria_label='Apri o chiudi il menù', tabindex='0'),
+        color=BORDEAUX, size='34px',
+    )
+    return document([section(
+        'Testata', [
+            row('Barra', [
+                column([
+                    image('Logo', media('svg/logo-tasche-piene-line.svg'), 'Tasche Piene', link='{{url:home}}', width=R('clamp(150px, 14.3vw, 206px)', tablet='168px'), bottom_space=False),
+                    burger,
+                    voices,
+                ], layout(direction='row', gap=R('32px', tablet='0px'), justify=R('space-between', tablet='space-between'), align='center', wrap=R('nowrap', tablet='wrap'))),
+            ], sizing(width=R('calc(100% - 100px)', tablet='calc(100% - 32px)', phone='calc(100% - 24px)'), maxWidth='1432px'),
+                background(color=CREAM), border(rad='15px'),
+                spacing(padding=box(R('20px', tablet='14px'), R('clamp(24px, 3.6vw, 52px)', tablet='20px')))),
+        ],
+        attrs(cls='tp-testata'),
+        position('fixed', vertical='0px', horizontal='0px', origin='top left'), z_index('9999'), sizing(width='100%'),
+        background(color='transparent'),
+        spacing(padding=box(R('12px', phone='10px'), '0px', '0px', '0px')),
+    )])
+
+
+def footer():
+    d = T.FOOTER
+    nav_font = display_font(R('clamp(18px, 1.67vw, 24px)', phone='17px'), R(CREAM, hover=WHITE), line='1.2em', capitalization='uppercase')
+    small = body_font(R('16px', phone='14px'), CREAM, weight='400', line='1.3em')
+    links = at('content.decoration.bodyFont.link.font', {'color': CREAM})
+
+    def voices(name, items):
+        return group(name, [link('Voce: ' + item[0], item[0], item[1] if item[1].startswith('http') else '{{url:home}}' + item[1],
+                                 target=(item[2] if len(item) > 2 else 'off'), **nav_font) for item in items],
+                     layout(direction='row', gap=R('clamp(18px, 2.3vw, 34px)', phone='16px'), align='center', wrap='wrap'))
+
+    return document([section(
+        'Piè di pagina', [
+            row('Piè di pagina', [
+                column([
+                    group('Logo e personaggi', [
+                        image('Logo', media('images/logo-footer.webp'), 'Tasche Piene', link='{{url:home}}', full=True, bottom_space=False),
+                        # The drawings sit on the letters: their place and size are parts of the logo's width, so they follow it.
+                        image('Personaggi: la coppia', media('images/footer/personaggi-4.webp'), '', position('absolute', vertical='70%', horizontal='35.2%', origin='bottom left'),
+                              z_index('2'), width='13.5%', bottom_space=False),
+                        image('Personaggi: i gabbiani', media('images/footer/personaggi-1.webp'), '', position('absolute', vertical='84%', horizontal='81.4%', origin='bottom left'),
+                              z_index('2'), width='9.8%', bottom_space=False),
+                    ], layout(direction='column', align='stretch'), spacing(margin=box(R('13vw', phone='16vw'), '0px', '0px', '0px'))),
+                    group('Voci', [voices('Voci a sinistra', d['left']), voices('Voci a destra', d['right'])],
+                          layout(direction='row', gap='16px', justify='space-between', align='center', wrap='wrap')),
+                    group('Note', [text('Nota %d' % (index + 1), '<p>%s</p>' % line, links, **small) for index, line in enumerate(d['lines'])],
+                          layout(direction=R('row', phone='column'), gap=R('36px', phone='8px'), align=R('center', phone='flex-start'), wrap='wrap'),
+                          spacing(padding=box(R('22px', phone='26px'), '0px', '0px', '0px'))),
+                ], layout(direction='column', gap=R('18px', phone='10px'), align='stretch')),
+            ], sizing(width=R('calc(100% - 72px)', phone='calc(100% - 32px)'), maxWidth='1500px')),
+        ],
+        attrs(cls='tp-pie'),
+        background(color=GREEN),
+        spacing(padding=box(R('60px', phone='40px'), '0px', R('34px', phone='28px'), '0px')),
+    )])
+
+
+def legal(key):
+    d = T.LEGAL[key]
+    body = body_font(R('18px', phone='17px'), BROWN, weight='400', line='1.55em')
+    return document([section(
+        d['title'], [
+            row(d['title'], [
+                column([
+                    heading('Titolo', d['title'], 'h1', **display_font(H2, BORDEAUX, line='1.05em')),
+                    text('Testo', d['html'], at('content.decoration.bodyFont.link.font', {'color': BORDEAUX}),
+                         headings={'h2': display_font(R('24px', phone='21px'), GREEN, line='1.2em')}, **body),
+                    text('Collegamenti', d['back'], at('content.decoration.bodyFont.link.font', {'color': BORDEAUX}), **merge(body, {'weight': '700'})),
+                ], layout(direction='column', gap=R('28px', phone='22px'), align='stretch')),
+            ], sizing(width=WIDTH_NARROW, maxWidth='860px')),
+        ],
+        background(color=CREAM),
+        spacing(padding=box(R('60px', phone='36px'), '0px', R('110px', phone='64px'), '0px')),
+    )])
 
 
 def write(name, content):
@@ -401,3 +668,7 @@ def write(name, content):
 
 if __name__ == '__main__':
     write('home.html', home())
+    write('header.html', header())
+    write('footer.html', footer())
+    write('privacy.html', legal('privacy'))
+    write('cookie.html', legal('cookie'))

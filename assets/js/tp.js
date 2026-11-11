@@ -4,6 +4,7 @@
  * Not loaded in the Visual Builder, where one writes.
  *
  *   tp-scorre            the words of a Text module run across the screen
+ *   tp-lettere           a title comes in letter by letter (GSAP, assets/vendor)
  *   tp-video-telefono    the background video of a section also runs on phones and tablets
  *   tp-testata           the header: its height is told to the page, its menu closes after a tap on a voice
  */
@@ -185,12 +186,112 @@
 		each('.tp-video-telefono', nativeVideo);
 	}
 
+	/* Titles that come in letter by letter ---------------------------------------------------------- */
+
+	// A title with the class tp-lettere (a Heading, or a Text with a title in it) rises into place one
+	// letter after the other, the first time it is seen. GSAP's SplitText cuts it into lines and letters
+	// for the time of the movement, then the title is put back exactly as Divi printed it.
+	// Until it starts the title is hidden by assets/css/tp.css, which shows it anyway after four seconds.
+	function letters() {
+		var modules = document.querySelectorAll('.tp-lettere');
+		var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		if (!modules.length) { return; }
+		if (still || !window.gsap || !window.SplitText) {
+			each('.tp-lettere', function (module) { module.style.visibility = 'visible'; });
+			return;
+		}
+		window.gsap.registerPlugin(window.SplitText);
+
+		function play(module) {
+			if (module.tpLettere) { return; }
+			module.tpLettere = true;
+			var title = module.querySelector('h1, h2, h3, h4, h5, h6') || module.querySelector('.et_pb_text_inner') || module;
+			var split;
+			try {
+				split = window.SplitText.create(title, { type: 'lines,words,chars', mask: 'lines' });
+			} catch (error) {
+				module.style.visibility = 'visible';
+				return;
+			}
+			module.style.visibility = 'visible';
+			window.gsap.from(split.chars, {
+				yPercent: 110,
+				duration: 0.58,
+				stagger: 0.014,
+				delay: 0.12,
+				ease: 'power3.out',
+				onComplete: function () { split.revert(); }
+			});
+		}
+
+		if (!window.IntersectionObserver) {
+			each('.tp-lettere', play);
+			return;
+		}
+		var observer = new window.IntersectionObserver(function (entries) {
+			entries.forEach(function (entry) {
+				if (entry.isIntersecting) {
+					observer.unobserve(entry.target);
+					play(entry.target);
+				}
+			});
+		}, { threshold: 0.2 });
+		each('.tp-lettere', function (module) { observer.observe(module); });
+	}
+
+	/* Header ------------------------------------------------------------------------------------------ */
+
+	// The header (class tp-testata) lies over the top of the page. Its height is told to the page, so the
+	// pages that do not start with a picture under it begin below it (assets/css/tp.css). On tablets and
+	// phones its voices open with the sandwich, by Divi's own Interactions: a tap on a voice closes them.
+	function header() {
+		var bar = document.querySelector('.tp-testata');
+		if (!bar) { return; }
+		document.documentElement.classList.add('tp-ha-testata');
+		var measure = function () {
+			var row = bar.querySelector('.et_pb_row') || bar;
+			var burger = bar.querySelector('.tp-panino');
+			var open = burger && burger.offsetParent !== null && row.querySelector('.et_pb_group') && row.querySelector('.et_pb_group').offsetParent !== null;
+			if (open) { return; } // the open menu is not the height of the header
+			document.documentElement.style.setProperty('--tp-testata', Math.round(bar.getBoundingClientRect().height) + 'px');
+		};
+		measure();
+		window.addEventListener('resize', measure, { passive: true });
+		window.addEventListener('load', measure);
+
+		bar.addEventListener('click', function (event) {
+			var voice = event.target.closest ? event.target.closest('.et_pb_group a, .et_pb_group .et_pb_link') : null;
+			var burger = bar.querySelector('.tp-panino');
+			if (!voice || !burger || burger.offsetParent === null) { return; }
+			var target = burger.querySelector('.et-pb-icon') || burger;
+			window.setTimeout(function () { target.click(); }, 60);
+		}, true); // before Divi's own handling of the link, which keeps the click to itself
+		// The sandwich is a button for the keyboard too.
+		bar.addEventListener('keydown', function (event) {
+			var burger = event.target.closest ? event.target.closest('.tp-panino') : null;
+			if (burger && (event.key === 'Enter' || event.key === ' ')) {
+				event.preventDefault();
+				(burger.querySelector('.et-pb-icon') || burger).click();
+			}
+		});
+	}
+
 	/* Start --------------------------------------------------------------------------------------- */
 
 	onReady(function () {
+		header();
 		videos();
 		running();
-		if (document.fonts && document.fonts.ready) { document.fonts.ready.then(running); }
+		var fonts = document.fonts && document.fonts.ready ? document.fonts.ready : null;
+		if (fonts) {
+			// The lines of a title are cut with its own font: wait for it, but not for long.
+			var started = false;
+			var go = function () { if (!started) { started = true; running(); letters(); } };
+			fonts.then(go);
+			window.setTimeout(go, 1500);
+		} else {
+			letters();
+		}
 		var timer = 0;
 		var width = window.innerWidth;
 		window.addEventListener('resize', function () {

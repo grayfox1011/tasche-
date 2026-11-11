@@ -36,13 +36,31 @@ function tp_is_visual_builder(): bool {
 }
 
 /**
- * Fonts and effects, after Divi's own styles.
+ * Fonts and effects, after Divi's own styles. GSAP only moves the titles that have the class tp-lettere.
  */
 function tp_enqueue_assets(): void {
 	wp_enqueue_style( 'tp', TP_URL . 'assets/css/tp.css', [], tp_asset_version( 'assets/css/tp.css' ) );
 
-	if ( ! tp_is_visual_builder() ) {
-		wp_enqueue_script( 'tp', TP_URL . 'assets/js/tp.js', [], tp_asset_version( 'assets/js/tp.js' ), true );
+	if ( tp_is_visual_builder() ) {
+		return;
 	}
+
+	wp_register_script( 'tp-gsap', TP_URL . 'assets/vendor/gsap.min.js', [], '3.14.2', true );
+	wp_register_script( 'tp-split-text', TP_URL . 'assets/vendor/SplitText.min.js', [ 'tp-gsap' ], '3.14.2', true );
+	wp_enqueue_script( 'tp', TP_URL . 'assets/js/tp.js', [ 'tp-gsap', 'tp-split-text' ], tp_asset_version( 'assets/js/tp.js' ), true );
 }
 add_action( 'wp_enqueue_scripts', 'tp_enqueue_assets', 30 );
+
+/**
+ * Tells the page, before it is drawn, that the effects will run: what waits for them (a title that
+ * comes in letter by letter) is hidden from the first moment and not after a flash. Not in the
+ * Visual Builder, nor for who asked the device for less motion.
+ */
+function tp_print_motion_flag(): void {
+	if ( tp_is_visual_builder() ) {
+		return;
+	}
+
+	echo "<script>(function(d,w){if(!(w.matchMedia&&w.matchMedia('(prefers-reduced-motion: reduce)').matches)){d.documentElement.classList.add('tp-anima');}})(document,window);</script>\n";
+}
+add_action( 'wp_head', 'tp_print_motion_flag', 1 );

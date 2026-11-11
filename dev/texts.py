@@ -190,3 +190,79 @@ FAQ = {'title': 'Informazioni utili',
            {'question': "Ho un'allergia: come faccio?",
             'html': "<p>Chiedi al banco: sappiamo cosa c'è in ogni ricetta perché la facciamo noi. La lista degli allergeni è esposta in negozio e "
                     'sul menù qui sopra.</p>'}]}
+
+# The legal pages. {{url:...}} are the addresses of the pages, {{date}} the day the page is created.
+LEGAL = {'privacy': {'slug': 'privacy-policy',
+             'title': 'Privacy Policy',
+             'html': '<p><strong>Ultimo aggiornamento:</strong> {{date}}</p>\n'
+                     '<p>La presente informativa descrive come Tasche Piene tratta i dati personali in relazione al sito web {{url:home}}.</p>\n'
+                     '<h2>1. Titolare del trattamento</h2>\n'
+                     '<p><strong>Barrakuda S.r.l.</strong> (Tasche Piene)<br> Via Carducci 5/10, 16121 Genova<br> P. IVA e C.F. 02789540990 </p>\n'
+                     '<h2>2. Tipologia di sito</h2>\n'
+                     '<p>Il sito ha finalità informativa e promozionale: presenta l’attività gastronomica, il menu e le informazioni utili per '
+                     'raggiungerci in negozio.</p>\n'
+                     '<p><strong>Non sono presenti moduli di contatto, form di iscrizione, newsletter o raccolta diretta di dati tramite e-mail sul '
+                     'sito.</strong></p>\n'
+                     '<h2>3. Dati trattati</h2>\n'
+                     '<p>Potrebbero essere trattati, in modo limitato e per il solo funzionamento tecnico del sito:</p>\n'
+                     '<ul><li>dati di navigazione e log tecnici (es. indirizzo IP, data e ora della richiesta, user agent del '
+                     'browser);</li><li>cookie e strumenti tecnici descritti nella <a href="{{url:cookie}}">Cookie Policy</a>.</li></ul>\n'
+                     '<p>Non effettuiamo profilazione commerciale né invio di comunicazioni promozionali tramite il sito.</p>\n'
+                     '<h2>4. Finalità e base giuridica</h2>\n'
+                     '<ul><li><strong>Funzionamento e sicurezza del sito</strong> — legittimo interesse del titolare e necessità tecnica (art. 6, '
+                     'par. 1, lett. f GDPR).</li><li><strong>Cookie tecnici</strong> — vedi Cookie Policy; per i cookie non strettamente necessari, '
+                     'ove presenti, il consenso viene richiesto separatamente.</li></ul>\n'
+                     '<h2>5. Conservazione</h2>\n'
+                     '<p>I dati tecnici di log sono conservati per il tempo strettamente necessario alla sicurezza e alla manutenzione del sito, '
+                     'secondo i termini del provider di hosting.</p>\n'
+                     '<h2>6. Comunicazione e trasferimenti</h2>\n'
+                     '<p>I dati possono essere trattati da fornitori tecnici (hosting, manutenzione sito) nominati responsabili del trattamento o '
+                     'autonomi titolari, solo per erogare il servizio.</p>\n'
+                     '<h2>7. Diritti dell’interessato</h2>\n'
+                     '<p>In qualità di interessato puoi esercitare i diritti previsti dagli artt. 15-22 GDPR (accesso, rettifica, cancellazione, '
+                     'limitazione, opposizione, portabilità ove applicabile) rivolgendoti al titolare presso la sede indicata sopra.</p>\n'
+                     '<p>Hai inoltre diritto di proporre reclamo all’Autorità Garante per la protezione dei dati personali (<a '
+                     'href="https://www.garanteprivacy.it" rel="noopener noreferrer" target="_blank">garanteprivacy.it</a>).</p>\n'
+                     '<h2>8. Modifiche</h2>\n'
+                     '<p>Il titolare può aggiornare la presente informativa; la versione aggiornata sarà pubblicata su questa pagina.</p>',
+             'back': '<p><a href="{{url:home}}">Torna alla home</a> · <a href="{{url:cookie}}">Cookie Policy</a></p>'},
+ 'cookie': {'slug': 'cookie-policy',
+            'title': 'Cookie Policy',
+            'html': '<p><strong>Ultimo aggiornamento:</strong> {{date}}</p>\n'
+                    '<p>Questa Cookie Policy spiega come Tasche Piene utilizza cookie e tecnologie simili sul sito {{url:home}}.</p>\n'
+                    '<h2>1. Cosa sono i cookie</h2>\n'
+                    '<p>I cookie sono piccoli file di testo che i siti possono salvare sul dispositivo dell’utente per memorizzare preferenze o '
+                    'informazioni tecniche.</p>\n'
+                    '<h2>2. Cookie utilizzati da questo sito</h2>\n'
+                    '<p>Il sito utilizza principalmente <strong>cookie tecnici</strong>, necessari al corretto funzionamento della piattaforma '
+                    'WordPress e alla visualizzazione delle pagine.</p>\n'
+                    '<p>Tra questi possono rientrare, a seconda della configurazione del server:</p>\n'
+                    '<ul><li>cookie di sessione o tecnici di WordPress;</li><li>cookie legati alla sicurezza e alla cache del '
+                    'sito;</li><li>preferenze salvate dal builder o dal tema per la corretta resa grafica.</li></ul>\n'
+                    '<p><strong>Non utilizziamo cookie di profilazione o pubblicitari</strong> e non raccogliamo dati tramite form o newsletter sul '
+                    'sito.</p>\n'
+                    '<p>Se in futuro venissero attivati strumenti di analisi o marketing (es. Google Analytics, pixel social), questa informativa '
+                    'sarà aggiornata e, ove richiesto, verrà richiesto il consenso tramite apposito banner.</p>\n'
+                    '<h2>3. Cookie di terze parti</h2>\n'
+                    '<p>Il sito può includere link esterni (es. mappe o profili social). Cliccando su tali link si accede a siti di terze parti con '
+                    'informative autonome.</p>\n'
+                    '<h2>4. Come gestire i cookie dal browser</h2>\n'
+                    '<p>Puoi configurare il browser per bloccare o cancellare i cookie. La disabilitazione dei cookie tecnici potrebbe compromettere '
+                    'alcune funzioni del sito.</p>\n'
+                    '<h2>5. Titolare e privacy</h2>\n'
+                    '<p>Per il trattamento dei dati personali collegato all’uso del sito, vedi la <a href="{{url:privacy}}">Privacy Policy</a>.</p>',
+            'back': '<p><a href="{{url:home}}">Torna alla home</a> · <a href="{{url:privacy}}">Privacy Policy</a></p>'}}
+
+# Header and footer.
+NAV = [('La nostra idea', '#chi-siamo'),
+ ('Il menù', '#menu'),
+ ('Senza glutine', '#materie'),
+ ('Domande', '#faq'),
+ ('Dove siamo', '#location')]
+
+FOOTER = {'left': [('MENÙ', '#menu'), ('DOVE SIAMO', '#location'), ('SU DI NOI', '#chi-siamo')],
+ 'right': [('TORNA SÙ', '#home', 'off'), ('FACEBOOK', 'https://facebook.com', 'on'), ('INSTAGRAM', 'https://instagram.com', 'on')],
+ 'lines': ['Tasche Piene è un progetto di Barrakuda S.r.l.',
+           'P.IVA e C.F.: 02789540990 | Via Carducci 5/10, 16121 - Genova',
+           '<a href="{{url:privacy}}">Privacy Policy</a> | <a href="{{url:cookie}}">Cookie Policy</a>',
+           '<a href="https://www.mochidesign.it" target="_blank" rel="noopener">creato con ♥ da Mochi</a>']}

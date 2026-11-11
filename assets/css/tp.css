@@ -40,7 +40,9 @@
  *                      data-velocita="70" in the same Attributes sets the pixels per second)
  * tp-piatto            a row of the menu: on computers, with the mouse over it, it shows the modules
  *                      inside it that have the class tp-al-passaggio (the photo, the description)
+ * tp-lettere           a title that comes in letter by letter the first time it is seen
  * tp-video-telefono    the section whose background video must also run on phones and tablets
+ * tp-testata           the header that lies over the top of the page
  */
 
 /* The words that run: one line, as wide as it needs, moving left by one copy of the text and again. */
@@ -86,24 +88,40 @@
 	}
 }
 
-/* The menu: what appears with the mouse over a dish. Where there is no mouse, nothing is hidden. */
+/* The menu: what appears with the mouse over a dish (or while one writes in it). Where there is no
+   mouse, nothing is hidden. A text takes its place only while it shows, so the name stays in the
+   middle of its line; a photo fades in over the lines without moving them. */
 @media (hover: hover) and (min-width: 981px) {
-	.tp-piatto .tp-al-passaggio {
+	.tp-piatto:not(:hover):not(:focus-within) .tp-al-passaggio:not(.et_pb_image) {
+		display: none;
+	}
+
+	.tp-piatto .tp-al-passaggio:not(.et_pb_image) {
+		animation: tp-appare .25s ease both;
+	}
+
+	.tp-piatto .et_pb_image.tp-al-passaggio {
 		opacity: 0;
 		visibility: hidden;
 		transition: opacity .25s ease, visibility 0s linear .25s;
 	}
 
-	.tp-piatto:hover .tp-al-passaggio,
-	.tp-piatto:focus-within .tp-al-passaggio {
+	.tp-piatto:hover .et_pb_image.tp-al-passaggio,
+	.tp-piatto:focus-within .et_pb_image.tp-al-passaggio {
 		opacity: 1;
 		visibility: visible;
 		transition: opacity .25s ease;
 	}
 
-	/* A photo that appears does not take the mouse away from the rows under it. */
+	/* A photo that appears does not take the mouse away from the lines under it. */
 	body:not(.et-fb) .tp-piatto .et_pb_image.tp-al-passaggio {
 		pointer-events: none;
+	}
+}
+
+@keyframes tp-appare {
+	from {
+		opacity: 0;
 	}
 }
 
@@ -125,4 +143,35 @@
 
 .tp-video-telefono.tp-video-telefono--attivo > .et-pb-background-video {
 	display: none;
+}
+
+/* A title that comes in letter by letter waits unseen for assets/js/tp.js to start it. If the script
+   never comes, the title shows by itself after four seconds. Not in the Visual Builder. */
+html.tp-anima .tp-lettere {
+	visibility: hidden;
+	animation: tp-mostra 0s linear 4s forwards;
+}
+
+@keyframes tp-mostra {
+	to {
+		visibility: visible;
+	}
+}
+
+/* The header lies over the top of the page (Position: fixed, set in Divi). The home starts under it
+   with its video; every other page starts below it, by the header's own height (measured by
+   assets/js/tp.js, 78 px until then). */
+#et-boc:has(> .et-l--header .tp-testata) > #et-main-area,
+html.tp-ha-testata #et-main-area {
+	padding-top: calc(var(--tp-testata, 78px) + 12px);
+}
+
+body.home #et-boc > #et-main-area,
+html.tp-ha-testata body.home #et-main-area {
+	padding-top: 0;
+}
+
+/* The sandwich of the header is pressed like a button. */
+.tp-panino .et-pb-icon {
+	cursor: pointer;
 }
