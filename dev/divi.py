@@ -138,9 +138,25 @@ def spacing(padding=None, margin=None, element='module'):
     return at(element + '.decoration.spacing', value)
 
 
+def flex_size(grow=None, shrink=None):
+    """Sizing > Size, the way the builder's three buttons store it: "Shrink to Fit" (what a module does when
+    nothing is chosen), "Grow to Fill", or "Custom" with the two numbers. Divi writes flex-grow and
+    flex-shrink only when `size` is there: the two numbers alone are not read."""
+    grow = '0' if grow is None else str(grow)
+    shrink = '1' if shrink is None else str(shrink)
+    if (grow, shrink) == ('0', '1'):
+        return {'size': ['flexShrink']}
+    if (grow, shrink) == ('1', '1'):
+        return {'size': ['flexShrink', 'flexGrow']}
+    return {'size': ['custom'], 'flexGrow': grow, 'flexShrink': shrink}
+
+
 def sizing(element='module', **props):
-    """width, maxWidth, minWidth, height, minHeight, maxHeight, alignment, flexGrow, flexShrink, alignSelf, flexType,
-    gridColumnSpan..."""
+    """width, maxWidth, minWidth, height, minHeight, maxHeight, alignment, alignSelf, flexType, gridColumnSpan...
+    flexGrow and flexShrink ('0' or '1') become the builder's Size choice: see flex_size."""
+    if 'flexGrow' in props or 'flexShrink' in props:
+        grow, shrink = props.pop('flexGrow', None), props.pop('flexShrink', None)
+        props.update(flex_size(grow, shrink))
     return at(element + '.decoration.sizing', props)
 
 
@@ -331,10 +347,11 @@ def _ratio(value):
 
 
 def image(name, src, alt='', *attributes, title=None, link=None, target='off', width=None, max_width=None, aspect=None, fit=None,
-          align=None, margin=None, rad=None, full=False, bottom_space=None):
+          align=None, margin=None, rad=None, full=False, bottom_space=None, shrink=None):
     """An Image module. Its sizes, spaces and corners are kept by Divi in places of their own:
     width / max_width / aspect ((4, 3): the photo is cut to that shape) / full (as wide as its column),
-    margin, align ('left', 'center', 'right'), rad (round corners).
+    margin, align ('left', 'center', 'right'), rad (round corners), shrink ('0': it keeps its width when
+    the row is short of room; Sizing > Size > Custom).
     `full` is Divi's "Force Fullwidth": with it the builder does not apply width and max_width, so it
     goes alone."""
     assert not (full and (width is not None or max_width is not None)), 'full goes without width and max_width: ' + name
@@ -353,6 +370,8 @@ def image(name, src, alt='', *attributes, title=None, link=None, target='off', w
         size['aspectRatio'] = _ratio(aspect)
     if full:
         size['forceFullwidth'] = 'on'
+    if shrink is not None:
+        size.update(flex_size(shrink=shrink))
     extra = []
     if size:
         extra.append(at('module.advanced.sizing', size))

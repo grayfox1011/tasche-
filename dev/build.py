@@ -588,15 +588,21 @@ def header():
     voices_label = 'Gruppo (Voci del menù)'
     voices = group(
         'Voci del menù',
-        [link('Voce: ' + words, words, '{{url:home}}' + url, sizing(flexShrink='0'), spacing(padding=box(R('21px', tablet='4px'), '0px')),
+        # On computers a voice is only as high as its words: the bar's height comes from the row's padding. In the
+        # Visual Builder Divi draws a "+" some 30 px above the bottom of the piece under the mouse: with a voice
+        # this low it lands above the words and not on them, so a voice can be clicked and written.
+        [link('Voce: ' + words, words, '{{url:home}}' + url, sizing(flexShrink='0'), spacing(padding=box(R('0px', tablet='4px'), '0px')),
               **display_font(R('clamp(15px, 1.39vw, 20px)', tablet='22px'), R(BROWN, hover=BORDEAUX), line='1.2em'))
          for words, url in T.NAV],
         # On tablets and phones the voices are hidden (Advanced > Visibility) until the sandwich is pressed.
         hide_on(tablet=True, phone=True),
         {'module': {'decoration': {'interactionTarget': voices_id}}},
         # The space between the voices grows with the screen: 16 px on a small laptop, 60 px from 1440 px up.
-        layout(direction=R('row', tablet='column'), gap=R('clamp(14px, calc(9.5vw - 77px), 60px)', tablet='20px'), align=R('center', tablet='flex-start'), wrap='nowrap'),
-        sizing(width=R('auto', tablet='100%'), flexShrink='0'),
+        # A voice never breaks in two lines (Sizing > Size of each voice): when there are more voices than the
+        # bar can hold, the last ones go to a second line and the bar grows.
+        layout(direction=R('row', tablet='column'), gap=R('clamp(14px, calc(9.5vw - 77px), 60px)', tablet='20px'), row_gap=R('18px', tablet='20px'),
+               justify=R('flex-end', tablet='flex-start'), align=R('center', tablet='flex-start'), wrap=R('wrap', tablet='nowrap')),
+        sizing(width=R('auto', tablet='100%')),
         spacing(padding=box(R('0px', tablet='14px'), '0px', R('0px', tablet='10px'), '0px'), margin=box(R('0px', tablet='14px'), '0px', '0px', '0px')),
         border(sides={'top': {'width': R('0px', tablet='2px'), 'color': LINE}}),
     )
@@ -615,14 +621,14 @@ def header():
         'Testata', [
             row('Barra', [
                 column([
-                    image('Logo', media('svg/logo-tasche-piene-line.svg'), 'Tasche Piene', sizing(flexShrink='0'), link='{{url:home}}',
-                          width=R('clamp(150px, 14.3vw, 206px)', tablet='168px'), bottom_space=False),
+                    image('Logo', media('svg/logo-tasche-piene-line.svg'), 'Tasche Piene', link='{{url:home}}',
+                          width=R('clamp(150px, 14.3vw, 206px)', tablet='168px'), bottom_space=False, shrink='0'),
                     burger,
                     voices,
                 ], layout(direction='row', gap=R('32px', tablet='0px'), justify=R('space-between', tablet='space-between'), align='center', wrap=R('nowrap', tablet='wrap'))),
             ], sizing(width=R('calc(100% - 100px)', tablet='calc(100% - 32px)', phone='calc(100% - 24px)'), maxWidth='1432px'),
                 background(color=CREAM), border(rad='15px'),
-                spacing(padding=box(R('0px', tablet='14px'), R('clamp(24px, 3.6vw, 52px)', tablet='20px')))),
+                spacing(padding=box(R('19px', tablet='14px'), R('clamp(24px, 3.6vw, 52px)', tablet='20px')))),
         ],
         attrs(cls='tp-testata'),
         position('fixed', vertical='0px', horizontal='0px', origin='top left'), z_index('9999'), sizing(width='100%'),
