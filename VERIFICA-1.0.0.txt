@@ -110,8 +110,14 @@ Sul sito
 Nel Visual Builder
 - Altezza delle sezioni uguale tra builder e sito su computer (tranne hero
   e striscia, fermi nel builder), entro 5 px su tablet e telefono.
-- Sotto il mouse c'e' il testo e non uno strumento di Divi: testata 5 su
-  5, pie' di pagina 10 su 10; home: vedi "Limiti noti".
+- Sotto il mouse c'e' il testo e non uno strumento di Divi (provato su
+  inizio, centro e fine di ogni testo): testata 5 su 5, pie' di pagina 10
+  su 10, home 128 su 128 in vista computer e 142 su 142 in vista telefono.
+  In tre testi della home il centro e' coperto e si clicca all'inizio:
+  vedi "Limiti noti".
+- Una voce della testata, pannello Design > Dimensionamento: Divi mostra
+  "Personalizzato" con Riduzione 0, cioe' legge l'impostazione che
+  impedisce alla voce di restringersi.
 - Doppio clic e scrittura: nome di un piatto (la riga passa da 100 a 169
   px, le altre non cambiano), un prezzo, una voce della testata, una nota
   e una voce del pie' di pagina.
@@ -122,13 +128,31 @@ Nel Visual Builder
 - Testata e pie' di pagina aperti come si fa a mano, da Divi > Theme
   Builder con la matita.
 
-Creazione del sito
-- Sito nuovo: pagine, Theme Builder, pagina iniziale, permalink, opzioni di
-  Divi, preferenze del builder.
-- Aggiornamento da un sito con la 0.8.3: home vecchia in bozza, testata e
-  pie' di pagina riscritti, immagini riusate.
-(I tempi e i numeri di queste due prove sono in fondo, rifatte con lo zip
-di questa versione.)
+Creazione del sito, con lo zip di questa versione caricato
+dall'amministrazione come si fa a mano
+
+- Sito nuovo (WordPress appena installato): zip caricato e attivato;
+  WordPress apre da solo Aspetto > Tasche Piene e la creazione parte.
+  Interrotta apposta dopo un secondo, chiudendo la pagina: in bacheca
+  compare l'avviso con "Crea il sito"; ripresa da li', finisce in 26
+  secondi. Risultato: Home (327 moduli) come pagina iniziale, Privacy
+  Policy e Cookie Policy pubblicate, testata e pie' di pagina nel Theme
+  Builder, permalink /%postname%/, 40 file nella libreria Media, nessuna
+  immagine presa dalla cartella del tema, opzioni di Divi e preferenze del
+  builder impostate. Nel builder di questo sito: nessuna barretta sul
+  prezzo sotto il mouse, doppio clic e scrittura del prezzo riusciti.
+- Aggiornamento (copia di un sito con la 0.8.3, 30 file nella libreria):
+  zip caricato, "Sostituisci"; anche qui creazione interrotta e ripresa.
+  Risultato: Home nuova come pagina iniziale all'indirizzo /home/; la
+  vecchia in bozza come "Home (versione precedente)", con i suoi blocchi
+  del vecchio tema intatti; testata e pie' di pagina riscritti negli
+  stessi layout del Theme Builder (12 e 22 moduli, nessun blocco del
+  vecchio tema); Privacy e Cookie Policy riscritte; libreria Media da 30 a
+  41 file. Il sito non carica piu' nessun file del vecchio tema.
+- Tutti e due i siti confrontati con quello di sviluppo modulo per modulo,
+  a 390, 1024 e 1440 px: 359 scatole su 359 uguali, entro 1 px.
+- Creazione non interrotta, misurata prima su due siti con una versione
+  precedente di questo stesso codice: 26 e 28 secondi.
 
 
 DIFFERENZE DALLA 0.8.3
@@ -169,6 +193,8 @@ LIMITI NOTI
   cliccano all'inizio della scritta, oppure dal pannello Livelli.
 - Titolo "Le cose che finiscono in tasca...": le card gli passano sopra al
   centro, per disegno. Si clicca all'inizio.
+- La striscia "Street food - Gastronomia..." in vista telefono: il "+"
+  cade al centro della scritta. Si clicca all'inizio o alla fine.
 - Con le icone al passaggio del mouse riaccese, sui testi alti una riga la
   barretta copre il testo (succede in ogni sito Divi 5 con pezzi piccoli).
 - Una voce della testata riscritta con il doppio clic viene salvata da Divi
