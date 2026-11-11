@@ -92,7 +92,7 @@
    mouse, nothing is hidden. A text takes its place only while it shows, so the name stays in the
    middle of its line; a photo fades in over the lines without moving them. */
 @media (hover: hover) and (min-width: 981px) {
-	.tp-piatto:not(:hover):not(:focus-within) .tp-al-passaggio:not(.et_pb_image) {
+	.tp-piatto:not(:hover):not(:focus-within) .tp-al-passaggio:not(.et_pb_image):not(.et-vb-module--is-edited) {
 		display: none;
 	}
 
@@ -116,6 +116,19 @@
 	/* A photo that appears does not take the mouse away from the lines under it. */
 	body:not(.et-fb) .tp-piatto .et_pb_image.tp-al-passaggio {
 		pointer-events: none;
+	}
+
+	/* Visual Builder: the photo steps aside while one writes in the line, and the piece whose
+	   settings are open stays in sight wherever the mouse is. */
+	body.et-fb .tp-piatto:focus-within .et_pb_image.tp-al-passaggio:not(.et-vb-module--is-edited) {
+		opacity: 0;
+		visibility: hidden;
+	}
+
+	body.et-fb .tp-piatto .tp-al-passaggio.et-vb-module--is-edited {
+		display: flex;
+		opacity: 1;
+		visibility: visible;
 	}
 }
 
@@ -174,4 +187,20 @@ html.tp-ha-testata body.home #et-main-area {
 /* The sandwich of the header is pressed like a button. */
 .tp-panino .et-pb-icon {
 	cursor: pointer;
+}
+
+/* Visual Builder, while a page is edited: the header drawn above it is not the piece being worked on
+   (a click on it opens it, or Divi > Theme Builder). Until then it stays at the top of the page and
+   does not follow the scroll, so it never covers the work; on tablet and phone views its voices are
+   closed, as on the site. */
+body.et-fb .theme-builder-area--inactive .tp-testata {
+	position: absolute;
+}
+
+@media (max-width: 980px) {
+	/* (Divi keeps them open in the builder with a style of its own, stronger than "display: none".) */
+	body.et-fb .theme-builder-area--inactive .tp-testata .et_pb_group {
+		position: absolute !important;
+		visibility: hidden !important;
+	}
 }

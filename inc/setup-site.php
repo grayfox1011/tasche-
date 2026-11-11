@@ -435,6 +435,11 @@ function tp_setup_divi_options(): void {
 		'divi_color_palette' => '#fff5e9|#f8ebdb|#054726|#560b22|#3e372e|#c5b197|#ffffff|#000000',
 	];
 
+	// In the Visual Builder a module switched off for a device (Advanced > Visibility) is not drawn in
+	// that device's view, as on the site: the pieces made only for phones do not crowd the computer
+	// view. Builder settings > "Nascondi moduli disabilitati" turns it back.
+	$choices['et_fb_pref_hide_disabled_modules'] = 'true';
+
 	foreach ( $choices as $name => $value ) {
 		$current = et_get_option( $name, '' );
 		if ( '' === $current || false === $current || null === $current ) {

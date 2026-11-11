@@ -334,7 +334,10 @@ def image(name, src, alt='', *attributes, title=None, link=None, target='off', w
           align=None, margin=None, rad=None, full=False, bottom_space=None):
     """An Image module. Its sizes, spaces and corners are kept by Divi in places of their own:
     width / max_width / aspect ((4, 3): the photo is cut to that shape) / full (as wide as its column),
-    margin, align ('left', 'center', 'right'), rad (round corners)."""
+    margin, align ('left', 'center', 'right'), rad (round corners).
+    `full` is Divi's "Force Fullwidth": with it the builder does not apply width and max_width, so it
+    goes alone."""
+    assert not (full and (width is not None or max_width is not None)), 'full goes without width and max_width: ' + name
     content = {'src': src, 'alt': alt}
     if title:
         content['titleText'] = title

@@ -149,7 +149,7 @@ def intro():
         'Introduzione', [
             row('Introduzione', [
                 column([
-                    picture('Foto', d['image'], transform(rotate=R('-5deg', tablet='0deg')), max_width=R('480px', tablet='100%'), full=True,
+                    picture('Foto', d['image'], transform(rotate=R('-5deg', tablet='0deg')), width='100%', max_width=R('480px', tablet='100%'),
                             aspect=R((480, 680), tablet=(4, 3)), rad=R('22px', phone='18px')),
                 ], layout(direction='column', align=R('center', tablet='stretch')), size=R('9_24', tablet='24_24'), name='Colonna foto'),
                 column([
@@ -354,14 +354,14 @@ def menu():
             legend(),
         ], layout(direction='row', gap='32px', justify='space-between', align='flex-end', wrap=R('nowrap', tablet='wrap')),
             spacing(padding=box('0px', SIDE, R('50px', tablet='24px'), SIDE))),
-        picture('Foto (tablet e telefono)', d['feature'][0], hide_on(desktop=True), full=True, align='center',
+        picture('Foto (tablet e telefono)', d['feature'][0], hide_on(desktop=True), align='center',
                 width=R('100%', tablet='calc(100% - 64px)', phone='calc(100% - 36px)'), aspect=R((358, 322), tablet=(2, 1), phone=(358, 322)), rad='18px',
                 margin=box('0px', 'auto', '20px', 'auto')),
         dish_list('Piatti', d['dishes']),
         menu_head(d['groups'][0], GREEN),
         dish_list('Contorni', d['groups'][0]['rows'], table=False, color=GREEN),
         menu_head(d['groups'][1], BORDEAUX),
-        picture('Foto dei dolci (tablet e telefono)', d['feature'][1], hide_on(desktop=True), full=True, align='center',
+        picture('Foto dei dolci (tablet e telefono)', d['feature'][1], hide_on(desktop=True), align='center',
                 width=R('100%', tablet='calc(100% - 64px)', phone='calc(100% - 36px)'), aspect=R((358, 322), tablet=(2, 1), phone=(358, 322)), rad='18px',
                 margin=box('0px', 'auto', '20px', 'auto')),
         dish_list('Dolci', d['groups'][1]['rows'], table=False, color=BORDEAUX),
