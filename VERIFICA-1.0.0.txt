@@ -1,0 +1,188 @@
+TASCHE PIENE - VERSIONE 1.0.0, TEMA RIFATTO DA CAPO
+
+La 1.0.0 non e' un aggiornamento della 0.8.3: e' un tema nuovo. Il motivo:
+nella 0.8.3 il sito era tenuto al posto del Figma da un foglio di stile del
+tema e da moduli fatti apposta (Header sito, Footer sito, Striscia, Onda,
+Titolo animato). Bastava cambiare un testo in Divi perche' un'altezza
+restasse bloccata o un pezzo uscisse dal suo posto, e nel pie' di pagina
+alcune cose non si potevano scrivere.
+
+Ora il sito e' fatto solo di moduli Divi (sezioni, righe, colonne, gruppi,
+testi, titoli, immagini, pulsanti, elenchi con icone, accordion,
+collegamenti, icone). Misure, spazi, colori, caratteri e disposizione sono
+nei campi di ogni modulo, per computer, tablet e telefono. Il tema non
+fissa nessuna altezza: una sezione e' alta quanto quello che contiene.
+
+Moduli per pagina: home 327, testata 12, pie' di pagina 22, Privacy Policy
+7, Cookie Policy 7.
+
+
+COSA FA ANCORA IL TEMA
+
+1. Porta i due caratteri (Bowlby One, DM Sans) dal sito e non da Google.
+2. Pochi effetti, ognuno legato a una classe scritta in Avanzate >
+   Attributi del modulo (tolta la classe l'effetto sparisce, il contenuto
+   resta):
+   tp-scorre          la scritta che scorre
+   tp-lettere         il titolo che entra lettera per lettera (GSAP)
+   tp-piatto          la riga di un piatto: con il mouse sopra mostra foto
+                      e descrizione (i moduli con tp-al-passaggio)
+   tp-video-telefono  il video di sfondo parte anche su telefono e tablet
+   tp-testata         le pagine diverse dalla home iniziano sotto la
+                      testata; su telefono un tocco su una voce chiude il
+                      menu'; una pagina aperta su un'ancora (/#menu) mostra
+                      la sezione sotto la testata
+   tp-panino          l'icona che apre il menu' su tablet e telefono: e'
+                      il pulsante che tp-testata preme per richiuderlo, e
+                      si usa anche da tastiera
+   Nel Visual Builder gli effetti stanno fermi.
+3. Crea il sito la prima volta: home, testata e pie' di pagina nel Theme
+   Builder, Privacy Policy e Cookie Policy, immagini e video nella libreria
+   Media.
+
+Tutto il resto e' Divi: il panino della testata apre le voci con le
+Interazioni di Divi, le domande sono un Accordion, il video dell'hero e' lo
+sfondo video della sezione, la testata resta in alto con la posizione
+fissa di Divi, le card sfalsate sono margini nei campi di Divi, la tabella
+dei prezzi e' un gruppo a griglia con tre testi.
+
+
+INSTALLARE E AGGIORNARE
+
+Sito nuovo: caricare lo zip, attivare. Si apre Aspetto > Tasche Piene, che
+crea il sito e mostra a che punto e' (circa mezzo minuto).
+
+Sito con la 0.8.3 o precedente: copia del database, poi caricare lo zip e
+scegliere "Sostituisci". Alla prima pagina di amministrazione si apre
+Aspetto > Tasche Piene e il sito nuovo viene creato:
+- la home nuova prende l'indirizzo /home/ e diventa la pagina iniziale;
+- la home vecchia resta tra le bozze come "Home (versione precedente)".
+  Era fatta con moduli che il tema non ha piu': non si puo' riaprire
+  com'era. I testi cambiati a mano nella vecchia home NON passano nella
+  nuova, che parte dai testi del tema;
+- testata e pie' di pagina del Theme Builder vengono riscritti;
+- Privacy e Cookie Policy create dal tema vengono riscritte; una pagina
+  scritta a mano allo stesso indirizzo resta com'e';
+- foto e video gia' nella libreria Media non vengono caricati due volte.
+
+"Rifai il sito da capo" (Aspetto > Tasche Piene) riporta home, testata,
+pie' di pagina e pagine legali allo stato iniziale: cancella le modifiche
+fatte in Divi a quelle pagine.
+
+
+DUE PREFERENZE DEL BUILDER CHE IL TEMA IMPOSTA
+
+Solo dove nessuno le aveva scelte:
+- i moduli spenti per un dispositivo non vengono disegnati nella vista di
+  quel dispositivo (come sul sito);
+- la barretta di icone che Divi mostra al passaggio del mouse (sposta,
+  impostazioni, duplica, elimina) parte spenta. Sui pezzi piccoli copre il
+  testo, e un clic puo' finire su "elimina". Senza barretta: doppio clic
+  per scrivere, un clic per le impostazioni, tasto destro per duplicare o
+  eliminare. Si riaccende dalla barra laterale del builder ("Icone azione
+  al passaggio del mouse").
+Il "+" di Divi per aggiungere un modulo resta sempre visibile: i pezzi
+piccoli (prezzi, orari, voci della testata, nomi dei piatti) sono fatti in
+modo che non cada sulle parole.
+
+
+VERIFICHE FATTE
+
+Ambiente: WordPress 7.1.3 su SQLite, PHP 8.3, Divi 5.15.1, Chromium.
+
+Sul sito
+- Nessuno sbordo orizzontale a 16 larghezze, da 320 a 1920 px.
+- Scritte che scorrono in movimento (circa 70 px al secondo), domande che
+  si aprono e chiudono, panino che apre, chiude e torna a posto cambiando
+  larghezza, titoli a lettere che lasciano il testo com'era, animazioni di
+  ingresso che finiscono visibili. Nessun errore di script.
+- Foto al passaggio del mouse: da 981 a 1920 px non copre mai i prezzi.
+- Nome e descrizione di un piatto lunghissimi, a 8 larghezze: i prezzi
+  restano dove sono e larghi uguale, la riga cresce, niente esce di lato.
+- Testata con 6 e con 8 voci: nessuna voce si spezza su due righe; le
+  ultime vanno su una seconda riga, la barra cresce, il logo non si
+  restringe. Con le 5 voci di oggi la barra e' alta 61-64 px (0.8.3: 60-66).
+- Ancore aperte da un'altra pagina (/#chi-siamo, #menu, #materie,
+  #location, #faq), computer e telefono: la sezione comincia sotto la
+  testata.
+- Caratteri: nessuna richiesta a Google nella home e nella Privacy Policy.
+
+Nel Visual Builder
+- Altezza delle sezioni uguale tra builder e sito su computer (tranne hero
+  e striscia, fermi nel builder), entro 5 px su tablet e telefono.
+- Sotto il mouse c'e' il testo e non uno strumento di Divi: testata 5 su
+  5, pie' di pagina 10 su 10; home: vedi "Limiti noti".
+- Doppio clic e scrittura: nome di un piatto (la riga passa da 100 a 169
+  px, le altre non cambiano), un prezzo, una voce della testata, una nota
+  e una voce del pie' di pagina.
+- Duplica (tasto destro): un piatto, la copia compare subito sotto; una
+  voce della testata.
+- Salva: cambiato un prezzo, nella pagina salvata cambia 1 blocco su 326;
+  cambiata una voce della testata, cambia 1 blocco su 17.
+- Testata e pie' di pagina aperti come si fa a mano, da Divi > Theme
+  Builder con la matita.
+
+Creazione del sito
+- Sito nuovo: pagine, Theme Builder, pagina iniziale, permalink, opzioni di
+  Divi, preferenze del builder.
+- Aggiornamento da un sito con la 0.8.3: home vecchia in bozza, testata e
+  pie' di pagina riscritti, immagini riusate.
+(I tempi e i numeri di queste due prove sono in fondo, rifatte con lo zip
+di questa versione.)
+
+
+DIFFERENZE DALLA 0.8.3
+
+Aspetto e comportamento
+- Non c'e' piu' la schermata di caricamento iniziale.
+- Card "Tasca o vaschetta": niente effetto al passaggio del mouse, la
+  descrizione e' sempre visibile.
+- Legenda del menu': non sale piu' con l'animazione.
+- Menu' su telefono: una foto in cima invece delle foto che scorrono.
+- Menu' su tablet e telefono: la descrizione dei piatti si vede sempre; sui
+  prezzi ci sono i nomi Tasca, Media, Grande con il loro disegno.
+- Card delle materie prime: entrano con l'animazione di Divi (dal basso),
+  senza rotazione.
+- La scritta in diagonale scorre ma non resta ferma mentre si scorre la
+  pagina.
+- Testata su telefono: barra chiara fissa con il logo bordeaux (prima era
+  trasparente sopra il video).
+- Testata su computer: se le voci non stanno su una riga, le ultime vanno
+  su una seconda riga e la barra cresce.
+- Pie' di pagina: due personaggi invece di tre.
+- Domande: quella aperta ha lo stesso bordo delle altre.
+- Orari su telefono: giorni scritti per intero.
+- Etichette delle card: icone di Font Awesome.
+- Le onde tra le sezioni sono immagini: i colori si cambiano con un file
+  nuovo, non da Divi.
+
+Per chi modifica
+- I moduli del vecchio tema non esistono piu'.
+- Tutte le classi tp-... della 0.8.3 non hanno piu' effetto: restano solo
+  quelle elencate sopra (con tp-al-passaggio).
+
+
+LIMITI NOTI
+
+- Legenda del menu', riquadro Vaschetta: sulle due misure ("Media - 200g",
+  "Grande - 400g") cadono i "+" dei riquadri che le contengono. Si
+  cliccano all'inizio della scritta, oppure dal pannello Livelli.
+- Titolo "Le cose che finiscono in tasca...": le card gli passano sopra al
+  centro, per disegno. Si clicca all'inizio.
+- Con le icone al passaggio del mouse riaccese, sui testi alti una riga la
+  barretta copre il testo (succede in ogni sito Divi 5 con pezzi piccoli).
+- Una voce della testata riscritta con il doppio clic viene salvata da Divi
+  dentro un paragrafo: sul sito ha lo stesso aspetto.
+- Aprendo testata o pie' di pagina con un indirizzo diretto, e non dalla
+  matita del Theme Builder, Divi 5.15.1 disegna la pagina sotto le sue
+  barre. Succede anche con il vecchio tema: non dipende da questo.
+
+
+NON PROVATO
+
+- iPhone e Safari veri, Firefox, Edge.
+- Database MySQL (le prove sono su SQLite).
+- Versioni di Divi diverse dalla 5.15.1.
+- Il video dell'hero in formato MP4: il browser di prova non lo legge
+  (parte la versione WebM). Su iPhone conta l'MP4.
+- Un sito con plugin di cache o di ottimizzazione.

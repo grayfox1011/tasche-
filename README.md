@@ -86,6 +86,7 @@ Nel Visual Builder gli effetti stanno fermi, per poter scrivere.
 | `tp-al-passaggio` | Modulo dentro un `tp-piatto` | Vedi sopra. Dove non c'è il mouse (tablet, telefono) resta sempre visibile. |
 | `tp-video-telefono` | Sezione con video di sfondo | Il video parte anche su telefono e tablet (un video semplice prende il posto di quello di Divi, che lì non parte; se il telefono lo blocca, resta l'immagine di sfondo). |
 | `tp-testata` | Sezione della testata | Le pagine diverse dalla home iniziano sotto la testata; su telefono un tocco su una voce chiude il menù; una pagina aperta su un'àncora (`…/#menu`, da un link di un'altra pagina) mostra la sezione sotto la testata e non dietro. |
+| `tp-panino` | Icona (il panino della testata) | È il pulsante che `tp-testata` preme per richiudere il menù dopo un tocco su una voce; si usa anche da tastiera (Invio o Spazio). |
 
 Tutto il resto è Divi: il panino della testata apre e chiude le voci con le *Interazioni* di
 Divi (*Avanzate > Interazioni* dell'icona), le domande sono un modulo Accordion, il video

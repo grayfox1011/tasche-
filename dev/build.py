@@ -672,7 +672,6 @@ def footer():
                 ], layout(direction='column', gap=R('18px', phone='10px'), align='stretch')),
             ], sizing(width=R('calc(100% - 72px)', phone='calc(100% - 32px)'), maxWidth='1500px')),
         ],
-        attrs(cls='tp-pie'),
         background(color=GREEN),
         spacing(padding=box(R('60px', phone='40px'), '0px', R('34px', phone='28px'), '0px')),
     )])
