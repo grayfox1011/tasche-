@@ -1,0 +1,128 @@
+/*
+ * Tasche Piene: the few rules the theme adds to Divi.
+ *
+ * The site is made of Divi modules, and their sizes, spaces, colours and fonts are set in Divi's own
+ * panels. Nothing here sets a height or moves a module: this file only brings
+ *   1. the two fonts, served by the site and not by Google;
+ *   2. the effects Divi has no option for, each tied to a class written in a module's
+ *      Advanced > Attributes (take the class away and the effect goes, the content stays).
+ */
+
+/* 1. Fonts: the names are the ones chosen in Divi's font fields. */
+@font-face {
+	font-family: "Bowlby One";
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url("../fonts/tp-bowlby-one-400.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "DM Sans";
+	font-style: normal;
+	font-weight: 100 1000;
+	font-display: swap;
+	src: url("../fonts/tp-dm-sans-opsz-normal.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "DM Sans";
+	font-style: italic;
+	font-weight: 100 1000;
+	font-display: swap;
+	src: url("../fonts/tp-dm-sans-opsz-italic.woff2") format("woff2");
+}
+
+/*
+ * 2. Effects.
+ *
+ * tp-scorre            a Text module whose words run across the screen (assets/js/tp.js starts it;
+ *                      data-velocita="70" in the same Attributes sets the pixels per second)
+ * tp-piatto            a row of the menu: on computers, with the mouse over it, it shows the modules
+ *                      inside it that have the class tp-al-passaggio (the photo, the description)
+ * tp-video-telefono    the section whose background video must also run on phones and tablets
+ */
+
+/* The words that run: one line, as wide as it needs, moving left by one copy of the text and again. */
+.tp-scorre--attiva {
+	overflow: hidden;
+}
+
+.tp-scorre--attiva .tp-scorre__nastro {
+	display: flex;
+	width: max-content;
+	animation: tp-scorre var(--tp-scorre-tempo, 40s) linear infinite;
+	will-change: transform;
+}
+
+.tp-scorre--attiva[data-verso="destra"] .tp-scorre__nastro {
+	animation-direction: reverse;
+}
+
+.tp-scorre--attiva:hover .tp-scorre__nastro {
+	animation-play-state: paused;
+}
+
+.tp-scorre--attiva .tp-scorre__pezzo {
+	flex: none;
+	white-space: nowrap;
+}
+
+.tp-scorre--attiva .tp-scorre__pezzo > * {
+	display: inline;
+	margin: 0;
+	padding: 0;
+}
+
+@keyframes tp-scorre {
+	to {
+		transform: translate3d(calc(-1 * var(--tp-scorre-passo, 50%)), 0, 0);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.tp-scorre--attiva .tp-scorre__nastro {
+		animation: none;
+	}
+}
+
+/* The menu: what appears with the mouse over a dish. Where there is no mouse, nothing is hidden. */
+@media (hover: hover) and (min-width: 981px) {
+	.tp-piatto .tp-al-passaggio {
+		opacity: 0;
+		visibility: hidden;
+		transition: opacity .25s ease, visibility 0s linear .25s;
+	}
+
+	.tp-piatto:hover .tp-al-passaggio,
+	.tp-piatto:focus-within .tp-al-passaggio {
+		opacity: 1;
+		visibility: visible;
+		transition: opacity .25s ease;
+	}
+
+	/* A photo that appears does not take the mouse away from the rows under it. */
+	body:not(.et-fb) .tp-piatto .et_pb_image.tp-al-passaggio {
+		pointer-events: none;
+	}
+}
+
+/* The video of a section on phones and tablets, put there by assets/js/tp.js in place of Divi's own. */
+.tp-video-telefono > .tp-video-nativo {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	pointer-events: none;
+}
+
+.tp-video-telefono > .tp-video-nativo::-webkit-media-controls,
+.tp-video-telefono > .tp-video-nativo::-webkit-media-controls-start-playback-button {
+	display: none !important;
+	-webkit-appearance: none;
+}
+
+.tp-video-telefono.tp-video-telefono--attivo > .et-pb-background-video {
+	display: none;
+}

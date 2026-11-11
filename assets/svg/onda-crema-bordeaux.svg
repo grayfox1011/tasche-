@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 395" width="1440" height="395" preserveAspectRatio="none" fill="none">
+  <rect width="1440" height="395" fill="#FFF5E9"/>
+  <g transform="translate(-143 0) scale(3.00364 2.8417)"><path d="M316.811 72.799C412.259 49.6111 509.818 43.3648 546.667 43.1401L574.304 59.9919L542.623 143.576L0 143.576L0 94.3692L0 0C65.8337 33.928 221.363 95.9869 316.811 72.799Z" fill="#054726"/></g>
+  <g transform="translate(-10 124) scale(3.0796 2.3868)"><path d="M218.458 35.015C104.942 3.1651 25.5208 -1.39474 0 0.306587L3.06255 88.0983L471.625 88.0983L471.625 62.5775C434.535 66.6608 331.975 66.8649 218.458 35.015Z" fill="#560B22" transform="translate(0 25.4427)"/></g>
+  <rect y="394" width="1440" height="2" fill="#560B22"/>
+</svg>
