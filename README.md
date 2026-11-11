@@ -1,4 +1,4 @@
-# Tasche Piene, tema figlio di Divi (1.0.0)
+# Tasche Piene, tema figlio di Divi (1.1.0)
 
 Il sito è fatto **solo di moduli Divi**: sezioni, righe, colonne, gruppi, testi, titoli, immagini,
 pulsanti, elenchi con icone, accordion. Misure, spazi, colori, caratteri e disposizione sono nei
@@ -14,6 +14,11 @@ Il tema aggiunge tre cose:
 
 Dalla 1.0.0 il tema non ha più moduli suoi (Header sito, Footer sito, Striscia, Onda, Titolo
 animato) né il foglio di stile che teneva ogni pezzo al posto del Figma.
+
+La 1.1.0 parte dai testi e dalle foto che erano sul sito l'11 novembre 2026 (galleria in fondo
+compresa) e riporta gli effetti della 0.8.3: il logo all'apertura della pagina, le card *Tasca o
+vaschetta* che si aprono, la scritta diagonale che resta in vista, le card delle materie prime
+che entrano ruotate e si accendono. Sono fatti sui moduli Divi: i contenuti restano in Divi.
 
 ## Installare
 
@@ -53,6 +58,13 @@ Alla prima pagina di amministrazione WordPress apre *Aspetto > Tasche Piene* e c
   carattere delle voci.
 - **Una foto**: clic sulla foto > *Contenuto > Immagine*. La foto che compare su un piatto con il
   mouse si vede passando sulla riga.
+- **Il logo all'apertura**: è la prima sezione della home, *Apertura*. Nel builder è una sezione
+  come le altre (colore di fondo e immagine del logo si cambiano lì); sul sito diventa lo schermo
+  che si vede per primo. Per toglierlo si elimina la sezione, o la sua classe `tp-apertura`.
+- **Le card Tasca o vaschetta**: nel builder la descrizione sta sotto le etichette e si scrive
+  lì; sul sito compare sopra la foto quando la card si apre.
+- **La galleria in fondo**: è il modulo *Galleria* di Divi. *Contenuto > Immagini* per
+  aggiungere, togliere o riordinare le foto; quante per riga in *Design > Layout*.
 - **Colori, caratteri, misure, spazi**: scheda *Design* del modulo. L'icona del dispositivo
   accanto a un campo dà un valore diverso a tablet e telefono.
 - **Pezzi che esistono solo su un dispositivo** (*Avanzate > Visibilità*): il panino della
@@ -87,10 +99,16 @@ Nel Visual Builder gli effetti stanno fermi, per poter scrivere.
 | `tp-video-telefono` | Sezione con video di sfondo | Il video parte anche su telefono e tablet (un video semplice prende il posto di quello di Divi, che lì non parte; se il telefono lo blocca, resta l'immagine di sfondo). |
 | `tp-testata` | Sezione della testata | Le pagine diverse dalla home iniziano sotto la testata; su telefono un tocco su una voce chiude il menù; una pagina aperta su un'àncora (`…/#menu`, da un link di un'altra pagina) mostra la sezione sotto la testata e non dietro. |
 | `tp-panino` | Icona (il panino della testata) | È il pulsante che `tp-testata` preme per richiudere il menù dopo un tocco su una voce; si usa anche da tastiera (Invio o Spazio). |
+| `tp-apertura` | Sezione (la prima della home) | Sul sito è lo schermo che apre la pagina: il logo sale in due righe, poi lo schermo si alza e si vede la pagina. Nel builder, senza JavaScript o con "meno movimento" chiesto al dispositivo, non c'è nessuno schermo. |
+| `tp-scheda` | Colonna o gruppo (una card) | Con il mouse sopra (un tocco su telefono) la foto con `tp-scheda-foto` riempie la card e si scurisce, nome ed etichette salgono e compare quello che ha `tp-scheda-nascosto`. La card è alta quanto foto, nome ed etichette. |
+| `tp-scheda-foto`, `tp-scheda-nascosto` | Moduli dentro una `tp-scheda` | Vedi sopra. |
+| `tp-resta` | Modulo (la scritta diagonale) | Su computer resta in vista, al 39% dell'altezza dello schermo, mentre la sua sezione scorre; attributo `data-posizione` per un'altra altezza (in percentuale). |
+| `tp-carte` | Gruppo di card | Ogni card entra dal basso, un po' ruotata, quando arriva sullo schermo (ferme su telefono). Con il mouse sopra una card i testi diventano chiari e la card cresce un poco; fondo e bordo al passaggio sono i valori *hover* della card in Divi. |
 
 Tutto il resto è Divi: il panino della testata apre e chiude le voci con le *Interazioni* di
-Divi (*Avanzate > Interazioni* dell'icona), le domande sono un modulo Accordion, il video
-dell'hero è lo sfondo video della sezione, la testata resta in alto con *Posizione: fissa*.
+Divi (*Avanzate > Interazioni* dell'icona), le domande sono un modulo Accordion, la galleria è
+il modulo Galleria, il video dell'hero è lo sfondo video della sezione, la testata resta in alto
+con *Posizione: fissa*.
 
 Le onde tra le sezioni sono immagini (`assets/svg/onda-*.svg`): per cambiarne i colori serve un
 file nuovo.
@@ -116,7 +134,9 @@ dev/                 come sono state scritte le pagine (non entra nello zip)
 ```
 
 `{{media:percorso}}` in `content/` indica un file di `assets/`: alla creazione va nella libreria
-Media e nella pagina finisce il suo indirizzo.
+Media e nella pagina finisce il suo indirizzo (`{{id:percorso}}`: il suo numero, per la galleria).
+Una foto già caricata a mano nella libreria, con lo stesso nome e lo stesso contenuto, viene
+usata così com'è e non caricata una seconda volta.
 
 ## Sviluppo
 
