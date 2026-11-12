@@ -1,4 +1,4 @@
-# Tasche Piene, tema figlio di Divi (1.3.1)
+# Tasche Piene, tema figlio di Divi (1.4.0)
 
 Il sito è fatto **solo di moduli Divi**: sezioni, righe, colonne, gruppi, testi, titoli, immagini,
 pulsanti, elenchi con icone, accordion. Misure, spazi, colori, caratteri e disposizione sono nei
@@ -35,7 +35,7 @@ La 1.2.0 rifà da una pagina bianca la home, la testata e il piè di pagina, sez
 sulle misure del Figma (il riquadro da 1512 px per i computer, quello da 390 px per i telefoni)
 come le aveva realizzate la 0.8.3, sempre e solo con moduli Divi: non è servito nessun modulo su
 misura. Ogni sezione è stata confrontata con il Figma e con la 0.8.3 a 1512 e a 390 px; il
-confronto, le differenze rimaste e le prove sono in `VERIFICA-1.3.1.txt`. In breve:
+confronto, le differenze rimaste e le prove sono in `VERIFICA-1.4.0.txt`. In breve:
 
 - testata: su computer la barra crema (76 px, logo da 216 px); su tablet e telefono logo chiaro
   e panino sopra il video, senza barra, e le voci in un riquadro largo quanto lo schermo;
@@ -71,6 +71,10 @@ il Figma dimezza la card del computer: il nome passa da 18,75 a 26 px, le etiche
 (una per riga), la descrizione da 11 a 15 px. Su tablet e computer i testi crescono di poco; foto,
 colori e disposizione sono gli stessi.
 
+La 1.4.0 aggiunge la **fotografia del sito**: da *Aspetto > Tasche Piene* un amministratore salva
+il sito com'è in quel momento e, se poi qualcosa viene rovinato, lo riporta a quel momento con un
+clic (vedi *Salvare e ripristinare il sito*).
+
 ## Installare
 
 Servono WordPress 6.5 o successivo, PHP 7.4 o successivo e il tema Divi 5 installato (provato con
@@ -80,7 +84,7 @@ Divi 5.15.1).
 2. WordPress apre *Aspetto > Tasche Piene*, che crea il sito da sola e mostra a che punto è
    (circa mezzo minuto). Se la pagina non si apre, c'è un avviso con il pulsante *Crea il sito*.
 
-### Aggiornare da una 1.x (dalla 1.0.0 alla 1.3.0)
+### Aggiornare da una 1.x (dalla 1.0.0 alla 1.3.1)
 
 1. *Aspetto > Temi > Aggiungi tema > Carica tema*, lo zip nuovo, *Installa ora*, poi *Sostituisci
    il tema installato con quello caricato*. Cambiano solo i file del tema: home, testata, piè di
@@ -180,6 +184,34 @@ Due preferenze del builder che il tema imposta la prima volta, dove nessuno le a
   azione del genitore al passaggio del mouse* per quelle delle scatole intorno). Il "+" per
   aggiungere un modulo resta sempre: i pezzi piccoli sono fatti in modo che non cada sul testo.
 
+## Salvare e ripristinare il sito
+
+In *Aspetto > Tasche Piene* c'è la scheda **Fotografia del sito**.
+
+- **Salva il sito com'è adesso**: tiene home, testata, piè di pagina, Privacy Policy e Cookie
+  Policy così come sono in quel momento (testi, disposizione, impostazioni Divi di ogni pagina).
+  Si fa quando il sito è finito, e ogni volta che lo si vuole fissare di nuovo: la fotografia
+  nuova prende il posto di quella di prima.
+- **Ripristina il sito salvato**: riporta quelle cinque pagine alla fotografia. Una pagina finita
+  nel cestino ne esce, una eliminata viene ricreata; la home torna pagina iniziale e il Theme
+  Builder torna a mostrare testata e piè di pagina. Quello che è stato cambiato dopo la fotografia
+  va perso: poi si rifanno solo le modifiche che servono.
+- **Annulla il ripristino**: compare dopo un ripristino e riporta il sito a com'era subito prima,
+  se il ripristino è stato premuto per errore.
+
+Lo può fare solo un **amministratore**: chi ha il ruolo di editor non vede la pagina né la voce
+di menu, e una richiesta fatta a mano viene rifiutata. Ogni pulsante chiede conferma.
+
+Da sapere:
+
+- la fotografia sta nel database del sito (un'opzione che non viene caricata a ogni pagina): un
+  aggiornamento del tema non la tocca, una copia del database la porta con sé;
+- tiene le pagine, non la libreria Media: una foto eliminata dalla libreria non torna. E non
+  tiene le *Opzioni del tema* di Divi né le pagine create in più: solo le cinque del tema;
+- *Rifai il sito da capo* è un'altra cosa: riporta ai contenuti di partenza del tema, non alla
+  fotografia. Serve dopo un aggiornamento del tema che cambia le pagine; subito dopo conviene
+  rifare le proprie modifiche e salvare una fotografia nuova.
+
 ## Gli effetti del tema
 
 Sono in `assets/css/tp.css` e `assets/js/tp.js`. Si attivano scrivendo la classe in
@@ -246,6 +278,7 @@ functions.php        caricamento di caratteri, effetti e script
 inc/fonts.php        caratteri serviti dal sito
 inc/svg-upload.php   caricamento di file SVG per chi amministra
 inc/setup-site.php   creazione del sito e pagina Aspetto > Tasche Piene
+inc/site-snapshot.php  fotografia del sito: salva, ripristina, annulla (solo amministratori)
 content/*.html       le pagine come blocchi Divi 5, copiate in WordPress alla creazione
 assets/              caratteri, immagini, video, tp.css, tp.js, GSAP
 dev/                 come sono state scritte le pagine (non entra nello zip)

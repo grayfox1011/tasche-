@@ -367,39 +367,21 @@ function tp_setup_save_post( string $key, array $item, array $posts ): int {
 		tp_setup_put_aside_old_home();
 	}
 
-	$args = [
-		'post_title'   => $item['title'],
-		'post_name'    => $item['slug'],
-		'post_type'    => $item['post_type'],
-		'post_status'  => 'publish',
-		'post_content' => wp_slash( tp_setup_content( $item['content'], $posts ) ),
-	];
+	$id = tp_setup_write_post(
+		$found,
+		[
+			'post_title'   => $item['title'],
+			'post_name'    => $item['slug'],
+			'post_type'    => $item['post_type'],
+			'post_status'  => 'publish',
+			'post_content' => wp_slash( tp_setup_content( $item['content'], $posts ) ),
+		]
+	);
 
-	// The pages are the theme's own files. WordPress takes out of a page what not every user may write
-	// (an <iframe>, as the map is) when who saves has not the right to write any HTML: on a network of
-	// sites, or where the host has switched that right off. Here the content is saved as the theme wrote it.
-	$filtered = false !== has_filter( 'content_save_pre', 'wp_filter_post_kses' );
-	if ( $filtered ) {
-		kses_remove_filters();
-	}
-
-	if ( $found ) {
-		$args['ID'] = $found;
-		$result     = wp_update_post( $args, true );
-	} else {
-		$args['post_author'] = get_current_user_id() ?: 1;
-		$result              = wp_insert_post( $args, true );
-	}
-
-	if ( $filtered ) {
-		kses_init_filters();
-	}
-
-	if ( is_wp_error( $result ) || ! $result ) {
+	if ( ! $id ) {
 		return 0;
 	}
 
-	$id   = (int) $result;
 	$meta = [
 		'_tp_content'                => '1',
 		'_et_pb_use_builder'         => 'on',
@@ -417,14 +399,51 @@ function tp_setup_save_post( string $key, array $item, array $posts ): int {
 		update_post_meta( $id, $name, $value );
 	}
 
-	// What Divi worked out for the page as it was before.
-	foreach ( [ '_divi_dynamic_assets_cached_modules', '_divi_dynamic_assets_cached_feature_used', '_divi_dynamic_assets_canvases_used', '_et_builder_post_features_cache', '_et_builder_dynamic_assets_loading_attr_threshold', '_tp_child_seed_managed' ] as $name ) {
-		delete_post_meta( $id, $name );
-	}
-
+	tp_setup_forget_divi_cache( $id );
 	clean_post_cache( $id );
 
 	return $id;
+}
+
+/**
+ * Writes a page as it is given: over the page `$found`, or as a new one when `$found` is 0.
+ *
+ * The content is the theme's own (its files, or a photograph of the site taken by the theme). WordPress
+ * takes out of a page what not every user may write (an <iframe>, as the map is) when who saves has not
+ * the right to write any HTML: on a network of sites, or where the host has switched that right off.
+ * Here the content is saved whole.
+ *
+ * @param array<string, string> $args What wp_insert_post takes; post_content already slashed.
+ * @return int The page, or 0.
+ */
+function tp_setup_write_post( int $found, array $args ): int {
+	$filtered = false !== has_filter( 'content_save_pre', 'wp_filter_post_kses' );
+	if ( $filtered ) {
+		kses_remove_filters();
+	}
+
+	if ( $found ) {
+		$args['ID'] = $found;
+		$result     = wp_update_post( $args, true );
+	} else {
+		$args['post_author'] = get_current_user_id() ?: 1;
+		$result              = wp_insert_post( $args, true );
+	}
+
+	if ( $filtered ) {
+		kses_init_filters();
+	}
+
+	return is_wp_error( $result ) || ! $result ? 0 : (int) $result;
+}
+
+/**
+ * What Divi worked out for a page as it was before it was written again.
+ */
+function tp_setup_forget_divi_cache( int $id ): void {
+	foreach ( [ '_divi_dynamic_assets_cached_modules', '_divi_dynamic_assets_cached_feature_used', '_divi_dynamic_assets_canvases_used', '_et_builder_post_features_cache', '_et_builder_dynamic_assets_loading_attr_threshold', '_tp_child_seed_managed' ] as $name ) {
+		delete_post_meta( $id, $name );
+	}
 }
 
 /**
@@ -795,6 +814,7 @@ function tp_setup_page(): void {
 	?>
 	<div class="wrap">
 		<h1>Tasche Piene</h1>
+		<?php tp_snapshot_notice(); ?>
 		<p style="max-width:720px"><?php esc_html_e( 'Il sito è fatto solo di moduli Divi: testi, immagini, colori, misure e spazi si cambiano da Divi, sulla pagina o nel Theme Builder. Il tema aggiunge i caratteri e pochi effetti.', 'tasche-piene' ); ?></p>
 
 		<div class="tp-setup" data-ajax="<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>" data-nonce="<?php echo esc_attr( wp_create_nonce( 'tp_setup' ) ); ?>" data-autostart="<?php echo $autostart ? '1' : '0'; ?>" data-done="<?php echo $done ? '1' : '0'; ?>">
@@ -834,9 +854,11 @@ function tp_setup_page(): void {
 				<p><button type="button" class="button button-primary tp-setup__retry"><?php esc_html_e( 'Riprova', 'tasche-piene' ); ?></button></p>
 			</div>
 
+			<?php tp_snapshot_card( $done ); ?>
+
 			<div class="tp-setup__again card" <?php echo $done ? '' : 'hidden'; ?>>
 				<h2><?php esc_html_e( 'Rifare il sito da capo', 'tasche-piene' ); ?></h2>
-				<p><?php esc_html_e( 'Riporta home, testata, piè di pagina e pagine legali a come il tema le crea la prima volta. Le modifiche fatte da Divi a queste pagine vanno perse (WordPress ne tiene le revisioni). Serve solo se qualcosa è stato rovinato.', 'tasche-piene' ); ?></p>
+				<p><?php esc_html_e( 'Riporta home, testata, piè di pagina e pagine legali a come il tema le crea la prima volta: non alla fotografia salvata qui sopra, ma ai contenuti di partenza del tema. Le modifiche fatte da Divi a queste pagine vanno perse (WordPress ne tiene le revisioni). Serve dopo un aggiornamento del tema che cambia le pagine, o se non c’è una fotografia a cui tornare.', 'tasche-piene' ); ?></p>
 				<p><button type="button" class="button tp-setup__redo" data-confirm="<?php esc_attr_e( 'Rifare il sito da capo? Le modifiche fatte da Divi a home, testata, piè di pagina e pagine legali vanno perse.', 'tasche-piene' ); ?>"><?php esc_html_e( 'Rifai il sito da capo', 'tasche-piene' ); ?></button></p>
 			</div>
 		</div>

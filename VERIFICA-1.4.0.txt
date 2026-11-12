@@ -1,3 +1,77 @@
+TASCHE PIENE - VERSIONE 1.4.0
+
+Una cosa nuova rispetto alla 1.3.1: la fotografia del sito.
+
+In Aspetto > Tasche Piene c'e' la scheda "Fotografia del sito", con tre
+pulsanti:
+
+- "Salva il sito com'e' adesso": tiene home, testata, pie' di pagina,
+  Privacy Policy e Cookie Policy cosi' come sono in quel momento (il
+  contenuto e le impostazioni Divi di ogni pagina). Una fotografia nuova
+  prende il posto di quella di prima.
+- "Ripristina il sito salvato": riporta quelle cinque pagine alla
+  fotografia. Una pagina nel cestino ne esce, una eliminata viene
+  ricreata; la home torna pagina iniziale e il Theme Builder torna a
+  mostrare testata e pie' di pagina.
+- "Annulla il ripristino": c'e' dopo un ripristino e riporta il sito a
+  com'era subito prima.
+
+Solo un amministratore (chi puo' gestire le opzioni del sito). Ogni
+pulsante chiede conferma. La fotografia sta nel database del sito, in
+un'opzione che non viene caricata a ogni pagina (circa 310 KB): un
+aggiornamento del tema non la tocca.
+
+Cosa NON tiene: la libreria Media (una foto eliminata non torna), le
+Opzioni del tema di Divi, le pagine create in piu' oltre alle cinque del
+tema.
+
+"Rifai il sito da capo" resta ed e' un'altra cosa: riporta ai contenuti
+di partenza del tema, non alla fotografia.
+
+Questa versione cambia solo file del tema: basta caricare lo zip, le
+pagine non vengono toccate.
+
+PROVE DELLA 1.4.0 (WordPress con Divi 5.15.1)
+
+Dall'interno, come amministratore:
+- Salvato: cinque pagine, home tenuta byte per byte, mappa compresa.
+- Sito rovinato apposta: home con un testo e il titolo cambiati, CSS
+  personalizzato "body{display:none}" e un'impostazione in piu' sulla
+  home, testata svuotata, Cookie Policy nel cestino, Privacy Policy e
+  pie' di pagina eliminati definitivamente, pagina iniziale tolta.
+- Ripristinato: contenuto delle cinque pagine identico alla fotografia,
+  tutte pubblicate; Privacy Policy e pie' di pagina ricreati; titolo
+  della home, CSS personalizzato e impostazioni tornati com'erano; home
+  di nuovo pagina iniziale; Theme Builder collegato alla testata e al
+  pie' di pagina nuovo; indirizzi /privacy-policy/ e /cookie-policy/
+  giusti. Sul sito l'impaginazione e' identica a prima (1512 px).
+- Annullato il ripristino: il sito torna quello rovinato; un secondo
+  annullamento viene rifiutato. Ripristinato di nuovo: identico.
+
+Dall'interfaccia (Chromium):
+- Amministratore: la scheda mostra data, ora, nome di chi ha salvato e
+  le pagine comprese; Salva, Ripristina e Annulla funzionano e ognuno
+  chiede conferma; rifiutando la domanda non succede nulla.
+- Richiesta senza il codice di sicurezza della pagina, o con uno
+  sbagliato: rifiutata (403).
+- Editor: la pagina Aspetto > Tasche Piene risponde "Non hai il permesso
+  di accedere a questa pagina" (403) e la voce di menu non c'e'; le
+  richieste di salvare e di ripristinare fatte a mano: rifiutate (403).
+- Senza accesso al sito: richiesta rifiutata (400).
+- Aggiornamento del tema caricando lo zip da WordPress con una
+  fotografia salvata: la fotografia c'e' ancora, con la stessa data.
+
+NON PROVATO
+
+- Una rete di siti (multisite) e un sito con MySQL: le prove sono su un
+  sito singolo con SQLite. La fotografia e' un'opzione di WordPress come
+  le altre, ma su un database vero non l'ho vista.
+- Safari e Firefox per la scheda (e' una pagina di amministrazione con
+  tre pulsanti normali).
+- Il sito online, che ho solo letto.
+
+==========================================================================
+
 TASCHE PIENE - VERSIONE 1.3.1
 
 Una cosa rispetto alla 1.3.0: la sezione "Tasca ripiena o vaschetta" si

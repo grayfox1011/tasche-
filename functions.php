@@ -4,20 +4,22 @@
  *
  * The site is made of Divi modules only: what one sees is set in Divi's panels and stored in the
  * pages. The theme brings the fonts, a few effects (assets/css/tp.css, assets/js/tp.js) and
- * creates the site (home, header, footer, legal pages) the first time: inc/setup-site.php.
+ * creates the site (home, header, footer, legal pages) the first time: inc/setup-site.php. An
+ * administrator can keep the site as it is at one moment and bring it back to it: inc/site-snapshot.php.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'TP_VERSION', '1.3.1' );
+define( 'TP_VERSION', '1.4.0' );
 define( 'TP_PATH', trailingslashit( get_stylesheet_directory() ) );
 define( 'TP_URL', trailingslashit( get_stylesheet_directory_uri() ) );
 
 require_once TP_PATH . 'inc/fonts.php';
 require_once TP_PATH . 'inc/svg-upload.php';
 require_once TP_PATH . 'inc/setup-site.php';
+require_once TP_PATH . 'inc/site-snapshot.php';
 
 /**
  * A file's version for the browser cache: it changes when the file does.

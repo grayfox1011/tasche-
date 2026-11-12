@@ -2,6 +2,7 @@
  * Aspetto > Tasche Piene: creates the site one step after the other (the pictures a few at a time, then
  * the pages) and shows how far it is. A step that does not answer is sent again three times; then
  * "Riprova" goes on from the same step. Without this file the button sends the whole work at once.
+ * It also asks for a yes before the photograph of the site is saved over, restored or a restore undone.
  */
 (function () {
 	'use strict';
@@ -12,7 +13,7 @@
 	var ajax = box.getAttribute('data-ajax');
 	var nonce = box.getAttribute('data-nonce');
 	var part = {};
-	['ready', 'ask', 'run', 'error', 'again'].forEach(function (name) { part[name] = box.querySelector('.tp-setup__' + name); });
+	['ready', 'ask', 'run', 'error', 'again', 'photo'].forEach(function (name) { part[name] = box.querySelector('.tp-setup__' + name); });
 	var bar = box.querySelector('.tp-setup__bar');
 	var fill = box.querySelector('.tp-setup__fill');
 	var status = box.querySelector('.tp-setup__status');
@@ -57,7 +58,7 @@
 					var view = box.querySelector('.tp-setup__view');
 					if (edit && data.edit_url) { edit.href = data.edit_url; }
 					if (view && data.home_url) { view.href = data.home_url; }
-					show(['ready', 'again']);
+					show(['ready', 'again', 'photo']);
 					return;
 				}
 				if (!data.next) { return failed(); }
@@ -87,5 +88,11 @@
 	if (redo) {
 		redo.addEventListener('click', function () { if (window.confirm(redo.getAttribute('data-confirm'))) { start(); } });
 	}
+	// The photograph of the site: each of its buttons asks before it writes over something.
+	Array.prototype.forEach.call(box.querySelectorAll('.tp-setup__photo button[data-confirm]'), function (button) {
+		button.addEventListener('click', function (event) {
+			if (!window.confirm(button.getAttribute('data-confirm'))) { event.preventDefault(); }
+		});
+	});
 	if (box.getAttribute('data-autostart') === '1') { start(); }
 })();
