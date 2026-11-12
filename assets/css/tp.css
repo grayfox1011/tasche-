@@ -33,6 +33,43 @@
 	src: url("../fonts/tp-dm-sans-opsz-italic.woff2") format("woff2");
 }
 
+/* tp-foto: a photo that fills its frame (the width and the shape set in Design > Sizing) also when its file is
+   smaller than the frame. Divi alone never enlarges a picture, unless "Force Fullwidth" is on. */
+.et_pb_image.tp-foto .et_pb_image_wrap,
+.et_pb_image.tp-foto .et_pb_image_wrap img {
+	width: 100%;
+}
+
+/* tp-freccia: a button with this class shows, in place of the icon chosen in Divi, the arrow of the Figma: the
+   one of DM Sans, bold, turned up and right, with its space after the words. The icon must be on (Design >
+   Button > Show Button Icon): where it is off, on phones for some buttons, there is no arrow. */
+body #page-container .et_pb_section .et_pb_button.tp-freccia:after,
+body #page-container .et_pb_section .et_pb_button.tp-freccia:hover:after,
+body #page-container .et_pb_section .tp-freccia .et_pb_button:after,
+body #page-container .et_pb_section .tp-freccia .et_pb_button:hover:after {
+	content: "\2191" !important;
+	font-family: "DM Sans", Arial, sans-serif !important;
+	font-weight: 700 !important;
+	line-height: 1.3em !important;
+	margin-left: 19px !important;
+	transform: translateY(-50%) rotate(45deg);
+}
+
+@media (max-width: 767px) {
+	body #page-container .et_pb_section .et_pb_button.tp-freccia:after,
+	body #page-container .et_pb_section .et_pb_button.tp-freccia:hover:after,
+	body #page-container .et_pb_section .tp-freccia .et_pb_button:after,
+	body #page-container .et_pb_section .tp-freccia .et_pb_button:hover:after {
+		margin-left: 33px !important;
+	}
+}
+
+/* Between two paragraphs of a Text module there is one empty line, as in the Figma (Divi leaves 1em). */
+.et_pb_text .et_pb_text_inner p:not(:last-child) {
+	padding-bottom: 1.4em;
+	padding-bottom: 1lh;
+}
+
 /*
  * 2. Effects.
  *
@@ -51,6 +88,9 @@
  * tp-resta             a piece that stays in view on computers while its section goes by (the diagonal words);
  *                      with tp-scorre on the same module, the running words cross the whole screen
  * tp-carte             a group whose cards come in one by one, a little turned, and light up under the mouse
+ * tp-foto              a photo that fills its frame also when its file is smaller than the frame
+ * tp-freccia           a button that shows the arrow of the Figma in place of the icon chosen in Divi
+ * tp-fascia            with tp-testata: on tablets and phones the header has a bordeaux band on every page but the home
  *
  * And one correction: the waves between the sections (SVG pictures) reach both sides of any screen.
  */
@@ -190,8 +230,19 @@ html.tp-ha-testata {
 }
 
 /* The sandwich of the header is pressed like a button. */
+.tp-panino,
 .tp-panino .et-pb-icon {
 	cursor: pointer;
+}
+
+/* tp-fascia, on the header's section: on tablets and phones the header has no bar of its own, its light logo
+   and its sandwich lie over the video of the home. On every other page, which starts with a light background,
+   they stand on a bordeaux band. */
+@media (max-width: 980px) {
+	body:not(.home):not(.et-fb) #page-container .et_pb_section.tp-testata.tp-fascia {
+		background-color: #560b22 !important;
+		padding-bottom: 14px !important;
+	}
 }
 
 /* Visual Builder, while a page is edited: the header drawn above it is not the piece being worked on

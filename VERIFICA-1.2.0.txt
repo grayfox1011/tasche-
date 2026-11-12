@@ -1,3 +1,177 @@
+TASCHE PIENE - VERSIONE 1.2.0
+
+La 1.2.0 rifa' da una pagina bianca la home, la testata e il pie' di
+pagina, sezione per sezione, sulle misure del Figma (il riquadro da
+1512 px per i computer e quello da 390 px per i telefoni) come le aveva
+realizzate la 0.8.3. E' tutto fatto con i moduli di Divi: non e' servito
+nessun modulo su misura. Al tema si aggiungono tre classi (tp-foto,
+tp-freccia, tp-fascia) e tre disegni (il panino, i tre puntini, i
+disegni delle porzioni per il telefono).
+
+COME SI OTTIENE
+
+- Sito nuovo: caricare lo zip e attivarlo. La pagina Aspetto > Tasche
+  Piene crea il sito.
+- Sito che ha gia' la 1.0.0, la 1.1.0 o la 1.1.1: caricare lo zip e
+  scegliere "Sostituisci il tema installato con quello caricato". Le
+  pagine restano quelle di prima. Per avere l'impaginazione nuova:
+  Aspetto > Tasche Piene > "Rifai il sito da capo".
+  ATTENZIONE: "Rifai il sito da capo" riscrive home, testata, pie' di
+  pagina, Privacy Policy e Cookie Policy. Le modifiche fatte da Divi a
+  queste pagine si perdono: testi e foto tornano quelli che erano sul
+  sito l'11 novembre 2026. Chi ha cambiato qualcosa dopo, se lo segni
+  prima e lo riscriva nella home nuova.
+- Con il solo zip, senza "Rifai il sito da capo", nelle pagine di prima
+  cambia una cosa sola: tra due paragrafi dello stesso testo lo spazio
+  diventa una riga intera (8 px in piu' ogni volta), come nel Figma.
+
+COSA C'E' DI NUOVO, SEZIONE PER SEZIONE
+(misure a 1512 px; tra parentesi quelle a 390 px)
+
+ 1. Testata. Su computer: barra crema alta 76 px, a 14 px dall'alto e a
+    50 px dai lati (al massimo 1412 px), logo largo 216 px, voci in
+    Bowlby One 20 px; resta in vista. Su tablet e telefono: niente
+    barra, logo chiaro e panino (tre linee, 40 x 25) sopra il video,
+    che salgono con la pagina; il panino apre le voci in un riquadro
+    crema largo quanto lo schermo. Sulle altre pagine (Privacy, Cookie)
+    logo e panino stanno su una fascia bordeaux.
+ 2. Apertura (hero). Titolo 96/100 (32/38), pulsante alto 54 px con la
+    freccia del Figma, ultima riga 24 px (19); sezione alta quanto lo
+    schermo (812 px).
+ 3. Introduzione. Foto 459 x 684 inclinata di 4 gradi a sinistra, testi
+    a destra con titolo 64 px (32, in maiuscolo) e pulsante. Su
+    telefono: titolo, testo, pulsante senza freccia, foto.
+ 4. "Cucinato ogni mattina". Testi a sinistra, due foto sovrapposte a
+    destra (359 x 239 con bordo crema, 525 x 350). Su telefono: testo,
+    poi le due foto.
+ 5. Tasca o vaschetta. Onda, titolo 96 px (30), due schede 716 x 581 con
+    foto 630 x 358 (358 x 291 con foto 315 x 179). Su telefono l'onda
+    che chiude il bordeaux viene subito dopo le schede.
+ 6. Menu'. Su computer: pannello crema su fondo bordeaux, titolo 96 px,
+    legenda (Tasca / Vaschetta media e grande), righe con tre prezzi,
+    foto e descrizione al passaggio del mouse (foto 284 x 379 girata di
+    4,5 gradi). Su telefono, come nel Figma: pagina crema, titolo 48
+    px, foto con i tre puntini, una scheda per piatto con le parole
+    "Tasca" e "Piatto", i tre disegni e i tre prezzi; contorni, dolci e
+    da bere in righe basse con un prezzo.
+ 7. Materie prime. Schede 402 x 517 (381 x 491) con la sagoma bordeaux
+    284 x 227 e la foto dentro, sparse come sulla lavagna del Figma;
+    la scritta obliqua (72 px) attraversa lo schermo e resta in vista
+    mentre le schede passano. Titolo e testo sopra le schede ci sono
+    solo se sono scritti (il sito online non li ha).
+ 8. Dove siamo. Foto 573 x 594 a 137 px da sinistra; a destra titolo
+    64 px, testo, indirizzo con il segnaposto, pulsante. Su telefono:
+    titolo (30 px), testo, indirizzo, foto, pulsante.
+ 9. Orari. Riquadri larghi 690 px, 47 px a sinistra del centro come nel
+    Figma: il primo con titolo e primo giorno, poi uno per giorno, alti
+    126 px. Su telefono: titolo da solo, righe alte 64 px con i giorni
+    abbreviati e tutto in maiuscolo.
+10. Domande e galleria (non sono nel Figma): come prima, con le misure
+    dei riquadri della 0.8.3 (690 px, margini 28/33).
+11. Pie' di pagina. Blocco verde alto 823 px a 1512: il nome largo
+    quanto la pagina a 478 px dall'alto con i personaggi seduti sulle
+    lettere, voci in Bowlby One 24 px, ultima riga in DM Sans 16 (su
+    telefono: 110 px sopra il nome, voci su due righe da 16 px, note
+    una sotto l'altra da 14 px).
+
+Tre cose valgono per tutta la pagina: i pulsanti hanno la freccia del
+Figma (in grassetto, staccata dal testo); una foto ritagliata riempie
+sempre la sua cornice, anche se il file e' piccolo (le foto "dimensioni
+medie" del sito online lasciavano un vuoto nelle schede); tra due
+paragrafi c'e' una riga vuota.
+
+CHECK CON IL FIGMA E CON LA 0.8.3
+
+Riferimenti: il prototipo Figma "tasche-prototipo-wip" letto dal link
+pubblico (riquadro computer 1512 x 12845, riquadro telefono 390 x
+14061) e un sito con la 0.8.3 originale.
+
+Metodo: un sito di prova con il tema nuovo e gli stessi testi e foto
+della 0.8.3, messo accanto al sito 0.8.3. A 1512 x 982 e a 390 x 844 ho
+confrontato posizione, misura, carattere e colore di ogni blocco di
+testo e di ogni immagine (circa 150 testi e 20-45 immagini per
+larghezza), e ho guardato le tre versioni affiancate (Figma, 0.8.3,
+tema nuovo) sezione per sezione.
+
+Risultato: testata, apertura, introduzione, "Cucinato ogni mattina",
+Tasca o vaschetta, menu', dove siamo, orari e pie' di pagina coincidono
+con la 0.8.3 entro pochi pixel (le righe del menu' entro 6 px, la
+legenda entro 3, dove siamo entro 4, il passo delle righe degli orari
+identico). Le differenze piu' grandi di una dozzina di pixel sono tutte
+tra quelle elencate qui sotto.
+
+DIFFERENZE RIMASTE (volute, o da sapere)
+
+- Testi e foto sono quelli del sito online dell'11 novembre 2026, non
+  quelli del Figma (che ha altri titoli, sei schede di materie prime
+  con un'etichetta ciascuna, altri orari e altri prezzi).
+- Materie prime: le schede hanno tutte la stessa forma. Nella 0.8.3
+  ogni scheda aveva una sagoma disegnata sulla foto del Figma (una foto
+  tonda, una piu' grande). Con quattro schede occupano i primi quattro
+  posti della lavagna del Figma, senza i vuoti che la 0.8.3 lasciava:
+  la quarta e' a destra e non in basso a sinistra. La scritta obliqua e'
+  una riga sola che resta in vista (nel Figma e' disegnata tre volte).
+- Pie' di pagina: e' un blocco in fondo alla pagina. Nella 0.8.3 era
+  fermo dietro la pagina e si scopriva scorrendo.
+- Orari: tutti i giorni hanno la stessa misura (nel Figma e nella 0.8.3
+  il secondo e' piu' grande, 24 px contro 20). Sotto i 1512 px i
+  riquadri restano larghi 690 px (la 0.8.3 li rimpiccioliva).
+- Domande: stanno 96 px sotto gli orari (nella 0.8.3 erano attaccate
+  all'ultimo giorno, con un margine diverso a sinistra).
+- Menu': i prezzi sono al centro della loro colonna (nella 0.8.3 8 px
+  piu' a sinistra). Su telefono le righe con un prezzo solo hanno il
+  bordo di 3 px (2 nella 0.8.3) e i nomi dei dolci stanno su una riga
+  (nella 0.8.3 andavano a capo: "Tiramisu' / in tasca").
+- Menu' aperto su telefono: il panino resta di tre linee (nella 0.8.3
+  diventava una X). I tre puntini sotto la foto del menu' sono un
+  disegno, come nella 0.8.3: la foto non cambia.
+- Pulsante dell'apertura su telefono: la freccia punta in alto a
+  destra come nel Figma (nella 0.8.3, solo su telefono, era dritta).
+- Tablet (da 768 a 980 px): nel Figma non c'e'. E' l'impaginazione del
+  telefono con le misure del tablet.
+
+ALTRE PROVE DELLA 1.2.0 (Chromium, WordPress con Divi 5.15.1)
+
+- Nessuna barra orizzontale e niente fuori dai bordi a 24 larghezze,
+  da 320 a 2560 px, con i contenuti del sito online.
+- Testata: su una riga sola da 981 a 1920 px. Su telefono e tablet il
+  panino apre e chiude le voci (tocco, Invio da tastiera), un tocco su
+  una voce porta alla sezione e richiude; riquadro delle voci largo
+  quanto lo schermo (390 su 390, 820 su 820).
+- Telefono (iPhone emulato): toccata, una scheda delle materie prime
+  resta crema; dopo aver scorso tutta la pagina nessun pezzo e' rimasto
+  nascosto.
+- Scritta obliqua a 1100, 1512 e 1920 px: da un bordo all'altro, ferma
+  al 39% dell'altezza mentre passano le schede, poi riparte.
+- Foto: a 390, 820, 1512 e 1920 px ogni foto ritagliata e' larga quanto
+  la sua cornice (prima, a 1512 px, quella della seconda scheda era
+  427 px su 630).
+- Visual Builder: con il mouse si raggiungono tutti i testi (128 su 128
+  nella vista computer, 125 su 125 nella vista telefono; il centro
+  della scritta obliqua e' coperto dalle schede, come previsto, e si
+  prende dall'inizio della riga). Scritta una parola in un testo e
+  premuto Salva: sul sito cambia solo quel testo, a 1512 e a 390 px.
+- Aggiornamento di un sito con la 1.1.1 caricando lo zip da WordPress:
+  versione 1.2.0, home identica a prima (stessa impronta del
+  contenuto); unica differenza a vista lo spazio tra i paragrafi. Poi
+  "Rifai il sito da capo": 11 secondi, impaginazione identica a quella
+  del sito di sviluppo a 1512 e a 390 px.
+- Sito nuovo (WordPress appena installato con Divi): zip caricato e
+  attivato, "Crea il sito": 24 secondi; home come pagina iniziale,
+  testata e pie' di pagina nel Theme Builder, Privacy e Cookie Policy,
+  57 file nella libreria; impaginazione identica al sito di sviluppo.
+
+NON PROVATO
+
+- Safari, Firefox e telefoni veri: le prove sono fatte con Chromium,
+  che emula telefono e tablet.
+- Il video dell'apertura: il Chromium di prova non riproduce quel
+  formato, quindi non l'ho visto partire.
+- Il sito online: non ho accesso a quel WordPress.
+- Stampa e lettori di schermo: non riprovati dopo la 1.1.1.
+
+==========================================================================
+
 TASCHE PIENE - VERSIONE 1.1.1
 
 La 1.1.1 corregge quattro cose viste sul sito online con la 1.1.0. Sono

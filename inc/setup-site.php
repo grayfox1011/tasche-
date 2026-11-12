@@ -39,7 +39,8 @@ function tp_setup_items(): array {
 }
 
 function tp_setup_raw_content( string $name ): string {
-	$file = TP_PATH . 'content/' . $name . '.html';
+	// The filter lets a test site take the pages from another folder (dev/build.py with TP_OUT).
+	$file = trailingslashit( (string) apply_filters( 'tp_setup_content_dir', TP_PATH . 'content' ) ) . $name . '.html';
 
 	return is_readable( $file ) ? (string) file_get_contents( $file ) : '';
 }

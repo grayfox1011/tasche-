@@ -347,13 +347,13 @@ def _ratio(value):
 
 
 def image(name, src, alt='', *attributes, title=None, link=None, target='off', width=None, max_width=None, aspect=None, fit=None,
-          align=None, margin=None, rad=None, full=False, bottom_space=None, shrink=None):
+          align=None, margin=None, rad=None, full=False, bottom_space=None, shrink=None, place=None):
     """An Image module. Its sizes, spaces and corners are kept by Divi in places of their own:
     width / max_width / aspect ((4, 3): the photo is cut to that shape) / full (as wide as its column),
     margin, align ('left', 'center', 'right'), rad (round corners), shrink ('0': it keeps its width when
     the row is short of room; Sizing > Size > Custom).
     `full` is Divi's "Force Fullwidth": with it the builder does not apply width and max_width, so it
-    goes alone."""
+    goes alone. `place`: where it stands in a grid (Sizing > Grid item), as {'gridColumnStart': '1', ...}."""
     assert not (full and (width is not None or max_width is not None)), 'full goes without width and max_width: ' + name
     content = {'src': src, 'alt': alt}
     if title:
@@ -372,6 +372,8 @@ def image(name, src, alt='', *attributes, title=None, link=None, target='off', w
         size['forceFullwidth'] = 'on'
     if shrink is not None:
         size.update(flex_size(shrink=shrink))
+    if place:
+        size.update(place)      # its place in a grid: gridColumnStart, gridRowStart, gridAlignSelf, gridJustifySelf
     extra = []
     if size:
         extra.append(at('module.advanced.sizing', size))
@@ -391,11 +393,12 @@ def image(name, src, alt='', *attributes, title=None, link=None, target='off', w
     return block('divi/image', label(name), at('image.innerContent', content), *extra, *attributes)
 
 
-def button(name, text_, url, *attributes, target='off', icon=None, **font_props):
-    """icon: {'unicode': '&#x24;', 'type': 'divi', 'weight': '400'} or None for a button without one."""
+def button(name, text_, url, *attributes, target='off', icon=None, icon_on='on', **font_props):
+    """icon: {'unicode': '&#x24;', 'type': 'divi', 'weight': '400'} or None for a button without one.
+    icon_on: 'on', or R('on', phone='off') for an icon that is not shown on phones."""
     settings = {'enable': 'on', 'icon': {'enable': 'off'}}
     if icon:
-        settings['icon'] = {'enable': 'on', 'settings': icon, 'placement': 'right', 'onHover': 'off'}
+        settings['icon'] = {'enable': icon_on, 'settings': icon, 'placement': 'right', 'onHover': 'off'}
     extra = [at('button.decoration.font.font', font_props)] if font_props else []
     return block('divi/button', label(name), at('button.innerContent', {'text': text_, 'linkUrl': url, 'linkTarget': target}),
                  at('button.decoration.button', settings), *extra, *attributes)

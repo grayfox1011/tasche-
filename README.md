@@ -1,4 +1,4 @@
-# Tasche Piene, tema figlio di Divi (1.1.1)
+# Tasche Piene, tema figlio di Divi (1.2.0)
 
 Il sito è fatto **solo di moduli Divi**: sezioni, righe, colonne, gruppi, testi, titoli, immagini,
 pulsanti, elenchi con icone, accordion. Misure, spazi, colori, caratteri e disposizione sono nei
@@ -31,6 +31,24 @@ caricare lo zip, le pagine non vengono toccate.
 - Le card del menù e i titoli dei suoi gruppi salgono e compaiono quando si arriva a loro, anche
   su telefono, come le righe del menù nella 0.8.3.
 
+La 1.2.0 rifà da una pagina bianca la home, la testata e il piè di pagina, sezione per sezione,
+sulle misure del Figma (il riquadro da 1512 px per i computer, quello da 390 px per i telefoni)
+come le aveva realizzate la 0.8.3, sempre e solo con moduli Divi: non è servito nessun modulo su
+misura. Ogni sezione è stata confrontata con il Figma e con la 0.8.3 a 1512 e a 390 px; il
+confronto, le differenze rimaste e le prove sono in `VERIFICA-1.2.0.txt`. In breve:
+
+- testata: su computer la barra crema (76 px, logo da 216 px); su tablet e telefono logo chiaro
+  e panino sopra il video, senza barra, e le voci in un riquadro largo quanto lo schermo;
+- menù su telefono come nel Figma: pagina crema, una scheda per piatto con le parole *Tasca* e
+  *Piatto*, i tre disegni e i tre prezzi;
+- materie prime: schede da 402 × 517 px sparse come sulla lavagna del Figma;
+- dove siamo, orari e piè di pagina con le misure del Figma (foto 573 × 594, riquadri da 690 px,
+  blocco verde con il nome a tutta larghezza);
+- pulsanti con la freccia del Figma, foto che riempiono sempre la loro cornice.
+
+Un sito che ha già una versione 1.x prende l'impaginazione nuova con *Rifai il sito da capo*
+(vedi *Aggiornare*).
+
 ## Installare
 
 Servono WordPress 6.5 o successivo, PHP 7.4 o successivo e il tema Divi 5 installato (provato con
@@ -40,13 +58,19 @@ Divi 5.15.1).
 2. WordPress apre *Aspetto > Tasche Piene*, che crea il sito da sola e mostra a che punto è
    (circa mezzo minuto). Se la pagina non si apre, c'è un avviso con il pulsante *Crea il sito*.
 
-### Aggiornare dalla 1.0.0 o dalla 1.1.0
+### Aggiornare dalla 1.0.0, dalla 1.1.0 o dalla 1.1.1
 
-*Aspetto > Temi > Aggiungi tema > Carica tema*, lo zip nuovo, *Installa ora*, poi *Sostituisci
-il tema installato con quello caricato*. Cambiano solo i file del tema: home, testata, piè di
-pagina e pagine legali restano come sono, con tutte le modifiche fatte in Divi. Non serve
-*Rifai il sito da capo*. Poi svuotare la cache del sito, se c'è un plugin di cache, e
-ricaricare la pagina (su telefono: chiuderla e riaprirla).
+1. *Aspetto > Temi > Aggiungi tema > Carica tema*, lo zip nuovo, *Installa ora*, poi *Sostituisci
+   il tema installato con quello caricato*. Cambiano solo i file del tema: home, testata, piè di
+   pagina e pagine legali restano come sono, con tutte le modifiche fatte in Divi. A vista cambia
+   una cosa sola: tra due paragrafi dello stesso testo lo spazio diventa una riga intera.
+2. Per avere l'impaginazione della 1.2.0: *Aspetto > Tasche Piene > Rifai il sito da capo*.
+   **Riscrive home, testata, piè di pagina, Privacy Policy e Cookie Policy**: le modifiche fatte
+   da Divi a queste pagine si perdono, testi e foto tornano quelli che erano sul sito l'11
+   novembre 2026. Chi ha cambiato qualcosa dopo se lo segni prima, e lo riscriva nella home
+   nuova. La pagina va lasciata aperta finché dice *Il sito è pronto* (una decina di secondi).
+3. Svuotare la cache del sito, se c'è un plugin di cache, e ricaricare la pagina (su telefono:
+   chiuderla e riaprirla).
 
 ### Aggiornare un sito che ha una versione precedente (0.8.3 o più vecchia)
 
@@ -77,7 +101,21 @@ Alla prima pagina di amministrazione WordPress apre *Aspetto > Tasche Piene* e c
   voci (gruppo *Voci del menù*, scheda *Design*, *Layout*, *Spazio Orizzontale*) o la misura del
   carattere delle voci.
 - **Una foto**: clic sulla foto > *Contenuto > Immagine*. La foto che compare su un piatto con il
-  mouse si vede passando sulla riga.
+  mouse si vede passando sulla riga. Le foto ritagliate (introduzione, schede, piatti) riempiono
+  la loro cornice qualunque sia la misura del file: forma e larghezza della cornice sono in
+  *Design > Dimensionamento*.
+- **Un orario**: ogni riga ha due nomi del giorno, quello intero (computer e tablet) e quello
+  breve (telefono, modulo *Giorno (telefono)*, che si vede nella vista telefono del builder).
+  Su telefono giorni e orari sono in maiuscolo; una riga senza numeri (*Chiusi*) resta com'è
+  scritta.
+- **Dove siamo**: foto, testi e pulsante stanno in una griglia (*Design > Layout* della
+  colonna): su computer la foto prende la prima colonna, su tablet e telefono è una colonna sola
+  nell'ordine in cui i pezzi sono scritti (testi, foto, pulsante).
+- **Le schede delle materie prime**: su computer il posto di ogni scheda è nei suoi margini
+  sinistro e superiore (*Design > Spaziatura*); una scheda duplicata prende quelli della scheda
+  copiata e va spostata da lì.
+- **Un pulsante**: i pulsanti del tema hanno la classe `tp-freccia`, che mette la freccia del
+  Figma al posto dell'icona di Divi. Un pulsante nuovo ottenuto duplicandone uno ce l'ha già.
 - **Il logo all'apertura**: è la prima sezione della home, *Apertura*. Nel builder è una sezione
   come le altre (colore di fondo e immagine del logo si cambiano lì); sul sito diventa lo schermo
   che si vede per primo. Per toglierlo si elimina la sezione, o la sua classe `tp-apertura`.
@@ -87,10 +125,12 @@ Alla prima pagina di amministrazione WordPress apre *Aspetto > Tasche Piene* e c
   aggiungere, togliere o riordinare le foto; quante per riga in *Design > Layout*.
 - **Colori, caratteri, misure, spazi**: scheda *Design* del modulo. L'icona del dispositivo
   accanto a un campo dà un valore diverso a tablet e telefono.
-- **Pezzi che esistono solo su un dispositivo** (*Avanzate > Visibilità*): il panino della
-  testata, la legenda del menù (solo computer), disegni e nomi sopra i prezzi e la foto in cima
-  al menù (solo tablet e telefono), le due versioni di ogni onda. Nel builder si vedono nella
-  vista del loro dispositivo.
+- **Pezzi che esistono solo su un dispositivo** (*Avanzate > Visibilità*): nella testata il
+  logo scuro (computer), il logo chiaro e il panino (tablet e telefono); la legenda del menù e
+  le descrizioni dei piatti (solo computer); parole, disegni e foto in cima al menù con i suoi
+  tre puntini (solo tablet e telefono); i nomi brevi dei giorni e l'onda dopo le due schede
+  (solo telefono); la scritta obliqua e l'onda prima delle materie prime (non su telefono). Nel
+  builder si vedono nella vista del loro dispositivo.
 
 Due preferenze del builder che il tema imposta la prima volta, dove nessuno le aveva scelte:
 
@@ -119,17 +159,23 @@ Nel Visual Builder gli effetti stanno fermi, per poter scrivere.
 | `tp-entra` | Qualunque modulo | Sale e compare la prima volta che arriva sullo schermo, come le card del menù (ce l'hanno i titoli *I nostri contorni*, *I nostri dolci*, *Da bere*). Quelli che entrano insieme si seguono uno dopo l'altro. |
 | `tp-video-telefono` | Sezione con video di sfondo | Il video parte anche su telefono e tablet (un video semplice prende il posto di quello di Divi, che lì non parte; se il telefono lo blocca, resta l'immagine di sfondo). |
 | `tp-testata` | Sezione della testata | Le pagine diverse dalla home iniziano sotto la testata; su telefono un tocco su una voce chiude il menù; una pagina aperta su un'àncora (`…/#menu`, da un link di un'altra pagina) mostra la sezione sotto la testata e non dietro. |
-| `tp-panino` | Icona (il panino della testata) | È il pulsante che `tp-testata` preme per richiudere il menù dopo un tocco su una voce; si usa anche da tastiera (Invio o Spazio). |
+| `tp-fascia` | Sezione della testata, insieme a `tp-testata` | Su tablet e telefono la testata non ha una barra sua: logo chiaro e panino stanno sopra il video della home. Nelle altre pagine, che iniziano su fondo chiaro, la sezione prende una fascia bordeaux. |
+| `tp-panino` | Immagine (il panino della testata) | È il pulsante che `tp-testata` preme per richiudere il menù dopo un tocco su una voce; si usa anche da tastiera (Invio o Spazio). |
 | `tp-apertura` | Sezione (la prima della home) | Sul sito è lo schermo che apre la pagina: il logo sale in due righe, poi lo schermo si alza e si vede la pagina. Nel builder, senza JavaScript o con "meno movimento" chiesto al dispositivo, non c'è nessuno schermo. |
 | `tp-scheda` | Colonna o gruppo (una card) | Con il mouse sopra (un tocco su telefono) la foto con `tp-scheda-foto` riempie la card e si scurisce, nome ed etichette salgono e compare quello che ha `tp-scheda-nascosto`. La card è alta quanto foto, nome ed etichette. |
 | `tp-scheda-foto`, `tp-scheda-nascosto` | Moduli dentro una `tp-scheda` | Vedi sopra. |
 | `tp-resta` | Modulo (la scritta diagonale) | Su computer resta in vista, al 39% dell'altezza dello schermo, mentre la sua sezione scorre; attributo `data-posizione` per un'altra altezza (in percentuale). Insieme a `tp-scorre` sullo stesso Testo: sul sito la scritta attraversa tutto lo schermo, e un po' di più perché è inclinata; larghezza e margini sinistro e destro di quel modulo li dà il tema, il resto (margine sopra, inclinazione, carattere, colore) si cambia in Divi. |
+| `tp-foto` | Immagine | La foto riempie la sua cornice (larghezza e forma scelte in *Design > Dimensionamento*) anche quando il file è più piccolo della cornice. Divi da solo non ingrandisce mai una foto, se non con *Forza larghezza intera*. |
+| `tp-freccia` | Pulsante | Al posto dell'icona scelta in Divi il pulsante mostra la freccia del Figma: quella di DM Sans, in grassetto, girata in alto a destra e staccata dal testo. L'icona deve essere accesa (*Design > Pulsante*): dove è spenta, su telefono per alcuni pulsanti, la freccia non c'è. |
 | `tp-carte` | Gruppo di card | Ogni card entra dal basso, un po' ruotata, quando arriva sullo schermo (ferme su telefono). Con il mouse sopra una card i testi diventano chiari e, su computer, la card cresce un poco; fondo e bordo al passaggio sono i valori *hover* della card in Divi. Sugli schermi che si toccano (telefono, tablet) le card non reagiscono al dito: lì il "passaggio del mouse" resterebbe acceso dopo il tocco. |
 
 Tutto il resto è Divi: il panino della testata apre e chiude le voci con le *Interazioni* di
-Divi (*Avanzate > Interazioni* dell'icona), le domande sono un modulo Accordion, la galleria è
+Divi (*Avanzate > Interazioni* dell'immagine), le domande sono un modulo Accordion, la galleria è
 il modulo Galleria, il video dell'hero è lo sfondo video della sezione, la testata resta in alto
-con *Posizione: fissa*.
+con *Posizione: fissa* (su tablet e telefono *assoluta*: sale con la pagina).
+
+Una regola vale per tutti i moduli Testo: tra due paragrafi c'è una riga vuota, come nel Figma
+(Divi lascia un po' meno).
 
 Le onde tra le sezioni sono immagini (`assets/svg/onda-*.svg`): per cambiarne i colori serve un
 file nuovo. Sono SVG con *Forza larghezza intera*: Divi da solo lascia un SVG alla larghezza del
@@ -168,7 +214,11 @@ usata così com'è e non caricata una seconda volta.
 ## Sviluppo
 
 Le pagine in `content/` sono scritte da `dev/build.py` (Python 3, nessuna dipendenza):
-`dev/divi.py` produce i blocchi Divi, `dev/texts.py` ha testi e immagini.
+`dev/divi.py` produce i blocchi Divi, `dev/texts.py` ha testi e immagini. Le misure sono quelle
+del Figma: `vw(96)` in `dev/build.py` vuol dire 96 px sul riquadro da 1512 px, in proporzione
+sugli altri schermi. `dev/drawings.py` ha scritto i tre disegni delle porzioni per il telefono
+(`assets/svg/menu-telefono-*.svg`) dalle frecce del Figma; serve solo a rifarli e vuole
+la libreria Python `fontTools`.
 
 ```
 python3 dev/build.py       riscrive content/*.html
