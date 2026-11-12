@@ -1,3 +1,59 @@
+TASCHE PIENE - VERSIONE 1.3.1
+
+Una cosa rispetto alla 1.3.0: la sezione "Tasca ripiena o vaschetta" si
+legge meglio, soprattutto su telefono. Il disegno e' lo stesso (stesse
+card, stesse foto, stessi colori): cambiano le misure dei testi.
+
+Su telefono avevo seguito il Figma alla lettera, che li' dimezza la card
+del computer: nome a 18,75 px, etichette a 7,5 px, descrizione a 11 px.
+Su un telefono vero sono troppo piccoli.
+
+                       prima          ora
+  Telefono (390 px)
+    nome della card    18,75 px       26 px
+    etichette          7,5 px         12 px, una per riga
+    descrizione        11 px          15 px
+    card               358 x 311      358 x 383
+  Tablet (820 px)
+    nome               28 px          34 px
+    etichette          12 px          15 px
+    descrizione        16 px          17 px
+  Computer (1512 px)
+    nome               37,5 px        37,5 px (invariato, e' quello del Figma)
+    etichette          14 px          15 px
+    descrizione        16 px          18 px
+    card               716 x 581      716 x 588
+
+Sul computer le etichette sono a 15 e non a 16 px: a 16 quelle della
+seconda card andrebbero su tre righe e le due card crescerebbero di una
+cinquantina di pixel.
+
+Un difetto corretto, visto ingrandendo: su telefono l'onda che chiude la
+sezione saliva di 12 px sopra la seconda card e ne nascondeva gli angoli
+tondi in basso. Ora sta 10 px sotto la card.
+
+Le misure stanno nelle pagine: su un sito che ha gia' una 1.x arrivano
+con "Rifai il sito da capo", dopo aver caricato lo zip.
+
+PROVE DELLA 1.3.1 (Chromium, WordPress con Divi 5.15.1)
+
+- Card aperta (tocco su telefono e tablet, mouse su computer): nome,
+  etichette e descrizione stanno dentro la card alle tre larghezze.
+- Nessuna barra orizzontale e niente fuori dai bordi a 24 larghezze, da
+  320 a 2560 px.
+- Visual Builder: tutti i testi si raggiungono col mouse (129 su 129
+  nella vista computer, 126 su 126 nella vista telefono).
+- Aggiornamento del sito di anteprima dalla 1.3.0 caricando lo zip da
+  WordPress, poi "Rifai il sito da capo": impaginazione identica al sito
+  di sviluppo a 1512 e a 390 px.
+
+NON PROVATO (come per la 1.3.0)
+
+- Safari, Firefox e telefoni veri; il video dell'apertura; il sito
+  online, che ho solo letto.
+
+==========================================================================
+
 TASCHE PIENE - VERSIONE 1.3.0
 
 Tre cose rispetto alla 1.2.1. Stanno quasi tutte nelle pagine (home,

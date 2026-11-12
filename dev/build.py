@@ -250,8 +250,9 @@ def alberto():
 
 
 def chip_list(name, phrases, paper, icons):
-    """The little labels of a card: an Icon List whose items are pills (23 px high on computers; tiny on phones,
-    as in the Figma, where the three of them fit in one line)."""
+    """The labels of a card: an Icon List whose items are pills. On computers 15 px words in pills 26 px high (the
+    Figma has 14 and 23: at 16 the labels of the second card would take three lines); on phones 12 px, one a line. (The Figma's phone has them at 7.5 px, three in a
+    line: too small to read on a real phone.)"""
     items = []
     for phrase, glyph in zip(phrases, icons):
         items.append(block(
@@ -259,35 +260,36 @@ def chip_list(name, phrases, paper, icons):
             at('content.innerContent', phrase),
             at('icon.innerContent', {'unicode': glyph, 'type': 'fa', 'weight': '900'}),
             background(color=paper),
-            border(rad=R('10px', phone='5px')),
-            spacing(padding=box(R('1px', phone='0px'), R('12px', phone='6px'))),
-            layout(direction='row', gap=R('6px', phone='4px'), align='center'),
+            border(rad=R('14px', phone='13px')),
+            spacing(padding=box(R('2px', phone='4px'), R('13px', phone='10px'))),
+            layout(direction='row', gap=R('7px', phone='6px'), align='center'),
         ))
     return block(
         'divi/icon-list', label(name),
-        at('icon.advanced.color', CREAM), at('icon.advanced.size', R('14px', phone='7px')),
-        at('listItem.decoration.font.font', display_font(R(vw(14, 11, 14), tablet='12px', phone='7.5px'), CREAM, line='1.5em')),
-        layout(direction='row', gap=R('10px', phone='5px'), wrap='wrap', align='center'),
+        at('icon.advanced.color', CREAM), at('icon.advanced.size', R('15px', phone='12px')),
+        at('listItem.decoration.font.font', display_font(R(vw(15, 12.5, 15), tablet='15px', phone='12px'), CREAM, line='1.5em')),
+        layout(direction='row', gap=R('10px', phone='6px'), wrap='wrap', align='center'),
         children=items,
     )
 
 
 def choice_card(d, ink, icons, delay='0ms'):
     # Figma (1512): a cream card 716 x 581, the photo 630 x 358 at 33 px from the left and 47 from the top, the name
-    # in Bowlby One 37.5 px, the labels. On phones 358 x 291 with the photo 315 x 179.
+    # in Bowlby One 37.5 px, the labels. On phones the Figma halves everything (name 18.75 px, labels 7.5 px): here
+    # the photo keeps the Figma's shape and the words are large enough to be read (name 26 px, description 15 px).
     # tp-scheda: with the mouse over the card (a tap on phones) the photo (tp-scheda-foto) fills it and what has
     # tp-scheda-nascosto, the description, comes up over it. In the Visual Builder everything is in view, to be written.
     return column([
         picture('Foto', d['image'], attrs(cls='tp-scheda-foto tp-foto'), width='96.92%', aspect=R((630, 358), phone=(315, 179)),
                 rad=R('18px', phone='9px')),
-        title('Nome', d['name'], 'h3', ink, spacing(margin=box(R(vw(30, 18, 30), phone='8px'), '0px', '-10px', '0px')),
-              size=R(vw(37.5, 26, 37.5), tablet='28px', phone='18.75px'), line='1.002em', upper_on_phone=False),
+        title('Nome', d['name'], 'h3', ink, spacing(margin=box(R(vw(30, 18, 30), phone='12px'), '0px', '-10px', '0px')),
+              size=R(vw(37.5, 26, 37.5), tablet='34px', phone='26px'), line=R('1.002em', phone='1.05em'), upper_on_phone=False),
         chip_list('Etichette', d['chips'], ink, icons),
         text('Descrizione (compare al passaggio del mouse)', d['html'], attrs(cls='tp-scheda-nascosto'),
-             **body_font(R('16px', phone='11px'), ink, weight='400', line=R('1.5em', phone='1.22em'))),
+             **body_font(R('18px', tablet='17px', phone='15px'), ink, weight='400', line=R('1.45em', phone='1.35em'))),
     ], attrs(cls='tp-scheda'), background(color=CREAM), border(rad=R('20px', phone='10px')),
         spacing(padding=box(R(vw(47, 30, 47), phone='23.5px'), R(vw(33, 22, 33), phone='16.6px'), R('14px', phone='23px'), R(vw(33, 22, 33), phone='16.6px'))),
-        layout(direction='column', gap=R('19px', phone='15px')), rise(delay), size=R('12_24', tablet='24_24'), name='Scheda: ' + d['name'])
+        layout(direction='column', gap=R('19px', phone='14px')), rise(delay), size=R('12_24', tablet='24_24'), name='Scheda: ' + d['name'])
 
 
 def choice():
@@ -313,7 +315,8 @@ def choice():
                 column([
                     image('Onda (telefono)', media('svg/onda-bordeaux-crema-telefono.svg'), '', full=True, bottom_space=False),
                 ]),
-            ], FULL, hide_on(desktop=True, tablet=True), spacing(margin=box('-12px', 'auto', '0px', 'auto'))),
+            # (Below the second card, not over it: a margin less than nothing hid the card's round corners.)
+            ], FULL, hide_on(desktop=True, tablet=True), spacing(margin=box('10px', 'auto', '0px', 'auto'))),
         ],
         attrs(id='come-mangi'),
         background(color=BORDEAUX),

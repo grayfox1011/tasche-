@@ -1,4 +1,4 @@
-# Tasche Piene, tema figlio di Divi (1.3.0)
+# Tasche Piene, tema figlio di Divi (1.3.1)
 
 Il sito è fatto **solo di moduli Divi**: sezioni, righe, colonne, gruppi, testi, titoli, immagini,
 pulsanti, elenchi con icone, accordion. Misure, spazi, colori, caratteri e disposizione sono nei
@@ -35,7 +35,7 @@ La 1.2.0 rifà da una pagina bianca la home, la testata e il piè di pagina, sez
 sulle misure del Figma (il riquadro da 1512 px per i computer, quello da 390 px per i telefoni)
 come le aveva realizzate la 0.8.3, sempre e solo con moduli Divi: non è servito nessun modulo su
 misura. Ogni sezione è stata confrontata con il Figma e con la 0.8.3 a 1512 e a 390 px; il
-confronto, le differenze rimaste e le prove sono in `VERIFICA-1.3.0.txt`. In breve:
+confronto, le differenze rimaste e le prove sono in `VERIFICA-1.3.1.txt`. In breve:
 
 - testata: su computer la barra crema (76 px, logo da 216 px); su tablet e telefono logo chiaro
   e panino sopra il video, senza barra, e le voci in un riquadro largo quanto lo schermo;
@@ -66,6 +66,11 @@ La 1.3.0 fa tre cose:
 - **piè di pagina**: una riga dice dove si mangia (Via di Scurreria 42/R), la riga dopo di chi è
   il progetto, con la sede legale di Via Carducci e la partita IVA.
 
+La 1.3.1 rende più leggibile la sezione *Tasca ripiena o vaschetta*, soprattutto su telefono, dove
+il Figma dimezza la card del computer: il nome passa da 18,75 a 26 px, le etichette da 7,5 a 12 px
+(una per riga), la descrizione da 11 a 15 px. Su tablet e computer i testi crescono di poco; foto,
+colori e disposizione sono gli stessi.
+
 ## Installare
 
 Servono WordPress 6.5 o successivo, PHP 7.4 o successivo e il tema Divi 5 installato (provato con
@@ -75,7 +80,7 @@ Divi 5.15.1).
 2. WordPress apre *Aspetto > Tasche Piene*, che crea il sito da sola e mostra a che punto è
    (circa mezzo minuto). Se la pagina non si apre, c'è un avviso con il pulsante *Crea il sito*.
 
-### Aggiornare da una 1.x (dalla 1.0.0 alla 1.2.1)
+### Aggiornare da una 1.x (dalla 1.0.0 alla 1.3.0)
 
 1. *Aspetto > Temi > Aggiungi tema > Carica tema*, lo zip nuovo, *Installa ora*, poi *Sostituisci
    il tema installato con quello caricato*. Cambiano solo i file del tema: home, testata, piè di
