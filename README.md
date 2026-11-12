@@ -1,4 +1,4 @@
-# Tasche Piene, tema figlio di Divi (1.4.0)
+# Tasche Piene, tema figlio di Divi (1.4.1)
 
 Il sito è fatto **solo di moduli Divi**: sezioni, righe, colonne, gruppi, testi, titoli, immagini,
 pulsanti, elenchi con icone, accordion. Misure, spazi, colori, caratteri e disposizione sono nei
@@ -46,8 +46,8 @@ confronto, le differenze rimaste e le prove sono in `VERIFICA-1.4.0.txt`. In bre
   blocco verde con il nome a tutta larghezza);
 - pulsanti con la freccia del Figma, foto che riempiono sempre la loro cornice.
 
-Un sito che ha già una versione 1.x prende l'impaginazione nuova con *Rifai il sito da capo*
-(vedi *Aggiornare*).
+Un sito che ha già una versione 1.x prende l'impaginazione nuova con *Ripristina il sito
+iniziale* (vedi *Aggiornare*).
 
 La 1.2.1 aggiunge la X: su tablet e telefono, mentre le voci del menù sono aperte, il panino
 della testata diventa una X e torna alle tre linee quando si chiudono. I contenuti sono stati
@@ -75,6 +75,12 @@ La 1.4.0 aggiunge la **fotografia del sito**: da *Aspetto > Tasche Piene* un amm
 il sito com'è in quel momento e, se poi qualcosa viene rovinato, lo riporta a quel momento con un
 clic (vedi *Salvare e ripristinare il sito*).
 
+La 1.4.1 riordina *Aspetto > Tasche Piene*: restano due schede sole, **Sito iniziale** e
+**Fotografia del sito**. La scheda *Il sito è pronto* non c'è più: quando il sito è stato creato
+o ripristinato, la pagina lo dice con una riga in alto. *Rifai il sito da capo* si chiama ora
+*Ripristina il sito iniziale* e, come il ripristino della fotografia, si può annullare. Cambiano
+solo i file del tema: basta caricare lo zip.
+
 ## Installare
 
 Servono WordPress 6.5 o successivo, PHP 7.4 o successivo e il tema Divi 5 installato (provato con
@@ -82,20 +88,27 @@ Divi 5.15.1).
 
 1. *Aspetto > Temi > Aggiungi > Carica tema*: caricare lo zip e attivarlo.
 2. WordPress apre *Aspetto > Tasche Piene*, che crea il sito da sola e mostra a che punto è
-   (circa mezzo minuto). Se la pagina non si apre, c'è un avviso con il pulsante *Crea il sito*.
+   (circa mezzo minuto). Alla fine dice in alto *Sito iniziale creato* e mostra le due schede,
+   *Sito iniziale* e *Fotografia del sito*. Se la pagina non si apre, c'è un avviso con il
+   pulsante *Crea il sito*.
 
-### Aggiornare da una 1.x (dalla 1.0.0 alla 1.3.1)
+### Aggiornare da una 1.x
 
 1. *Aspetto > Temi > Aggiungi tema > Carica tema*, lo zip nuovo, *Installa ora*, poi *Sostituisci
    il tema installato con quello caricato*. Cambiano solo i file del tema: home, testata, piè di
-   pagina e pagine legali restano come sono, con tutte le modifiche fatte in Divi. A vista cambia
-   una cosa sola: tra due paragrafi dello stesso testo lo spazio diventa una riga intera.
-2. Per avere l'impaginazione nuova, la mappa e il piè di pagina nuovo (stanno nelle pagine, non nei
-   file del tema): *Aspetto > Tasche Piene > Rifai il sito da capo*.
+   pagina e pagine legali restano come sono, con tutte le modifiche fatte in Divi, e la fotografia
+   del sito resta quella salvata. A vista, per chi arriva da prima della 1.2.0, cambia una cosa
+   sola: tra due paragrafi dello stesso testo lo spazio diventa una riga intera.
+2. **Solo se le pagine sono quelle di una versione prima della 1.3.1** (cioè se dopo aver caricato
+   la 1.3.1 non sono state rifatte): per avere l'impaginazione nuova, la mappa e il piè di pagina
+   nuovo (stanno nelle pagine, non nei file del tema), *Aspetto > Tasche Piene > Ripristina il
+   sito iniziale* (fino alla 1.4.0 il pulsante si chiamava *Rifai il sito da capo*).
    **Riscrive home, testata, piè di pagina, Privacy Policy e Cookie Policy**: le modifiche fatte
    da Divi a queste pagine si perdono, testi e foto tornano quelli che erano sul sito il 12
    novembre 2026 (riletto quel giorno: uguali a quelli del tema). Chi ha cambiato qualcosa dopo
-   se lo segni prima, e lo riscriva nella home nuova. La pagina va lasciata aperta finché dice *Il sito è pronto* (una decina di secondi).
+   se lo segni prima, e lo riscriva nella home nuova. La pagina va lasciata aperta finché in alto
+   compare *Sito iniziale ripristinato* (una decina di secondi). Chi ha già le pagine della 1.3.1
+   salta questo passo: dalla 1.3.1 in poi le pagine non sono più cambiate.
 3. Svuotare la cache del sito, se c'è un plugin di cache, e ricaricare la pagina (su telefono:
    chiuderla e riaprirla).
 
@@ -186,7 +199,20 @@ Due preferenze del builder che il tema imposta la prima volta, dove nessuno le a
 
 ## Salvare e ripristinare il sito
 
-In *Aspetto > Tasche Piene* c'è la scheda **Fotografia del sito**.
+In *Aspetto > Tasche Piene* ci sono due schede, e solo quelle: **Sito iniziale** e **Fotografia
+del sito**.
+
+**Sito iniziale** è il sito come il tema lo crea la prima volta.
+
+- **Ripristina il sito iniziale** (fino alla 1.4.0: *Rifai il sito da capo*): riporta home,
+  testata, piè di pagina, Privacy Policy e Cookie Policy ai contenuti di partenza del tema, cioè
+  ai file di `content/`. Le modifiche fatte da Divi a queste pagine vanno perse. Serve dopo un
+  aggiornamento del tema che cambia le pagine, o quando non c'è una fotografia a cui tornare;
+  subito dopo conviene rifare le proprie modifiche e salvare una fotografia nuova.
+- Su un sito non ancora creato la scheda ha il pulsante *Crea il sito*, e la fotografia compare
+  quando il sito c'è.
+
+**Fotografia del sito** è il sito come lo si è lasciato quando era finito.
 
 - **Salva il sito com'è adesso**: tiene home, testata, piè di pagina, Privacy Policy e Cookie
   Policy così come sono in quel momento (testi, disposizione, impostazioni Divi di ogni pagina).
@@ -196,11 +222,13 @@ In *Aspetto > Tasche Piene* c'è la scheda **Fotografia del sito**.
   nel cestino ne esce, una eliminata viene ricreata; la home torna pagina iniziale e il Theme
   Builder torna a mostrare testata e piè di pagina. Quello che è stato cambiato dopo la fotografia
   va perso: poi si rifanno solo le modifiche che servono.
-- **Annulla il ripristino**: compare dopo un ripristino e riporta il sito a com'era subito prima,
-  se il ripristino è stato premuto per errore.
+- **Annulla il ripristino**: compare dopo un ripristino, della fotografia o del sito iniziale, e
+  riporta il sito a com'era subito prima, se il ripristino è stato premuto per errore. Vale per
+  l'ultimo ripristino soltanto.
 
 Lo può fare solo un **amministratore**: chi ha il ruolo di editor non vede la pagina né la voce
-di menu, e una richiesta fatta a mano viene rifiutata. Ogni pulsante chiede conferma.
+di menu, e una richiesta fatta a mano viene rifiutata. Ogni pulsante chiede conferma, e dopo
+ogni operazione la pagina dice in alto che cosa è stato fatto.
 
 Da sapere:
 
@@ -208,9 +236,9 @@ Da sapere:
   aggiornamento del tema non la tocca, una copia del database la porta con sé;
 - tiene le pagine, non la libreria Media: una foto eliminata dalla libreria non torna. E non
   tiene le *Opzioni del tema* di Divi né le pagine create in più: solo le cinque del tema;
-- *Rifai il sito da capo* è un'altra cosa: riporta ai contenuti di partenza del tema, non alla
-  fotografia. Serve dopo un aggiornamento del tema che cambia le pagine; subito dopo conviene
-  rifare le proprie modifiche e salvare una fotografia nuova.
+- i due ripristini portano in due posti diversi: *Ripristina il sito iniziale* ai contenuti di
+  partenza del tema, *Ripristina il sito salvato* alla fotografia. Il primo non tocca la
+  fotografia.
 
 ## Gli effetti del tema
 
@@ -309,8 +337,8 @@ python3 dev/make-zip.py    crea lo zip da caricare in WordPress
 ```
 
 Dopo la creazione le pagine vivono in WordPress: `content/` serve solo a un sito nuovo o a
-*Rifai il sito da capo* (in *Aspetto > Tasche Piene*), che riporta home, testata, piè di pagina e
-pagine legali allo stato iniziale.
+*Ripristina il sito iniziale* (in *Aspetto > Tasche Piene*), che riporta home, testata, piè di
+pagina e pagine legali allo stato iniziale.
 
 Nel Visual Builder Divi disegna i suoi strumenti sopra il pezzo sotto il mouse: una barretta in
 alto (24 px) e un "+" largo 40 px al centro, tra 42 e 22 px sopra il fondo del pezzo. Un testo

@@ -5,7 +5,9 @@
  *
  * The site is finished: one presses "Salva il sito com'è adesso". If later a page is spoiled, "Ripristina
  * il sito salvato" puts the five of them back as they were (also one thrown in the bin or deleted) and
- * one goes on from there. What the site was just before a restore is kept too, to undo it.
+ * one goes on from there. What the site was just before a restore is kept too, to undo it: before a
+ * restore to the photograph and before "Ripristina il sito iniziale" (inc/setup-site.php), which brings
+ * the five of them back to the theme's starting content.
  *
  * The photograph lives in the site's database, in one option that is not loaded with every page: an
  * update of the theme does not touch it, a copy of the database carries it along. It keeps what is
@@ -194,6 +196,21 @@ function tp_snapshot_apply( array $snapshot ) {
 }
 
 /**
+ * Keeps the site as it is now, just before a restore (to the photograph or to the starting site), so
+ * that the restore can be undone. A site that cannot be kept (its home is in the bin) leaves nothing to
+ * undo: what was kept before an earlier restore goes too, or "Annulla" would bring back that one.
+ */
+function tp_snapshot_keep_for_undo(): bool {
+	if ( is_wp_error( tp_snapshot_save( TP_SNAPSHOT_UNDO ) ) ) {
+		delete_option( TP_SNAPSHOT_UNDO );
+
+		return false;
+	}
+
+	return true;
+}
+
+/**
  * Brings the site back to the photograph. How the site was just before is kept, to undo the restore.
  *
  * @return array<string, int>|WP_Error
@@ -205,7 +222,7 @@ function tp_snapshot_restore() {
 		return new WP_Error( 'no_photo', __( 'Non c’è nessuna fotografia salvata.', 'tasche-piene' ) );
 	}
 
-	tp_snapshot_save( TP_SNAPSHOT_UNDO );
+	tp_snapshot_keep_for_undo();
 
 	return tp_snapshot_apply( $snapshot );
 }
@@ -288,7 +305,7 @@ function tp_snapshot_notice(): void {
 	$why      = isset( $_GET['tp_why'] ) ? sanitize_key( wp_unslash( $_GET['tp_why'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	$messages = [
 		'saved'    => __( 'Sito salvato: questa è ora la fotografia a cui «Ripristina il sito salvato» riporta.', 'tasche-piene' ),
-		'restored' => __( 'Sito ripristinato alla fotografia salvata. Se non era quello che volevi, «Annulla il ripristino» lo riporta a com’era un momento fa.', 'tasche-piene' ),
+		'restored' => __( 'Sito ripristinato alla fotografia salvata.', 'tasche-piene' ) . ( tp_snapshot_get( TP_SNAPSHOT_UNDO ) ? ' ' . __( 'Se non era quello che volevi, «Annulla il ripristino» lo riporta a com’era un momento fa.', 'tasche-piene' ) : '' ),
 		'undone'   => __( 'Ripristino annullato: il sito è tornato com’era prima del ripristino.', 'tasche-piene' ),
 	];
 	$errors   = [
@@ -346,12 +363,14 @@ function tp_snapshot_card( bool $shown ): void {
 						data-confirm="<?php echo esc_attr( sprintf( /* translators: %s: date and time. */ __( 'Ripristinare il sito alla fotografia del %s? Home, testata, piè di pagina e pagine legali tornano com’erano allora: quello che è stato cambiato dopo va perso.', 'tasche-piene' ), tp_snapshot_when( $snapshot ) ) ); ?>"
 					><?php esc_html_e( 'Ripristina il sito salvato', 'tasche-piene' ); ?></button>
 				<?php endif; ?>
-				<?php if ( $before ) : ?>
-					<button type="submit" name="tp_snapshot" value="undo" class="button-link tp-setup__undo" style="margin-left:12px"
+			</p>
+			<?php if ( $before ) : ?>
+				<p>
+					<button type="submit" name="tp_snapshot" value="undo" class="button-link tp-setup__undo"
 						data-confirm="<?php echo esc_attr( sprintf( /* translators: %s: date and time. */ __( 'Annullare l’ultimo ripristino? Il sito torna com’era il %s, subito prima del ripristino.', 'tasche-piene' ), tp_snapshot_when( $before ) ) ); ?>"
 					><?php echo esc_html( sprintf( /* translators: %s: date and time. */ __( 'Annulla il ripristino del %s', 'tasche-piene' ), tp_snapshot_when( $before ) ) ); ?></button>
-				<?php endif; ?>
-			</p>
+				</p>
+			<?php endif; ?>
 		</form>
 		<p class="description"><?php esc_html_e( 'La fotografia tiene i testi, la disposizione e le impostazioni delle pagine; le foto restano nella libreria Media (una foto eliminata dalla libreria non torna). Sta nel database del sito: un aggiornamento del tema non la tocca.', 'tasche-piene' ); ?></p>
 	</div>

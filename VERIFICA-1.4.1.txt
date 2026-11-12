@@ -1,3 +1,117 @@
+TASCHE PIENE - VERSIONE 1.4.1
+
+Una cosa rispetto alla 1.4.0: la pagina Aspetto > Tasche Piene ha due
+schede sole, "Sito iniziale" e "Fotografia del sito".
+
+- La scheda "Il sito e' pronto" non c'e' piu' (spiegazioni e i tre
+  pulsanti "Modifica la home con Divi", "Vedi il sito", "Apri il Theme
+  Builder"). Quando il sito e' stato creato o ripristinato la pagina lo
+  dice con una riga in alto, come fa gia' per la fotografia.
+- "Rifare il sito da capo" si chiama "Sito iniziale", e il suo pulsante
+  "Ripristina il sito iniziale". Fa la stessa cosa di prima: riporta
+  home, testata, pie' di pagina, Privacy Policy e Cookie Policy ai
+  contenuti di partenza del tema. Sta sopra la fotografia.
+- Su un sito non ancora creato la scheda "Sito iniziale" ha il pulsante
+  "Crea il sito"; la fotografia compare quando il sito c'e'.
+
+NOTA: nelle note delle versioni precedenti, qui sotto, il pulsante si
+chiama ancora "Rifai il sito da capo". E' lo stesso pulsante.
+
+Due cose aggiunte, non chieste, che vengono da se' con le due schede
+vicine:
+
+- Anche "Ripristina il sito iniziale" si puo' annullare. Prima di
+  riscrivere le pagine il tema tiene il sito com'e', e dopo, nella scheda
+  della fotografia, c'e' "Annulla il ripristino". Prima della 1.4.1 si
+  poteva annullare solo il ripristino della fotografia. Vale per
+  l'ultimo ripristino soltanto, e solo per un amministratore.
+- Corretto un difetto della 1.4.0: ripristinando la fotografia con la
+  home nel cestino, il sito di quel momento non si puo' tenere, e
+  "Annulla il ripristino" restava quello di un ripristino piu' vecchio
+  (con la sua data). Ora in quel caso l'annullamento non viene offerto, e
+  l'avviso in alto non lo nomina.
+
+Altri ritocchi: "Annulla il ripristino" sta su una riga sua sotto i due
+pulsanti; ricaricando la pagina l'avviso in alto non si ripete (il suo
+codice viene tolto dall'indirizzo); mentre il sito viene creato il
+titolo e' "Sto preparando il sito iniziale".
+
+Questa versione cambia solo file del tema: basta caricare lo zip, le
+pagine e la fotografia non vengono toccate.
+
+PROVE DELLA 1.4.1 (Chromium, WordPress con Divi 5.15.1)
+
+La pagina:
+- Sito creato: due schede, "Sito iniziale" (pulsante "Ripristina il sito
+  iniziale") e "Fotografia del sito". Niente altro. Nessuno scorrimento
+  orizzontale a 1280 e a 390 px, nessun pulsante fuori dallo schermo.
+- Sito non creato: una scheda sola, "Sito iniziale", con "Crea il sito".
+
+Creare il sito, in tre modi, sul sito di prova (con le foto gia' nella
+libreria):
+- dal pulsante: barra di avanzamento, 12 secondi, poi la pagina si
+  ricarica e dice "Sito iniziale creato: home, testata e pie' di pagina
+  (Theme Builder), Privacy Policy e Cookie Policy", con le due schede;
+- senza JavaScript: lo stesso avviso, dopo una richiesta sola (2
+  secondi);
+- come la apre WordPress la prima volta (parte da sola): lo stesso, 12
+  secondi.
+
+Installazione da zero, due volte (WordPress nuovo con solo Divi, zip
+caricato e attivato da Aspetto > Temi; WordPress apre la pagina, che
+parte da sola):
+- lasciata fare: 29 secondi da "Attiva" all'avviso "Sito iniziale
+  creato", 57 file nella libreria, due schede (la fotografia con il solo
+  "Salva il sito com'e' adesso"), home pagina iniziale;
+- interrotta dopo 3 foto su 57 (il mio strumento di prova aveva lasciato
+  la pagina): nelle altre pagine c'e' l'avviso "il sito non e' ancora
+  stato creato" con "Crea il sito"; da li', scheda "Sito iniziale" e
+  "Crea il sito": 27 secondi, 57 file, stesso avviso, due schede. La
+  home e' identica a quella del sito di sviluppo a 1512 e a 390 px (153
+  e 150 testi, 34 e 61 immagini, stessa altezza, nessuna differenza di
+  posizione).
+
+Ripristinare il sito iniziale:
+- chiede conferma; rifiutando non succede nulla;
+- su un sito con una modifica nella home: 12 secondi, avviso "Sito
+  iniziale ripristinato ... Se non era quello che volevi, Annulla il
+  ripristino lo riporta a com'era un momento fa", e nella scheda della
+  fotografia compare "Annulla il ripristino del (data e ora)";
+- "Annulla il ripristino": la home modificata torna, byte per byte; un
+  secondo annullamento non c'e';
+- la fotografia salvata non cambia (stessa data, stesso contenuto);
+- con la home nel cestino: viene creata una home nuova, pubblicata e
+  pagina iniziale; nessun annullamento offerto.
+- Ricaricando la pagina dopo un avviso (provato con "Sito iniziale
+  ripristinato" e con "Sito salvato"): l'avviso non torna.
+
+La fotografia, di nuovo tutta: Salva, Ripristina e Annulla funzionano e
+chiedono conferma come nella 1.4.0; richiesta senza codice di sicurezza
+o con uno sbagliato: rifiutata (403). Rifatte anche le 20 prove
+dall'interno della 1.4.0 (sito rovinato apposta, pagine nel cestino ed
+eliminate, ripristino identico, annullamento): tutte a posto.
+
+Editor: pagina 403, nessuna voce di menu, richieste di salvare e di
+ripristinare la fotografia rifiutate (403); i passi di "Ripristina il
+sito iniziale" chiesti a mano: rifiutati (403), anche con il codice di
+sicurezza di un amministratore. Senza accesso al sito: 400.
+
+Aggiornamento dalla 1.4.0 caricando lo zip da WordPress, su un sito con
+una fotografia salvata: la fotografia e' la stessa (stessa data), la
+home non e' stata toccata, la pagina mostra le due schede. Li' ho
+ripristinato il sito iniziale e annullato: il sito e' tornato identico
+a prima (stesso contenuto della home, stessa fotografia).
+
+NON PROVATO
+
+- Una rete di siti (multisite) e un sito con MySQL: le prove sono su
+  siti singoli con SQLite.
+- Safari e Firefox per la pagina (e' una pagina di amministrazione con
+  pulsanti normali).
+- Il sito online, che ho solo letto.
+
+==========================================================================
+
 TASCHE PIENE - VERSIONE 1.4.0
 
 Una cosa nuova rispetto alla 1.3.1: la fotografia del sito.

@@ -653,6 +653,12 @@ function tp_setup_step( string $step, int $offset ): array {
 		$total = count( $paths );
 
 		if ( 'start' === $step ) {
+			// The site is there and is about to go back to its starting content: how it is now is kept,
+			// so that "Annulla il ripristino" (inc/site-snapshot.php) can bring it back.
+			if ( tp_setup_is_done() && tp_snapshot_can() ) {
+				tp_snapshot_keep_for_undo();
+			}
+
 			return [ 'next' => 'media', 'offset' => 0, 'total' => $total ];
 		}
 
@@ -670,13 +676,8 @@ function tp_setup_step( string $step, int $offset ): array {
 
 		if ( 'finish' === $step ) {
 			$posts = tp_setup_finish();
-			$home  = ! empty( $posts['home'] ) ? (string) get_permalink( $posts['home'] ) : home_url( '/' );
 
-			return [
-				'done'     => ! empty( $posts['home'] ),
-				'home_url' => home_url( '/' ),
-				'edit_url' => add_query_arg( 'et_fb', '1', $home ),
-			];
+			return [ 'done' => ! empty( $posts['home'] ) ];
 		}
 
 		return [ 'error' => 'step' ];
@@ -801,11 +802,46 @@ function tp_setup_run_from_form(): void {
 }
 add_action( 'admin_init', 'tp_setup_run_from_form', 5 );
 
+/**
+ * What the creation of the site did, said at the top of the page it comes back to. With `again` the
+ * site was already there and has been brought back to the theme's starting content.
+ */
+function tp_setup_done_notice(): void {
+	$what = isset( $_GET['tp_done'] ) ? sanitize_key( wp_unslash( $_GET['tp_done'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+	if ( ! $what || ! tp_setup_is_done() ) {
+		return;
+	}
+
+	$message = 'again' === $what
+		? __( 'Sito iniziale ripristinato: home, testata, piè di pagina, Privacy Policy e Cookie Policy sono tornate ai contenuti di partenza del tema.', 'tasche-piene' )
+		: __( 'Sito iniziale creato: home, testata e piè di pagina (Theme Builder), Privacy Policy e Cookie Policy.', 'tasche-piene' );
+
+	if ( 'again' === $what && tp_snapshot_can() && tp_snapshot_get( TP_SNAPSHOT_UNDO ) ) {
+		$message .= ' ' . __( 'Se non era quello che volevi, «Annulla il ripristino» lo riporta a com’era un momento fa.', 'tasche-piene' );
+	}
+
+	printf( '<div class="notice notice-success is-dismissible tp-setup__done"><p>%s</p></div>', esc_html( $message ) );
+}
+
+/**
+ * The notices of the page answer to these: WordPress takes them out of the address once the page is
+ * open, so that loading it again does not say twice what was done once.
+ *
+ * @param string[] $args
+ * @return string[]
+ */
+function tp_setup_removable_args( $args ): array {
+	return array_merge( (array) $args, [ 'tp_done', 'tp_photo', 'tp_why' ] );
+}
+add_filter( 'removable_query_args', 'tp_setup_removable_args' );
+
+/**
+ * Aspetto > Tasche Piene, two cards: the starting site (created the first time, brought back later)
+ * and the photograph of the site (inc/site-snapshot.php).
+ */
 function tp_setup_page(): void {
 	$done      = tp_setup_is_done();
-	$state     = tp_setup_state();
-	$home_id   = (int) ( $state['posts']['home'] ?? 0 );
-	$home_url  = $home_id ? (string) get_permalink( $home_id ) : home_url( '/' );
 	$autostart = ! $done && ! empty( $_GET['tp_start'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	$old_homes = get_posts( [ 'post_type' => 'page', 'post_status' => 'draft', 'name' => 'home-versione-precedente', 'posts_per_page' => 1, 'no_found_rows' => true ] );
 	$old_home  = $old_homes ? $old_homes[0] : null;
@@ -814,27 +850,14 @@ function tp_setup_page(): void {
 	?>
 	<div class="wrap">
 		<h1>Tasche Piene</h1>
+		<?php tp_setup_done_notice(); ?>
 		<?php tp_snapshot_notice(); ?>
 		<p style="max-width:720px"><?php esc_html_e( 'Il sito è fatto solo di moduli Divi: testi, immagini, colori, misure e spazi si cambiano da Divi, sulla pagina o nel Theme Builder. Il tema aggiunge i caratteri e pochi effetti.', 'tasche-piene' ); ?></p>
 
-		<div class="tp-setup" data-ajax="<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>" data-nonce="<?php echo esc_attr( wp_create_nonce( 'tp_setup' ) ); ?>" data-autostart="<?php echo $autostart ? '1' : '0'; ?>" data-done="<?php echo $done ? '1' : '0'; ?>">
-			<div class="tp-setup__ready card" <?php echo $done ? '' : 'hidden'; ?>>
-				<h2><?php esc_html_e( 'Il sito è pronto', 'tasche-piene' ); ?></h2>
-				<p><?php esc_html_e( 'La home è in Pagine > Home ed è la pagina iniziale. Testata e piè di pagina sono in Divi > Theme Builder.', 'tasche-piene' ); ?></p>
-				<p><?php esc_html_e( 'Nel builder: doppio clic su un testo per scriverci, un clic su un pezzo per aprirne le impostazioni, tasto destro per duplicare o eliminare (per esempio la riga di un piatto). Le icone che Divi mostra al passaggio del mouse partono spente, perché sui pezzi piccoli coprono il testo: si riaccendono dalla barra laterale del builder, "Icone azione al passaggio del mouse".', 'tasche-piene' ); ?></p>
-				<p>
-					<a class="button button-primary tp-setup__edit" href="<?php echo esc_url( add_query_arg( 'et_fb', '1', $home_url ) ); ?>"><?php esc_html_e( 'Modifica la home con Divi', 'tasche-piene' ); ?></a>
-					<a class="button tp-setup__view" href="<?php echo esc_url( home_url( '/' ) ); ?>" target="_blank" rel="noopener"><?php esc_html_e( 'Vedi il sito', 'tasche-piene' ); ?></a>
-					<a class="button" href="<?php echo esc_url( admin_url( 'admin.php?page=et_theme_builder' ) ); ?>"><?php esc_html_e( 'Apri il Theme Builder', 'tasche-piene' ); ?></a>
-				</p>
-				<?php if ( $old_home instanceof WP_Post ) : ?>
-					<p class="description"><?php esc_html_e( 'La home della versione precedente del tema è rimasta tra le bozze (Pagine > Home (versione precedente)): era fatta con moduli che il tema non ha più. Quando non serve, si può cestinare.', 'tasche-piene' ); ?></p>
-				<?php endif; ?>
-			</div>
-
+		<div class="tp-setup" data-ajax="<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>" data-nonce="<?php echo esc_attr( wp_create_nonce( 'tp_setup' ) ); ?>" data-page="<?php echo esc_url( tp_setup_page_url() ); ?>" data-autostart="<?php echo $autostart ? '1' : '0'; ?>" data-done="<?php echo $done ? '1' : '0'; ?>">
 			<div class="tp-setup__ask card" <?php echo $done ? 'hidden' : ''; ?>>
-				<h2><?php esc_html_e( 'Crea il sito', 'tasche-piene' ); ?></h2>
-				<p><?php esc_html_e( 'Crea la home, la testata e il piè di pagina (Theme Builder), Privacy Policy e Cookie Policy, e mette foto e video nella libreria Media. Ci vuole circa un minuto.', 'tasche-piene' ); ?></p>
+				<h2><?php esc_html_e( 'Sito iniziale', 'tasche-piene' ); ?></h2>
+				<p><?php esc_html_e( 'Il sito non è ancora stato creato. «Crea il sito» mette la home, la testata e il piè di pagina (Theme Builder), Privacy Policy e Cookie Policy con i contenuti di partenza del tema, e porta foto e video nella libreria Media. Ci vuole circa un minuto.', 'tasche-piene' ); ?></p>
 				<form method="post">
 					<?php wp_nonce_field( 'tp_setup_form' ); ?>
 					<p><button type="submit" name="tp_setup_run" value="1" class="button button-primary tp-setup__start"><?php esc_html_e( 'Crea il sito', 'tasche-piene' ); ?></button></p>
@@ -842,25 +865,28 @@ function tp_setup_page(): void {
 			</div>
 
 			<div class="tp-setup__run card" hidden>
-				<h2><?php esc_html_e( 'Sto creando il sito', 'tasche-piene' ); ?></h2>
+				<h2><?php esc_html_e( 'Sto preparando il sito iniziale', 'tasche-piene' ); ?></h2>
 				<p><?php esc_html_e( 'Lascia aperta questa pagina.', 'tasche-piene' ); ?></p>
-				<div class="tp-setup__bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="<?php esc_attr_e( 'Creazione del sito', 'tasche-piene' ); ?>" style="<?php echo esc_attr( $bar ); ?>"><span class="tp-setup__fill" style="<?php echo esc_attr( $fill ); ?>"></span></div>
+				<div class="tp-setup__bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="<?php esc_attr_e( 'Preparazione del sito iniziale', 'tasche-piene' ); ?>" style="<?php echo esc_attr( $bar ); ?>"><span class="tp-setup__fill" style="<?php echo esc_attr( $fill ); ?>"></span></div>
 				<p class="tp-setup__status" aria-live="polite"></p>
 			</div>
 
 			<div class="tp-setup__error card" hidden>
-				<h2><?php esc_html_e( 'La creazione si è fermata', 'tasche-piene' ); ?></h2>
+				<h2><?php esc_html_e( 'La preparazione si è fermata', 'tasche-piene' ); ?></h2>
 				<p><?php esc_html_e( 'La connessione o il server non hanno risposto. Premi Riprova: riparte dal punto in cui si era fermata.', 'tasche-piene' ); ?></p>
 				<p><button type="button" class="button button-primary tp-setup__retry"><?php esc_html_e( 'Riprova', 'tasche-piene' ); ?></button></p>
 			</div>
 
-			<?php tp_snapshot_card( $done ); ?>
-
 			<div class="tp-setup__again card" <?php echo $done ? '' : 'hidden'; ?>>
-				<h2><?php esc_html_e( 'Rifare il sito da capo', 'tasche-piene' ); ?></h2>
-				<p><?php esc_html_e( 'Riporta home, testata, piè di pagina e pagine legali a come il tema le crea la prima volta: non alla fotografia salvata qui sopra, ma ai contenuti di partenza del tema. Le modifiche fatte da Divi a queste pagine vanno perse (WordPress ne tiene le revisioni). Serve dopo un aggiornamento del tema che cambia le pagine, o se non c’è una fotografia a cui tornare.', 'tasche-piene' ); ?></p>
-				<p><button type="button" class="button tp-setup__redo" data-confirm="<?php esc_attr_e( 'Rifare il sito da capo? Le modifiche fatte da Divi a home, testata, piè di pagina e pagine legali vanno perse.', 'tasche-piene' ); ?>"><?php esc_html_e( 'Rifai il sito da capo', 'tasche-piene' ); ?></button></p>
+				<h2><?php esc_html_e( 'Sito iniziale', 'tasche-piene' ); ?></h2>
+				<p><?php esc_html_e( 'È il sito come il tema lo crea la prima volta. «Ripristina il sito iniziale» riporta home, testata, piè di pagina, Privacy Policy e Cookie Policy ai contenuti di partenza del tema: le modifiche fatte da Divi a queste pagine vanno perse. Serve dopo un aggiornamento del tema che cambia le pagine, o quando non c’è una fotografia a cui tornare.', 'tasche-piene' ); ?></p>
+				<p><button type="button" class="button tp-setup__redo" data-confirm="<?php esc_attr_e( 'Ripristinare il sito iniziale? Home, testata, piè di pagina e pagine legali tornano ai contenuti di partenza del tema: le modifiche fatte da Divi a queste pagine vanno perse.', 'tasche-piene' ); ?>"><?php esc_html_e( 'Ripristina il sito iniziale', 'tasche-piene' ); ?></button></p>
+				<?php if ( $old_home instanceof WP_Post ) : ?>
+					<p class="description"><?php esc_html_e( 'La home della versione precedente del tema è rimasta tra le bozze (Pagine > Home (versione precedente)): era fatta con moduli che il tema non ha più. Quando non serve, si può cestinare.', 'tasche-piene' ); ?></p>
+				<?php endif; ?>
 			</div>
+
+			<?php tp_snapshot_card( $done ); ?>
 		</div>
 	</div>
 	<?php
