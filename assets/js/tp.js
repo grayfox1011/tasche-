@@ -8,6 +8,7 @@
  *   tp-video-telefono    the background video of a section also runs on phones and tablets
  *   tp-testata           the header: its height is told to the page, its menu closes after a tap on a voice,
  *                        a page opened at an anchor (…/#menu) shows the piece under the header
+ *   tp-panino            the sandwich of the header: it says whether the voices are open, and becomes an X
  *   tp-apertura          the section that opens the page: the logo on a full screen, then the page (GSAP)
  *   tp-scheda            a card whose photo fills it with the mouse over, while its hidden text comes up
  *   tp-resta             a piece that stays in view on computers while its section goes by
@@ -268,6 +269,22 @@
 		measure();
 		window.addEventListener('resize', measure, { passive: true });
 		window.addEventListener('load', measure);
+
+		// The sandwich says whether the voices are open (aria-expanded): with it assets/css/tp.css draws an
+		// X in place of the three lines. Divi opens and closes the voices by writing their "display": that
+		// is what is watched, so the X follows whatever closes them (the sandwich, a voice, a wider screen).
+		var voices = (bar.querySelector('.et_pb_row') || bar).querySelector('.et_pb_group');
+		var tell = function () {
+			var burger = bar.querySelector('.tp-panino');
+			if (!burger) { return; }
+			var open = burger.offsetParent !== null && !!voices && voices.offsetParent !== null;
+			burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+		};
+		tell();
+		if (voices && window.MutationObserver) {
+			new window.MutationObserver(tell).observe(voices, { attributes: true, attributeFilter: ['style', 'class'] });
+		}
+		window.addEventListener('resize', tell, { passive: true });
 
 		// A page opened at one of its pieces (…/#menu, from a link on another page): Divi brings the piece to
 		// the very top of the screen, behind the header, because it measures the header only a moment later.

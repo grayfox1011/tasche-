@@ -235,6 +235,68 @@ html.tp-ha-testata {
 	cursor: pointer;
 }
 
+/* While the voices are open the sandwich is an X: the picture of the three lines fades and two lines cross
+   in its place (assets/js/tp.js writes aria-expanded on the sandwich). The X is cream like the picture the
+   theme puts there, 45 px from tip to tip on a picture 40 px wide. */
+.tp-panino .et_pb_image_wrap {
+	position: relative;
+}
+
+.tp-panino img {
+	transition: opacity .2s ease;
+}
+
+.tp-panino .et_pb_image_wrap::before,
+.tp-panino .et_pb_image_wrap::after {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: -6%;
+	width: 112%;
+	height: 4px;
+	margin-top: -2px;
+	background: #fff5e9;
+	opacity: 0;
+	transition: opacity .2s ease, transform .25s ease;
+	pointer-events: none;
+}
+
+.tp-panino[aria-expanded="true"] img {
+	opacity: 0;
+}
+
+.tp-panino[aria-expanded="true"] .et_pb_image_wrap::before {
+	opacity: 1;
+	transform: rotate(45deg);
+}
+
+.tp-panino[aria-expanded="true"] .et_pb_image_wrap::after {
+	opacity: 1;
+	transform: rotate(-45deg);
+}
+
+/* The same for a sandwich that is an Icon module, as in the header of versions 1.0 and 1.1: while the voices
+   are open Divi's "close" sign takes the place of the three lines, in the icon's own size and colour. */
+.tp-panino[aria-expanded="true"] .et-pb-icon {
+	position: relative;
+	display: inline-block;
+	width: 1em;
+	height: 1em;
+	overflow: hidden;
+	text-indent: -9em;
+	vertical-align: top;
+}
+
+.tp-panino[aria-expanded="true"] .et-pb-icon::after {
+	content: "\4d";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 1em;
+	text-indent: 0;
+	text-align: center;
+}
+
 /* tp-fascia, on the header's section: on tablets and phones the header has no bar of its own, its light logo
    and its sandwich lie over the video of the home. On every other page, which starts with a light background,
    they stand on a bordeaux band. */

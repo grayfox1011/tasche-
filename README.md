@@ -1,4 +1,4 @@
-# Tasche Piene, tema figlio di Divi (1.2.0)
+# Tasche Piene, tema figlio di Divi (1.2.1)
 
 Il sito è fatto **solo di moduli Divi**: sezioni, righe, colonne, gruppi, testi, titoli, immagini,
 pulsanti, elenchi con icone, accordion. Misure, spazi, colori, caratteri e disposizione sono nei
@@ -35,7 +35,7 @@ La 1.2.0 rifà da una pagina bianca la home, la testata e il piè di pagina, sez
 sulle misure del Figma (il riquadro da 1512 px per i computer, quello da 390 px per i telefoni)
 come le aveva realizzate la 0.8.3, sempre e solo con moduli Divi: non è servito nessun modulo su
 misura. Ogni sezione è stata confrontata con il Figma e con la 0.8.3 a 1512 e a 390 px; il
-confronto, le differenze rimaste e le prove sono in `VERIFICA-1.2.0.txt`. In breve:
+confronto, le differenze rimaste e le prove sono in `VERIFICA-1.2.1.txt`. In breve:
 
 - testata: su computer la barra crema (76 px, logo da 216 px); su tablet e telefono logo chiaro
   e panino sopra il video, senza barra, e le voci in un riquadro largo quanto lo schermo;
@@ -48,6 +48,11 @@ confronto, le differenze rimaste e le prove sono in `VERIFICA-1.2.0.txt`. In bre
 
 Un sito che ha già una versione 1.x prende l'impaginazione nuova con *Rifai il sito da capo*
 (vedi *Aggiornare*).
+
+La 1.2.1 aggiunge la X: su tablet e telefono, mentre le voci del menù sono aperte, il panino
+della testata diventa una X e torna alle tre linee quando si chiudono. I contenuti sono stati
+riconfrontati il 12 novembre 2026 con il sito online, modulo per modulo (testi, collegamenti,
+foto, galleria in fondo, pagine legali): sono gli stessi, non c'era niente da portare.
 
 ## Installare
 
@@ -66,9 +71,9 @@ Divi 5.15.1).
    una cosa sola: tra due paragrafi dello stesso testo lo spazio diventa una riga intera.
 2. Per avere l'impaginazione della 1.2.0: *Aspetto > Tasche Piene > Rifai il sito da capo*.
    **Riscrive home, testata, piè di pagina, Privacy Policy e Cookie Policy**: le modifiche fatte
-   da Divi a queste pagine si perdono, testi e foto tornano quelli che erano sul sito l'11
-   novembre 2026. Chi ha cambiato qualcosa dopo se lo segni prima, e lo riscriva nella home
-   nuova. La pagina va lasciata aperta finché dice *Il sito è pronto* (una decina di secondi).
+   da Divi a queste pagine si perdono, testi e foto tornano quelli che erano sul sito il 12
+   novembre 2026 (riletto quel giorno: uguali a quelli del tema). Chi ha cambiato qualcosa dopo
+   se lo segni prima, e lo riscriva nella home nuova. La pagina va lasciata aperta finché dice *Il sito è pronto* (una decina di secondi).
 3. Svuotare la cache del sito, se c'è un plugin di cache, e ricaricare la pagina (su telefono:
    chiuderla e riaprirla).
 
@@ -160,7 +165,7 @@ Nel Visual Builder gli effetti stanno fermi, per poter scrivere.
 | `tp-video-telefono` | Sezione con video di sfondo | Il video parte anche su telefono e tablet (un video semplice prende il posto di quello di Divi, che lì non parte; se il telefono lo blocca, resta l'immagine di sfondo). |
 | `tp-testata` | Sezione della testata | Le pagine diverse dalla home iniziano sotto la testata; su telefono un tocco su una voce chiude il menù; una pagina aperta su un'àncora (`…/#menu`, da un link di un'altra pagina) mostra la sezione sotto la testata e non dietro. |
 | `tp-fascia` | Sezione della testata, insieme a `tp-testata` | Su tablet e telefono la testata non ha una barra sua: logo chiaro e panino stanno sopra il video della home. Nelle altre pagine, che iniziano su fondo chiaro, la sezione prende una fascia bordeaux. |
-| `tp-panino` | Immagine (il panino della testata) | È il pulsante che `tp-testata` preme per richiudere il menù dopo un tocco su una voce; si usa anche da tastiera (Invio o Spazio). |
+| `tp-panino` | Immagine (il panino della testata) | È il pulsante che `tp-testata` preme per richiudere il menù dopo un tocco su una voce; si usa anche da tastiera (Invio o Spazio). Mentre le voci sono aperte diventa una X: l'immagine delle tre linee sfuma e due linee crema si incrociano al suo posto (lo script scrive `aria-expanded` sul panino, il CSS disegna la X). Se il panino è un'icona di Divi, come nelle versioni 1.0 e 1.1, compare il segno *chiudi* di Divi. |
 | `tp-apertura` | Sezione (la prima della home) | Sul sito è lo schermo che apre la pagina: il logo sale in due righe, poi lo schermo si alza e si vede la pagina. Nel builder, senza JavaScript o con "meno movimento" chiesto al dispositivo, non c'è nessuno schermo. |
 | `tp-scheda` | Colonna o gruppo (una card) | Con il mouse sopra (un tocco su telefono) la foto con `tp-scheda-foto` riempie la card e si scurisce, nome ed etichette salgono e compare quello che ha `tp-scheda-nascosto`. La card è alta quanto foto, nome ed etichette. |
 | `tp-scheda-foto`, `tp-scheda-nascosto` | Moduli dentro una `tp-scheda` | Vedi sopra. |

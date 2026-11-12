@@ -1,3 +1,65 @@
+TASCHE PIENE - VERSIONE 1.2.1
+
+Due cose rispetto alla 1.2.0.
+
+1. Il panino diventa una X.
+   Su tablet e telefono, mentre le voci del menu' sono aperte, al posto
+   delle tre linee c'e' una X (crema, 45 px da punta a punta). Torna alle
+   tre linee quando le voci si chiudono, in qualunque modo: col panino,
+   toccando una voce, da tastiera, allargando la finestra.
+   Come: lo script del tema scrive sul panino se le voci sono aperte
+   (aria-expanded, che lo dice anche a chi usa un lettore di schermo) e
+   il CSS del tema disegna la X. Vale anche per la testata delle
+   versioni 1.0 e 1.1, dove il panino e' un'icona di Divi: li' compare il
+   segno "chiudi" di Divi, con la misura e il colore dell'icona.
+
+2. I contenuti sono quelli del sito online di oggi.
+   Il 12 novembre 2026 ho riletto il sito
+   wordpress1791795513908.app.runonflux.io (che ha la 1.1.0): home,
+   testata, pie' di pagina, Privacy Policy e Cookie Policy, e l'ho
+   confrontato con le pagine che questo tema crea.
+   - Testi: 170 moduli (6 nella testata, 154 nella home, 10 nel pie' di
+     pagina). Parole, grassetti e collegamenti dentro i testi: nessuna
+     differenza.
+   - Collegamenti (voci, pulsanti, mappe, consegne, telefono): uguali.
+   - Foto: le stesse. Le 14 foto della galleria in fondo alla pagina sono
+     le stesse, nello stesso ordine. Stesso video e stessa immagine
+     dell'apertura.
+   - Privacy e Cookie Policy: uguali (cambia la data, che e' quella del
+     giorno in cui le pagine vengono create).
+   Nel tema non c'era quindi niente da cambiare: "Rifai il sito da capo"
+   rimette questi testi e queste foto nell'impaginazione nuova.
+   Due cose il tema le aggiunge e sul sito oggi non ci sono: i nomi brevi
+   dei giorni per il telefono (Lun, Mar, Mer-Gio, Ven, Sab, Dom) e, nelle
+   schede del menu' su telefono, le parole "Tasca" e "Piatto" del Figma
+   (oggi sul sito ci sono "Tasca", "Media" e "Grande").
+   Nota: le immagini di confronto col Figma mandate con la 1.2.0
+   mostravano il tema con i testi e le foto della vecchia 0.8.3, messi
+   li' solo per confrontare le posizioni. Non sono i contenuti dello zip.
+
+PROVE DELLA 1.2.1 (Chromium, WordPress con Divi 5.15.1)
+
+- La X, su telefono (390 px) e tablet (820 px) emulati: chiuso tre
+  linee; aperto X (tre linee nascoste, due linee incrociate a 45 gradi);
+  richiuso col panino, con un tocco su una voce (la pagina va alla
+  sezione), con Invio e con Spazio: di nuovo tre linee. Menu' aperto e
+  finestra allargata a 1280 px: il panino sparisce e lo stato torna
+  "chiuso"; tornando stretti le voci sono chiuse e il panino ha le tre
+  linee. Su Privacy Policy la X e' sulla fascia bordeaux.
+- La X sulla testata della 1.1.1 (panino icona): tre linee da chiuso,
+  segno "chiudi" da 34 px bordeaux da aperto, tre linee da richiuso.
+- Nessuno sbordo a 10 larghezze da 320 a 2560 px dopo la modifica.
+- Aggiornamento del sito di anteprima dalla 1.2.0 caricando lo zip da
+  WordPress, poi "Rifai il sito da capo": impaginazione identica a
+  quella del sito di sviluppo, X funzionante.
+
+NON PROVATO (come per la 1.2.0)
+
+- Safari, Firefox e telefoni veri; il video dell'apertura; il sito
+  online, che ho solo letto.
+
+==========================================================================
+
 TASCHE PIENE - VERSIONE 1.2.0
 
 La 1.2.0 rifa' da una pagina bianca la home, la testata e il pie' di

@@ -854,7 +854,8 @@ def header():
             interaction('breakpointEnter', 'addVisibility', voices_id, voices_label, burger_id, breakpointName='desktop'),
             interaction('breakpointExit', 'removeVisibility', voices_id, voices_label, burger_id, breakpointName='desktop'),
         ]})}}},
-        attrs(cls='tp-panino', role='button', aria_label='Apri o chiudi il menù', tabindex='0'),
+        # aria-expanded: the theme's script keeps it true while the voices are open, and the theme's CSS then shows an X.
+        attrs(cls='tp-panino', role='button', aria_label='Apri o chiudi il menù', aria_expanded='false', tabindex='0'),
         width='40px', margin=box('0px', '3px', '0px', '0px'), bottom_space=False, shrink='0',
     )
     return document([section(
