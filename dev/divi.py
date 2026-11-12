@@ -340,6 +340,11 @@ def text(name, html, *attributes, headings=None, **font_props):
     return block('divi/text', label(name), at('content.innerContent', html), *extra, *attributes)
 
 
+def code(name, html, *attributes):
+    """A Code module: HTML as it is written (an <iframe>, a snippet)."""
+    return block('divi/code', label(name), at('content.innerContent', html), *attributes)
+
+
 def _ratio(value):
     if isinstance(value, R):
         return R(**{key: _ratio(item) for key, item in value.items()})

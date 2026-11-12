@@ -1,4 +1,4 @@
-# Tasche Piene, tema figlio di Divi (1.2.1)
+# Tasche Piene, tema figlio di Divi (1.3.0)
 
 Il sito è fatto **solo di moduli Divi**: sezioni, righe, colonne, gruppi, testi, titoli, immagini,
 pulsanti, elenchi con icone, accordion. Misure, spazi, colori, caratteri e disposizione sono nei
@@ -35,7 +35,7 @@ La 1.2.0 rifà da una pagina bianca la home, la testata e il piè di pagina, sez
 sulle misure del Figma (il riquadro da 1512 px per i computer, quello da 390 px per i telefoni)
 come le aveva realizzate la 0.8.3, sempre e solo con moduli Divi: non è servito nessun modulo su
 misura. Ogni sezione è stata confrontata con il Figma e con la 0.8.3 a 1512 e a 390 px; il
-confronto, le differenze rimaste e le prove sono in `VERIFICA-1.2.1.txt`. In breve:
+confronto, le differenze rimaste e le prove sono in `VERIFICA-1.3.0.txt`. In breve:
 
 - testata: su computer la barra crema (76 px, logo da 216 px); su tablet e telefono logo chiaro
   e panino sopra il video, senza barra, e le voci in un riquadro largo quanto lo schermo;
@@ -54,6 +54,18 @@ della testata diventa una X e torna alle tre linee quando si chiudono. I contenu
 riconfrontati il 12 novembre 2026 con il sito online, modulo per modulo (testi, collegamenti,
 foto, galleria in fondo, pagine legali): sono gli stessi, non c'era niente da portare.
 
+La 1.3.0 fa tre cose:
+
+- **materie prime**: su computer le card stanno una per volta, a sinistra e a destra, con uno
+  spazio tra una e l'altra. La scritta che scorre parte sotto la prima card e resta in vista: tra
+  due card si legge intera, e una card sola per volta le passa sopra (prima due card affiancate
+  ne coprivano la maggior parte);
+- **dove siamo**: sotto foto e testi c'è una mappa che si muove, senza chiave API. È la mappa di
+  OpenStreetMap in un modulo *Codice* di Divi; resta ferma finché non la si tocca, così la
+  pagina scorre anche passandoci sopra;
+- **piè di pagina**: una riga dice dove si mangia (Via di Scurreria 42/R), la riga dopo di chi è
+  il progetto, con la sede legale di Via Carducci e la partita IVA.
+
 ## Installare
 
 Servono WordPress 6.5 o successivo, PHP 7.4 o successivo e il tema Divi 5 installato (provato con
@@ -63,13 +75,14 @@ Divi 5.15.1).
 2. WordPress apre *Aspetto > Tasche Piene*, che crea il sito da sola e mostra a che punto è
    (circa mezzo minuto). Se la pagina non si apre, c'è un avviso con il pulsante *Crea il sito*.
 
-### Aggiornare dalla 1.0.0, dalla 1.1.0 o dalla 1.1.1
+### Aggiornare da una 1.x (dalla 1.0.0 alla 1.2.1)
 
 1. *Aspetto > Temi > Aggiungi tema > Carica tema*, lo zip nuovo, *Installa ora*, poi *Sostituisci
    il tema installato con quello caricato*. Cambiano solo i file del tema: home, testata, piè di
    pagina e pagine legali restano come sono, con tutte le modifiche fatte in Divi. A vista cambia
    una cosa sola: tra due paragrafi dello stesso testo lo spazio diventa una riga intera.
-2. Per avere l'impaginazione della 1.2.0: *Aspetto > Tasche Piene > Rifai il sito da capo*.
+2. Per avere l'impaginazione nuova, la mappa e il piè di pagina nuovo (stanno nelle pagine, non nei
+   file del tema): *Aspetto > Tasche Piene > Rifai il sito da capo*.
    **Riscrive home, testata, piè di pagina, Privacy Policy e Cookie Policy**: le modifiche fatte
    da Divi a queste pagine si perdono, testi e foto tornano quelli che erano sul sito il 12
    novembre 2026 (riletto quel giorno: uguali a quelli del tema). Chi ha cambiato qualcosa dopo
@@ -117,8 +130,21 @@ Alla prima pagina di amministrazione WordPress apre *Aspetto > Tasche Piene* e c
   colonna): su computer la foto prende la prima colonna, su tablet e telefono è una colonna sola
   nell'ordine in cui i pezzi sono scritti (testi, foto, pulsante).
 - **Le schede delle materie prime**: su computer il posto di ogni scheda è nei suoi margini
-  sinistro e superiore (*Design > Spaziatura*); una scheda duplicata prende quelli della scheda
-  copiata e va spostata da lì.
+  (*Design > Spaziatura*): quello sinistro la porta a sinistra o a destra, quello superiore (240
+  px) è lo spazio dalla scheda prima, dove la scritta che scorre si vede intera. Una scheda
+  duplicata prende i margini della scheda copiata: basta cambiarle il margine sinistro. La
+  scritta parte sotto la prima scheda (il suo margine superiore, 590 px) e il gruppo delle schede
+  torna su di altrettanto più l'altezza della scritta (margine superiore negativo, -684 px).
+- **La mappa**: è il modulo *Codice* sotto la foto di *Dove siamo*, con dentro il codice che
+  OpenStreetMap dà per incorporare una mappa. Per un altro punto o un altro taglio: su
+  openstreetmap.org si inquadra la zona, *Condividi* > *HTML* (con la casella che aggiunge il
+  segnaposto), si copia il codice e lo si incolla nel modulo al posto di quello che c'è. Va
+  bene anche il codice di Google Maps (*Condividi* > *Incorpora una mappa* > *Copia HTML*):
+  non chiede chiavi, ma porta i cookie di Google, da dichiarare nella Cookie Policy. Bordo e
+  angoli sono nel *Design* del modulo, l'altezza è nel codice (`aspect-ratio` e `min-height`).
+  Nel builder la mappa non risponde al mouse: un clic apre le impostazioni del modulo.
+- **Le note del piè di pagina**: sono quattro moduli Testo. Il primo (dove si mangia) è largo
+  quanto la riga, così gli altri vanno a capo sotto.
 - **Un pulsante**: i pulsanti del tema hanno la classe `tp-freccia`, che mette la freccia del
   Figma al posto dell'icona di Divi. Un pulsante nuovo ottenuto duplicandone uno ce l'ha già.
 - **Il logo all'apertura**: è la prima sezione della home, *Apertura*. Nel builder è una sezione
@@ -171,6 +197,7 @@ Nel Visual Builder gli effetti stanno fermi, per poter scrivere.
 | `tp-scheda-foto`, `tp-scheda-nascosto` | Moduli dentro una `tp-scheda` | Vedi sopra. |
 | `tp-resta` | Modulo (la scritta diagonale) | Su computer resta in vista, al 39% dell'altezza dello schermo, mentre la sua sezione scorre; attributo `data-posizione` per un'altra altezza (in percentuale). Insieme a `tp-scorre` sullo stesso Testo: sul sito la scritta attraversa tutto lo schermo, e un po' di più perché è inclinata; larghezza e margini sinistro e destro di quel modulo li dà il tema, il resto (margine sopra, inclinazione, carattere, colore) si cambia in Divi. |
 | `tp-foto` | Immagine | La foto riempie la sua cornice (larghezza e forma scelte in *Design > Dimensionamento*) anche quando il file è più piccolo della cornice. Divi da solo non ingrandisce mai una foto, se non con *Forza larghezza intera*. |
+| `tp-mappa` | Codice (con una mappa in un `<iframe>`) | La mappa resta ferma finché non la si clicca o tocca: così la rotella del mouse e il dito continuano a scorrere la pagina anche passando sopra la mappa. Torna ferma quando il mouse esce, quando si tocca altrove o quando la mappa esce dallo schermo. Con la tastiera (Tab) si raggiunge sempre. |
 | `tp-freccia` | Pulsante | Al posto dell'icona scelta in Divi il pulsante mostra la freccia del Figma: quella di DM Sans, in grassetto, girata in alto a destra e staccata dal testo. L'icona deve essere accesa (*Design > Pulsante*): dove è spenta, su telefono per alcuni pulsanti, la freccia non c'è. |
 | `tp-carte` | Gruppo di card | Ogni card entra dal basso, un po' ruotata, quando arriva sullo schermo (ferme su telefono). Con il mouse sopra una card i testi diventano chiari e, su computer, la card cresce un poco; fondo e bordo al passaggio sono i valori *hover* della card in Divi. Sugli schermi che si toccano (telefono, tablet) le card non reagiscono al dito: lì il "passaggio del mouse" resterebbe acceso dopo il tocco. |
 
@@ -181,6 +208,14 @@ con *Posizione: fissa* (su tablet e telefono *assoluta*: sale con la pagina).
 
 Una regola vale per tutti i moduli Testo: tra due paragrafi c'è una riga vuota, come nel Figma
 (Divi lascia un po' meno).
+
+E una vale nel Visual Builder per ogni modulo *Codice* che contiene un `<iframe>`: l'`<iframe>`
+non prende il mouse. Senza, con Divi 5.15.1, dopo un clic sul modulo il rilascio del tasto si
+perde dentro l'`<iframe>` e Divi trascina via il modulo al primo movimento del mouse.
+
+La mappa manda il browser di chi visita ai server di OpenStreetMap: Privacy Policy e Cookie
+Policy create dal tema lo dicono in una riga ciascuna (la mappa non installa cookie). Chi la
+toglie, o la cambia con quella di Google, aggiorni quelle due righe.
 
 Le onde tra le sezioni sono immagini (`assets/svg/onda-*.svg`): per cambiarne i colori serve un
 file nuovo. Sono SVG con *Forza larghezza intera*: Divi da solo lascia un SVG alla larghezza del
@@ -210,6 +245,11 @@ content/*.html       le pagine come blocchi Divi 5, copiate in WordPress alla cr
 assets/              caratteri, immagini, video, tp.css, tp.js, GSAP
 dev/                 come sono state scritte le pagine (non entra nello zip)
 ```
+
+Le pagine vengono salvate così come il tema le ha scritte: mentre le crea, il tema sospende il
+filtro con cui WordPress toglie da una pagina quello che non tutti gli utenti possono scrivere
+(un `<iframe>`, com'è la mappa), che scatterebbe su una rete di siti o dove l'hosting ha tolto
+quel permesso.
 
 `{{media:percorso}}` in `content/` indica un file di `assets/`: alla creazione va nella libreria
 Media e nella pagina finisce il suo indirizzo (`{{id:percorso}}`: il suo numero, per la galleria).

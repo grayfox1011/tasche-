@@ -142,7 +142,12 @@ LOCATION = {'image': {'src': 'images/intro/fig-intro-caruggi.webp',
  'text': 'Siamo in Piazza San Lorenzo a due passi dalla Cattedrale.',
  'address': 'Via di Scurreria 42/R',
  'button': 'Mappe',
- 'button_url': 'https://www.google.com/maps/search/?api=1&query=Via%20di%20Scurreria%2042%2FR%2C%20Genova'}
+ 'button_url': 'https://www.google.com/maps/search/?api=1&query=Via%20di%20Scurreria%2042%2FR%2C%20Genova',
+ # The map: OpenStreetMap, which asks for no key. The point is the house "42 rosso" of Via di Scurreria as
+ # OpenStreetMap has it (looked up on 12 November 2026).
+ 'map': {'lat': 44.4081467, 'lon': 8.9312192,
+         'title': 'Mappa: Tasche Piene, Via di Scurreria 42/R, Genova',
+         'note': 'Tocca o clicca la mappa per muoverla. Per farti guidare fino al banco usa il pulsante Mappe.'}}
 
 HOURS = {'title': 'Quando siamo aperti?',
  'rows': [{'day': 'Lunedì', 'short': 'Lun', 'hours': '12:00-21:00'},
@@ -237,6 +242,10 @@ LEGAL = {'privacy': {'slug': 'privacy-policy',
                      '<h2>6. Comunicazione e trasferimenti</h2>\n'
                      '<p>I dati possono essere trattati da fornitori tecnici (hosting, manutenzione sito) nominati responsabili del trattamento o '
                      'autonomi titolari, solo per erogare il servizio.</p>\n'
+                     '<p>La pagina iniziale mostra una mappa di OpenStreetMap. Per visualizzarla il browser si collega ai server di OpenStreetMap '
+                     '(OpenStreetMap Foundation), che ricevono l’indirizzo IP del dispositivo e i dati tecnici della richiesta; la mappa non installa '
+                     'cookie. Informativa: <a href="https://osmfoundation.org/wiki/Privacy_Policy" rel="noopener noreferrer" target="_blank">'
+                     'osmfoundation.org/wiki/Privacy_Policy</a>.</p>\n'
                      '<h2>7. Diritti dell’interessato</h2>\n'
                      '<p>In qualità di interessato puoi esercitare i diritti previsti dagli artt. 15-22 GDPR (accesso, rettifica, cancellazione, '
                      'limitazione, opposizione, portabilità ove applicabile) rivolgendoti al titolare presso la sede indicata sopra.</p>\n'
@@ -265,6 +274,7 @@ LEGAL = {'privacy': {'slug': 'privacy-policy',
                     '<h2>3. Cookie di terze parti</h2>\n'
                     '<p>Il sito può includere link esterni (es. mappe o profili social). Cliccando su tali link si accede a siti di terze parti con '
                     'informative autonome.</p>\n'
+                    '<p>La mappa nella pagina iniziale è fornita da OpenStreetMap e non installa cookie sul dispositivo.</p>\n'
                     '<h2>4. Come gestire i cookie dal browser</h2>\n'
                     '<p>Puoi configurare il browser per bloccare o cancellare i cookie. La disabilitazione dei cookie tecnici potrebbe compromettere '
                     'alcune funzioni del sito.</p>\n'
@@ -277,7 +287,8 @@ NAV = [('La nostra idea', '#chi-siamo'), ('Il menù', '#menu'), ('Senza glutine'
 
 FOOTER = {'left': [('MENÙ', '#menu'), ('DOVE SIAMO', '#location'), ('SU DI NOI', '#chi-siamo')],
  'right': [('TORNA SÙ', '#home', 'off'), ('FACEBOOK', 'https://facebook.com', 'on'), ('INSTAGRAM', 'https://instagram.com', 'on')],
- 'lines': ['Tasche Piene è un progetto di Barrakuda S.r.l.',
-           'P.IVA e C.F.: 02789540990 | Via Carducci 5/10, 16121 - Genova',
+ # The first line is where one eats, the second who is behind it and where its papers are.
+ 'lines': ['Ci trovi al banco in <a href="https://www.google.com/maps/search/?api=1&query=Via%20di%20Scurreria%2042%2FR%2C%20Genova" target="_blank" rel="noopener">Via di Scurreria 42/R</a>, nei caruggi di Genova.',
+           'Tasche Piene è un progetto di Barrakuda S.r.l. · Sede legale: Via Carducci 5/10, 16121 Genova · P.IVA e C.F. 02789540990',
            '<a href="{{url:privacy}}">Privacy Policy</a> | <a href="{{url:cookie}}">Cookie Policy</a>',
            '<a href="https://www.mochidesign.it" target="_blank" rel="noopener">creato con ♥ da Mochi</a>']}

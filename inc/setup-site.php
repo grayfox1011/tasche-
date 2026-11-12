@@ -375,12 +375,24 @@ function tp_setup_save_post( string $key, array $item, array $posts ): int {
 		'post_content' => wp_slash( tp_setup_content( $item['content'], $posts ) ),
 	];
 
+	// The pages are the theme's own files. WordPress takes out of a page what not every user may write
+	// (an <iframe>, as the map is) when who saves has not the right to write any HTML: on a network of
+	// sites, or where the host has switched that right off. Here the content is saved as the theme wrote it.
+	$filtered = false !== has_filter( 'content_save_pre', 'wp_filter_post_kses' );
+	if ( $filtered ) {
+		kses_remove_filters();
+	}
+
 	if ( $found ) {
 		$args['ID'] = $found;
 		$result     = wp_update_post( $args, true );
 	} else {
 		$args['post_author'] = get_current_user_id() ?: 1;
 		$result              = wp_insert_post( $args, true );
+	}
+
+	if ( $filtered ) {
+		kses_init_filters();
 	}
 
 	if ( is_wp_error( $result ) || ! $result ) {

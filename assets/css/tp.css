@@ -33,6 +33,26 @@
 	src: url("../fonts/tp-dm-sans-opsz-italic.woff2") format("woff2");
 }
 
+/* tp-mappa: a map written in a Code module as an <iframe>. While its module has tp-mappa--ferma, which
+   assets/js/tp.js gives and takes, the map does not answer the mouse or the finger: the page scrolls over it.
+   A click on it sets it free. Without the script the map simply answers at once. */
+.tp-mappa--ferma {
+	cursor: pointer;
+}
+
+.tp-mappa--ferma iframe {
+	pointer-events: none;
+}
+
+/* Visual Builder: an <iframe> written in a Code module never takes the mouse. Divi covers it, but takes the
+   cover away at the click that opens the module: the release of the button is then lost inside the <iframe>,
+   Divi believes the button still down and carries the module away with the mouse (seen with Divi 5.15.1).
+   With this rule the click stays Divi's, and the map is tried on the site. */
+body.et-fb .et_pb_code iframe,
+html.et-vb-app-ancestor .et_pb_code iframe {
+	pointer-events: none !important;
+}
+
 /* tp-foto: a photo that fills its frame (the width and the shape set in Design > Sizing) also when its file is
    smaller than the frame. Divi alone never enlarges a picture, unless "Force Fullwidth" is on. */
 .et_pb_image.tp-foto .et_pb_image_wrap,
@@ -90,6 +110,7 @@ body #page-container .et_pb_section .tp-freccia .et_pb_button:hover:after {
  * tp-carte             a group whose cards come in one by one, a little turned, and light up under the mouse
  * tp-foto              a photo that fills its frame also when its file is smaller than the frame
  * tp-freccia           a button that shows the arrow of the Figma in place of the icon chosen in Divi
+ * tp-mappa             a map in an <iframe> (Code module) that stands still until it is clicked
  * tp-fascia            with tp-testata: on tablets and phones the header has a bordeaux band on every page but the home
  *
  * And one correction: the waves between the sections (SVG pictures) reach both sides of any screen.

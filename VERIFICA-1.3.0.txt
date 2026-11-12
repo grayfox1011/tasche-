@@ -1,3 +1,108 @@
+TASCHE PIENE - VERSIONE 1.3.0
+
+Tre cose rispetto alla 1.2.1. Stanno quasi tutte nelle pagine (home,
+pie' di pagina, pagine legali): su un sito che ha gia' una 1.x arrivano
+con "Rifai il sito da capo", dopo aver caricato lo zip.
+
+1. Materie prime: spazio tra le card, la scritta si vede.
+   Prima: su computer le card erano affiancate a due a due, come sulla
+   lavagna del Figma, e insieme coprivano quasi tutta la scritta che
+   scorre.
+   Ora: le card stanno una per volta, a sinistra e a destra, con 240 px
+   tra il fondo di una e la cima della successiva. La scritta parte
+   sotto la prima card e resta ferma al 39% dell'altezza dello schermo
+   mentre le altre le passano sopra una alla volta; scorrendo arrivano
+   le card successive.
+   Misurato scorrendo tutta la sezione a passi di 20 px: a 1512 x 982 la
+   scritta e' del tutto libera nel 54% dei passi e mai coperta per piu'
+   del 27% (una card); a 1920 x 1080 libera nel 55%, coperta al massimo
+   per il 21%; a 1280 x 720 libera nel 34%, al massimo 31%; a 1024 x 768
+   libera nel 35%, al massimo 39%. Mai due card insieme sopra la scritta.
+   La sezione e' piu' lunga: 3143 px a 1512 (erano 2221).
+   Tablet e telefono: come prima (scritta sopra le card su tablet, card
+   in colonna; niente scritta su telefono).
+
+2. Dove siamo: una mappa che non chiede la chiave API.
+   Sotto foto e testi c'e' la mappa di OpenStreetMap, incorporata con il
+   codice che OpenStreetMap stesso da' (un <iframe>) dentro un modulo
+   "Codice" di Divi: 1345 x 424 px a 1512, 358 x 306 su telefono, angoli
+   da 20 px e bordo come le card, una riga di spiegazione sotto.
+   - Il punto: il civico "42 rosso" di Via di Scurreria come lo ha
+     OpenStreetMap (44.4081467, 8.9312192), cercato il 12 novembre 2026.
+   - Niente chiave, niente account. Caricata da sola in un browser
+     pulito chiama solo www.openstreetmap.org e tile.openstreetmap.org
+     e non lascia cookie ne' altri dati nel browser.
+   - Non blocca lo scorrimento. Una mappa incorporata prende per se' la
+     rotella del mouse e il dito: la classe tp-mappa la tiene ferma
+     finche' non la si clicca o tocca. Provato: con la mappa ferma la
+     rotella sposta la pagina (200 px su 200); dopo un clic la rotella
+     muove la mappa e la pagina resta dov'e'; uscendo col mouse torna
+     ferma. Su telefono: un tocco la libera, un tocco fuori o l'uscita
+     dallo schermo la fermano di nuovo.
+   - Si cambia dal modulo: basta incollare un altro codice (anche quello
+     di Google Maps, "Condividi > Incorpora una mappa", che pero' porta
+     i cookie di Google).
+   - Privacy Policy e Cookie Policy create dal tema hanno una riga in
+     piu' ciascuna sulla mappa. Sono testi miei, da far vedere a chi
+     segue la parte legale.
+   - Creazione del sito: mentre scrive le pagine il tema sospende il
+     filtro con cui WordPress toglie gli <iframe> a chi non ha il
+     permesso di scrivere qualunque HTML (reti di siti, alcuni hosting).
+   Un problema trovato e risolto nel Visual Builder: con Divi 5.15.1,
+   dopo un clic su un modulo Codice che contiene un <iframe>, Divi
+   trascinava via il modulo al primo movimento del mouse (toglie la sua
+   copertura al clic e il rilascio del tasto si perde nell'<iframe>).
+   Il tema ora tiene inerte nel builder ogni <iframe> dei moduli Codice.
+   Riprovato: clic sulla mappa (si aprono le impostazioni "Codice"),
+   Esc, mouse altrove, clic: il modulo resta al suo posto.
+
+3. Pie' di pagina: il locale e la sede legale.
+   Le note ora sono:
+     Ci trovi al banco in Via di Scurreria 42/R, nei caruggi di Genova.
+     Tasche Piene e' un progetto di Barrakuda S.r.l. - Sede legale: Via
+     Carducci 5/10, 16121 Genova - P.IVA e C.F. 02789540990
+     Privacy Policy | Cookie Policy
+     creato con (cuore) da Mochi
+   "Via di Scurreria 42/R" porta a Google Maps. Su computer la prima
+   riga sta da sola e le altre tre sulla riga sotto; su telefono una
+   sotto l'altra.
+
+PROVE DELLA 1.3.0 (Chromium, WordPress con Divi 5.15.1)
+
+- Nessuna barra orizzontale e niente fuori dai bordi a 24 larghezze, da
+  320 a 2560 px.
+- Telefono (iPhone emulato): toccata, una card delle materie prime
+  resta crema; scorsa tutta la pagina nessun pezzo resta nascosto.
+- Menu' con la X: tre linee da chiuso, X da aperto, come nella 1.2.1.
+- Visual Builder: tutti i testi si raggiungono col mouse (129 su 129
+  nella vista computer, 126 su 126 nella vista telefono; ora anche il
+  centro della scritta obliqua). Aperte e chiuse le impostazioni della
+  mappa, scritta una parola in un testo, premuto Salva: nel contenuto
+  salvato cambia solo quella parola (stessi 470 blocchi nello stesso
+  ordine, mappa compresa) e sul sito cambia solo quel testo, a 1512 e a
+  390 px.
+- Aggiornamento del sito di anteprima dalla 1.2.1 caricando lo zip da
+  WordPress: versione 1.3.0, home identica a prima (senza mappa). Poi
+  "Rifai il sito da capo" dalla pagina del tema: 10 secondi, mappa
+  presente, impaginazione identica al sito di sviluppo a 1512 e a 390
+  px, mappa e X funzionanti.
+- Confronto con il sito online: rispetto ai testi che sono sul sito
+  cambiano solo le due note del pie' di pagina; in piu' ci sono la riga
+  sotto la mappa e i nomi brevi dei giorni. Foto e galleria uguali.
+
+NON PROVATO
+
+- Safari, Firefox e telefoni veri: le prove sono con Chromium, che
+  emula telefono e tablet. In particolare il trascinamento della mappa
+  col dito e' provato solo in emulazione.
+- Il video dell'apertura (il Chromium di prova non riproduce quel
+  formato) e il sito online, che ho solo letto.
+- Un sito appena installato con la 1.3.0: la creazione usa lo stesso
+  codice di "Rifai il sito da capo", provato qui sopra; l'installazione
+  da zero era stata provata con la 1.2.0.
+
+==========================================================================
+
 TASCHE PIENE - VERSIONE 1.2.1
 
 Due cose rispetto alla 1.2.0.

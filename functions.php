@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'TP_VERSION', '1.2.1' );
+define( 'TP_VERSION', '1.3.0' );
 define( 'TP_PATH', trailingslashit( get_stylesheet_directory() ) );
 define( 'TP_URL', trailingslashit( get_stylesheet_directory_uri() ) );
 

@@ -14,6 +14,7 @@
  *   tp-resta             a piece that stays in view on computers while its section goes by
  *   tp-carte             a group whose cards come in one by one, a little turned (GSAP)
  *   tp-piatto, tp-entra  the cards of the menu, and any module with tp-entra, come up when they are reached (GSAP)
+ *   tp-mappa             a map in an <iframe> stands still until it is clicked, so the page scrolls over it
  */
 (function () {
 	'use strict';
@@ -548,6 +549,34 @@
 		if (window.ResizeObserver) { new window.ResizeObserver(again).observe(document.body); }
 	}
 
+	/* Maps ------------------------------------------------------------------------------------------ */
+
+	// A map put in the page as an <iframe> (class tp-mappa on its module) takes the wheel and the finger
+	// for itself: who scrolls the page over it stops there, and on a phone cannot go on. So the map stands
+	// still until it is clicked or tapped; and stands still again when the mouse leaves it, when one taps
+	// elsewhere, when it goes out of the screen. From the keyboard it is always reached, with Tab.
+	function maps() {
+		each('.tp-mappa', function (module) {
+			if (!module.querySelector('iframe')) { return; }
+			var still = function () { module.classList.add('tp-mappa--ferma'); };
+			still();
+			module.addEventListener('click', function () { module.classList.remove('tp-mappa--ferma'); });
+			// (Only where there is a mouse: after a tap a phone says the "mouse" has left, and the map would
+			// stand still again at once.)
+			module.addEventListener('mouseleave', function () {
+				if (!window.matchMedia || window.matchMedia('(hover: hover)').matches) { still(); }
+			});
+			document.addEventListener('touchstart', function (event) {
+				if (!module.contains(event.target)) { still(); }
+			}, { passive: true });
+			if (window.IntersectionObserver) {
+				new window.IntersectionObserver(function (entries) {
+					if (!entries[entries.length - 1].isIntersecting) { still(); }
+				}).observe(module);
+			}
+		});
+	}
+
 	/* What comes in when it is reached ---------------------------------------------------------------- */
 
 	// Pieces that wait unseen below the screen and come in the first time they enter it. Each item says where
@@ -665,6 +694,7 @@
 		arrive();
 		enter();
 		stay();
+		maps();
 		var fonts = document.fonts && document.fonts.ready ? document.fonts.ready : null;
 		if (fonts) {
 			// The lines of a title are cut with its own font: wait for it, but not for long.

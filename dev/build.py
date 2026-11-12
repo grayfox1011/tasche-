@@ -550,25 +550,31 @@ def ingredient_card(d, *attributes):
         sizing(width=R(CARD_WIDTH, phone='calc(100% + 23px)'), maxWidth=R('100%', phone='none'), minHeight=R('517px', phone='491px')), *attributes)
 
 
-# Where the cards stand on computers, as on the Figma's board (six places, then again from the first): how far from
-# the left, as a share of the page's width, and how far from the card before (less than nothing: beside it).
-CARD_PLACES = [
-    ('15.9%', '0px'),
-    ('min(64.46%, calc(100% - ' + CARD_WIDTH + '))', '-260px'),
-    ('13.09%', '81px'),
-    ('50.55%', '-23px'),
-    ('7.64%', '-63px'),
-    ('min(67.8%, calc(100% - ' + CARD_WIDTH + '))', '-349px'),
+# Where the cards stand on computers: one at a time, to the left and to the right in turn, as far from the left
+# as on the Figma's board (a share of the page's width). Between the bottom of a card and the top of the next
+# there is CARD_GAP: in that space the running line, which stays in view, is seen whole before the next card
+# comes over it. (Two cards side by side, as on the board, would hide most of the line.)
+CARD_GAP = '240px'
+CARD_LEFTS = [
+    '15.9%',
+    'min(64.46%, calc(100% - ' + CARD_WIDTH + '))',
+    '13.09%',
+    '50.55%',
+    '7.64%',
+    'min(67.8%, calc(100% - ' + CARD_WIDTH + '))',
 ]
+# The running line starts in the first space, under the first card: 517 px of card, half the space, less half
+# the line's own height (94 px).
+LINE_TOP = '590px'
+LINE_BACK = '-684px'       # what pulls the cards back up over the line: its top and its height
 
 
 def ingredients():
     d = T.MATERIE
     cards = []
     for index, card in enumerate(d['cards']):
-        left, above = CARD_PLACES[index % len(CARD_PLACES)]
-        if index and index % len(CARD_PLACES) == 0:
-            above = '81px'
+        left = CARD_LEFTS[index % len(CARD_LEFTS)]
+        above = CARD_GAP if index else '0px'
         cards.append(ingredient_card(card, spacing(margin=box(R(above, tablet='0px'), '0px', '0px', R(left, tablet='0px', phone='-11.5px')))))
     pieces = []
     # The title and the words above the cards are there only if they are written (the site online has none).
@@ -585,14 +591,14 @@ def ingredients():
     pieces += [
         # tp-scorre: the words run. tp-resta: on computers they stay in view while the cards go by over them.
         # The two together: the line crosses the whole screen (its width and side margins are the theme's).
-        # The line starts 368 px below the first card's top: the cards after it are pulled up by as much.
+        # The line starts under the first card (LINE_TOP): the cards, written after it, are pulled back up by as much.
         text('Scritta obliqua che scorre', '<p>%s</p>' % d['marquee'], attrs(cls='tp-scorre tp-resta', data_durata='5'), hide_on(phone=True),
-             transform(rotate='-4deg'), z_index('1'), spacing(margin=box(R('368px', tablet='0px'), '0px', '0px', '0px')),
+             transform(rotate='-4deg'), z_index('1'), spacing(margin=box(R(LINE_TOP, tablet='0px'), '0px', '0px', '0px')),
              **display_font('72px', GREEN, line='1.3em')),
         # tp-carte: the cards come in one by one, a little turned, when they enter the screen.
         group('Schede', cards, attrs(cls='tp-carte'), z_index('2'),
               layout(direction='column', gap=R('0px', tablet='33px', phone='10px'), align=R('flex-start', tablet='center', phone='flex-start')),
-              spacing(margin=box(R('-462px', tablet='40px', phone='0px'), '0px', '0px', '0px'))),
+              spacing(margin=box(R(LINE_BACK, tablet='40px', phone='0px'), '0px', '0px', '0px'))),
     ]
     return section(
         'Materie prime', [
@@ -617,6 +623,24 @@ def location():
     # button the second; on tablets and phones one column, in the order they are written here.
     d = T.LOCATION
     second = R('2', tablet='1')
+    rows = []
+    place = d.get('map')
+    if place:
+        # The map is OpenStreetMap's, put in the page with the <iframe> OpenStreetMap gives for it: it asks for no
+        # key and leaves no cookies. It is written in a Code module, where it can be changed for any other map
+        # (Google's "Incorpora una mappa" too). bbox is the piece of town in sight (360 m by 155 m around the
+        # point), marker the pin. tp-mappa: the map stands still until it is clicked, so the page scrolls over it.
+        lat, lon = place['lat'], place['lon']
+        bbox = '%.7f%%2C%.7f%%2C%.7f%%2C%.7f' % (lon - 0.0018, lat - 0.0007, lon + 0.0018, lat + 0.0007)
+        address = 'https://www.openstreetmap.org/export/embed.html?bbox=%s&amp;layer=mapnik&amp;marker=%.7f%%2C%.7f' % (bbox, lat, lon)
+        frame = ('<iframe title="%s" src="%s" style="display:block;width:100%%;aspect-ratio:16/5;min-height:300px;border:0" loading="lazy"></iframe>'
+                 % (place['title'], address))
+        rows.append(row('Mappa', [
+            column([
+                code('Mappa (OpenStreetMap)', frame, attrs(cls='tp-mappa'), border(rad='20px', width='3px', color=LINE), overflow('hidden')),
+                text('Nota sotto la mappa', '<p>%s</p>' % place['note'], **body_font(R('16px', phone='15px'), BORDEAUX, line='1.4em')),
+            ], layout(direction='column', gap='12px', align='stretch')),
+        ], WIDE, spacing(padding=box(R('64px', tablet='40px', phone='32px'), '0px', '0px', R(vw(107, 0, 107), tablet='0px')))))
     return section(
         'Dove siamo', [
             row('Dove siamo', [
@@ -648,9 +672,10 @@ def location():
                     'gridRowHeights': 'manual', 'gridTemplateRows': R('auto 1fr', tablet='auto auto auto'),
                     'columnGap': R('5.28%', tablet='0px'), 'rowGap': R('0px', tablet='28px'), 'alignItems': 'start'})),
             ], WIDE, spacing(padding=box('0px', '0px', '0px', R(vw(107, 0, 107), tablet='0px')))),
-        ],
+        ] + rows,
         attrs(id='location'),
         background(color=CREAM),
+        layout(direction='column', gap='0px', align='center'),
         spacing(padding=box(R('200px', tablet='80px', phone='0px'), '0px', R('204px', tablet='96px', phone='221px'), '0px')),
     )
 
@@ -890,7 +915,8 @@ def footer():
     # On phones: 110 px above the name, the voices in two lines (16 px), the notes one under the other (14 px).
     d = T.FOOTER
     nav_font = display_font(R(vw(23.8, 18, 24), tablet='20px', phone='16px'), R(CREAM, hover=WHITE), line='1em', capitalization='uppercase')
-    small = body_font(R('16px', phone='14px'), R(WHITE, phone=CREAM), weight=R('300', phone='400'), line='1em')
+    # (A note that takes two lines, on tablets and phones, has some air between them.)
+    small = body_font(R('16px', phone='14px'), R(WHITE, phone=CREAM), weight=R('300', phone='400'), line=R('1em', tablet='1.3em'))
     links = at('content.decoration.bodyFont.link.font', {'color': R(WHITE, phone=CREAM)})
 
     def voices(name, items):
@@ -915,8 +941,12 @@ def footer():
                         spacing(margin=box('0px', '0px', '0px', R('0px', phone='-3px')))),
                     group('Voci', [voices('Voci a sinistra', d['left']), voices('Voci a destra', d['right'])],
                           layout(direction='row', gap='16px', row_gap='14px', justify='space-between', align='center', wrap='wrap')),
-                    group('Note', [text('Nota %d' % (index + 1), '<p>%s</p>' % line, links, **small) for index, line in enumerate(d['lines'])],
-                          layout(direction=R('row', phone='column'), gap=R('36px', phone='12px'), align=R('center', phone='flex-start'), wrap='wrap'),
+                    # The first note, where one eats, takes a line of its own; the others follow on the next.
+                    group('Note', [text('Nota %d' % (index + 1), '<p>%s</p>' % line, links,
+                                        *([sizing(width='100%')] if index == 0 and len(d['lines']) > 3 else []), **small)
+                                   for index, line in enumerate(d['lines'])],
+                          layout(direction=R('row', phone='column'), gap=R('36px', phone='10px'), row_gap=R('16px', phone='10px'),
+                                 align=R('center', phone='flex-start'), wrap='wrap'),
                           spacing(padding=box(R('28px', phone='60px'), '0px', '0px', '0px'))),
                 ], layout(direction='column', gap=R('22px', phone='12px'), align='stretch')),
             ], sizing(width=R('calc(100% - 72px)', phone='calc(100% - 32px)'), maxWidth='1500px')),
